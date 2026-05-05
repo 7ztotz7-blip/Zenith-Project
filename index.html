@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith | Mastery. Code. Evolution.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Kanit', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; }
+
+        /* Full Page Video Background */
+        #bg-video {
+            position: fixed;
+            right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            z-index: -2;
+            object-fit: cover;
+            opacity: 0.6;
+            filter: saturate(1.2) brightness(0.9);
+        }
+
+        /* ซ่อนวิดีโอในมือถือเพื่อประหยัดทรัพยากร (Optional) */
+        @media (max-width: 768px) {
+            #bg-video { opacity: 0.3; }
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 40%, #050505 120%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .zenith-card {
+            background: rgba(13, 13, 14, 0.6);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .zenith-card:hover {
+            border-color: #a855f7;
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .nav-blur {
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .img-python { background: linear-gradient(135deg, #064e3b 0%, #0d9488 100%); }
+        .img-js { background: linear-gradient(135deg, #713f12 0%, #eab308 100%); }
+        .img-react { background: linear-gradient(135deg, #1e3a5f 0%, #60a5fa 100%); }
+
+        .welcome-mini {
+            font-size: 12px;
+            letter-spacing: 0.15em;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            padding: 6px 18px;
+            border-radius: 99px;
+            background: rgba(168, 85, 247, 0.1);
+            backdrop-filter: blur(10px);
+            display: inline-block;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<video autoplay loop muted playsinline id="bg-video">
+    <source src="gg-video.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+<!-- NAVIGATION: ปรับให้ Responsive -->
+<nav class="fixed top-0 w-full z-50 h-auto py-4 md:h-20 flex items-center justify-between px-6 md:px-10 nav-blur">
+    <div class="flex items-center gap-4 md:gap-12">
+        <h1 class="text-xl md:text-2xl font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
+        <div class="hidden lg:flex items-center gap-8 text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">
+            <a href="#courses" class="hover:text-[#a855f7] transition-all">คอร์สทั้งหมด</a>
+            <a href="#about" class="hover:text-[#a855f7] transition-all">เกี่ยวกับเรา</a>
+        </div>
+    </div>
+    
+    <div class="flex items-center gap-3 md:gap-6">
+        <div id="authStatus">
+            <div id="guestLinks" class="flex items-center gap-3 md:gap-6">
+                <a href="login.html" class="text-gray-400 hover:text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest transition">Sign In</a>
+                <a href="register.html" class="bg-[#a855f7] text-white px-4 py-2 md:px-8 md:py-3 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] shadow-lg shadow-purple-500/20 hover:scale-105 transition-all">
+                    Get Started
+                </a>
+            </div>
+            
+            <div id="userProfile" class="hidden flex items-center gap-3 bg-white/5 py-1.5 pl-4 pr-1.5 rounded-full border border-white/10 backdrop-blur-md">
+                <div class="text-right hidden sm:block">
+                    <p class="text-[7px] text-gray-500 uppercase font-black leading-none">Logged in</p>
+                    <p id="navUserName" class="text-[10px] font-black text-[#2dd4bf] uppercase tracking-widest"></p>
+                </div>
+                <button onclick="logout()" class="w-7 h-7 flex items-center justify-center bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white rounded-full transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- HEADER: ปรับขนาด Font ให้ลดลงในมือถือ -->
+<header class="relative w-full flex flex-col items-center justify-center text-center px-4 pt-32 pb-10">
+    <div class="relative mb-6">
+        <p class="text-[#a855f7] text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] mb-2 opacity-80">Next-Gen Learning Platform</p>
+        <h2 class="text-5xl md:text-7xl font-black text-white tracking-tighter italic leading-none drop-shadow-[0_0_20px_rgba(168,85,247,0.4)]">ZENITH</h2>
+        <p class="text-[#2dd4bf] text-[8px] md:text-[9px] mt-2 font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Mastery • Evolution</p>
+    </div>
+
+    <div class="w-full max-w-[280px] md:max-w-[320px] mx-auto" id="nameSection">
+        <div class="bg-white/5 border border-white/10 p-1 rounded-full backdrop-blur-2xl flex items-center gap-2">
+            <input type="text" id="userNameInput" placeholder="Identify yourself..." 
+                   class="bg-transparent flex-grow p-2 rounded-full text-white outline-none text-[10px] font-medium pl-4">
+            <button onclick="saveUser()" class="bg-[#a855f7] text-white w-8 h-8 rounded-full flex items-center justify-center hover:scale-105 transition-all shadow-lg shadow-purple-500/40">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div id="welcomeSection" class="hidden mt-4">
+        <div class="welcome-mini">
+            WELCOME BACK, <span id="userNameText" class="text-[#a855f7]"></span>
+        </div>
+    </div>
+</header>
+
+<!-- MAIN CONTENT: ปรับ Grid ให้เรียง 1 คอลัมน์ในมือถือ -->
+<main class="max-w-7xl mx-auto py-10 px-6 md:px-10" id="courses">
+    <div class="flex flex-col mb-12 border-l-[3px] border-[#a855f7] pl-4">
+        <h3 class="text-xl md:text-2xl font-black text-white uppercase italic tracking-tighter leading-none">Available Modules</h3>
+        <p class="text-zinc-500 text-[8px] md:text-[9px] font-black mt-1 uppercase tracking-[0.2em] md:tracking-[0.3em]">Choose your path to mastery</p>
+    </div>
+
+    <!-- Grid Container: มือถือเรียง 1 / Tablet เรียง 2 / คอมเรียง 3 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+        
+        <!-- Python -->
+        <div class="zenith-card p-6 flex flex-col">
+            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center img-python mb-6 md:mb-8 text-5xl md:text-6xl">🐍</div>
+            <h4 class="text-xl md:text-2xl font-black text-white mb-2 md:mb-3 italic uppercase">Python</h4>
+            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 md:mb-8 flex-grow">Master the art of efficiency. Build advanced scripts to automate your digital world.</p>
+            <a href="course.html?course=python">
+                <button class="w-full py-3 md:py-4 bg-white/5 border border-white/10 hover:bg-[#2dd4bf] hover:text-white text-gray-300 rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all">Start Learning →</button>
+            </a>
+        </div>
+
+        <!-- JavaScript -->
+        <div class="zenith-card p-6 flex flex-col">
+            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center img-js mb-6 md:mb-8 text-5xl md:text-6xl">💛</div>
+            <h4 class="text-xl md:text-2xl font-black text-white mb-2 md:mb-3 italic uppercase">JavaScript</h4>
+            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 md:mb-8 flex-grow">Beyond the basics. Deep dive into ES6+ and the core of modern web architecture.</p>
+            <a href="course.html?course=javascript">
+                <button class="w-full py-3 md:py-4 bg-white/5 border border-white/10 hover:bg-yellow-500 hover:text-black text-gray-300 rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all">Start Learning →</button>
+            </a>
+        </div>
+
+        <!-- React -->
+        <div class="zenith-card p-6 flex flex-col">
+            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center img-react mb-6 md:mb-8 text-5xl md:text-6xl">⚛️</div>
+            <h4 class="text-xl md:text-2xl font-black text-white mb-2 md:mb-3 italic uppercase">React</h4>
+            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 md:mb-8 flex-grow">Build high-performance, component-based user interfaces for the modern web.</p>
+            <a href="course.html?course=react">
+                <button class="w-full py-3 md:py-4 bg-white/5 border border-white/10 hover:bg-blue-500 hover:text-white text-gray-300 rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all">Start Learning →</button>
+            </a>
+        </div>
+
+    </div>
+</main>
+
+<footer class="bg-black/80 backdrop-blur-md border-t border-white/5 py-10" id="about">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 text-center flex flex-col gap-4">
+        <h2 class="text-2xl font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h2>
+        <p class="text-gray-600 text-[9px] md:text-[10px] uppercase tracking-widest">© 2026 Senior Project · วิทยาลัยเทคนิคลำพูน</p>
+    </div>
+</footer>
+
+<script>
+    function saveUser() {
+        const input = document.getElementById('userNameInput');
+        const name = input.value.trim();
+        if (name !== "") {
+            localStorage.setItem('zenith_user', name);
+            checkUser();
+        }
+    }
+
+    function checkUser() {
+        const savedName = localStorage.getItem('zenith_user');
+        const elements = {
+            nameSection: document.getElementById('nameSection'),
+            welcomeSection: document.getElementById('welcomeSection'),
+            guestLinks: document.getElementById('guestLinks'),
+            userProfile: document.getElementById('userProfile'),
+            navUserName: document.getElementById('navUserName'),
+            userNameText: document.getElementById('userNameText')
+        };
+
+        if (savedName) {
+            elements.nameSection.classList.add('hidden');
+            elements.welcomeSection.classList.remove('hidden');
+            elements.guestLinks.classList.add('hidden');
+            elements.userProfile.classList.remove('hidden');
+            elements.navUserName.innerText = savedName;
+            elements.userNameText.innerText = savedName;
+        } else {
+            elements.nameSection.classList.remove('hidden');
+            elements.welcomeSection.classList.add('hidden');
+            elements.guestLinks.classList.remove('hidden');
+            elements.userProfile.classList.add('hidden');
+        }
+    }
+
+    function logout() {
+        if(confirm("ต้องการออกจากระบบ?")) {
+            localStorage.removeItem('zenith_user');
+            window.location.reload();
+        }
+    }
+
+    window.onload = checkUser;
+</script>
+</body>
+</html>

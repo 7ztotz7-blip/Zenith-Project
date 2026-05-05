@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith Classroom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body { font-family: 'Kanit', sans-serif; background: #050505; color: #fff; }
+        .lesson-card {
+            background: #0d0d0e;
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .lesson-card:hover { border-color: #a855f7; transform: translateX(4px); box-shadow: 0 0 20px rgba(168,85,247,0.15); }
+        .lesson-card.locked { opacity: 0.45; pointer-events: none; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        .fade-in { animation: fadeIn 0.5s ease both; }
+        .geo-bg {
+            background-image: linear-gradient(rgba(168,85,247,0.04) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(168,85,247,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+    </style>
+</head>
+<body class="min-h-screen geo-bg">
+
+<nav class="fixed top-0 w-full z-50 h-14 flex items-center justify-between px-8 bg-black/70 backdrop-blur-md border-b border-white/5">
+    <a href="index.html" class="flex items-center gap-2 text-gray-500 hover:text-[#a855f7] font-black text-sm uppercase tracking-widest transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
+        กลับหน้าหลัก
+    </a>
+    <h1 class="text-lg font-black text-[#a855f7] italic">ZENITH.</h1>
+    <div class="w-24"></div>
+</nav>
+
+<main class="max-w-3xl mx-auto pt-24 pb-20 px-6">
+
+    <!-- Course header -->
+    <div class="mb-12 fade-in">
+        <div id="courseBadge" class="text-[10px] font-black px-3 py-1 rounded-full uppercase w-fit border mb-4"></div>
+        <h1 id="course-title" class="text-5xl font-black italic tracking-tighter mb-3">กำลังโหลด...</h1>
+        <p id="course-desc" class="text-gray-500 text-sm"></p>
+
+        <!-- Progress bar -->
+        <div class="mt-6 bg-zinc-900 rounded-full h-2 overflow-hidden">
+            <div id="progressBar" class="h-2 rounded-full transition-all duration-700" style="width:0%"></div>
+        </div>
+        <p class="text-[11px] text-gray-600 mt-2" id="progressLabel">0% เสร็จแล้ว</p>
+    </div>
+
+    <!-- Lesson list -->
+    <div id="lesson-list" class="space-y-4"></div>
+
+</main>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get('course') || 'python';
+
+    // 1. ฟังก์ชันช่วยดึงระดับการเรียน (ย้ายมาไว้ที่นี่เพื่อกัน Error)
+    function getUnlockedLevel(courseType) {
+        const key = `zenith_progress_${courseType}`;
+        return parseInt(localStorage.getItem(key) || '1');
+    }
+
+    const themeMap = {
+    python: { badge: 'Python Expert', badgeColor: '#2dd4bf', bgClass: 'bg-[#2dd4bf]/10 text-[#2dd4bf] border-[#2dd4bf]/25', desc: 'จัดการงานซ้ำๆ ให้เป็นระบบอัตโนมัติขั้นสูงด้วย Python' },
+    javascript: { badge: 'Web Dev', badgeColor: '#eab308', bgClass: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/25', desc: 'สร้างเว็บไซต์ให้มีชีวิตด้วย JavaScript ES6+' },
+    react: { badge: 'Frontend', badgeColor: '#3b82f6', bgClass: 'bg-blue-500/10 text-blue-400 border-blue-500/25', desc: 'สร้าง Web App ระดับองค์กรด้วย React' },
+    
+    // --- เพิ่ม 3 ภาษาใหม่ตรงนี้ ---
+    php: { badge: 'Backend Dev', badgeColor: '#777bb4', bgClass: 'bg-[#777bb4]/10 text-[#777bb4] border-[#777bb4]/25', desc: 'พัฒนาฝั่ง Server และเชื่อมต่อฐานข้อมูลด้วย PHP & Laravel' },
+    sql: { badge: 'Data Master', badgeColor: '#00758f', bgClass: 'bg-[#00758f]/10 text-[#00758f] border-[#00758f]/25', desc: 'ออกแบบและจัดการฐานข้อมูลระดับมืออาชีพด้วย SQL' },
+    html: { badge: 'UI Designer', badgeColor: '#e34f26', bgClass: 'bg-[#e34f26]/10 text-[#e34f26] border-[#e34f26]/25', desc: 'สร้างโครงสร้างเว็บไซต์และดีไซน์ให้สวยงามด้วย HTML5 & CSS3' }
+};
+
+    const script = document.createElement('script');
+    script.src = `assets/js/${type}_data.js`;
+
+    script.onload = () => {
+        // ตรวจสอบว่าไฟล์ข้อมูล (Data File) มีตัวแปร courseData จริงไหม
+        if (typeof courseData === 'undefined') {
+            document.getElementById('course-title').innerText = '❌ ข้อมูลไม่สมบูรณ์';
+            return;
+        }
+
+        const theme = themeMap[type] || themeMap.python;
+        
+        // อัปเดต Header
+        const badge = document.getElementById('courseBadge');
+        badge.textContent = theme.badge;
+        badge.className = `text-[10px] font-black px-3 py-1 rounded-full uppercase w-fit border mb-4 ${theme.bgClass}`;
+
+        const title = document.getElementById('course-title');
+        title.innerText = courseData.title;
+        title.style.color = courseData.themeColor;
+
+        document.getElementById('course-desc').textContent = theme.desc;
+        
+        const progressBar = document.getElementById('progressBar');
+        progressBar.style.background = courseData.themeColor;
+
+        const list = document.getElementById('lesson-list');
+        list.innerHTML = '';
+
+        const unlockedLevel = getUnlockedLevel(type);
+        
+        // คำนวณความคืบหน้า (%)
+        const totalLessons = courseData.lessons.length;
+        const progressPct = Math.min(((unlockedLevel - 1) / totalLessons) * 100, 100);
+        progressBar.style.width = `${progressPct}%`;
+        document.getElementById('progressLabel').innerText = `${Math.floor(progressPct)}% เสร็จแล้ว`;
+
+        // สร้างรายการบทเรียน
+        courseData.lessons.forEach((lesson, idx) => {
+            const isUnlocked = lesson.id <= unlockedLevel;
+            const div = document.createElement('div');
+            
+            div.className = `lesson-card p-6 flex justify-between items-center fade-in ${!isUnlocked ? 'locked' : ''}`;
+            div.style.animationDelay = `${idx * 0.08}s`;
+            
+            div.innerHTML = `
+                <div class="flex items-center gap-5">
+                    <div class="w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm flex-shrink-0"
+                         style="background:${isUnlocked ? courseData.themeColor + '22' : 'rgba(255,255,255,0.04)'};
+                                color:${isUnlocked ? courseData.themeColor : '#555'}">
+                        ${String(lesson.id).padStart(2,'0')}
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm text-white mb-0.5">${lesson.title}</h3>
+                        <p class="text-zinc-600 text-xs">${lesson.desc}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    ${!isUnlocked
+                        ? `<svg class="w-4 h-4 text-zinc-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>`
+                        : `<a href="lesson.html?course=${type}&id=${lesson.id}">
+                                <button style="background:${courseData.themeColor};color:black"
+                                    class="px-6 py-2.5 rounded-xl font-black text-[11px] uppercase tracking-widest hover:scale-105 transition-all shadow-lg">
+                                    ${lesson.id < unlockedLevel ? 'ทบทวน' : 'เริ่มเรียน'}
+                                </button>
+                           </a>`
+                    }
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    };
+
+    script.onerror = () => {
+        document.getElementById('course-title').innerText = '❌ ไม่พบไฟล์ข้อมูล';
+    };
+
+    // สำคัญ: ต้องใส่ Append ไว้บรรทัดสุดท้ายเพื่อให้แน่ใจว่า onload/onerror ถูกตั้งค่าไว้แล้ว
+    document.head.appendChild(script);
+</script>
+</body>
+</html>
