@@ -1,4 +1,6 @@
-/* การตั้งค่าพื้นหลังและ Font */
+/* =========================================
+   1. CORE SETTINGS & FONTS
+   ========================================= */
 body { 
     font-family: 'Kanit', sans-serif; 
     background-color: #050505; 
@@ -7,58 +9,7 @@ body {
     margin: 0;
 }
 
-/* บทเรียนที่กำลังเรียนอยู่ (Sidebar) */
-.active-lesson { 
-    background-color: #a855f7 !important; 
-    color: white !important; 
-    border-left: 4px solid #2dd4bf;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
-}
-
-/* รายการบทเรียนใน Sidebar */
-.sidebar-item { 
-    border-bottom: 1px solid #18181b; 
-    transition: all 0.2s; 
-}
-.sidebar-item:hover:not(.active-lesson) { 
-    background: #18181b; 
-}
-
-/* ปุ่มตัวเลือกใน Quiz */
-.option-btn {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.option-btn:hover {
-    border-color: #a855f7;
-    background-color: rgba(168, 85, 247, 0.1);
-    transform: scale(1.02);
-}
-
-/* ใส่เอฟเฟกต์แสงฟุ้งให้ปุ่มในหน้า Index */
-.btn-primary {
-    background: linear-gradient(45deg, #a855f7, #2dd4bf);
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-}
-
-.btn-primary:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(45, 212, 191, 0.6);
-}
-
-/* ทำให้ Card ดูเหมือนลอยได้ */
-.course-card {
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(24, 24, 27, 0.8);
-    backdrop-filter: blur(10px);
-}
-
-/* เอฟเฟกต์ตอนกดปุ่มคำตอบ */
-.option-btn:active {
-    transform: scale(0.95);
-}
-
-/* ปรับแต่ง Scrollbar ให้ดูโมเดิร์น */
+/* ปรับแต่ง Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -70,29 +21,9 @@ body {
     background: #a855f7;
 }
 
-/* --- 1. System-wide Animations --- */
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.fade-up {
-    animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* Staggered Delay สำหรับรายการที่เรียงกัน */
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-
-/* --- 2. Advanced Glassmorphism --- */
+/* =========================================
+   2. LAYOUT COMPONENTS (Sidebar & Content)
+   ========================================= */
 nav {
     background: rgba(5, 5, 5, 0.7) !important;
     backdrop-filter: blur(12px) saturate(180%);
@@ -100,6 +31,25 @@ nav {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.active-lesson { 
+    background-color: #a855f7 !important; 
+    color: white !important; 
+    border-left: 4px solid #2dd4bf;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+.sidebar-item { 
+    border-bottom: 1px solid #18181b; 
+    transition: all 0.2s; 
+}
+
+.sidebar-item:hover:not(.active-lesson) { 
+    background: #18181b; 
+}
+
+/* =========================================
+   3. COURSE CARDS & INTERACTIVE ELEMENTS
+   ========================================= */
 .course-card {
     background: rgba(24, 24, 27, 0.4);
     backdrop-filter: blur(8px);
@@ -114,7 +64,41 @@ nav {
                 0 0 20px rgba(168, 85, 247, 0.1);
 }
 
-/* --- 3. Enhanced Code Block --- */
+.btn-primary {
+    background: linear-gradient(45deg, #a855f7, #2dd4bf);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(45, 212, 191, 0.6);
+}
+
+.option-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.option-btn:hover {
+    border-color: #a855f7;
+    background-color: rgba(168, 85, 247, 0.1);
+    transform: scale(1.02);
+}
+
+.option-btn:active {
+    transform: scale(0.95);
+}
+
+.option-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    filter: grayscale(0.5);
+    transform: none !important;
+}
+
+/* =========================================
+   4. ENHANCED CODE BLOCK
+   ========================================= */
 .code-block {
     background: #080808 !important;
     border: 1px solid rgba(168, 85, 247, 0.15);
@@ -132,7 +116,6 @@ nav {
     color: #d1d5db;
 }
 
-/* มุมกล่องมีแสง Gradient บางๆ */
 .code-block::after {
     content: '';
     position: absolute;
@@ -143,21 +126,24 @@ nav {
     pointer-events: none;
 }
 
-/* --- 4. Interactive Elements --- */
-.option-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    filter: grayscale(0.5);
-    transform: none !important;
+/* =========================================
+   5. ANIMATIONS & EFFECTS
+   ========================================= */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* เอฟเฟกต์ Glow ตอนตอบถูก */
+.fade-up { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+
 .correct-glow {
     box-shadow: 0 0 20px rgba(45, 212, 191, 0.3);
     border-color: #2dd4bf !important;
 }
 
-/* เอฟเฟกต์สั่นตอนตอบผิด */
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
@@ -169,29 +155,47 @@ nav {
     border-color: #ef4444 !important;
 }
 
-/* สำหรับหน้าจอมือถือ (ขนาดไม่เกิน 768px) */
+/* =========================================
+   6. MOBILE RESPONSIVE (จุดที่แก้ไขล่าสุด)
+   ========================================= */
 @media (max-width: 768px) {
-    /* 1. จัดการ Sidebar ที่บังเนื้อหา */
+    /* ซ่อน Sidebar เพื่อไม่ให้บังเนื้อหาหลัก */
     .sidebar {
-        position: fixed;
-        left: -100%; /* ซ่อนไว้ก่อน */
-        transition: 0.3s;
-        z-index: 1000;
+        display: none !important;
     }
 
-    /* 2. แก้ปุ่มบทถัดไปที่ซ้อนทับกัน (จากภาพที่ 2) */
-    .nav-buttons {
-        position: relative; /* เปลี่ยนจาก absolute/fixed เป็น relative */
-        display: flex;
-        flex-direction: column; /* วางปุ่มเรียงกันแนวตั้งแทน */
-        gap: 10px;
-        margin-top: 20px;
-    }
-
-    /* 3. ปรับขนาดเนื้อหาหลักให้เต็มจอ ไม่โดนเบียด */
+    /* ขยายเนื้อหาหลักให้เต็มจอ */
     .main-content {
         margin-left: 0 !important;
-        padding: 15px;
-        width: 100%;
+        padding: 15px !important;
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /* แก้ไข Code Block ให้เลื่อนแนวนอน ไม่บีบตัวอักษรแนวตั้ง */
+    .code-block {
+        padding: 1rem !important;
+        width: 100% !important;
+        overflow-x: auto;
+    }
+
+    .code-block pre {
+        white-space: pre !important; 
+        font-size: 0.75rem !important;
+    }
+
+    /* จัดระเบียบปุ่มนำทางให้นั่งซ้อนกันสวยๆ */
+    .nav-buttons {
+        position: static !important;
+        display: grid !important;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    .nav-buttons button, .nav-buttons a {
+        width: 100% !important;
+        text-align: center;
+        padding: 12px !important;
     }
 }
