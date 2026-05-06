@@ -169,3 +169,29 @@ nav {
     border-color: #ef4444 !important;
 }
 
+/* สำหรับหน้าจอมือถือ (ขนาดไม่เกิน 768px) */
+@media (max-width: 768px) {
+    /* 1. จัดการ Sidebar ที่บังเนื้อหา */
+    .sidebar {
+        position: fixed;
+        left: -100%; /* ซ่อนไว้ก่อน */
+        transition: 0.3s;
+        z-index: 1000;
+    }
+
+    /* 2. แก้ปุ่มบทถัดไปที่ซ้อนทับกัน (จากภาพที่ 2) */
+    .nav-buttons {
+        position: relative; /* เปลี่ยนจาก absolute/fixed เป็น relative */
+        display: flex;
+        flex-direction: column; /* วางปุ่มเรียงกันแนวตั้งแทน */
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    /* 3. ปรับขนาดเนื้อหาหลักให้เต็มจอ ไม่โดนเบียด */
+    .main-content {
+        margin-left: 0 !important;
+        padding: 15px;
+        width: 100%;
+    }
+}
