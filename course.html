@@ -29,45 +29,57 @@
         }
         ::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-thumb{background:#3f3f46;border-radius:6px}
 
-        /* แก้ไขการแสดงผลสำหรับมือถือ */
-@media (max-width: 640px) {
-    /* 1. ปรับขนาดหัวข้อคอร์สให้เล็กลงไม่ให้ล้นจอ */
-    #course-title {
-        font-size: 2.5rem !important; /* จากเดิม text-5xl (3rem) ให้เหลือ 2.5rem */
-        line-height: 1;
-    }
+        /* --- CSS แก้ไขการแสดงผลสำหรับมือถือ (Responsive) --- */
+        @media (max-width: 640px) {
+            main.max-w-3xl {
+                padding-top: 6rem !important; 
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
 
-    /* 2. ปรับระยะห่างของเนื้อหาหลัก */
-    main {
-        padding-top: 5rem !important; /* ดันลงมาไม่ให้โดน Nav ทับ */
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-    }
+            #course-title {
+                font-size: 2.2rem !important; 
+                line-height: 1.1 !important;
+                word-break: break-word !important;
+            }
 
-    /* 3. จัดการ Lesson Card ให้กระชับขึ้น */
-    .lesson-card {
-        padding: 1rem !important; /* ลดความกว้างขอบใน */
-        gap: 0.5rem !important;
-    }
+            .lesson-card {
+                padding: 16px !important;
+                flex-direction: column !important; /* เปลี่ยนจากแนวนอนเป็นแนวตั้ง */
+                align-items: flex-start !important;
+                gap: 16px !important;
+            }
 
-    /* 4. แก้ปัญหาปุ่ม "เริ่มเรียน" บีบตัวหนังสือบทเรียน */
-    .lesson-card h3 {
-        font-size: 0.85rem !important;
-        white-space: normal !important; /* ยอมให้ชื่อบทเรียนขึ้นบรรทัดใหม่ได้ */
-    }
+            .lesson-card .flex.items-center.gap-5 {
+                width: 100% !important;
+                align-items: flex-start !important; /* จัดให้ไอคอนกับข้อความอยู่ชิดบน */
+            }
 
-    /* 5. ปรับขนาดวงกลมตัวเลขบทเรียนให้เล็กลงนิดนึง */
-    .lesson-card .flex-shrink-0.w-10 {
-        width: 2.25rem !important;
-        height: 2.25rem !important;
-    }
+            .lesson-card h3 {
+                font-size: 1rem !important;
+                white-space: normal !important; /* ยอมให้ขึ้นบรรทัดใหม่ */
+            }
 
-    /* 6. จัดการ Nav ให้ตัวหนังสือไม่เบียดกัน */
-    nav {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-    }
-}
+            .lesson-card p {
+                white-space: normal !important; /* ยอมให้ขึ้นบรรทัดใหม่ */
+            }
+
+            .lesson-card .flex-shrink-0.ml-4 {
+                width: 100% !important;
+                margin-left: 0 !important;
+            }
+
+            .lesson-card button {
+                width: 100% !important; /* ปุ่มกว้างเต็มจอ กดง่ายขึ้น */
+                padding: 12px !important;
+                font-size: 12px !important;
+            }
+
+            nav {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen geo-bg">
@@ -78,18 +90,15 @@
         กลับหน้าหลัก
     </a>
     <h1 class="text-lg font-black text-[#a855f7] italic">ZENITH.</h1>
-    <div class="w-28"></div>
+    <div class="hidden sm:block w-28"></div>
 </nav>
 
 <main class="max-w-3xl mx-auto pt-24 pb-20 px-6">
-
-    <!-- Loading state -->
     <div id="loadingState" class="text-center py-20">
         <div class="inline-block w-8 h-8 border-2 border-[#a855f7] border-t-transparent rounded-full animate-spin mb-4"></div>
         <p class="text-gray-500 text-sm">กำลังโหลดข้อมูลคอร์ส...</p>
     </div>
 
-    <!-- Course header (hidden until loaded) -->
     <div id="courseHeader" class="mb-12 fade-in hidden">
         <div id="courseBadge" class="text-[10px] font-black px-3 py-1 rounded-full uppercase w-fit border mb-4"></div>
         <h1 id="course-title" class="text-5xl font-black italic tracking-tighter mb-3"></h1>
@@ -103,9 +112,7 @@
         </div>
     </div>
 
-    <!-- Lesson list -->
     <div id="lesson-list" class="space-y-4"></div>
-
 </main>
 
 <script>
@@ -130,12 +137,7 @@
 
     script.onload = () => {
         document.getElementById('loadingState').classList.add('hidden');
-
-        if (typeof courseData === 'undefined') {
-            document.getElementById('lesson-list').innerHTML =
-                '<p class="text-red-400 font-bold text-center py-10">❌ ข้อมูลไม่สมบูรณ์ในไฟล์ ' + type + '_data.js</p>';
-            return;
-        }
+        if (typeof courseData === 'undefined') return;
 
         const theme      = themeMap[type] || themeMap.python;
         const unlocked   = getUnlockedLevel(type);
@@ -143,9 +145,7 @@
         const doneLessons= Math.max(0, unlocked - 1);
         const pct        = Math.min((doneLessons / total) * 100, 100);
 
-        // Show header
         document.getElementById('courseHeader').classList.remove('hidden');
-
         const badge = document.getElementById('courseBadge');
         badge.textContent = theme.badge;
         badge.className   = `text-[10px] font-black px-3 py-1 rounded-full uppercase w-fit border mb-4 ${theme.bgClass}`;
@@ -153,14 +153,12 @@
         const titleEl = document.getElementById('course-title');
         titleEl.innerText   = courseData.title;
         titleEl.style.color = courseData.themeColor;
-
-        document.getElementById('course-desc').textContent     = theme.desc;
+        document.getElementById('course-desc').textContent = theme.desc;
         document.getElementById('progressBar').style.background = courseData.themeColor;
-        document.getElementById('progressBar').style.width      = pct + '%';
-        document.getElementById('progressLabel').textContent    = `${Math.round(pct)}% เสร็จแล้ว`;
-        document.getElementById('progressDetail').textContent   = `${doneLessons} / ${total} บท`;
+        document.getElementById('progressBar').style.width = pct + '%';
+        document.getElementById('progressLabel').textContent = `${Math.round(pct)}% เสร็จแล้ว`;
+        document.getElementById('progressDetail').textContent = `${doneLessons} / ${total} บท`;
 
-        // Build lesson list
         const list = document.getElementById('lesson-list');
         list.innerHTML = '';
 
@@ -177,21 +175,21 @@
                 <div class="flex items-center gap-5 min-w-0">
                     <div class="w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm flex-shrink-0"
                          style="background:${isDone ? 'rgba(45,212,191,0.15)' : isUnlocked ? courseData.themeColor+'22' : 'rgba(255,255,255,0.04)'};
-                                color:${isDone ? '#2dd4bf' : isUnlocked ? courseData.themeColor : '#555'}">
+                                 color:${isDone ? '#2dd4bf' : isUnlocked ? courseData.themeColor : '#555'}">
                         ${isDone ? '✓' : String(lesson.id).padStart(2,'0')}
                     </div>
                     <div class="min-w-0">
                         <div class="flex items-center gap-2 mb-0.5">
-                            <h3 class="font-bold text-sm ${isUnlocked ? 'text-white' : 'text-zinc-600'} truncate">${lesson.title}</h3>
+                            <h3 class="font-bold text-sm ${isUnlocked ? 'text-white' : 'text-zinc-600'}">${lesson.title}</h3>
                             ${isCurrent ? '<span class="text-[8px] bg-[#a855f7]/20 text-[#a855f7] px-1.5 py-0.5 rounded font-black uppercase flex-shrink-0">ถัดไป</span>' : ''}
                         </div>
-                        <p class="text-zinc-600 text-xs truncate">${lesson.desc}</p>
+                        <p class="text-zinc-600 text-xs">${lesson.desc}</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-3 flex-shrink-0 ml-4">
                     ${!isUnlocked
                         ? `<svg class="w-4 h-4 text-zinc-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>`
-                        : `<a href="lesson.html?course=${type}&id=${lesson.id}">
+                        : `<a href="lesson.html?course=${type}&id=${lesson.id}" class="w-full">
                                 <button style="background:${isDone ? 'rgba(45,212,191,0.15)' : courseData.themeColor};color:${isDone ? '#2dd4bf' : 'black'}"
                                     class="px-5 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-lg whitespace-nowrap">
                                     ${isDone ? 'ทบทวน' : 'เริ่มเรียน'}
@@ -203,18 +201,6 @@
             list.appendChild(div);
         });
     };
-
-    script.onerror = () => {
-        document.getElementById('loadingState').classList.add('hidden');
-        document.getElementById('lesson-list').innerHTML = `
-            <div class="text-center py-16">
-                <p class="text-4xl mb-4">❌</p>
-                <p class="text-red-400 font-bold mb-2">ไม่พบไฟล์ assets/js/${type}_data.js</p>
-                <p class="text-gray-600 text-sm">กรุณาตรวจสอบว่าไฟล์ถูก upload ขึ้น Vercel แล้วครับ</p>
-                <a href="index.html" class="inline-block mt-6 px-6 py-2.5 bg-[#a855f7] text-white rounded-xl font-black text-xs uppercase tracking-widest">กลับหน้าหลัก</a>
-            </div>`;
-    };
-
     document.head.appendChild(script);
 </script>
 </body>
