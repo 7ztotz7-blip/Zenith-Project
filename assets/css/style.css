@@ -198,4 +198,32 @@ nav {
         text-align: center;
         padding: 12px !important;
     }
+}   
+
+/* แก้ไขหน้าเรียนสำหรับมือถือ */
+@media (max-width: 768px) {
+    /* 1. สั่งให้ Sidebar ซ่อนไปก่อน หรือเลื่อนไปอยู่ข้างล่าง */
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        z-index: 10;
+    }
+
+    /* 2. ดันเนื้อหาหลักไม่ให้โดนทับ */
+    .main-content {
+        margin-left: 0 !important;
+        padding: 20px;
+        width: 100%;
+    }
+
+    /* 3. แก้ไขตัวอักษร Code ที่เรียงเป็นแนวตั้ง */
+    pre code, .code-block {
+        display: block;
+        white-space: pre-wrap; /* ให้มันขึ้นบรรทัดใหม่แทนการตัดคำ */
+        word-break: break-all;
+        font-size: 14px;
+        line-height: 1.5;
+        overflow-x: auto;
+    }
 }
