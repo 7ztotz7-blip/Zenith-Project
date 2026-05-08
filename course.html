@@ -28,6 +28,46 @@
             background-size:60px 60px;
         }
         ::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-thumb{background:#3f3f46;border-radius:6px}
+
+        /* แก้ไขการแสดงผลสำหรับมือถือ */
+@media (max-width: 640px) {
+    /* 1. ปรับขนาดหัวข้อคอร์สให้เล็กลงไม่ให้ล้นจอ */
+    #course-title {
+        font-size: 2.5rem !important; /* จากเดิม text-5xl (3rem) ให้เหลือ 2.5rem */
+        line-height: 1;
+    }
+
+    /* 2. ปรับระยะห่างของเนื้อหาหลัก */
+    main {
+        padding-top: 5rem !important; /* ดันลงมาไม่ให้โดน Nav ทับ */
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    /* 3. จัดการ Lesson Card ให้กระชับขึ้น */
+    .lesson-card {
+        padding: 1rem !important; /* ลดความกว้างขอบใน */
+        gap: 0.5rem !important;
+    }
+
+    /* 4. แก้ปัญหาปุ่ม "เริ่มเรียน" บีบตัวหนังสือบทเรียน */
+    .lesson-card h3 {
+        font-size: 0.85rem !important;
+        white-space: normal !important; /* ยอมให้ชื่อบทเรียนขึ้นบรรทัดใหม่ได้ */
+    }
+
+    /* 5. ปรับขนาดวงกลมตัวเลขบทเรียนให้เล็กลงนิดนึง */
+    .lesson-card .flex-shrink-0.w-10 {
+        width: 2.25rem !important;
+        height: 2.25rem !important;
+    }
+
+    /* 6. จัดการ Nav ให้ตัวหนังสือไม่เบียดกัน */
+    nav {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
     </style>
 </head>
 <body class="min-h-screen geo-bg">
