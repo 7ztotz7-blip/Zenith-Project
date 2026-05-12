@@ -90,5 +90,19 @@
 
     <!-- เชื่อมต่อระบบสมาชิก -->
     <script src="assets/js/auth.js"></script>
+
+    <script>
+    function saveUser() {
+        const nameInput = document.getElementById('userNameInput').value;
+        if (nameInput.trim() !== "") {
+            // บันทึกชื่อลงในเครื่อง
+            localStorage.setItem('zenith_user_name', nameInput);
+            // ส่งไปหน้าแรก
+            window.location.href = 'index.html';
+        } else {
+            alert('กรุณากรอกชื่อผู้ใช้งานก่อนครับ');
+        }
+    }
+</script>
 </body>
 </html>
