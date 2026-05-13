@@ -222,33 +222,35 @@
         const name = input.value.trim();
         if (name !== "") {
             localStorage.setItem('zenith_user', name);
-            checkUser();
+            window.location.reload(); // รีโหลดเพื่อให้หน้าจอเปลี่ยนสถานะ
         }
     }
 
     function checkUser() {
         const savedName = localStorage.getItem('zenith_user');
-        const elements = {
-            nameSection: document.getElementById('nameSection'),
-            welcomeSection: document.getElementById('welcomeSection'),
-            guestLinks: document.getElementById('guestLinks'),
-            userProfile: document.getElementById('userProfile'),
-            navUserName: document.getElementById('navUserName'),
-            userNameText: document.getElementById('userNameText')
-        };
+        
+        const nameSection = document.getElementById('nameSection');
+        const welcomeSection = document.getElementById('welcome-section');
+        const guestLinks = document.getElementById('guestLinks');
+        const userProfile = document.getElementById('userProfile');
+        const navUserName = document.getElementById('navUserName');
+        const userDisplayName = document.getElementById('user-display-name');
 
         if (savedName) {
-            elements.nameSection.classList.add('hidden');
-            elements.welcomeSection.classList.remove('hidden');
-            elements.guestLinks.classList.add('hidden');
-            elements.userProfile.classList.remove('hidden');
-            elements.navUserName.innerText = savedName;
-            elements.userNameText.innerText = savedName;
+            // ถ้ามีชื่อผู้ใช้
+            nameSection.classList.add('hidden');
+            welcomeSection.classList.remove('hidden');
+            guestLinks.classList.add('hidden');
+            userProfile.classList.remove('hidden');
+            
+            navUserName.innerText = savedName;
+            userDisplayName.innerText = savedName;
         } else {
-            elements.nameSection.classList.remove('hidden');
-            elements.welcomeSection.classList.add('hidden');
-            elements.guestLinks.classList.remove('hidden');
-            elements.userProfile.classList.add('hidden');
+            // ถ้ายังไม่มีชื่อผู้ใช้
+            nameSection.classList.remove('hidden');
+            welcomeSection.classList.add('hidden');
+            guestLinks.classList.remove('hidden');
+            userProfile.classList.add('hidden');
         }
     }
 
