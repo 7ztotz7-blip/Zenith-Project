@@ -124,35 +124,45 @@
     }
 
     const themeMap = {
-        python:     { badge:'Python Expert', bgClass:'bg-[#2dd4bf]/10 text-[#2dd4bf] border-[#2dd4bf]/25',     desc:'จัดการงานซ้ำๆ ให้เป็นระบบอัตโนมัติขั้นสูงด้วย Python' },
-        javascript: { badge:'Web Dev',       bgClass:'bg-yellow-500/10 text-yellow-400 border-yellow-500/25',   desc:'สร้างเว็บไซต์ให้มีชีวิตด้วย JavaScript ES6+' },
-        react:      { badge:'Frontend',      bgClass:'bg-blue-500/10 text-blue-400 border-blue-500/25',         desc:'สร้าง Web App ระดับองค์กรด้วย React' },
-        php:        { badge:'Backend Dev',   bgClass:'bg-[#777bb4]/10 text-[#777bb4] border-[#777bb4]/25',     desc:'พัฒนาฝั่ง Server และเชื่อมต่อฐานข้อมูลด้วย PHP' },
-        sql:        { badge:'Data Master',   bgClass:'bg-[#00758f]/10 text-[#00758f] border-[#00758f]/25',     desc:'ออกแบบและจัดการฐานข้อมูลระดับมืออาชีพด้วย SQL' },
-        html:       { badge:'UI Designer',   bgClass:'bg-[#e34f26]/10 text-[#e34f26] border-[#e34f26]/25',     desc:'สร้างโครงสร้างเว็บไซต์และดีไซน์ด้วย HTML5 & CSS3' }
+        python:     { badge:'Python Expert', bgClass:'bg-[#2dd4bf]/10 text-[#2dd4bf] border-[#2dd4bf]/25', desc:'จัดการงานซ้ำๆ ให้เป็นระบบอัตโนมัติขั้นสูงด้วย Python' },
+        javascript: { badge:'Web Dev',       bgClass:'bg-yellow-500/10 text-yellow-400 border-yellow-500/25', desc:'สร้างเว็บไซต์ให้มีชีวิตด้วย JavaScript ES6+' },
+        react:      { badge:'Frontend',      bgClass:'bg-blue-500/10 text-blue-400 border-blue-500/25', desc:'สร้าง Web App ระดับองค์กรด้วย React' },
+        php:        { badge:'Backend Dev',   bgClass:'bg-[#777bb4]/10 text-[#777bb4] border-[#777bb4]/25', desc:'พัฒนาฝั่ง Server และเชื่อมต่อฐานข้อมูลด้วย PHP' },
+        sql:        { badge:'Data Master',   bgClass:'bg-[#00758f]/10 text-[#00758f] border-[#00758f]/25', desc:'ออกแบบและจัดการฐานข้อมูลระดับมืออาชีพด้วย SQL' },
+        html:       { badge:'UI Designer',   bgClass:'bg-[#e34f26]/10 text-[#e34f26] border-[#e34f26]/25', desc:'สร้างโครงสร้างเว็บไซต์และดีไซน์ด้วย HTML5 & CSS3' }
     };
 
-    const script  = document.createElement('script');
-    script.src    = `assets/js/${type}_data.js`;
+    // ใช้การโหลดไฟล์แบบมี timestamp เพื่อป้องกันไฟล์เก่าค้างใน Cache
+    const script = document.createElement('script');
+    script.src = `assets/js/${type}_data.js?t=${Date.now()}`;
+    script.async = true;
 
     script.onload = () => {
         document.getElementById('loadingState').classList.add('hidden');
-        if (typeof courseData === 'undefined') return;
+        
+        // เช็คว่าโหลดข้อมูลสำเร็จไหม
+        if (typeof courseData === 'undefined') {
+            document.getElementById('loadingState').innerHTML = `<p class="text-red-500">Error: ไม่พบข้อมูลใน assets/js/${type}_data.js</p>`;
+            return;
+        }
 
-        const theme      = themeMap[type] || themeMap.python;
-        const unlocked   = getUnlockedLevel(type);
-        const total      = courseData.lessons.length;
-        const doneLessons= Math.max(0, unlocked - 1);
-        const pct        = Math.min((doneLessons / total) * 100, 100);
+        const theme = themeMap[type] || themeMap.python;
+        const unlocked = getUnlockedLevel(type);
+        const total = courseData.lessons.length;
+        const doneLessons = Math.max(0, unlocked - 1);
+        const pct = Math.min((doneLessons / total) * 100, 100);
 
         document.getElementById('courseHeader').classList.remove('hidden');
+        
+        // อัปเดตข้อมูล UI
         const badge = document.getElementById('courseBadge');
         badge.textContent = theme.badge;
-        badge.className   = `text-[10px] font-black px-3 py-1 rounded-full uppercase w-fit border mb-4 ${theme.bgClass}`;
-
+        badge.className = `text-[10px] font-black px-3 py-1 rounded-full uppercase w-fit border mb-4 ${theme.bgClass}`;
+        
         const titleEl = document.getElementById('course-title');
-        titleEl.innerText   = courseData.title;
+        titleEl.innerText = courseData.title;
         titleEl.style.color = courseData.themeColor;
+        
         document.getElementById('course-desc').textContent = theme.desc;
         document.getElementById('progressBar').style.background = courseData.themeColor;
         document.getElementById('progressBar').style.width = pct + '%';
@@ -164,18 +174,18 @@
 
         courseData.lessons.forEach((lesson, idx) => {
             const isUnlocked = lesson.id <= unlocked;
-            const isDone     = lesson.id < unlocked;
-            const isCurrent  = lesson.id === unlocked;
+            const isDone = lesson.id < unlocked;
+            const isCurrent = lesson.id === unlocked;
 
             const div = document.createElement('div');
             div.className = `lesson-card p-6 flex justify-between items-center fade-in ${!isUnlocked ? 'locked' : isDone ? 'done' : ''}`;
             div.style.animationDelay = `${idx * 0.06}s`;
-
+            
             div.innerHTML = `
                 <div class="flex items-center gap-5 min-w-0">
                     <div class="w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm flex-shrink-0"
                          style="background:${isDone ? 'rgba(45,212,191,0.15)' : isUnlocked ? courseData.themeColor+'22' : 'rgba(255,255,255,0.04)'};
-                                 color:${isDone ? '#2dd4bf' : isUnlocked ? courseData.themeColor : '#555'}">
+                                color:${isDone ? '#2dd4bf' : isUnlocked ? courseData.themeColor : '#555'}">
                         ${isDone ? '✓' : String(lesson.id).padStart(2,'0')}
                     </div>
                     <div class="min-w-0">
@@ -187,13 +197,13 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3 flex-shrink-0 ml-4">
-                    ${!isUnlocked
+                    ${!isUnlocked 
                         ? `<svg class="w-4 h-4 text-zinc-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>`
                         : `<a href="lesson.html?course=${type}&id=${lesson.id}" class="w-full">
-                                <button style="background:${isDone ? 'rgba(45,212,191,0.15)' : courseData.themeColor};color:${isDone ? '#2dd4bf' : 'black'}"
-                                    class="px-5 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-lg whitespace-nowrap">
-                                    ${isDone ? 'ทบทวน' : 'เริ่มเรียน'}
-                                </button>
+                            <button style="background:${isDone ? 'rgba(45,212,191,0.15)' : courseData.themeColor};color:${isDone ? '#2dd4bf' : 'black'}"
+                                class="px-5 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-lg whitespace-nowrap">
+                                ${isDone ? 'ทบทวน' : 'เริ่มเรียน'}
+                            </button>
                            </a>`
                     }
                 </div>
@@ -201,6 +211,11 @@
             list.appendChild(div);
         });
     };
+
+    script.onerror = () => {
+        document.getElementById('loadingState').innerHTML = `<p class="text-red-500">Error: ไม่พบไฟล์ ${type}_data.js</p>`;
+    };
+
     document.head.appendChild(script);
 </script>
 </body>
