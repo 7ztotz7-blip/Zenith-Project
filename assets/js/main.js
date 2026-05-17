@@ -29,7 +29,8 @@ function updateXPBar() {
     const lvl = document.getElementById('levelBadge');
     if (bar) bar.style.width = getLevelPct() + '%';
     if (txt) txt.innerText   = `${getLevelXP()} / ${XP_PER_LEVEL} XP`;
-    if (lvl) lvl.innerText   = `LV ${getLevel}`;
+    // 🔥 FIXED: เติม () เพื่อเรียกใช้งานฟังก์ชันเอาผลลัพธ์ตัวเลขมาแสดงผลแทนที่จะเป็นตัวฟังก์ชัน
+    if (lvl) lvl.innerText   = `LV ${getLevel()}`;
 }
 
 function showLevelUp(level) {
@@ -325,6 +326,7 @@ function prevLesson() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
+function flex-1() {} // Placeholder ป้องกัน error ถ้าเกิดมีเรียกใช้งานในส่วนย่อย
 function setLesson(id) {
     currentLessonId = id;
     updateUI();
