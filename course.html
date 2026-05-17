@@ -8,36 +8,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        body { font-family:'Kanit',sans-serif; background:#050505; color:#fff; }
+        body { font-family:'Kanit',sans-serif; background:#050505; color:#fff; overflow-x: hidden; }
         
-        /* --- Ambient Glow Background & Grid Line (แก้ปัญหาหน้าเว็บโล่ง) --- */
-        .ambient-glow {
+        /* --- ระบบวิดีโอพื้นหลังดึงมาจากหน้าแรก --- */
+        #bg-video {
+            position: fixed; right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            z-index: -2; object-fit: cover; 
+            opacity: 0.15; /* ดรอปความเข้มลงมาที่ 15% เพื่อให้เห็นตารางและไม่แย่งซีนตัวหนังสือ */
+            filter: saturate(1.2) brightness(0.6);
+        }
+        @media (max-width: 768px) { #bg-video { opacity: 0.08; } } /* บนมือถือดรอปแสงลงอีกเพื่อความสบายตา */
+
+        .video-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; overflow: hidden;
-        }
-        .glow-1 {
-            position: absolute; top: -20%; right: -10%; width: 60vw; height: 60vw;
-            background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%);
-            filter: blur(40px);
-        }
-        .glow-2 {
-            position: absolute; bottom: -20%; left: -10%; width: 70vw; height: 70vw;
-            background: radial-gradient(circle, rgba(45,212,191,0.08) 0%, transparent 70%);
-            filter: blur(40px);
+            background: radial-gradient(circle, transparent 30%, #050505 110%);
+            z-index: -1; pointer-events: none;
         }
 
-        /* ลายเส้นตารางจาง ๆ ทั่วทั้งเว็บ ช่วยถมพื้นที่ว่างให้ดูพรีเมียม */
+        /* ผสานลายเส้นตาราง Grid เข้ากับเงาวิดีโอ ช่วยให้พื้นหลังดูแน่นมีมิติมาก */
         .geo-bg {
             background-image:
-                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+                linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
             background-size:40px 40px;
         }
 
-        /* Glassmorphic Lesson Cards */
+        /* Glassmorphic Lesson Cards ปรับพื้นหลังการ์ดให้ทึบขึ้นเล็กน้อยเพื่อสู้แสงวิดีโอ */
         .lesson-card {
-            background: rgba(15, 15, 18, 0.7) !important; 
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(10, 10, 12, 0.8) !important; 
+            border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 24px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(20px);
         }
@@ -47,7 +47,7 @@
             box-shadow: 0 12px 30px rgba(168,85,247,0.1);
         }
         .lesson-card.locked { opacity:0.25; pointer-events:none; }
-        .lesson-card.done   { border-color:rgba(45,212,191,0.25); background: rgba(15, 15, 18, 0.4) !important; }
+        .lesson-card.done   { border-color:rgba(45,212,191,0.2); background: rgba(10, 10, 12, 0.5) !important; }
         
         @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
         .fade-in { animation:fadeIn 0.6s ease both; }
@@ -68,12 +68,12 @@
 </head>
 <body class="min-h-screen geo-bg">
 
-<div class="ambient-glow">
-    <div class="glow-1"></div>
-    <div class="glow-2"></div>
-</div>
+<video autoplay loop muted playsinline id="bg-video">
+    <source src="assets/video/bg-video.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
 
-<nav class="fixed top-0 w-full z-50 h-16 flex items-center justify-between px-6 bg-[#050505]/70 backdrop-blur-md border-b border-white/5">
+<nav class="fixed top-0 w-full z-50 h-16 flex items-center justify-between px-6 bg-[#050505]/75 backdrop-blur-md border-b border-white/5">
     <a href="index.html" class="flex items-center gap-2 text-zinc-500 hover:text-white font-bold text-xs uppercase tracking-widest transition-all">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
         กลับหน้าหลัก
@@ -94,7 +94,7 @@
         <h1 id="course-title" class="text-4xl md:text-5xl font-black italic tracking-tighter mb-4 leading-tight"></h1>
         <p id="course-desc" class="text-zinc-400 text-sm md:text-base max-w-2xl leading-relaxed"></p>
         
-        <div class="mt-8 bg-zinc-900/80 border border-white/5 p-4 rounded-2xl backdrop-blur-md flex flex-col gap-3">
+        <div class="mt-8 bg-zinc-950/60 border border-white/5 p-4 rounded-2xl backdrop-blur-md flex flex-col gap-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-[#2dd4bf] animate-pulse"></span>
@@ -177,7 +177,7 @@
             div.innerHTML = `
                 <div class="flex items-center gap-5 min-w-0">
                     <div class="w-11 h-11 rounded-xl flex items-center justify-center font-black text-xs flex-shrink-0"
-                         style="background:${isDone ? 'rgba(45,212,191,0.1)' : isUnlocked ? courseData.themeColor+'15' : 'rgba(255,255,255,0.03)'};
+                         style="background:${isDone ? 'rgba(45,212,191,0.15)' : isUnlocked ? courseData.themeColor+'15' : 'rgba(255,255,255,0.03)'};
                                 color:${isDone ? '#2dd4bf' : isUnlocked ? courseData.themeColor : '#444'}">
                         ${isDone ? '✓' : String(lesson.id).padStart(2,'0')}
                     </div>
