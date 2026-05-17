@@ -131,37 +131,58 @@ function updateUI() {
     const lesson = lessonObj.content[currentLang] || lessonObj.content['th'];
     if (!lesson) return;
 
-    // หยอดหัวข้อและรายละเอียดเนื้อหา
-    document.getElementById('lessonTitle').innerText  = lesson.title;
-    document.getElementById('lessonDesc').innerText   = lesson.desc;
-    document.getElementById('questionText').innerText = lesson.quiz.q;
-
-    // หยอดกล่องโค้ดจำลอง Terminal
+    // ─── 1. แสดงผลเนื้อหาบทเรียน (บังคับเอา hidden ออกเพื่อให้แสดงชัวร์ๆ) ───
+    const titleEl = document.getElementById('lessonTitle');
+    const descEl = document.getElementById('lessonDesc');
     const codeBox = document.getElementById('codeBlock');
-    if (lesson.code) {
-        codeBox.textContent = lesson.code;
-        codeBox.classList.remove('hidden');
-    } else {
-        codeBox.classList.add('hidden');
+
+    if (titleEl) {
+        titleEl.innerText = lesson.title;
+        titleEl.classList.remove('hidden'); // ป้องกันกรณีเผลอโดนซ่อน
+    }
+    if (descEl) {
+        descEl.innerText = lesson.desc;
+        descEl.classList.remove('hidden'); // ป้องกันกรณีเผลอโดนซ่อน
     }
 
-    // เจนเนอเรตปุ่มชอยส์คำตอบเก็บไว้ข้างในกล่องควิซ
-    const container = document.getElementById('optionsContainer');
-    container.innerHTML = lesson.quiz.options.map((opt, i) => `
-        <button onclick="checkAns(${i}, ${lesson.quiz.ans}, this)"
-                class="option-btn">
-            <span class="text-[#a855f7] font-black mr-3">${String.fromCharCode(65+i)}.</span>${opt}
-        </button>`).join('');
+    // จัดการกล่องโค้ดจำลอง Terminal
+    if (codeBox) {
+        if (lesson.code) {
+            codeBox.textContent = lesson.code;
+            codeBox.classList.remove('hidden');
+        } else {
+            codeBox.classList.add('hidden');
+        }
+    }
 
-    document.getElementById('quizFeedback').innerText = '';
+    // ─── 2. เจนเนอเรตควิซและตัวเลือกคำตอบ ───
+    const questionTextEl = document.getElementById('questionText');
+    if (questionTextEl) questionTextEl.innerText = lesson.quiz.q;
+
+    const container = document.getElementById('optionsContainer');
+    if (container) {
+        container.innerHTML = lesson.quiz.options.map((opt, i) => `
+            <button onclick="checkAns(${i}, ${lesson.quiz.ans}, this)"
+                    class="option-btn">
+                <span class="text-[#a855f7] font-black mr-3">${String.fromCharCode(65+i)}.</span>${opt}
+            </button>`).join('');
+    }
+
+    const feedbackEl = document.getElementById('quizFeedback');
+    if (feedbackEl) feedbackEl.innerText = '';
     
-    // 🔥 สั่งเซ็ตระบบ "โหมดเนื้อหามาก่อน": แสดงปุ่มเริ่มทำควิซ และซ่อนการแจ้งเตือน/ส่วนควิซไว้ก่อน
+    // ─── 3. เคลียร์สถานะปุ่มและกล่องต่างๆ สำหรับ "โหมดเริ่มเรียนใหม่" ───
     const startQuizBtn = document.getElementById('startQuizBtn');
     const quizSection = document.getElementById('quizSection');
     const nextBtn = document.getElementById('nextLessonBtn');
     
+    // แสดงปุ่มเริ่มทำควิซเสมอเวลาเปลี่ยนบทใหม่
     if (startQuizBtn) startQuizBtn.classList.remove('hidden');
+    
+    // ซ่อนส่วนควิซไว้ก่อนจนกว่าจะกดปุ่มม่วง
     if (quizSection) quizSection.classList.add('hidden');
+    
+    // ซ่อนปุ่ม "ไปบทถัดไป" ไว้ก่อน (จนกว่าจะตอบถูก)
     if (nextBtn) {
         nextBtn.classList.add('hidden');
         nextBtn.classList.remove('animate-bounce');
@@ -170,6 +191,22 @@ function updateUI() {
     renderSidebar();
     updateProgress();
     updateXPBar();
+}
+
+// ─── 4. ฟังก์ชันเปิดโหมดควิซเมื่อผู้เรียนกดปุ่มม่วง ───
+function switchToQuizMode() {
+    const startQuizBtn = document.getElementById('startQuizBtn');
+    const quizSection = document.getElementById('quizSection');
+    
+    // ซ่อนปุ่มเริ่มทำควิซตัวเองไป
+    if (startQuizBtn) startQuizBtn.classList.add('hidden');
+    
+    // เปิดส่วนควิซคำถามขึ้นมาแสดง
+    if (quizSection) {
+        quizSection.classList.remove('hidden');
+        // สกรอลล์หน้าจอลงมาหาควิซอย่างนุ่มนวลให้ผู้เรียนเห็นทันที
+        quizSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 }
 
 function checkAns(selected, correct, btn) {

@@ -149,7 +149,7 @@
 
             <div id="codeBlock" class="code-block mb-8 hidden fade-up"></div>
 
-            <button id="startQuizBtn" onclick="switchToQuizMode()" class="w-full mb-8 py-4 bg-gradient-to-r from-[#a855f7] to-[#6366f1] text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg shadow-purple-500/20 transition-all hover:scale-[1.01] active:scale-95 fade-up">
+            <button id="startQuizBtn" onclick="switchToQuizMode()" class="w-full mb-8 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-base uppercase tracking-wider rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.3)] transition-all transform hover:scale-[1.01] active:scale-[0.98]">
                 เข้าใจเนื้อหาแล้ว ไปทำควิซกัน! 🚀
             </button>
 
@@ -221,14 +221,10 @@
 
     document.head.appendChild(ds);
 
-    // 🔥 ฟังก์ชันสลับโหมดเปิดควิซ (สำหรับผูกเข้ากับระบบหลังอ่านจบ)
     function switchToQuizMode() {
-        // ซ่อนปุ่มเริ่มทำควิซ
         document.getElementById('startQuizBtn').classList.add('hidden');
-        // เปิดกล่องควิซคำถามขึ้นมา
         const quizSec = document.getElementById('quizSection');
         quizSec.classList.remove('hidden');
-        // สกรอลล์หน้าจอลงมาที่จุดเริ่มควิซให้เห็นชัดๆ แบบนุ่มนวล
         quizSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 </script>
