@@ -29,7 +29,6 @@ function updateXPBar() {
     const lvl = document.getElementById('levelBadge');
     if (bar) bar.style.width = getLevelPct() + '%';
     if (txt) txt.innerText   = `${getLevelXP()} / ${XP_PER_LEVEL} XP`;
-    // 🔥 FIXED: เติม () เพื่อเรียกใช้งานฟังก์ชันเอาผลลัพธ์ตัวเลขมาแสดงผลแทนที่จะเป็นตัวฟังก์ชัน
     if (lvl) lvl.innerText   = `LV ${getLevel()}`;
 }
 
@@ -120,33 +119,30 @@ function showAchievementToast(a) {
     setTimeout(() => el.remove(), 4000);
 }
 
-// ─── UI CONTROLLER (อัปเกรดให้ดึงข้อมูลจากดิกชันนารีใหม่แบบสมบูรณ์) ───
+// ─── UI CONTROLLER ───
 function updateUI() {
     if (typeof courseData === 'undefined' || !courseData.lessons) return;
     
-    // ค้นหาบทเรียนปัจจุบันจากคลังข้อมูลโครงสร้างใหม่
     const lessonObj = courseData.lessons.find(l => l.id === currentLessonId);
     if (!lessonObj) return;
 
-    // เลือกใช้เนื้อหาตามภาษาที่เลือกค้างไว้
     const lesson = lessonObj.content[currentLang] || lessonObj.content['th'];
     if (!lesson) return;
 
-    // ─── 1. แสดงผลเนื้อหาบทเรียน (บังคับเอา hidden ออกเพื่อให้แสดงชัวร์ๆ) ───
+    // ─── 1. แสดงผลเนื้อหาบทเรียน ───
     const titleEl = document.getElementById('lessonTitle');
     const descEl = document.getElementById('lessonDesc');
     const codeBox = document.getElementById('codeBlock');
 
     if (titleEl) {
         titleEl.innerText = lesson.title;
-        titleEl.classList.remove('hidden'); // ป้องกันกรณีเผลอโดนซ่อน
+        titleEl.classList.remove('hidden');
     }
     if (descEl) {
         descEl.innerText = lesson.desc;
-        descEl.classList.remove('hidden'); // ป้องกันกรณีเผลอโดนซ่อน
+        descEl.classList.remove('hidden');
     }
 
-    // จัดการกล่องโค้ดจำลอง Terminal
     if (codeBox) {
         if (lesson.code) {
             codeBox.textContent = lesson.code;
@@ -172,18 +168,14 @@ function updateUI() {
     const feedbackEl = document.getElementById('quizFeedback');
     if (feedbackEl) feedbackEl.innerText = '';
     
-    // ─── 3. เคลียร์สถานะปุ่มและกล่องต่างๆ สำหรับ "โหมดเริ่มเรียนใหม่" ───
+    // ─── 3. เคลียร์สถานะปุ่มสำหรับ "โหมดเริ่มเรียนใหม่" ───
     const startQuizBtn = document.getElementById('startQuizBtn');
     const quizSection = document.getElementById('quizSection');
     const nextBtn = document.getElementById('nextLessonBtn');
     
-    // แสดงปุ่มเริ่มทำควิซเสมอเวลาเปลี่ยนบทใหม่
     if (startQuizBtn) startQuizBtn.classList.remove('hidden');
-    
-    // ซ่อนส่วนควิซไว้ก่อนจนกว่าจะกดปุ่มม่วง
     if (quizSection) quizSection.classList.add('hidden');
     
-    // ซ่อนปุ่ม "ไปบทถัดไป" ไว้ก่อน (จนกว่าจะตอบถูก)
     if (nextBtn) {
         nextBtn.classList.add('hidden');
         nextBtn.classList.remove('animate-bounce');
@@ -199,13 +191,10 @@ function switchToQuizMode() {
     const startQuizBtn = document.getElementById('startQuizBtn');
     const quizSection = document.getElementById('quizSection');
     
-    // ซ่อนปุ่มเริ่มทำควิซตัวเองไป
     if (startQuizBtn) startQuizBtn.classList.add('hidden');
     
-    // เปิดส่วนควิซคำถามขึ้นมาแสดง
     if (quizSection) {
         quizSection.classList.remove('hidden');
-        // สกรอลล์หน้าจอลงมาหาควิซอย่างนุ่มนวลให้ผู้เรียนเห็นทันที
         quizSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
@@ -225,7 +214,6 @@ function checkAns(selected, correct, btn) {
         checkStreak();
         checkAchievements();
 
-        // เด้งปุ่มไปต่อแบบอนิเมชันเด้งดึ๋งนุ่มนวล
         setTimeout(() => {
             const nextBtn = document.getElementById('nextLessonBtn');
             if (nextBtn) {
@@ -326,12 +314,12 @@ function prevLesson() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
-function flex-1() {} // Placeholder ป้องกัน error ถ้าเกิดมีเรียกใช้งานในส่วนย่อย
 function setLesson(id) {
     currentLessonId = id;
     updateUI();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function changeLanguage() {
     currentLang = document.getElementById('langSelect').value;
     updateUI();
