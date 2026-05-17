@@ -1,181 +1,40 @@
-// assets/js/python_data.js
-
 const courseData = {
-    title: "Python Programming",
+    title: "Python Automation",
+    themeColor: "#2dd4bf",
     lessons: [
         {
             id: 1,
             content: {
-                th: {
-                    title: "🐍 1. รู้จักกับภาษา Python",
-                    desc: "Python เป็นภาษาโปรแกรมมิ่งระดับสูงที่อ่านง่าย ไวยากรณ์ไม่ซับซ้อน เหมาะสำหรับผู้เริ่มต้น โค้ดด้านล่างนี้คือคำสั่งในการสั่งให้ระบบแสดงข้อความออกทางหน้าจอ",
-                    code: "print('Hello, Zenith!')",
-                    quiz: {
-                        q: "คำสั่งใดใช้สำหรับแสดงผลข้อความออกทางหน้าจอในภาษา Python?",
-                        options: [
-                            "echo 'Hello'",
-                            "print('Hello')",
-                            "console.log('Hello')",
-                            "printf('Hello')"
-                        ],
-                        ans: 1 // ข้อ B (เริ่มนับชอยส์แรกจาก index 0, 1, 2, 3)
-                    }
-                },
-                en: {
-                    title: "🐍 1. Introduction to Python",
-                    desc: "Python is a high-level programming language known for its readability and simple syntax. The code below shows how to display a message on the screen.",
-                    code: "print('Hello, Zenith!')",
-                    quiz: {
-                        q: "Which function is used to output text to the screen in Python?",
-                        options: [
-                            "echo 'Hello'",
-                            "print('Hello')",
-                            "console.log('Hello')",
-                            "printf('Hello')"
-                        ],
-                        ans: 1
-                    }
-                }
+                th: { title: "🐍 1. รู้จักกับภาษา Python", desc: "ภาษาโปรแกรมมิ่งที่อ่านง่าย ไวยากรณ์ไม่ซับซ้อน เหมาะสำหรับใช้สั่งงานระบบอัตโนมัติ", code: "print('Hello, Automation!')", quiz: { q: "คำสั่งใดใช้แสดงผลข้อความใน Python?", options: ["echo()", "print()", "console.log()", "printf()"], ans: 1 } },
+                en: { title: "🐍 1. Intro to Python", desc: "A readable and simple programming language, perfect for automation tasks.", code: "print('Hello, Automation!')", quiz: { q: "Which function outputs text in Python?", options: ["echo()", "print()", "console.log()", "printf()"], ans: 1 } }
             }
         },
         {
             id: 2,
             content: {
-                th: {
-                    title: "📦 2. การสร้างตัวแปร (Variables)",
-                    desc: "ตัวแปรเปรียบเสมือนกล่องที่ใช้เก็บข้อมูล ใน Python คุณสามารถสร้างตัวแปรขึ้นมาและกำหนดค่าให้มันได้ทันทีโดยไม่ต้องระบุชนิดข้อมูลล่วงหน้า",
-                    code: "x = 5\nname = 'Zenith'\nprint(name)",
-                    quiz: {
-                        q: "จากโค้ดข้างต้น ตัวแปรชื่อ name เก็บข้อมูลประเภทใด?",
-                        options: [
-                            "จำนวนเต็ม (Integer)",
-                            "ทศนิยม (Float)",
-                            "ข้อความ (String)",
-                            "ตรรกศาสตร์ (Boolean)"
-                        ],
-                        ans: 2 // ข้อ C
-                    }
-                },
-                en: {
-                    title: "📦 2. Python Variables",
-                    desc: "Variables are containers for storing data values. In Python, a variable is created the moment you first assign a value to it.",
-                    code: "x = 5\nname = 'Zenith'\nprint(name)",
-                    quiz: {
-                        q: "Based on the code above, what data type is stored in the variable 'name'?",
-                        options: [
-                            "Integer",
-                            "Float",
-                            "String",
-                            "Boolean"
-                        ],
-                        ans: 2
-                    }
-                }
+                th: { title: "📦 2. การใช้งานตัวแปร", desc: "การประกาศตัวแปรเพื่อเก็บข้อมูลประเภทต่างๆ โดยไม่จำเป็นต้องระบุชนิดข้อมูลล่วงหน้า", code: "task_name = 'Backup'\nprint(task_name)", quiz: { q: "ตัวแปร task_name เก็บข้อมูลประเภทใด?", options: ["Integer", "Float", "String", "Boolean"], ans: 2 } },
+                en: { title: "📦 2. Python Variables", desc: "Declaring variables to store data without needing to specify types upfront.", code: "task_name = 'Backup'\nprint(task_name)", quiz: { q: "What data type is stored in 'task_name'?", options: ["Integer", "Float", "String", "Boolean"], ans: 2 } }
             }
         },
         {
             id: 3,
             content: {
-                th: {
-                    title: "📊 3. ชนิดข้อมูลพื้นฐาน (Data Types)",
-                    desc: "ใน Python มีชนิดข้อมูลหลักๆ เช่น int (เลขจำนวนเต็ม), float (เลขทศนิยม) และ str (ข้อความที่ครอบด้วยเครื่องหมายคำพูด) เราสามารถตรวจสอบชนิดข้อมูลได้ด้วยคำสั่ง type()",
-                    code: "age = 18\ngpa = 3.85\nprint(type(gpa))",
-                    quiz: {
-                        q: "จากโค้ดข้างต้น คำสั่ง print(type(gpa)) จะแสดงผลลัพธ์ตรงกับข้อใด?",
-                        options: [
-                            "<class 'int'>",
-                            "<class 'str'>",
-                            "<class 'float'>",
-                            "<class 'boolean'>"
-                        ],
-                        ans: 2
-                    }
-                },
-                en: {
-                    title: "📊 3. Basic Data Types",
-                    desc: "Python has several built-in data types including int (integers), float (floating-point numbers), and str (strings wrapped in quotes). You can check a variable's type using the type() function.",
-                    code: "age = 18\ngpa = 3.85\nprint(type(gpa))",
-                    quiz: {
-                        q: "Based on the code above, what will print(type(gpa)) output?",
-                        options: [
-                            "<class 'int'>",
-                            "<class 'str'>",
-                            "<class 'float'>",
-                            "<class 'boolean'>"
-                        ],
-                        ans: 2
-                    }
-                }
+                th: { title: "📊 3. ชนิดข้อมูลพื้นฐาน", desc: "เรียนรู้ความแตกต่างระหว่างข้อมูลแบบตัวเลขจำนวนเต็ม ทศนิยม และข้อความ", code: "count = 10\nrate = 0.5\nprint(type(rate))", quiz: { q: "คำสั่ง print(type(rate)) จะแสดงคลาสอะไร?", options: ["int", "str", "float", "bool"], ans: 2 } },
+                en: { title: "📊 3. Basic Data Types", desc: "Learn the difference between integer, floating-point numbers, and strings.", code: "count = 10\nrate = 0.5\nprint(type(rate))", quiz: { q: "What will print(type(rate)) output?", options: ["int", "str", "float", "bool"], ans: 2 } }
             }
         },
         {
             id: 4,
             content: {
-                th: {
-                    title: "🛠️ 4. การตรวจสอบเงื่อนไข (If-Else)",
-                    desc: "คำสั่ง if-elif-else ใช้สำหรับควบคุมทิศทางของโปรแกรมตามเงื่อนไขที่กำหนด สิ่งสำคัญของ Python คือ 'การย่อหน้า (Indentation)' เพื่อบอกขอบเขตของโค้ดในเงื่อนไขนั้นๆ",
-                    code: "score = 75\nif score >= 50:\n    print('Pass')\nelse:\n    print('Fail')",
-                    quiz: {
-                        q: "จากโค้ดด้านบน หากเปลี่ยนค่าตัวแปร score เป็น 45 ข้อความใดจะถูกแสดงบนหน้าจอ?",
-                        options: [
-                            "Pass",
-                            "Fail",
-                            "ไม่แสดงข้อความใดๆ เลย",
-                            "เกิดข้อผิดพลาด (Error)"
-                        ],
-                        ans: 1
-                    }
-                },
-                en: {
-                    title: "🛠️ 4. Conditional Statements (If-Else)",
-                    desc: "The if-elif-else statements are used to control the program flow based on conditions. Python relies on 'Indentation' (whitespace at the beginning of a line) to define the scope of the code block.",
-                    code: "score = 75\nif score >= 50:\n    print('Pass')\nelse:\n    print('Fail')",
-                    quiz: {
-                        q: "Based on the code above, if we change the score variable to 45, what will be displayed on the screen?",
-                        options: [
-                            "Pass",
-                            "Fail",
-                            "Nothing will be displayed",
-                            "An error will occur"
-                        ],
-                        ans: 1
-                    }
-                }
+                th: { title: "🛠️ 4. เงื่อนไขควบคุม If-Else", desc: "ใช้ตรวจสอบเงื่อนไขในการทำงาน โดยให้ความสำคัญกับการย่อหน้าโค้ด (Indentation)", code: "status = 200\nif status == 200:\n    print('Success')\nelse:\n    print('Error')", quiz: { q: "ถ้าเปลี่ยน status เป็น 404 ระบบจะพิมพ์อะไร?", options: ["Success", "Error", "ไม่พิมพ์อะไรเลย", "Error โค้ดพัง"], ans: 1 } },
+                en: { title: "🛠️ 4. If-Else Conditions", desc: "Using conditional logic to guide the execution flow based on rules.", code: "status = 200\nif status == 200:\n    print('Success')\nelse:\n    print('Error')", quiz: { q: "If status is changed to 404, what will be printed?", options: ["Success", "Error", "Nothing", "Syntax Error"], ans: 1 } }
             }
         },
         {
             id: 5,
             content: {
-                th: {
-                    title: "🔄 5. การวนซ้ำด้วย For Loop",
-                    desc: "ฟังก์ชัน for loop ใช้สำหรับสั่งให้โปรแกรมทำงานซ้ำๆ ตามจำนวนรอบที่ระบุ โดยมักจะใช้ร่วมกับฟังก์ชัน range() เพื่อกำหนดช่วงของตัวเลขรันจากเริ่มต้นไปจนถึงก่อนค่าสุดท้าย",
-                    code: "for i in range(3):\n    print('Zenith')",
-                    quiz: {
-                        q: "จากโค้ดข้างต้น ข้อความคำว่า 'Zenith' จะถูกพิมพ์ออกมาทั้งหมดกี่ครั้ง?",
-                        options: [
-                            "2 ครั้ง",
-                            "3 ครั้ง",
-                            "4 ครั้ง",
-                            "วนซ้ำไม่สิ้นสุด (Infinite Loop)"
-                        ],
-                        ans: 1
-                    }
-                },
-                en: {
-                    title: "🔄 5. For Loops",
-                    desc: "A for loop is used for iterating over a sequence. It is commonly paired with the range() function to execute a block of code a specific number of times.",
-                    code: "for i in range(3):\n    print('Zenith')",
-                    quiz: {
-                        q: "Based on the code above, how many times will the word 'Zenith' be printed?",
-                        options: [
-                            "2 times",
-                            "3 times",
-                            "4 times",
-                            "Infinite times"
-                        ],
-                        ans: 1
-                    }
-                }
+                th: { title: "🔄 5. การวนซ้ำด้วย For Loop", desc: "สั่งให้โปรแกรมทำงานซ้ำเป็นจำนวนรอบที่แน่นอน นิยมใช้คู่กับฟังก์ชัน range()", code: "for i in range(3):\n    print('Run')", quiz: { q: "ข้อความคำว่า 'Run' จะถูกพิมพ์ออกมาทั้งหมดกี่รอบ?", options: ["2 รอบ", "3 รอบ", "4 รอบ", "วนซ้ำไม่รู้จบ"], ans: 1 } },
+                en: { title: "🔄 5. Loop Automation", desc: "Automate repetitive tasks for a fixed number of times using For Loops.", code: "for i in range(3):\n    print('Run')", quiz: { q: "How many times will 'Run' be printed?", options: ["2 times", "3 times", "4 times", "Infinite"], ans: 1 } }
             }
         }
     ]
