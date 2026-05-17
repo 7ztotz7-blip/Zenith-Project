@@ -10,22 +10,22 @@
     <style>
         body { font-family:'Kanit',sans-serif; background:#050505; color:#fff; overflow-x: hidden; }
         
-        /* --- ระบบวิดีโอพื้นหลังดึงมาจากหน้าแรก --- */
+        /* --- เพิ่มความชัดของวิดีโอพื้นหลัง --- */
         #bg-video {
             position: fixed; right: 0; bottom: 0;
             min-width: 100%; min-height: 100%;
             z-index: -2; object-fit: cover; 
-            opacity: 0.15; /* ดรอปความเข้มลงมาที่ 15% เพื่อให้เห็นตารางและไม่แย่งซีนตัวหนังสือ */
-            filter: saturate(1.2) brightness(0.6);
+            opacity: 0.45; /* 🔥 ปรับเพิ่มขึ้นมาเป็น 45% เพื่อให้วิดีโอชัดเจนขึ้นเต็มตา */
+            filter: saturate(1.1) brightness(0.7);
         }
-        @media (max-width: 768px) { #bg-video { opacity: 0.08; } } /* บนมือถือดรอปแสงลงอีกเพื่อความสบายตา */
+        @media (max-width: 768px) { #bg-video { opacity: 0.25; } } /* บนมือถือปรับเป็น 25% */
 
+        /* ปรับวงเงาดำให้ถอยออกไปที่ขอบจอมากขึ้น วิดีโอตรงกลางจะได้สว่างชัดขึ้น */
         .video-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 30%, #050505 110%);
+            background: radial-gradient(circle, transparent 45%, #050505 130%);
             z-index: -1; pointer-events: none;
         }
-
         /* ผสานลายเส้นตาราง Grid เข้ากับเงาวิดีโอ ช่วยให้พื้นหลังดูแน่นมีมิติมาก */
         .geo-bg {
             background-image:
