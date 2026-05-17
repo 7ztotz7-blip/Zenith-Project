@@ -1,5 +1,5 @@
 // ============================================================
-//  ZENITH — main.js (Fixed)
+//  ZENITH — main.js (Fixed for Content-First Mode)
 //  courseType ถูกกำหนดจาก lesson.html ผ่าน window.courseType
 //  ห้ามนิยาม courseType ซ้ำในไฟล์นี้
 // ============================================================
@@ -29,7 +29,7 @@ function updateXPBar() {
     const lvl = document.getElementById('levelBadge');
     if (bar) bar.style.width = getLevelPct() + '%';
     if (txt) txt.innerText   = `${getLevelXP()} / ${XP_PER_LEVEL} XP`;
-    if (lvl) lvl.innerText   = `LV ${getLevel()}`;
+    if (lvl) lvl.innerText   = `LV ${getLevel}`;
 }
 
 function showLevelUp(level) {
@@ -57,7 +57,6 @@ function getStreak() { return parseInt(localStorage.getItem('zenith_streak') || 
 
 // ─── UNLOCK — ใช้ window.courseType จาก lesson.html ─────────
 function getCourseType() {
-    // ใช้ window.courseType ที่ lesson.html กำหนดไว้ก่อน
     return window.courseType || 'python';
 }
 
@@ -120,20 +119,24 @@ function showAchievementToast(a) {
     setTimeout(() => el.remove(), 4000);
 }
 
-// ─── UI ───────────────────────────────────────────────────────
+// ─── UI CONTROLLER (อัปเกรดให้ดึงข้อมูลจากดิกชันนารีใหม่แบบสมบูรณ์) ───
 function updateUI() {
-    if (typeof lessonData === 'undefined') return;
-    const lessonObj = lessonData.find(l => l.id === currentLessonId);
+    if (typeof courseData === 'undefined' || !courseData.lessons) return;
+    
+    // ค้นหาบทเรียนปัจจุบันจากคลังข้อมูลโครงสร้างใหม่
+    const lessonObj = courseData.lessons.find(l => l.id === currentLessonId);
     if (!lessonObj) return;
 
-    // รองรับทั้งภาษาที่มีและ fallback เป็น 'th'
+    // เลือกใช้เนื้อหาตามภาษาที่เลือกค้างไว้
     const lesson = lessonObj.content[currentLang] || lessonObj.content['th'];
     if (!lesson) return;
 
+    // หยอดหัวข้อและรายละเอียดเนื้อหา
     document.getElementById('lessonTitle').innerText  = lesson.title;
     document.getElementById('lessonDesc').innerText   = lesson.desc;
     document.getElementById('questionText').innerText = lesson.quiz.q;
 
+    // หยอดกล่องโค้ดจำลอง Terminal
     const codeBox = document.getElementById('codeBlock');
     if (lesson.code) {
         codeBox.textContent = lesson.code;
@@ -142,14 +145,28 @@ function updateUI() {
         codeBox.classList.add('hidden');
     }
 
+    // เจนเนอเรตปุ่มชอยส์คำตอบเก็บไว้ข้างในกล่องควิซ
     const container = document.getElementById('optionsContainer');
     container.innerHTML = lesson.quiz.options.map((opt, i) => `
         <button onclick="checkAns(${i}, ${lesson.quiz.ans}, this)"
-                class="option-btn p-5 bg-zinc-950 border border-zinc-800 rounded-2xl text-left font-bold text-gray-300 hover:text-white transition-all">
+                class="option-btn">
             <span class="text-[#a855f7] font-black mr-3">${String.fromCharCode(65+i)}.</span>${opt}
         </button>`).join('');
 
     document.getElementById('quizFeedback').innerText = '';
+    
+    // 🔥 สั่งเซ็ตระบบ "โหมดเนื้อหามาก่อน": แสดงปุ่มเริ่มทำควิซ และซ่อนการแจ้งเตือน/ส่วนควิซไว้ก่อน
+    const startQuizBtn = document.getElementById('startQuizBtn');
+    const quizSection = document.getElementById('quizSection');
+    const nextBtn = document.getElementById('nextLessonBtn');
+    
+    if (startQuizBtn) startQuizBtn.classList.remove('hidden');
+    if (quizSection) quizSection.classList.add('hidden');
+    if (nextBtn) {
+        nextBtn.classList.add('hidden');
+        nextBtn.classList.remove('animate-bounce');
+    }
+
     renderSidebar();
     updateProgress();
     updateXPBar();
@@ -170,31 +187,27 @@ function checkAns(selected, correct, btn) {
         checkStreak();
         checkAchievements();
 
-        // แสดงปุ่ม "บทถัดไป" อัตโนมัติหลังตอบถูก
+        // เด้งปุ่มไปต่อแบบอนิเมชันเด้งดึ๋งนุ่มนวล
         setTimeout(() => {
             const nextBtn = document.getElementById('nextLessonBtn');
             if (nextBtn) {
                 nextBtn.classList.remove('hidden');
                 nextBtn.classList.add('animate-bounce');
             }
-        }, 800);
+        }, 600);
 
     } else {
-        btn.style.backgroundColor = '#ef4444';
-        btn.style.color = 'white';
         btn.classList.add('wrong-shake');
         feedback.innerText = currentLang === 'th' ? '❌ ลองใหม่อีกครั้งนะ' : '❌ TRY AGAIN';
         setTimeout(() => {
             btn.classList.remove('wrong-shake');
-            btn.style.backgroundColor = '';
-            btn.style.color = '';
         }, 600);
     }
 }
 
 function updateProgress() {
-    if (typeof lessonData === 'undefined') return;
-    const total    = lessonData.length;
+    if (typeof courseData === 'undefined' || !courseData.lessons) return;
+    const total    = courseData.lessons.length;
     const unlocked = getUnlockedLesson();
     const pct      = Math.min(((unlocked - 1) / total) * 100, 100);
     const bar      = document.getElementById('sidebarProgress');
@@ -202,12 +215,12 @@ function updateProgress() {
 }
 
 function renderSidebar() {
-    if (typeof lessonData === 'undefined') return;
+    if (typeof courseData === 'undefined' || !courseData.lessons) return;
     const list     = document.getElementById('lessonList');
     if (!list) return;
     const unlocked = getUnlockedLesson();
 
-    list.innerHTML = lessonData.map(lesson => {
+    list.innerHTML = courseData.lessons.map(lesson => {
         const isActive   = lesson.id === currentLessonId;
         const isUnlocked = lesson.id <= unlocked;
         const isDone     = lesson.id < unlocked;
@@ -234,7 +247,7 @@ function showCompletionScene() {
     checkAchievements();
 
     const title = typeof courseData !== 'undefined' ? courseData.title : 'คอร์สนี้';
-    const total = typeof lessonData !== 'undefined' ? lessonData.length : '-';
+    const total = typeof courseData !== 'undefined' && courseData.lessons ? courseData.lessons.length : '-';
 
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.95);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:24px';
@@ -259,14 +272,11 @@ function showCompletionScene() {
 
 // ─── NAVIGATION ───────────────────────────────────────────────
 function nextLesson() {
-    if (typeof lessonData === 'undefined') return;
-    if (currentLessonId < lessonData.length) {
+    if (typeof courseData === 'undefined' || !courseData.lessons) return;
+    if (currentLessonId < courseData.lessons.length) {
         currentLessonId++;
         updateUI();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        // ซ่อนปุ่ม next อัตโนมัติ
-        const nextBtn = document.getElementById('nextLessonBtn');
-        if (nextBtn) nextBtn.classList.add('hidden');
     } else {
         showCompletionScene();
     }
@@ -276,16 +286,12 @@ function prevLesson() {
         currentLessonId--;
         updateUI();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        const nextBtn = document.getElementById('nextLessonBtn');
-        if (nextBtn) nextBtn.classList.add('hidden');
     }
 }
 function setLesson(id) {
     currentLessonId = id;
     updateUI();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    const nextBtn = document.getElementById('nextLessonBtn');
-    if (nextBtn) nextBtn.classList.add('hidden');
 }
 function changeLanguage() {
     currentLang = document.getElementById('langSelect').value;

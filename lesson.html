@@ -90,7 +90,7 @@
         .xp-bar-bg  { background: rgba(168,85,247,.1); border-radius: 99px; height: 6px; overflow: hidden; }
         .xp-bar-fill{ background: linear-gradient(90deg,#a855f7,#2dd4bf); height: 100%; border-radius: 99px; transition: width .7s ease; }
 
-        #nextLessonBtn { animation: pulse 1.5s ease-in-out infinite; }
+        #nextLessonBtn, #startQuizBtn { animation: pulse 1.5s ease-in-out infinite; }
 
         ::-webkit-scrollbar { width: 4px; } 
         ::-webkit-scrollbar-track { background: transparent; }
@@ -111,7 +111,8 @@
     </a>
     <h1 class="text-base font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
     <select id="langSelect" onchange="changeLanguage()" class="bg-zinc-950/60 border border-white/10 text-zinc-400 text-[11px] px-2.5 py-1.5 rounded-xl font-bold focus:outline-none focus:border-purple-500 appearance-none cursor-pointer hover:text-white transition-all">
-       
+        <option value="th">🇹🇭 TH</option>
+        <option value="en">🇺🇸 EN</option>
     </select>
 </nav>
 
@@ -148,7 +149,11 @@
 
             <div id="codeBlock" class="code-block mb-8 hidden fade-up"></div>
 
-            <div class="fade-up" style="animation-delay:.1s">
+            <button id="startQuizBtn" onclick="switchToQuizMode()" class="w-full mb-8 py-4 bg-gradient-to-r from-[#a855f7] to-[#6366f1] text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg shadow-purple-500/20 transition-all hover:scale-[1.01] active:scale-95 fade-up">
+                เข้าใจเนื้อหาแล้ว ไปทำควิซกัน! 🚀
+            </button>
+
+            <div id="quizSection" class="fade-up hidden" style="animation-delay:.1s">
                 <div class="flex items-center gap-3 mb-5">
                     <div class="w-8 h-8 bg-[#a855f7]/10 border border-[#a855f7]/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <span class="text-[#a855f7] text-sm font-black">?</span>
@@ -215,6 +220,17 @@
     };
 
     document.head.appendChild(ds);
+
+    // 🔥 ฟังก์ชันสลับโหมดเปิดควิซ (สำหรับผูกเข้ากับระบบหลังอ่านจบ)
+    function switchToQuizMode() {
+        // ซ่อนปุ่มเริ่มทำควิซ
+        document.getElementById('startQuizBtn').classList.add('hidden');
+        // เปิดกล่องควิซคำถามขึ้นมา
+        const quizSec = document.getElementById('quizSection');
+        quizSec.classList.remove('hidden');
+        // สกรอลล์หน้าจอลงมาที่จุดเริ่มควิซให้เห็นชัดๆ แบบนุ่มนวล
+        quizSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 </script>
 </body>
 </html>
