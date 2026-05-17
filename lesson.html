@@ -70,21 +70,24 @@
         .correct-glow { box-shadow: 0 0 20px rgba(45,212,191,0.25)!important; border-color: #2dd4bf!important; background: rgba(45,212,191,0.08) !important; color: #2dd4bf !important; }
 
         /* --- กล่อง Terminal จำลอง --- */
-        .code-block {
+        .code-container {
             background: rgba(9, 9, 11, 0.8); border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 20px; padding: 46px 24px 20px 24px;
-            font-family: 'Fira Code','JetBrains Mono','Courier New',monospace;
-            font-size: 13.5px; line-height: 1.8; position: relative;
-            white-space: pre-wrap; word-break: break-word;
+            position: relative;
             backdrop-filter: blur(16px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            color: #e4e4e7;
         }
-        .code-block::before {
+        .code-container::before {
             content: ''; position: absolute; top: 18px; left: 20px;
             width: 10px; height: 10px; border-radius: 50%;
             background: #ef4444; 
             box-shadow: 16px 0 0 #f59e0b, 32px 0 0 #10b981; 
+        }
+        .code-block-style {
+            font-family: 'Fira Code','JetBrains Mono','Courier New',monospace;
+            font-size: 13.5px; line-height: 1.8;
+            white-space: pre-wrap; word-break: break-word;
+            color: #e4e4e7; display: block;
         }
 
         .xp-bar-bg  { background: rgba(168,85,247,.1); border-radius: 99px; height: 6px; overflow: hidden; }
@@ -104,7 +107,7 @@
 </video>
 <div class="video-overlay"></div>
 
-<nav class="fixed top-0 w-full z-50 h-14 flex items-center justify-between px-6 bg-black/60 backdrop-blur-md border-b border-white/5">
+<nav class="fixed top-0 w-full z-50 h-14 flex items-center justify-between px-6 background-navbar bg-black/60 backdrop-blur-md border-b border-white/5">
     <a id="backBtn" href="course.html" class="flex items-center gap-2 text-zinc-500 hover:text-white font-bold text-xs uppercase tracking-widest transition-all">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
         กลับ
@@ -131,7 +134,8 @@
         <div class="p-5 border-b border-white/5">
             <p class="text-[9px] text-zinc-500 uppercase tracking-widest font-bold mb-1">คอร์สนี้</p>
             <h2 id="sidebarTitle" class="text-sm font-black text-white italic tracking-tight"></h2>
-            <div class="mt-3 bg-zinc-900 rounded-full h-1.5 overflow-hidden">
+            <p id="progressText" class="text-[10px] text-zinc-400 mt-1">1 / 12 บทเรียน</p>
+            <div class="mt-2 bg-zinc-900 rounded-full h-1.5 overflow-hidden">
                 <div id="sidebarProgress" class="h-1.5 rounded-full bg-[#a855f7] transition-all duration-700" style="width:0%"></div>
             </div>
         </div>
@@ -143,11 +147,13 @@
 
             <div class="mb-8 fade-up">
                 <p class="text-[9px] text-[#a855f7] uppercase tracking-widest font-black mb-1">บทเรียน</p>
-                <h1 id="lessonTitle" class="text-3xl font-bold text-white tracking-tight"></h1>
-                <p id="lessonDesc" class="text-zinc-400 text-sm mt-3 leading-relaxed font-medium"></p>
+                <h1 id="lessonTitle" class="text-3xl font-bold text-white tracking-tight">กำลังโหลดหัวข้อ...</h1>
+                <p id="lessonDesc" class="text-zinc-400 text-sm mt-3 leading-relaxed font-medium">กำลังโหลดเนื้อหา...</p>
             </div>
 
-            <div id="codeBlock" class="code-block mb-8 hidden fade-up"></div>
+            <div id="codeContainer" class="code-container mb-8 hidden fade-up">
+                <pre><code id="codeBlock" class="code-block-style"></code></pre>
+            </div>
 
             <button id="startQuizBtn" onclick="switchToQuizMode()" class="w-full mb-8 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-base uppercase tracking-wider rounded-2xl shadow-[0_0_30px_rgba(168,85,247,0.3)] transition-all transform hover:scale-[1.01] active:scale-[0.98]">
                 เข้าใจเนื้อหาแล้ว ไปทำควิซกัน! 🚀

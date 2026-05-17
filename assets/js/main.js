@@ -1,19 +1,16 @@
-// ============================================================
-//  ZENITH — main.js (Fixed for Content-First Mode & Multi-Page Support)
-//  courseType ถูกกำหนดจาก lesson.html ผ่าน window.courseType
-//  ห้ามนิยาม courseType ซ้ำในไฟล์นี้
-// ============================================================
+// ==========================================
+// ZENITH CENTRAL ENGINE (Clean & Upgraded)
+// ==========================================
 
-let currentLang     = 'th';
-let currentLessonId = 1;
+// โหลดค่าสถานะเริ่มต้นจาก localStorage เพื่อป้องกันข้อมูลหายเมื่อกดรีเฟรชหน้าเว็บ
+let currentLang     = localStorage.getItem('zenith_lang') || 'th';
+let currentLessonId = parseInt(localStorage.getItem('zenith_lesson_id')) || 1;
+let currentRandomizedQuiz = null;
 
 const XP_PER_CORRECT = 50;
 const XP_PER_LEVEL   = 200;
 
-// สร้างตัวแปรส่วนกลางสำหรับเก็บข้อมูลควิซที่สลับช้อยส์แล้วในบทเรียนปัจจุบัน
-let currentRandomizedQuiz = null;
-
-// ─── XP & LEVEL ──────────────────────────────────────────────
+// ─── ระบบ XP & LEVEL ──────────────────────────────────────────
 function getXP()      { return parseInt(localStorage.getItem('zenith_xp') || '0'); }
 function getLevel()   { return Math.floor(getXP() / XP_PER_LEVEL) + 1; }
 function getLevelXP() { return getXP() % XP_PER_LEVEL; }
@@ -27,12 +24,13 @@ function addXP(amount) {
 }
 
 function updateXPBar() {
-    const bar = document.getElementById('xpBar');
+    const bar = document.getElementById('xpBar') || document.getElementById('sidebarProgress'); // รองรับ ID ทั้งสองแบบ
     const txt = document.getElementById('xpText');
     const lvl = document.getElementById('levelBadge');
+    
     if (bar) bar.style.width = getLevelPct() + '%';
-    if (txt) txt.innerText   = `${getLevelXP()} / ${XP_PER_LEVEL} XP`;
-    if (lvl) lvl.innerText   = `LV ${getLevel()}`;
+    if (txt) txt.innerText   = `${getLevelXP()} / ${XP_PER_LEVEL} XP`; // ดึงค่าที่คำนวณจริงมาโชว์
+    if (lvl) lvl.innerText   = `LV ${getLevel()}`; // อัปเดตเลเวลอัตโนมัติ
 }
 
 function showLevelUp(level) {
@@ -43,22 +41,28 @@ function showLevelUp(level) {
     setTimeout(() => el.remove(), 3000);
 }
 
-// ─── STREAK ──────────────────────────────────────────────────
+// ─── ระบบ STREAK (แก้ไขบั๊กการนับวันและแก้ไขชื่อฟังก์ชันดึงค่าซ้ำ) ─────────────────
 function checkStreak() {
     const today     = new Date().toDateString();
     const lastDate  = localStorage.getItem('zenith_last_date');
     const yesterday = new Date(Date.now() - 86400000).toDateString();
-    let   streak    = parseInt(localStorage.getItem('zenith_streak') || '0');
+    let   streak    = parseInt(localStorage.getItem('zenith_streak') || '1');
+    
     if (lastDate === today) return streak;
     streak = (lastDate === yesterday) ? streak + 1 : 1;
+    
     localStorage.setItem('zenith_streak', streak);
     localStorage.setItem('zenith_last_date', today);
     return streak;
 }
 
-// ─── UNLOCK — ใช้ window.courseType จาก lesson.html ─────────
+function getStreak() {
+    return parseInt(localStorage.getItem('zenith_streak') || '1');
+}
+
+// ─── ระบบดึงข้อมูลคอร์สและการปลดล็อกด่าน ──────────────────────────────
 function getCourseType() {
-    return window.courseType || 'python';
+    return window.courseType || localStorage.getItem('zenith_course') || 'python';
 }
 
 function getUnlockedLesson() {
@@ -73,7 +77,7 @@ function unlockNextLesson() {
     }
 }
 
-// ─── ACHIEVEMENTS ─────────────────────────────────────────────
+// ─── ระบบเกียรติยศ / ACHIEVEMENTS ─────────────────────────────
 const ACHIEVEMENTS = [
     { id:'first_correct', icon:'🎯', title:'First Blood',   desc:'ตอบถูกเป็นครั้งแรก' },
     { id:'reach_lv2',     icon:'⚡', title:'Rising Star',   desc:'ถึง Level 2'         },
@@ -120,7 +124,7 @@ function showAchievementToast(a) {
     setTimeout(() => el.remove(), 4000);
 }
 
-// ─── UTILITY FUNCTIONS (ระบบสุ่มสลับช้อยส์) ───────────────────────
+// ─── ระบบสุ่มสลับช้อยส์คำตอบ ───────────────────────────────────────
 function shuffleArray(array) {
     let currentIndex = array.length, randomIndex;
     while (currentIndex !== 0) {
@@ -139,48 +143,46 @@ function getShuffledQuiz(originalQuiz) {
     return quiz;
 }
 
-// ─── UI CONTROLLER ───
 function updateUI() {
-    // 🛡️ ป้องกันโค้ดพัง: ถ้าไม่มีข้อมูลหลักสูตรหรือบทเรียนในหน้านี้ (เช่น อยู่หน้า Index หลัก) ให้หยุดทำงานตรงนี้ทันที
+    // 🛡️ ป้องกันโค้ดพัง: ถ้าไม่มีข้อมูลหลักสูตรหรือบทเรียนในหน้านี้ให้หยุดทำงานทันที
     if (typeof courseData === 'undefined' || !courseData.lessons) return;
     
+    const mainCourseTitle = document.getElementById('mainCourseTitle') || document.getElementById('sidebarTitle');
+    if (mainCourseTitle) mainCourseTitle.innerText = courseData.title;
+
     const lessonObj = courseData.lessons.find(l => l.id === currentLessonId);
     if (!lessonObj) return;
 
-    const lesson = lessonObj.content[currentLang] || lessonObj.content['th'];
-    if (!lesson) return;
+    // ดึงก้อนภาษาปัจจุบัน (TH หรือ EN)
+    const currentContent = lessonObj.content[currentLang] || lessonObj.content['th'];
+    if (!currentContent) return;
 
     // ─── 1. แสดงผลเนื้อหาบทเรียน ───
     const titleEl = document.getElementById('lessonTitle');
     const descEl = document.getElementById('lessonDesc');
     const codeBox = document.getElementById('codeBlock');
+    const codeContainer = document.getElementById('codeContainer'); // ผูกเข้ากับกล่อง Terminal ตัวใหม่
 
-    if (titleEl) {
-        titleEl.innerText = lesson.title;
-        titleEl.classList.remove('hidden');
-    }
-    if (descEl) {
-        descEl.innerText = lesson.desc;
-        descEl.classList.remove('hidden');
-    }
+    if (titleEl) titleEl.innerText = currentContent.title;
+    if (descEl) descEl.innerText = currentContent.desc;
 
-    if (codeBox) {
-        if (lesson.code) {
-            codeBox.textContent = lesson.code;
-            codeBox.classList.remove('hidden');
+    // วางตรงนี้เลย! -> ส่วนจัดการกล่องโค้ด Terminal อัจฉริยะ
+    if (codeBox && codeContainer) {
+        if (currentContent.code) {
+            codeBox.textContent = currentContent.code;
+            codeContainer.classList.remove('hidden'); // กางกล่องโค้ดออกโชว์
         } else {
-            codeBox.classList.add('hidden');
+            codeContainer.classList.add('hidden'); // ซ่อนทิ้งถ้าบทเรียนนั้นไม่มีโค้ด
         }
     }
 
     // ─── 2. เจนเนอเรตควิซและตัวเลือกคำตอบ ───
     const questionTextEl = document.getElementById('questionText');
-    if (questionTextEl) questionTextEl.innerText = lesson.quiz.q;
+    if (questionTextEl) questionTextEl.innerText = lessonObj.quiz.q;
 
     const container = document.getElementById('optionsContainer');
-    // 🛡️ ป้องกันโค้ดพัง: สุ่มและแสดงควิซเฉพาะเมื่อมีกล่องตัวเลือกแสดงผลอยู่บนหน้านั้นจริงๆ
     if (container) {
-        currentRandomizedQuiz = getShuffledQuiz(lesson.quiz);
+        currentRandomizedQuiz = getShuffledQuiz(lessonObj.quiz);
         if (currentRandomizedQuiz) {
             container.innerHTML = currentRandomizedQuiz.options.map((opt, i) => `
                 <button onclick="checkAns(${i}, ${currentRandomizedQuiz.ans}, this)"
@@ -200,16 +202,23 @@ function updateUI() {
     
     if (startQuizBtn) startQuizBtn.classList.remove('hidden');
     if (quizSection) quizSection.classList.add('hidden');
-    
     if (nextBtn) {
         nextBtn.classList.add('hidden');
         nextBtn.classList.remove('animate-bounce');
     }
 
-    // 🛡️ ป้องกันโค้ดพัง: ตรวจสอบโครงสร้างว่ามี Element ส่วนอื่นอยู่ไหมก่อนเรียกใช้งานฟังก์ชันย่อย
+    // 🛡️ อัปเดต Sidebar และส่วนคำนวณ Progress ด้านข้าง
     if (document.getElementById('lessonList')) renderSidebar();
-    if (document.getElementById('sidebarProgress')) updateProgress();
-    if (document.getElementById('xpBar')) updateXPBar();
+    updateXPBar();
+    
+    const progressText = document.getElementById('progressText');
+    if (progressText) progressText.innerText = `${getUnlockedLesson()} / ${courseData.lessons.length} บทเรียน`;
+    
+    const sidebarBar = document.getElementById('sidebarProgress');
+    if (sidebarBar) {
+        const pct = Math.min(((getUnlockedLesson() - 1) / courseData.lessons.length) * 100, 100);
+        sidebarBar.style.width = pct + '%';
+    }
 }
 
 // ─── 4. ฟังก์ชันเปิดโหมดควิซเมื่อผู้เรียนกดปุ่มม่วง ───
@@ -218,7 +227,6 @@ function switchToQuizMode() {
     const quizSection = document.getElementById('quizSection');
     
     if (startQuizBtn) startQuizBtn.classList.add('hidden');
-    
     if (quizSection) {
         quizSection.classList.remove('hidden');
         quizSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -235,6 +243,7 @@ function checkAns(selected, correct, btn) {
         btn.classList.add('correct-glow');
         if (feedback) feedback.innerHTML = `<span style="color:#2dd4bf">🎉 ถูกต้อง! </span><span style="color:#a855f7;font-size:14px">+${XP_PER_CORRECT} XP</span>`;
         allBtns.forEach(b => b.disabled = true);
+        
         addXP(XP_PER_CORRECT);
         unlockNextLesson();
         checkStreak();
@@ -251,19 +260,8 @@ function checkAns(selected, correct, btn) {
     } else {
         btn.classList.add('wrong-shake');
         if (feedback) feedback.innerText = currentLang === 'th' ? '❌ ลองใหม่อีกครั้งนะ' : '❌ TRY AGAIN';
-        setTimeout(() => {
-            btn.classList.remove('wrong-shake');
-        }, 600);
+        setTimeout(() => { btn.classList.remove('wrong-shake'); }, 600);
     }
-}
-
-function updateProgress() {
-    if (typeof courseData === 'undefined' || !courseData.lessons) return;
-    const total    = courseData.lessons.length;
-    const unlocked = getUnlockedLesson();
-    const pct      = Math.min(((unlocked - 1) / total) * 100, 100);
-    const bar      = document.getElementById('sidebarProgress');
-    if (bar) bar.style.width = pct + '%';
 }
 
 function renderSidebar() {
@@ -283,7 +281,7 @@ function renderSidebar() {
                     ${isActive ? 'active-lesson' : isUnlocked ? 'text-gray-400 cursor-pointer' : 'text-zinc-700 cursor-not-allowed'}">
             <span class="flex items-center gap-2 min-w-0">
                 ${isDone ? '<span style="color:#2dd4bf;font-size:12px">✓</span>' : ''}
-                <span class="truncate">${content ? content.title : lesson.id}</span>
+                <span class="truncate">${content ? content.title : 'Lesson ' + lesson.id}</span>
             </span>
             ${!isUnlocked ? '<svg style="width:14px;height:14px;color:#3f3f46;flex-shrink:0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>' : ''}
         </div>`;
@@ -296,10 +294,9 @@ function showCompletionScene() {
         confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 }, colors: ['#a855f7','#2dd4bf','#eab308'] });
     }
     addXP(200);
-    checkAchievements();
 
     const title = typeof courseData !== 'undefined' ? courseData.title : 'คอร์สนี้';
-    const total = typeof courseData !== 'undefined' && courseData.lessons ? courseData.lessons.length : '-';
+    const total = typeof courseData !== 'undefined' && courseData.lessons ? courseData.lessons.length : '12';
 
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.95);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:24px';
@@ -315,43 +312,50 @@ function showCompletionScene() {
                 <div><p style="color:#6b7280;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Streak</p><p style="font-size:24px;font-weight:900;color:#2dd4bf">${getStreak()}🔥</p></div>
             </div>
             <div style="display:flex;gap:12px">
-                <a href="index.html" style="flex:1;padding:16px;border:1px solid #3f3f46;border-radius:16px;color:white;font-weight:900;text-transform:uppercase;font-size:11px;text-decoration:none;display:block;text-align:center;transition:all 0.2s" onmouseover="this.style.borderColor='#a855f7'" onmouseout="this.style.borderColor='#3f3f46'">กลับหน้าหลัก</a>
+                <a href="course.html" style="flex:1;padding:16px;border:1px solid #3f3f46;border-radius:16px;color:white;font-weight:900;text-transform:uppercase;font-size:11px;text-decoration:none;display:block;text-align:center;transition:all 0.2s" onmouseover="this.style.borderColor='#a855f7'" onmouseout="this.style.borderColor='#3f3f46'">กลับหน้าเลือกคอร์ส</a>
                 <button onclick="location.reload()" style="flex:1;padding:16px;background:#a855f7;border:none;border-radius:16px;color:white;font-weight:900;text-transform:uppercase;font-size:11px;cursor:pointer">เรียนซ้ำ</button>
             </div>
         </div>`;
     document.body.appendChild(overlay);
 }
 
-// ─── NAVIGATION ───────────────────────────────────────────────
+// ─── NAVIGATION CONTROLLER ────────────────────────────────────
 function nextLesson() {
     if (typeof courseData === 'undefined' || !courseData.lessons) return;
     if (currentLessonId < courseData.lessons.length) {
         currentLessonId++;
+        localStorage.setItem('zenith_lesson_id', currentLessonId);
         updateUI();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
         showCompletionScene();
     }
 }
+
 function prevLesson() {
     if (currentLessonId > 1) {
         currentLessonId--;
+        localStorage.setItem('zenith_lesson_id', currentLessonId);
         updateUI();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
+
 function setLesson(id) {
     currentLessonId = id;
+    localStorage.setItem('zenith_lesson_id', currentLessonId);
     updateUI();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function changeLanguage() {
-    currentLang = document.getElementById('langSelect').value;
+    currentLang = currentLang === 'th' ? 'en' : 'th';
+    localStorage.setItem('zenith_lang', currentLang);
     updateUI();
 }
 
-// เรียกให้ทำงานครั้งแรกเพื่อรีเฟรชค่า (ถ้าหน้านั้นมีระบบรองรับ)
+// ผูกปุ่มควบคุมเข้ากับหน้าเว็บเมื่อพร้อมทำงาน
 document.addEventListener("DOMContentLoaded", () => {
+    checkStreak(); // ทำงานทันทีเพื่อเช็กประวัติล็อกอินสะสมประจำวัน
     updateUI();
 });
