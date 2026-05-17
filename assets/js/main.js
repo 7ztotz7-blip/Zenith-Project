@@ -1,5 +1,5 @@
 // ============================================================
-//  ZENITH — main.js (Fixed for Content-First Mode)
+//  ZENITH — main.js (Fixed for Content-First Mode & Multi-Page Support)
 //  courseType ถูกกำหนดจาก lesson.html ผ่าน window.courseType
 //  ห้ามนิยาม courseType ซ้ำในไฟล์นี้
 // ============================================================
@@ -55,8 +55,6 @@ function checkStreak() {
     localStorage.setItem('zenith_last_date', today);
     return streak;
 }
-
-function getStreak() { return parseInt(localStorage.getItem('zenith_streak') || '0'); }
 
 // ─── UNLOCK — ใช้ window.courseType จาก lesson.html ─────────
 function getCourseType() {
@@ -143,6 +141,7 @@ function getShuffledQuiz(originalQuiz) {
 
 // ─── UI CONTROLLER ───
 function updateUI() {
+    // 🛡️ ป้องกันโค้ดพัง: ถ้าไม่มีข้อมูลหลักสูตรหรือบทเรียนในหน้านี้ (เช่น อยู่หน้า Index หลัก) ให้หยุดทำงานตรงนี้ทันที
     if (typeof courseData === 'undefined' || !courseData.lessons) return;
     
     const lessonObj = courseData.lessons.find(l => l.id === currentLessonId);
@@ -174,21 +173,21 @@ function updateUI() {
         }
     }
 
-    // ─── 2. เจนเนอเรตควิซและตัวเลือกคำตอบ (ผสานระบบสุ่มตรงนี้เลย) ───
+    // ─── 2. เจนเนอเรตควิซและตัวเลือกคำตอบ ───
     const questionTextEl = document.getElementById('questionText');
     if (questionTextEl) questionTextEl.innerText = lesson.quiz.q;
 
-    // สั่งสุ่มควิซของบทเรียนนี้เก็บไว้ในตัวแปรกลาง เพื่อเอาไว้ใช้เช็กคำตอบตอนคลิก
-    currentRandomizedQuiz = getShuffledQuiz(lesson.quiz);
-
     const container = document.getElementById('optionsContainer');
-    if (container && currentRandomizedQuiz) {
-        // ใช้ข้อมูลช้อยส์จากตัวที่สุ่มเรียบร้อยแล้วไปแสดงผลในปุ่ม HTML
-        container.innerHTML = currentRandomizedQuiz.options.map((opt, i) => `
-            <button onclick="checkAns(${i}, ${currentRandomizedQuiz.ans}, this)"
-                    class="option-btn">
-                <span class="text-[#a855f7] font-black mr-3">${String.fromCharCode(65+i)}.</span>${opt}
-            </button>`).join('');
+    // 🛡️ ป้องกันโค้ดพัง: สุ่มและแสดงควิซเฉพาะเมื่อมีกล่องตัวเลือกแสดงผลอยู่บนหน้านั้นจริงๆ
+    if (container) {
+        currentRandomizedQuiz = getShuffledQuiz(lesson.quiz);
+        if (currentRandomizedQuiz) {
+            container.innerHTML = currentRandomizedQuiz.options.map((opt, i) => `
+                <button onclick="checkAns(${i}, ${currentRandomizedQuiz.ans}, this)"
+                        class="option-btn">
+                    <span class="text-[#a855f7] font-black mr-3">${String.fromCharCode(65+i)}.</span>${opt}
+                </button>`).join('');
+        }
     }
 
     const feedbackEl = document.getElementById('quizFeedback');
@@ -207,9 +206,10 @@ function updateUI() {
         nextBtn.classList.remove('animate-bounce');
     }
 
-    renderSidebar();
-    updateProgress();
-    updateXPBar();
+    // 🛡️ ป้องกันโค้ดพัง: ตรวจสอบโครงสร้างว่ามี Element ส่วนอื่นอยู่ไหมก่อนเรียกใช้งานฟังก์ชันย่อย
+    if (document.getElementById('lessonList')) renderSidebar();
+    if (document.getElementById('sidebarProgress')) updateProgress();
+    if (document.getElementById('xpBar')) updateXPBar();
 }
 
 // ─── 4. ฟังก์ชันเปิดโหมดควิซเมื่อผู้เรียนกดปุ่มม่วง ───
@@ -233,7 +233,7 @@ function checkAns(selected, correct, btn) {
         btn.style.backgroundColor = '#2dd4bf';
         btn.style.color = 'black';
         btn.classList.add('correct-glow');
-        feedback.innerHTML = `<span style="color:#2dd4bf">🎉 ถูกต้อง! </span><span style="color:#a855f7;font-size:14px">+${XP_PER_CORRECT} XP</span>`;
+        if (feedback) feedback.innerHTML = `<span style="color:#2dd4bf">🎉 ถูกต้อง! </span><span style="color:#a855f7;font-size:14px">+${XP_PER_CORRECT} XP</span>`;
         allBtns.forEach(b => b.disabled = true);
         addXP(XP_PER_CORRECT);
         unlockNextLesson();
@@ -250,7 +250,7 @@ function checkAns(selected, correct, btn) {
 
     } else {
         btn.classList.add('wrong-shake');
-        feedback.innerText = currentLang === 'th' ? '❌ ลองใหม่อีกครั้งนะ' : '❌ TRY AGAIN';
+        if (feedback) feedback.innerText = currentLang === 'th' ? '❌ ลองใหม่อีกครั้งนะ' : '❌ TRY AGAIN';
         setTimeout(() => {
             btn.classList.remove('wrong-shake');
         }, 600);
@@ -350,3 +350,8 @@ function changeLanguage() {
     currentLang = document.getElementById('langSelect').value;
     updateUI();
 }
+
+// เรียกให้ทำงานครั้งแรกเพื่อรีเฟรชค่า (ถ้าหน้านั้นมีระบบรองรับ)
+document.addEventListener("DOMContentLoaded", () => {
+    updateUI();
+});
