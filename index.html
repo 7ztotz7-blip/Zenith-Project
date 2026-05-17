@@ -20,7 +20,6 @@
             filter: saturate(1.2) brightness(0.9);
         }
 
-        /* ซ่อนวิดีโอในมือถือเพื่อประหยัดทรัพยากร (Optional) */
         @media (max-width: 768px) {
             #bg-video { opacity: 0.3; }
         }
@@ -36,17 +35,23 @@
 
         .zenith-card {
             background: rgba(13, 13, 14, 0.6);
-            border: 1px solid rgba(168, 85, 247, 0.2);
+            border: 1px solid rgba(168, 85, 247, 0.1);
             backdrop-filter: blur(12px);
             border-radius: 32px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .zenith-card:hover {
-            border-color: #a855f7;
-            box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
             transform: translateY(-10px) scale(1.02);
         }
+
+        /* แยกสีเส้นขอบตอน Hover ตามสีประจำคอร์สเพื่อความโปร */
+        .card-python:hover { border-color: #2dd4bf; box-shadow: 0 0 40px rgba(45, 212, 191, 0.25); }
+        .card-js:hover { border-color: #eab308; box-shadow: 0 0 40px rgba(234, 179, 8, 0.25); }
+        .card-react:hover { border-color: #3b82f6; box-shadow: 0 0 40px rgba(59, 130, 246, 0.25); }
+        .card-html:hover { border-color: #f97316; box-shadow: 0 0 40px rgba(249, 115, 22, 0.25); }
+        .card-php:hover { border-color: #6366f1; box-shadow: 0 0 40px rgba(99, 102, 241, 0.25); }
+        .card-sql:hover { border-color: #0ea5e9; box-shadow: 0 0 40px rgba(14, 165, 233, 0.25); }
 
         .nav-blur {
             background: rgba(5, 5, 5, 0.7);
@@ -57,20 +62,6 @@
         .img-python { background: linear-gradient(135deg, #064e3b 0%, #0d9488 100%); }
         .img-js { background: linear-gradient(135deg, #713f12 0%, #eab308 100%); }
         .img-react { background: linear-gradient(135deg, #1e3a5f 0%, #60a5fa 100%); }
-
-        .welcome-mini {
-            font-size: 12px;
-            letter-spacing: 0.15em;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            padding: 6px 18px;
-            border-radius: 99px;
-            background: rgba(168, 85, 247, 0.1);
-            backdrop-filter: blur(10px);
-            display: inline-block;
-        }
 
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #050505; }
@@ -84,12 +75,12 @@
 </video>
 <div class="video-overlay"></div>
 
-<!-- NAVIGATION: ปรับให้ Responsive -->
 <nav class="fixed top-0 w-full z-50 h-auto py-4 md:h-20 flex items-center justify-between px-6 md:px-10 nav-blur">
     <div class="flex items-center gap-4 md:gap-12">
         <h1 class="text-xl md:text-2xl font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
         <div class="hidden lg:flex items-center gap-8 text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">
             <a href="#courses" class="hover:text-[#a855f7] transition-all">คอร์สทั้งหมด</a>
+            <a href="#career-path" class="hover:text-[#a855f7] transition-all">เส้นทางอาชีพ</a>
             <a href="#about" class="hover:text-[#a855f7] transition-all">เกี่ยวกับเรา</a>
         </div>
     </div>
@@ -118,7 +109,6 @@
     </div>
 </nav>
 
-<!-- HEADER: ปรับขนาด Font ให้ลดลงในมือถือ -->
 <header class="relative w-full flex flex-col items-center justify-center text-center px-4 pt-32 pb-10">
     <div class="relative mb-6">
         <p class="text-[#a855f7] text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] mb-2 opacity-80">Next-Gen Learning Platform</p>
@@ -126,23 +116,32 @@
         <p class="text-[#2dd4bf] text-[8px] md:text-[9px] mt-2 font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Mastery • Evolution</p>
     </div>
 
-    <div class="w-full max-w-[280px] md:max-w-[320px] mx-auto" id="nameSection">
-        <div class="bg-white/5 border border-white/10 p-1 rounded-full backdrop-blur-2xl flex items-center gap-2">
-            <input type="text" id="userNameInput" placeholder="Identify yourself..." 
-                   class="bg-transparent flex-grow p-2 rounded-full text-white outline-none text-[10px] font-medium pl-4">
-            <button onclick="saveUser()" class="bg-[#a855f7] text-white w-8 h-8 rounded-full flex items-center justify-center hover:scale-105 transition-all shadow-lg shadow-purple-500/40">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>
-            </button>
-        </div>
+    <div class="w-full max-w-[280px] md:max-w-[320px] mx-auto mb-8" id="nameSection">
+        <a href="register.html" class="block w-full text-center bg-gradient-to-r from-[#a855f7] to-[#2dd4bf] text-white py-3.5 px-8 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-purple-500/20 hover:scale-105 transition-all">
+            เริ่มเรียนฟรีวันนี้ →
+        </a>
     </div>
 
-    <div id="welcome-section" class="hidden"> 
-    <p class="text-[#a855f7] font-bold text-sm tracking-widest uppercase mb-2">Welcome Back,</p>
-    <h2 id="user-display-name" class="text-4xl font-black italic italic tracking-tighter"></h2>
-</div>
+    <div id="welcome-section" class="hidden mb-8"> 
+        <p class="text-[#a855f7] font-bold text-xs tracking-widest uppercase mb-1">Welcome Back,</p>
+        <h2 id="user-display-name" class="text-3xl md:text-4xl font-black text-[#2dd4bf] italic tracking-tighter uppercase"></h2>
+    </div>
 </header>
+
+<section class="max-w-4xl mx-auto grid grid-cols-3 gap-4 px-6 mb-16 text-center relative z-10">
+    <div class="bg-white/5 border border-white/5 backdrop-blur-md p-4 rounded-2xl">
+        <p class="text-2xl md:text-3xl font-black text-[#a855f7] italic">6</p>
+        <p class="text-gray-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest mt-1">Modules</p>
+    </div>
+    <div class="bg-white/5 border border-white/5 backdrop-blur-md p-4 rounded-2xl">
+        <p class="text-2xl md:text-3xl font-black text-[#2dd4bf] italic">30+</p>
+        <p class="text-gray-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest mt-1">Lessons</p>
+    </div>
+    <div class="bg-white/5 border border-white/5 backdrop-blur-md p-4 rounded-2xl">
+        <p class="text-2xl md:text-3xl font-black text-yellow-500 italic">100%</p>
+        <p class="text-gray-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest mt-1">Free Access</p>
+    </div>
+</section>
 
 <main class="max-w-7xl mx-auto py-10 px-6 md:px-10" id="courses">
     <div class="flex flex-col mb-12 border-l-[3px] border-[#a855f7] pl-4">
@@ -152,62 +151,103 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
         
-        <div class="zenith-card p-6 flex flex-col">
-            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center img-python mb-6 md:mb-8 text-5xl md:text-6xl">🐍</div>
-            <h4 class="text-xl md:text-2xl font-black text-white mb-2 md:mb-3 italic uppercase">Python</h4>
-            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 md:mb-8 flex-grow">Master the art of efficiency. Build advanced scripts to automate your digital world.</p>
+        <div class="zenith-card card-python p-6 flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[8px] font-black bg-[#2dd4bf]/10 text-[#2dd4bf] border border-[#2dd4bf]/20 px-2.5 py-1 rounded-full uppercase tracking-wider">Beginner</span>
+                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 45 นาที</span>
+            </div>
+            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center img-python mb-6 text-5xl md:text-6xl">🐍</div>
+            <h4 class="text-xl md:text-2xl font-black text-white mb-2 italic uppercase">Python</h4>
+            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 flex-grow">Master the art of efficiency. Build advanced scripts to automate your digital world.</p>
             <a href="course.html?course=python">
-                <button class="w-full py-3 md:py-4 bg-white/5 border border-white/10 hover:bg-[#2dd4bf] hover:text-white text-gray-300 rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all">Start Learning →</button>
+                <button class="w-full py-3.5 bg-white/5 border border-white/10 hover:bg-[#2dd4bf] hover:text-black hover:border-[#2dd4bf] text-white rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
-        <div class="zenith-card p-6 flex flex-col">
-            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center img-js mb-6 md:mb-8 text-5xl md:text-6xl">💛</div>
-            <h4 class="text-xl md:text-2xl font-black text-white mb-2 md:mb-3 italic uppercase">JavaScript</h4>
-            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 md:mb-8 flex-grow">Beyond the basics. Deep dive into ES6+ and the core of modern web architecture.</p>
+        <div class="zenith-card card-js p-6 flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[8px] font-black bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider">Intermediate</span>
+                <span class="text-[9px] text-gray-500 font-bold">6 บทเรียน • 60 นาที</span>
+            </div>
+            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center img-js mb-6 text-5xl md:text-6xl">💛</div>
+            <h4 class="text-xl md:text-2xl font-black text-white mb-2 italic uppercase">JavaScript</h4>
+            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 flex-grow">Beyond the basics. Deep dive into ES6+ and the core of modern web architecture.</p>
             <a href="course.html?course=javascript">
-                <button class="w-full py-3 md:py-4 bg-white/5 border border-white/10 hover:bg-yellow-500 hover:text-black text-gray-300 rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all">Start Learning →</button>
+                <button class="w-full py-3.5 bg-white/5 border border-white/10 hover:bg-yellow-500 hover:text-black hover:border-yellow-500 text-white rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
-        <div class="zenith-card p-6 flex flex-col">
-            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center img-react mb-6 md:mb-8 text-5xl md:text-6xl">⚛️</div>
-            <h4 class="text-xl md:text-2xl font-black text-white mb-2 md:mb-3 italic uppercase">React</h4>
-            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 md:mb-8 flex-grow">Build high-performance, component-based user interfaces for the modern web.</p>
+        <div class="zenith-card card-react p-6 flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[8px] font-black bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider">Advanced</span>
+                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 55 นาที</span>
+            </div>
+            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center img-react mb-6 text-5xl md:text-6xl">⚛️</div>
+            <h4 class="text-xl md:text-2xl font-black text-white mb-2 italic uppercase">React</h4>
+            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 flex-grow">Build high-performance, component-based user interfaces for the modern web.</p>
             <a href="course.html?course=react">
-                <button class="w-full py-3 md:py-4 bg-white/5 border border-white/10 hover:bg-blue-500 hover:text-white text-gray-300 rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all">Start Learning →</button>
+                <button class="w-full py-3.5 bg-white/5 border border-white/10 hover:bg-blue-500 hover:text-white hover:border-blue-500 text-white rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
-        <div class="zenith-card p-6 flex flex-col">
-            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center mb-6 md:mb-8 text-5xl md:text-6xl" style="background: linear-gradient(135deg, #7c2d12 0%, #f97316 100%);">🌐</div>
-            <h4 class="text-xl md:text-2xl font-black text-white mb-2 md:mb-3 italic uppercase">HTML & CSS</h4>
-            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 md:mb-8 flex-grow">The blueprint of the web. Learn to structure and style beautiful digital experiences.</p>
+        <div class="zenith-card card-html p-6 flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[8px] font-black bg-orange-500/10 text-orange-500 border border-orange-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider">Beginner</span>
+                <span class="text-[9px] text-gray-500 font-bold">4 บทเรียน • 30 นาที</span>
+            </div>
+            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center mb-6 text-5xl md:text-6xl" style="background: linear-gradient(135deg, #7c2d12 0%, #f97316 100%);">🌐</div>
+            <h4 class="text-xl md:text-2xl font-black text-white mb-2 italic uppercase">HTML & CSS</h4>
+            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 flex-grow">The blueprint of the web. Learn to structure and style beautiful digital experiences.</p>
             <a href="course.html?course=html">
-                <button class="w-full py-3 md:py-4 bg-white/5 border border-white/10 hover:bg-orange-500 hover:text-white text-gray-300 rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all">Start Learning →</button>
+                <button class="w-full py-3.5 bg-white/5 border border-white/10 hover:bg-orange-500 hover:text-white hover:border-orange-500 text-white rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
-        <div class="zenith-card p-6 flex flex-col">
-            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center mb-6 md:mb-8 text-5xl md:text-6xl" style="background: linear-gradient(135deg, #1e1b4b 0%, #6366f1 100%);">🐘</div>
-            <h4 class="text-xl md:text-2xl font-black text-white mb-2 md:mb-3 italic uppercase">PHP</h4>
-            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 md:mb-8 flex-grow">Server-side powerhouse. Master back-end logic and dynamic content generation.</p>
+        <div class="zenith-card card-php p-6 flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[8px] font-black bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider">Intermediate</span>
+                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 50 นาที</span>
+            </div>
+            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center mb-6 text-5xl md:text-6xl" style="background: linear-gradient(135deg, #1e1b4b 0%, #6366f1 100%);">🐘</div>
+            <h4 class="text-xl md:text-2xl font-black text-white mb-2 italic uppercase">PHP</h4>
+            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 flex-grow">Server-side powerhouse. Master back-end logic and dynamic content generation.</p>
             <a href="course.html?course=php">
-                <button class="w-full py-3 md:py-4 bg-white/5 border border-white/10 hover:bg-indigo-500 hover:text-white text-gray-300 rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all">Start Learning →</button>
+                <button class="w-full py-3.5 bg-white/5 border border-white/10 hover:bg-indigo-500 hover:text-white hover:border-indigo-500 text-white rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
-        <div class="zenith-card p-6 flex flex-col">
-            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center mb-6 md:mb-8 text-5xl md:text-6xl" style="background: linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 100%);">🗄️</div>
-            <h4 class="text-xl md:text-2xl font-black text-white mb-2 md:mb-3 italic uppercase">SQL Database</h4>
-            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 md:mb-8 flex-grow">Control the data flow. Learn to manage, query, and optimize relational databases.</p>
+        <div class="zenith-card card-sql p-6 flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[8px] font-black bg-sky-500/10 text-sky-400 border border-sky-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider">Intermediate</span>
+                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 40 นาที</span>
+            </div>
+            <div class="h-40 md:h-48 rounded-[24px] flex items-center justify-center mb-6 text-5xl md:text-6xl" style="background: linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 100%);">🗄️</div>
+            <h4 class="text-xl md:text-2xl font-black text-white mb-2 italic uppercase">SQL Database</h4>
+            <p class="text-gray-500 text-[11px] md:text-xs leading-relaxed mb-6 flex-grow">Control the data flow. Learn to manage, query, and optimize relational databases.</p>
             <a href="course.html?course=sql">
-                <button class="w-full py-3 md:py-4 bg-white/5 border border-white/10 hover:bg-sky-500 hover:text-white text-gray-300 rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all">Start Learning →</button>
+                <button class="w-full py-3.5 bg-white/5 border border-white/10 hover:bg-sky-500 hover:text-white hover:border-sky-500 text-white rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
     </div>
 </main>
+
+<section id="career-path" class="max-w-7xl mx-auto py-16 px-6 md:px-10 border-t border-white/5">
+    <div class="flex flex-col mb-12 border-l-[3px] border-[#2dd4bf] pl-4">
+        <h3 class="text-xl md:text-2xl font-black text-white uppercase italic tracking-tighter leading-none">Career Roadmap</h3>
+        <p class="text-zinc-500 text-[8px] md:text-[9px] font-black mt-1 uppercase tracking-[0.2em] md:tracking-[0.3em]">สิ่งที่คุณจะเป็นได้หลังจากเรียนจบเว็บบล็อกนี้</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white/5 border border-white/5 p-6 rounded-2xl backdrop-blur-md">
+            <h5 class="text-lg font-black text-[#2dd4bf] italic mb-2">FRONT-END DEVELOPER</h5>
+            <p class="text-gray-400 text-xs leading-relaxed">เลือกเรียนคอร์ส HTML & CSS ➔ JavaScript ➔ React เพื่อเป็นผู้เชี่ยวชาญด้านการพัฒนาหน้าบ้านและ User Interface ระดับสูง</p>
+        </div>
+        <div class="bg-white/5 border border-white/5 p-6 rounded-2xl backdrop-blur-md">
+            <h5 class="text-lg font-black text-[#a855f7] italic mb-2">BACK-END DEVELOPER</h5>
+            <p class="text-gray-400 text-xs leading-relaxed">เลือกเรียนคอร์ส Python ➔ PHP ➔ SQL Database เพื่อปูทางสู่การจัดการเซิร์ฟเวอร์ ระบบหลังบ้าน และสถาปัตยกรรมข้อมูลที่แข็งแกร่ง</p>
+        </div>
+    </div>
+</section>
 
 <footer class="bg-black/80 backdrop-blur-md border-t border-white/5 py-10" id="about">
     <div class="max-w-7xl mx-auto px-6 md:px-10 text-center flex flex-col gap-4">
@@ -217,15 +257,6 @@
 </footer>
 
 <script>
-    function saveUser() {
-        const input = document.getElementById('userNameInput');
-        const name = input.value.trim();
-        if (name !== "") {
-            localStorage.setItem('zenith_user', name);
-            window.location.reload(); // รีโหลดเพื่อให้หน้าจอเปลี่ยนสถานะ
-        }
-    }
-
     function checkUser() {
         const savedName = localStorage.getItem('zenith_user');
         
@@ -237,18 +268,18 @@
         const userDisplayName = document.getElementById('user-display-name');
 
         if (savedName) {
-            // ถ้ามีชื่อผู้ใช้
-            nameSection.classList.add('hidden');
-            welcomeSection.classList.remove('hidden');
+            // ถ้ามีชื่อผู้ใช้ (Logged In)
+            if(nameSection) nameSection.classList.add('hidden');
+            if(welcomeSection) welcomeSection.classList.remove('hidden');
             guestLinks.classList.add('hidden');
             userProfile.classList.remove('hidden');
             
             navUserName.innerText = savedName;
-            userDisplayName.innerText = savedName;
+            if(userDisplayName) userDisplayName.innerText = savedName;
         } else {
-            // ถ้ายังไม่มีชื่อผู้ใช้
-            nameSection.classList.remove('hidden');
-            welcomeSection.classList.add('hidden');
+            // ถ้ายังไม่มีชื่อผู้ใช้ (Guest)
+            if(nameSection) nameSection.classList.remove('hidden');
+            if(welcomeSection) welcomeSection.classList.add('hidden');
             guestLinks.classList.remove('hidden');
             userProfile.classList.add('hidden');
         }
