@@ -3,180 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Studio | ZENITH</title>
+    <title>Zenith Classroom</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        body { font-family: 'Kanit', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; }
+        body { font-family:'Kanit',sans-serif; background:#050505; color:#fff; }
         
-        #bg-video {
-            position: fixed; right: 0; bottom: 0;
-            min-width: 100%; min-height: 100%;
-            z-index: -2; object-fit: cover; opacity: 0.4; filter: saturate(1.2) brightness(0.7);
-        }
-        .video-overlay {
+        /* --- ดวงไฟเรืองแสง Ambient Glow Background (แทนวิดีโอ) --- */
+        .ambient-glow {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 30%, #050505 110%);
-            z-index: -1; pointer-events: none;
+            z-index: -1; pointer-events: none; overflow: hidden;
         }
-        .nav-blur, .sidebar-blur {
-            background: rgba(5, 5, 5, 0.65); backdrop-filter: blur(20px);
-            border-color: rgba(255, 255, 255, 0.05);
+        .glow-1 {
+            position: absolute; top: -10%; right: -10%; width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 70%);
         }
-        .glass-panel {
-            background: rgba(13, 13, 14, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px);
+        .glow-2 {
+            position: absolute; bottom: -10%; left: -10%; width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(45,212,191,0.05) 0%, transparent 70%);
         }
-        ::-webkit-scrollbar { width: 6px; }
+
+        /* เสริมความหรูแบบกระจก Glassmorphism ให้การ์ดบทเรียน */
+        .lesson-card {
+            background: rgba(13, 13, 14, 0.7) !important; 
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            border-radius: 20px; transition: all 0.3s ease;
+            backdrop-filter: blur(16px);
+        }
+        .lesson-card:hover:not(.locked) {
+            border-color:#a855f7; transform:translateX(4px);
+            box-shadow:0 0 20px rgba(168,85,247,0.15);
+        }
+        .lesson-card.locked { opacity:0.4; pointer-events:none; }
+        .lesson-card.done   { border-color:rgba(45,212,191,0.3); }
+        
+        @keyframes fadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        .fade-in { animation:fadeIn 0.5s ease both; }
+        
+        .geo-bg {
+            background-image:
+                linear-gradient(rgba(168,85,247,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168,85,247,0.04) 1px, transparent 1px);
+            background-size:60px 60px;
+        }
+        
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
+
+        /* --- CSS แก้ไขการแสดงผลสำหรับมือถือ (Responsive) --- */
+        @media (max-width: 640px) {
+            main.max-w-3xl {
+                padding-top: 6rem !important; 
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            #course-title {
+                font-size: 2.2rem !important; 
+                line-height: 1.1 !important;
+                word-break: break-word !important;
+            }
+
+            .lesson-card {
+                padding: 16px !important;
+                flex-direction: column !important; /* เปลี่ยนจากแนวนอนเป็นแนวตั้ง */
+                align-items: flex-start !important;
+                gap: 16px !important;
+            }
+
+            .lesson-card .flex.items-center.gap-5 {
+                width: 100% !important;
+                align-items: flex-start !important; /* จัดให้ไอคอนกับข้อความอยู่ชิดบน */
+            }
+
+            .lesson-card h3 {
+                font-size: 1rem !important;
+                white-space: normal !important; /* ยอมให้ขึ้นบรรทัดใหม่ */
+            }
+
+            .lesson-card p {
+                white-space: normal !important; /* ยอมให้ขึ้นบรรทัดใหม่ */
+            }
+
+            .lesson-card .flex-shrink-0.ml-4 {
+                width: 100% !important;
+                margin-left: 0 !important;
+            }
+
+            .lesson-card button {
+                width: 100% !important; /* ปุ่มกว้างเต็มจอ กดง่ายขึ้น */
+                padding: 12px !important;
+                font-size: 12px !important;
+            }
+
+            nav {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+        }
     </style>
 </head>
-<body>
+<body class="min-h-screen geo-bg">
 
-<video autoplay loop muted playsinline id="bg-video">
-    <source src="gg-video.mp4" type="video/mp4">
-</video>
-<div class="video-overlay"></div>
-
-<nav class="fixed top-0 w-full z-50 h-16 flex items-center justify-between px-6 md:px-10 nav-blur border-b">
-    <div class="flex items-center gap-4">
-        <a href="index.html" class="text-gray-400 hover:text-white transition text-xs font-black uppercase tracking-widest flex items-center gap-2">
-            ← Back
-        </a>
-        <span class="text-gray-600">|</span>
-        <h1 id="course-title-nav" class="text-sm font-black text-[#a855f7] uppercase tracking-wider italic">Loading Course...</h1>
-    </div>
-    <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest hidden sm:block">
-        Senior Project · วิทยาลัยเทคนิคลำพูน
-    </div>
-</nav>
-
-<div class="pt-16 min-h-screen flex flex-col lg:flex-row max-w-[1600px] mx-auto">
-    
-    <aside class="w-full lg:w-80 sidebar-blur border-b lg:border-b-0 lg:border-r flex flex-col h-auto lg:h-[calc(100vh-4rem)] lg:sticky lg:top-16">
-        <div class="p-5 border-b border-white/5">
-            <span id="course-badge" class="text-[8px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider bg-purple-500/10 text-[#a855f7] border border-purple-500/20">Learning Path</span>
-            <h2 id="course-title-sidebar" class="text-xl font-black text-white italic uppercase tracking-tighter mt-2 leading-tight">Course Title</h2>
-            <p class="text-zinc-500 text-[9px] font-black mt-1 uppercase tracking-[0.15em]">ความคืบหน้าบทเรียนของคุณ</p>
-        </div>
-        
-        <div class="flex-grow overflow-y-auto p-4 flex flex-col gap-2" id="lessons-container">
-            </div>
-    </aside>
-
-    <main class="flex-grow p-6 md:p-8 flex flex-col gap-6">
-        <div class="w-full aspect-video glass-panel rounded-3xl overflow-hidden relative border border-white/10 flex flex-col items-center justify-center group shadow-2xl shadow-purple-500/5">
-            <div class="absolute inset-0 bg-gradient-to-tr from-purple-900/10 to-transparent pointer-events-none"></div>
-            <div class="w-16 h-16 rounded-full bg-[#a855f7] text-white flex items-center justify-center text-xl font-black shadow-lg shadow-purple-500/50 group-hover:scale-110 transition-all cursor-pointer">
-                ▶
-            </div>
-            <p id="video-placeholder-text" class="text-gray-400 text-xs font-black uppercase tracking-[0.2em] mt-4">Streaming Lesson Video...</p>
-        </div>
-
-        <div class="glass-panel rounded-3xl p-6 md:p-8">
-            <h3 id="active-lesson-title" class="text-xl md:text-2xl font-black text-white italic uppercase tracking-tighter">Lesson Introduction</h3>
-            <p class="text-[#2dd4bf] text-[9px] font-black uppercase tracking-widest mt-1">บทเรียนปัจจุบัน</p>
-            <hr class="border-white/5 my-4">
-            <p id="active-lesson-desc" class="text-zinc-400 text-xs md:text-sm leading-relaxed max-w-3xl">
-                ยินดีต้อนรับเข้าสู่คอร์สเรียน ระบบกำลังโหลดเนื้อหาพื้นฐานและโปรเจกต์ตัวอย่างสำหรับวิชานี้...
-            </p>
-        </div>
-    </main>
-
+<div class="ambient-glow">
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
 </div>
 
-<script>
-    // ข้อมูลเนื้อหาแบบคร่าว ๆ สำหรับเปิดโชว์อาจารย์
-    const courseData = {
-        python: {
-            title: "Python Automation",
-            icon: "🐍",
-            color: "#2dd4bf",
-            lessons: [
-                "01 | Introduction to Python Environment",
-                "02 | Variables and Dynamic Data Types",
-                "03 | Control Flow and Logic Loops",
-                "04 | Functions and Modular Scripting",
-                "05 | Build First Automation Script Project"
-            ]
-        },
-        javascript: {
-            title: "Modern JavaScript",
-            icon: "💛",
-            color: "#eab308",
-            lessons: [
-                "01 | Core JS and DOM Manipulation",
-                "02 | ES6+ Features & Arrow Functions",
-                "03 | Asynchronous JS & Fetch API",
-                "04 | Array Methods and Data Structure",
-                "05 | Working with LocalStorage States",
-                "06 | Build Dynamic Web App Project"
-            ]
-        },
-        react: {
-            title: "React Ultimate",
-            icon: "⚛️",
-            color: "#3b82f6",
-            lessons: [
-                "01 | Understanding Component Lifecycle",
-                "02 | JSX Elements and Styling",
-                "03 | Props and State Management",
-                "04 | Handling Events and Forms",
-                "05 | Deployment of React Project"
-            ]
-        }
-    };
+<nav class="fixed top-0 w-full z-50 h-14 flex items-center justify-between px-6 bg-black/80 backdrop-blur-md border-b border-white/5">
+    <a href="index.html" class="flex items-center gap-2 text-gray-500 hover:text-[#a855f7] font-black text-sm uppercase tracking-widest transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
+        กลับหน้าหลัก
+    </a>
+    <h1 class="text-lg font-black text-[#a855f7] italic">ZENITH.</h1>
+    <div class="hidden sm:block w-28"></div>
+</nav>
 
-    function initCourse() {
-        // ดึงพารามิเตอร์จาก URL เช่น ?course=python
-        const urlParams = new URLSearchParams(window.location.search);
-        const courseKey = urlParams.get('course') || 'python'; // ถ้าไม่มีให้ฟอลแบ็กเป็น python
-        
-        const data = courseData[courseKey] || courseData.python;
-        
-        // อัปเดตข้อความบนหน้าจอตามคอร์สที่เลือก
-        document.getElementById('course-title-nav').innerText = `${data.icon} ${data.title}`;
-        document.getElementById('course-title-sidebar').innerText = data.title;
-        
-        const container = document.getElementById('lessons-container');
-        container.innerHTML = ''; // เคลียร์ของเก่า
-        
-        // สร้างรายชื่อบทเรียนในแถบข้าง
-        data.lessons.forEach((lesson, index) => {
-            const button = document.createElement('button');
-            // ทำให้อันแรกเปิดมาติ๊กแอคทีฟไว้ก่อน
-            const isActive = index === 0;
-            
-            button.className = `w-full text-left p-3 rounded-xl font-bold text-xs transition-all flex items-center justify-between ${
-                isActive 
-                ? 'bg-white/10 text-white border border-white/20' 
-                : 'text-zinc-500 hover:bg-white/5 hover:text-zinc-300'
-            }`;
-            
-            button.innerHTML = `
-                <span class="truncate">${lesson}</span>
-                <span class="text-[9px] opacity-60">${isActive ? '● Active' : '⏱️'}</span>
-            `;
-            
-            // เพิ่มลูกเล่นเวลากดเปลี่ยนบทเรียนแบบง่าย ๆ
-            button.onclick = () => {
-                document.querySelectorAll('#lessons-container button').forEach(b => {
-                    b.className = "w-full text-left p-3 rounded-xl font-bold text-xs transition-all flex items-center justify-between text-zinc-500 hover:bg-white/5 hover:text-zinc-300";
-                });
-                button.className = "w-full text-left p-3 rounded-xl font-bold text-xs transition-all flex items-center justify-between bg-white/10 text-white border border-white/20";
-                
-                document.getElementById('active-lesson-title').innerText = lesson;
-                document.getElementById('active-lesson-desc').innerText = `เนื้อหาเจาะลึกและเวิร์กชอปของ ${lesson} กำลังเตรียมพร้อมในระบบการเรียนรู้ถัดไป...`;
-            };
-            
-            container.appendChild(button);
-        });
-        
-        // เซ็ตเนื้อหาแรกเข้า
-        document.getElementById('active-lesson-title').innerText = data.lessons[0];
+<main class="max-w-3xl mx-auto pt-24 pb-20 px-6">
+    <div id="loadingState" class="text-center py-20">
+        <div class="inline-block w-8 h-8 border-2 border-[#a855f7] border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p class="text-gray-500 text-sm">กำลังโหลดข้อมูลคอร์ส...</p>
+    </div>
+
+    <div id="courseHeader" class="mb-12 fade-in hidden">
+        <div id="courseBadge" class="text-[10px] font-black px-3 py-1 rounded-full uppercase w-fit border mb-4"></div>
+        <h1 id="course-title" class="text-5xl font-black italic tracking-tighter mb-3"></h1>
+        <p id="course-desc" class="text-gray-500 text-sm"></p>
+        <div class="mt-6 bg-zinc-900 rounded-full h-2 overflow-hidden">
+            <div id="progressBar" class="h-2 rounded-full transition-all duration-700" style="width:0%"></div>
+        </div>
+        <div class="flex items-center justify-between mt-2">
+            <p class="text-[11px] text-gray-600" id="progressLabel">0% เสร็จแล้ว</p>
+            <p class="text-[11px] text-gray-600" id="progressDetail"></p>
+        </div>
+    </div>
+
+    <div id="lesson-list" class="space-y-4"></div>
+</main>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const type   = params.get('course') || 'python';
+
+    function getUnlockedLevel(courseType) {
+        return parseInt(localStorage.getItem(`zenith_progress_${courseType}`) || '1');
     }
 
-    window.onload = initCourse;
+    const themeMap = {
+        python:     { badge:'Python Expert', bgClass:'bg-[#2dd4bf]/10 text-[#2dd4bf] border-[#2dd4bf]/25', desc:'จัดการงานซ้ำๆ ให้เป็นระบบอัตโนมัติขั้นสูงด้วย Python' },
+        javascript: { badge:'Web Dev',       bgClass:'bg-yellow-500/10 text-yellow-400 border-yellow-500/25', desc:'สร้างเว็บไซต์ให้มีชีวิตด้วย JavaScript ES6+' },
+        react:      { badge:'Frontend',      bgClass:'bg-blue-500/10 text-blue-400 border-blue-500/25', desc:'สร้าง Web App ระดับองค์กรด้วย React' },
+        php:        { badge:'Backend Dev',   bgClass:'bg-[#777bb4]/10 text-[#777bb4] border-[#777bb4]/25', desc:'พัฒนาฝั่ง Server และเชื่อมต่อฐานข้อมูลด้วย PHP' },
+        sql:        { badge:'Data Master',   bgClass:'bg-[#00758f]/10 text-[#00758f] border-[#00758f]/25', desc:'ออกแบบและจัดการฐานข้อมูลระดับมืออาชีพด้วย SQL' },
+        html:       { badge:'UI Designer',   bgClass:'bg-[#e34f26]/10 text-[#e34f26] border-[#e34f26]/25', desc:'สร้างโครงสร้างเว็บไซต์และดีไซน์ด้วย HTML5 & CSS3' }
+    };
+
+    // ใช้การโหลดไฟล์แบบมี timestamp เพื่อป้องกันไฟล์เก่าค้างใน Cache
+    const script = document.createElement('script');
+    script.src = `assets/js/${type}_data.js?t=${Date.now()}`;
+    script.async = true;
+
+    script.onload = () => {
+        document.getElementById('loadingState').classList.add('hidden');
+        
+        // เช็คว่าโหลดข้อมูลสำเร็จไหม
+        if (typeof courseData === 'undefined') {
+            document.getElementById('loadingState').innerHTML = `<p class="text-red-500">Error: ไม่พบข้อมูลใน assets/js/${type}_data.js</p>`;
+            return;
+        }
+
+        const theme = themeMap[type] || themeMap.python;
+        const unlocked = getUnlockedLevel(type);
+        const total = courseData.lessons.length;
+        const doneLessons = Math.max(0, unlocked - 1);
+        const pct = Math.min((doneLessons / total) * 100, 100);
+
+        document.getElementById('courseHeader').classList.remove('hidden');
+        
+        // อัปเดตข้อมูล UI
+        const badge = document.getElementById('courseBadge');
+        badge.textContent = theme.badge;
+        badge.className = `text-[10px] font-black px-3 py-1 rounded-full uppercase w-fit border mb-4 ${theme.bgClass}`;
+        
+        const titleEl = document.getElementById('course-title');
+        titleEl.innerText = courseData.title;
+        titleEl.style.color = courseData.themeColor;
+        
+        document.getElementById('course-desc').textContent = theme.desc;
+        document.getElementById('progressBar').style.background = courseData.themeColor;
+        document.getElementById('progressBar').style.width = pct + '%';
+        document.getElementById('progressLabel').textContent = `${Math.round(pct)}% เสร็จแล้ว`;
+        document.getElementById('progressDetail').textContent = `${doneLessons} / ${total} บท`;
+
+        const list = document.getElementById('lesson-list');
+        list.innerHTML = '';
+
+        courseData.lessons.forEach((lesson, idx) => {
+            const isUnlocked = lesson.id <= unlocked;
+            const isDone = lesson.id < unlocked;
+            const isCurrent = lesson.id === unlocked;
+
+            const div = document.createElement('div');
+            div.className = `lesson-card p-6 flex justify-between items-center fade-in ${!isUnlocked ? 'locked' : isDone ? 'done' : ''}`;
+            div.style.animationDelay = `${idx * 0.06}s`;
+            
+            div.innerHTML = `
+                <div class="flex items-center gap-5 min-w-0">
+                    <div class="w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm flex-shrink-0"
+                         style="background:${isDone ? 'rgba(45,212,191,0.15)' : isUnlocked ? courseData.themeColor+'22' : 'rgba(255,255,255,0.04)'};
+                                color:${isDone ? '#2dd4bf' : isUnlocked ? courseData.themeColor : '#555'}">
+                        ${isDone ? '✓' : String(lesson.id).padStart(2,'0')}
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2 mb-0.5">
+                            <h3 class="font-bold text-sm ${isUnlocked ? 'text-white' : 'text-zinc-600'}">${lesson.title}</h3>
+                            ${isCurrent ? '<span class="text-[8px] bg-[#a855f7]/20 text-[#a855f7] px-1.5 py-0.5 rounded font-black uppercase flex-shrink-0">ถัดไป</span>' : ''}
+                        </div>
+                        <p class="text-zinc-600 text-xs">${lesson.desc}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 flex-shrink-0 ml-4">
+                    ${!isUnlocked 
+                        ? `<svg class="w-4 h-4 text-zinc-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>`
+                        : `<a href="lesson.html?course=${type}&id=${lesson.id}" class="w-full">
+                            <button style="background:${isDone ? 'rgba(45,212,191,0.15)' : courseData.themeColor};color:${isDone ? '#2dd4bf' : 'black'}"
+                                class="px-5 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-lg whitespace-nowrap">
+                                ${isDone ? 'ทบทวน' : 'เริ่มเรียน'}
+                            </button>
+                           </a>`
+                    }
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    };
+
+    script.onerror = () => {
+        document.getElementById('loadingState').innerHTML = `<p class="text-red-500">Error: ไม่พบไฟล์ ${type}_data.js</p>`;
+    };
+
+    document.head.appendChild(script);
 </script>
 </body>
 </html>
