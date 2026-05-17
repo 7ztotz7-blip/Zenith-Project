@@ -1,6 +1,6 @@
 const courseData = {
     title: "CSS Styling & UI Design",
-    themeColor: "#38bdf8", // สีฟ้านีออนสไตล์ Tailwind / CSS Expert
+    themeColor: "#38bdf8", // สีฟ้านีออนแมตช์เข้ากับโมดูลการ์ดแทน React
     lessons: [
         {
             id: 1,

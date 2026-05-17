@@ -46,13 +46,13 @@
             transform: translateY(-10px) scale(1.02);
         }
 
-        /* Hover Effects */
+        /* Hover Effects - อัปเดตสีแมตช์ตามรายวิชาใหม่ */
         .card-python:hover { border-color: #2dd4bf; box-shadow: 0 0 40px rgba(45, 212, 191, 0.25); }
         .card-js:hover { border-color: #eab308; box-shadow: 0 0 40px rgba(234, 179, 8, 0.25); }
-        .card-react:hover { border-color: #3b82f6; box-shadow: 0 0 40px rgba(59, 130, 246, 0.25); }
+        .card-css:hover { border-color: #38bdf8; box-shadow: 0 0 40px rgba(56, 189, 248, 0.25); }
         .card-html:hover { border-color: #f97316; box-shadow: 0 0 40px rgba(249, 115, 22, 0.25); }
-        .card-php:hover { border-color: #6366f1; box-shadow: 0 0 40px rgba(99, 102, 241, 0.25); }
-        .card-sql:hover { border-color: #0ea5e9; box-shadow: 0 0 40px rgba(14, 165, 233, 0.25); }
+        .card-php:hover { border-color: #777bb4; box-shadow: 0 0 40px rgba(119, 123, 180, 0.25); }
+        .card-sql:hover { border-color: #00758f; box-shadow: 0 0 40px rgba(0, 117, 143, 0.25); }
 
         .nav-blur {
             background: rgba(5, 5, 5, 0.7);
@@ -62,7 +62,7 @@
 
         .img-python { background: linear-gradient(135deg, #064e3b 0%, #0d9488 100%); }
         .img-js { background: linear-gradient(135deg, #713f12 0%, #eab308 100%); }
-        .img-react { background: linear-gradient(135deg, #1e3a5f 0%, #60a5fa 100%); }
+        .img-css { background: linear-gradient(135deg, #0369a1 0%, #38bdf8 100%); }
 
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #050505; }
@@ -108,7 +108,7 @@
         <p class="text-gray-500 text-[9px] font-black uppercase tracking-widest mt-1">Modules</p>
     </div>
     <div class="bg-white/5 border border-white/5 backdrop-blur-md py-6 px-4 rounded-3xl flex flex-col justify-center">
-        <p class="text-2xl md:text-4xl font-black text-[#2dd4bf] italic leading-none">30+</p>
+        <p class="text-2xl md:text-4xl font-black text-[#2dd4bf] italic leading-none">30</p>
         <p class="text-gray-500 text-[9px] font-black uppercase tracking-widest mt-1">Lessons</p>
     </div>
     <div class="bg-white/5 border border-white/5 backdrop-blur-md py-6 px-4 rounded-3xl flex flex-col justify-center">
@@ -141,7 +141,7 @@
         <div class="zenith-card card-js p-5 flex flex-col">
             <div class="flex justify-between items-center mb-3">
                 <span class="text-[8px] font-black bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
-                <span class="text-[9px] text-gray-500 font-bold">6 บทเรียน • 60 นาที</span>
+                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 60 นาที</span>
             </div>
             <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-js mb-4 text-4xl md:text-5xl">💛</div>
             <h4 class="text-lg md:text-xl font-black text-white mb-1 italic uppercase">JavaScript</h4>
@@ -151,27 +151,27 @@
             </a>
         </div>
 
-        <div class="zenith-card card-react p-5 flex flex-col">
+        <div class="zenith-card card-css p-5 flex flex-col">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[8px] font-black bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider">Advanced</span>
-                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 55 นาที</span>
+                <span class="text-[8px] font-black bg-sky-500/10 text-sky-400 border border-sky-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
+                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 50 นาที</span>
             </div>
-            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-react mb-4 text-4xl md:text-5xl">⚛️</div>
-            <h4 class="text-lg md:text-xl font-black text-white mb-1 italic uppercase">React</h4>
-            <p class="text-gray-500 text-[11px] leading-relaxed mb-4 flex-grow">Build high-performance, component-based user interfaces for the modern web.</p>
-            <a href="course.html?course=react">
-                <button class="w-full py-2.5 bg-white/5 border border-white/10 hover:bg-blue-500 hover:text-white hover:border-blue-500 text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
+            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-css mb-4 text-4xl md:text-5xl">🎨</div>
+            <h4 class="text-lg md:text-xl font-black text-white mb-1 italic uppercase">CSS Styling</h4>
+            <p class="text-gray-500 text-[11px] leading-relaxed mb-4 flex-grow">Master interface design. Learn modern Glassmorphism, layout architecture and sleek UI animations.</p>
+            <a href="course.html?course=css">
+                <button class="w-full py-2.5 bg-white/5 border border-white/10 hover:bg-[#38bdf8] hover:text-black hover:border-[#38bdf8] text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
         <div class="zenith-card card-html p-5 flex flex-col">
             <div class="flex justify-between items-center mb-3">
                 <span class="text-[8px] font-black bg-orange-500/10 text-orange-500 border border-orange-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider">Beginner</span>
-                <span class="text-[9px] text-gray-500 font-bold">4 บทเรียน • 30 นาที</span>
+                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 30 นาที</span>
             </div>
             <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center mb-4 text-4xl md:text-5xl" style="background: linear-gradient(135deg, #7c2d12 0%, #f97316 100%);">🌐</div>
-            <h4 class="text-lg md:text-xl font-black text-white mb-1 italic uppercase">HTML & CSS</h4>
-            <p class="text-gray-500 text-[11px] leading-relaxed mb-4 flex-grow">The blueprint of the web. Learn to structure and style beautiful digital experiences.</p>
+            <h4 class="text-lg md:text-xl font-black text-white mb-1 italic uppercase">HTML Structure</h4>
+            <p class="text-gray-500 text-[11px] leading-relaxed mb-4 flex-grow">The blueprint of the web. Learn to structure content and define the core web elements.</p>
             <a href="course.html?course=html">
                 <button class="w-full py-2.5 bg-white/5 border border-white/10 hover:bg-orange-500 hover:text-white hover:border-orange-500 text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
@@ -214,7 +214,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="bg-white/5 border border-white/5 p-5 rounded-2xl backdrop-blur-md">
             <h5 class="text-base font-black text-[#2dd4bf] italic mb-1">FRONT-END DEVELOPER</h5>
-            <p class="text-gray-400 text-xs leading-relaxed">เลือกเรียนคอร์ส HTML & CSS ➔ JavaScript ➔ React เพื่อพัฒนา Interface ระดับสูง</p>
+            <p class="text-gray-400 text-xs leading-relaxed">เลือกเรียนคอร์ส HTML Structure ➔ CSS Styling ➔ JavaScript เพื่อพัฒนา Interface และ UI/UX ระดับสูง</p>
         </div>
         <div class="bg-white/5 border border-white/5 p-5 rounded-2xl backdrop-blur-md">
             <h5 class="text-base font-black text-[#a855f7] italic mb-1">BACK-END DEVELOPER</h5>
