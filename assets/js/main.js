@@ -10,6 +10,9 @@ let currentLessonId = 1;
 const XP_PER_CORRECT = 50;
 const XP_PER_LEVEL   = 200;
 
+// สร้างตัวแปรส่วนกลางสำหรับเก็บข้อมูลควิซที่สลับช้อยส์แล้วในบทเรียนปัจจุบัน
+let currentRandomizedQuiz = null;
+
 // ─── XP & LEVEL ──────────────────────────────────────────────
 function getXP()      { return parseInt(localStorage.getItem('zenith_xp') || '0'); }
 function getLevel()   { return Math.floor(getXP() / XP_PER_LEVEL) + 1; }
@@ -119,6 +122,25 @@ function showAchievementToast(a) {
     setTimeout(() => el.remove(), 4000);
 }
 
+// ─── UTILITY FUNCTIONS (ระบบสุ่มสลับช้อยส์) ───────────────────────
+function shuffleArray(array) {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+}
+
+function getShuffledQuiz(originalQuiz) {
+    let quiz = JSON.parse(JSON.stringify(originalQuiz));
+    let correctAnswerText = quiz.options[quiz.ans];
+    quiz.options = shuffleArray(quiz.options);
+    quiz.ans = quiz.options.indexOf(correctAnswerText);
+    return quiz;
+}
+
 // ─── UI CONTROLLER ───
 function updateUI() {
     if (typeof courseData === 'undefined' || !courseData.lessons) return;
@@ -152,14 +174,18 @@ function updateUI() {
         }
     }
 
-    // ─── 2. เจนเนอเรตควิซและตัวเลือกคำตอบ ───
+    // ─── 2. เจนเนอเรตควิซและตัวเลือกคำตอบ (ผสานระบบสุ่มตรงนี้เลย) ───
     const questionTextEl = document.getElementById('questionText');
     if (questionTextEl) questionTextEl.innerText = lesson.quiz.q;
 
+    // สั่งสุ่มควิซของบทเรียนนี้เก็บไว้ในตัวแปรกลาง เพื่อเอาไว้ใช้เช็กคำตอบตอนคลิก
+    currentRandomizedQuiz = getShuffledQuiz(lesson.quiz);
+
     const container = document.getElementById('optionsContainer');
-    if (container) {
-        container.innerHTML = lesson.quiz.options.map((opt, i) => `
-            <button onclick="checkAns(${i}, ${lesson.quiz.ans}, this)"
+    if (container && currentRandomizedQuiz) {
+        // ใช้ข้อมูลช้อยส์จากตัวที่สุ่มเรียบร้อยแล้วไปแสดงผลในปุ่ม HTML
+        container.innerHTML = currentRandomizedQuiz.options.map((opt, i) => `
+            <button onclick="checkAns(${i}, ${currentRandomizedQuiz.ans}, this)"
                     class="option-btn">
                 <span class="text-[#a855f7] font-black mr-3">${String.fromCharCode(65+i)}.</span>${opt}
             </button>`).join('');
