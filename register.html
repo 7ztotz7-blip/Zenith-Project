@@ -62,7 +62,6 @@
 
 <div class="w-full max-w-4xl grid md:grid-cols-2 gap-8 items-center">
 
-    <!-- Left: Perks -->
     <div class="hidden md:block fade-up">
         <a href="index.html" class="text-4xl font-black text-[#a855f7] italic tracking-tighter block mb-3">ZENITH.</a>
         <p class="text-gray-500 text-sm mb-10 uppercase tracking-widest">เริ่มต้นเส้นทาง Mastery ของคุณ</p>
@@ -92,15 +91,14 @@
 
         <div class="mt-10 bg-white/[0.02] border border-white/5 rounded-2xl p-5">
             <p class="text-[10px] text-gray-600 uppercase tracking-widest font-black mb-3">คอร์สที่มีให้เรียน</p>
-            <div class="flex gap-3">
+            <div class="flex flex-wrap gap-3">
                 <span class="text-xs font-black bg-[#2dd4bf]/10 text-[#2dd4bf] border border-[#2dd4bf]/20 px-3 py-1.5 rounded-full">🐍 Python</span>
                 <span class="text-xs font-black bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-3 py-1.5 rounded-full">💛 JavaScript</span>
-                <span class="text-xs font-black bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1.5 rounded-full">⚛️ React</span>
+                <span class="text-xs font-black bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1.5 rounded-full">🎨 CSS Styling</span>
             </div>
         </div>
     </div>
 
-    <!-- Right: Form -->
     <div class="auth-card p-10 relative overflow-hidden fade-up delay-1">
         <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#a855f7] to-transparent"></div>
         <div class="absolute -top-20 -right-20 w-40 h-40 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -117,7 +115,7 @@
         <div class="flex flex-col gap-4">
             <div>
                 <label class="text-[10px] text-gray-500 uppercase tracking-widest font-black ml-1 block mb-1.5">ชื่อของคุณ</label>
-                <input type="text" id="regName" placeholder="ชื่อที่ใช้แสดงในระบบ" class="auth-input">
+                <input type="text" id="regName" placeholder="ชื่อที่ใช้แสดงในระบบ" class="auth-input" onkeydown="checkEnter(event)">
             </div>
 
             <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
@@ -166,22 +164,21 @@
             return;
         }
 
-        // บันทึกข้อมูลและเริ่ม streak
+        // บันทึกข้อมูลและเริ่มเซ็ตค่าเริ่มต้น (แก้ไข Streak ให้เริ่มต้นที่ 0 ให้ตรงกับภาพหน้าจอ UI)
         localStorage.setItem('zenith_user', name);
         localStorage.setItem('zenith_xp', '0');
-        localStorage.setItem('zenith_streak', '1');
+        localStorage.setItem('zenith_streak', '0'); 
         localStorage.setItem('zenith_last_date', new Date().toDateString());
         localStorage.setItem('zenith_achievements', '[]');
 
         window.location.href = 'index.html';
     }
 
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Enter') handleRegister();
-    });
-
-    if (localStorage.getItem('zenith_user')) {
-        window.location.href = 'index.html';
+    // ฟังก์ชันตรวจสอบการกดปุ่ม Enter เฉพาะเมื่อทำงานอยู่ใน Input Field
+    function checkEnter(event) {
+        if (event.key === 'Enter') {
+            handleRegister();
+        }
     }
 </script>
 </body>

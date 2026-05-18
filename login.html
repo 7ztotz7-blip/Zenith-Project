@@ -57,21 +57,31 @@
 
     <script>
         function saveUser() {
+            // ป้องกันปัญหาเบราว์เซอร์เก่าไม่รู้จัก event
+            const e = window.event || event; 
+            
             const name = document.getElementById('userNameInput').value.trim();
             const pass = document.getElementById('passwordInput').value.trim();
             
-            if (name !== "") {
-                // บันทึก key เป็น zenith_user ตามที่หน้า index.html ต้องการ
-                localStorage.setItem('zenith_user', name);
-                
-                // เอฟเฟกต์เล็กน้อยก่อนเปลี่ยนหน้า
-                event.target.innerText = "Authenticating...";
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 500);
-            } else {
-                alert('Please enter your username');
+            // 1. เช็กก่อนว่ากรอกครบทั้ง Username และ Password ไหม
+            if (name === "" || pass === "") {
+                alert('กรุณากรอกข้อมูลให้ครบถ้วนทั้ง Username และ Password');
+                return; // หยุดการทำงานทันทีถ้ากรอกไม่ครบ
             }
+            
+            // 2. บันทึกข้อมูลลง LocalStorage
+            localStorage.setItem('zenith_user', name);
+            
+            // 3. ปรับเอฟเฟกต์ปุ่มตอนกำลังโหลด (เช็กตัวแปร e ป้องกันโค้ดค้าง)
+            if (e && e.target) {
+                e.target.innerText = "Authenticating...";
+                e.target.disabled = true; // ล็อกปุ่มไว้ไม่ให้กดซ้ำซ้อน
+            }
+            
+            // 4. หน่วงเวลา 0.5 วินาทีแล้วเปลี่ยนหน้า
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 500);
         }
     </script>
 </body>
