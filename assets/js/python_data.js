@@ -1,56 +1,364 @@
-// assets/js/python_data.js
 const courseData = {
-    id: "python",
-    title: "Python Programming for Business",
-    description: "จัดการงานซ้ำๆ ให้เป็นระบบอัตโนมัติขั้นสูงด้วย Python สำหรับนวัตกรรมยุคใหม่",
+    title: "Python Programming",
+    themeColor: "#2dd4bf",
+
     lessons: [
+
         {
             id: 1,
+            title: "Python คืออะไร",
+            desc: "เริ่มต้นรู้จักภาษา Python",
+
             content: {
-                th: { 
-                    title: "บทที่ 1: แนะนำภาษา Python และการตั้งค่า", 
-                    desc: "ภาษา Python เป็นภาษาโปรแกรมระดับสูงที่อ่านง่าย คล้ายภาษาอังกฤษ เหมาะสำหรับใช้จัดการข้อมูลและทำระบบอัตโนมัติ (Automation) ในโลกธุรกิจ การเริ่มต้นใช้งานจำเป็นต้องติดตั้งตัวแปลภาษา Python และโปรแกรมเขียนโค้ด เช่น VS Code ให้เรียบร้อยก่อน",
-                    code: "# ตัวอย่างการเขียนสั่งแสดงผลครั้งแรก\nprint('Hello, Zenith Coder!')\nprint('Welcome to Python for Business')"
-                },
-                en: { 
-                    title: "Chapter 1: Introduction to Python", 
-                    desc: "Python is a high-level programming language known for readability, making it perfect for automation and data analysis. Setup requires installing Python interpreter and VS Code.",
-                    code: "print('Hello, Zenith Coder!')"
+                th: {
+                    title: "Python คืออะไร",
+                    desc: "Python เป็นภาษาโปรแกรมที่นิยมมาก ใช้ทำเว็บไซต์ AI เกม ระบบอัตโนมัติ และงานข้อมูล",
+
+                    code:
+`print("Hello World")`
                 }
             },
-            quiz: { q: "ข้อใดคือการประกาศตัวแปรที่ถูกต้องตามมาตรฐาน PEP 8?", options: ["user-score = 100", "1st_score = 100", "user_score = 100", "def = 100"], ans: 2 }
+
+            quiz: {
+                q: "Python ใช้ทำอะไรได้?",
+                options: [
+                    "สร้างเว็บไซต์",
+                    "AI",
+                    "Automation",
+                    "ถูกทุกข้อ"
+                ],
+                ans: 3
+            }
         },
+
         {
             id: 2,
+            title: "Variables",
+            desc: "การสร้างตัวแปร",
+
             content: {
-                th: { 
-                    title: "บทที่ 2: ตัวแปรและประเภทข้อมูล", 
-                    desc: "ตัวแปร (Variable) เปรียบเหมือนกล่องที่ใช้เก็บข้อมูลไว้ใช้งานในโปรแกรม Python มีจุดเด่นคือไม่จำเป็นต้องระบุประเภทข้อมูลตอนสร้าง ตัวระบบจะคำนวณชนิดข้อมูลให้เองอัตโนมัติ เช่น ข้อความ (String), เลขจำนวนเต็ม (Integer), และทศนิยม (Float)",
-                    code: "# การประกาศตัวแปรใน Python\nproduct_name = 'Notebook'\nprice = 25000\ntax_rate = 0.07\nis_available = True"
-                },
-                en: { 
-                    title: "Chapter 2: Variables & Data Types", 
-                    desc: "Variables act as containers for storing data values. Python has no command for declaring a variable; it is created the moment you first assign a value to it.",
-                    code: "product_name = 'Notebook'\nprice = 25000"
+                th: {
+                    title: "Variables",
+                    desc: "ตัวแปรใช้เก็บข้อมูล",
+
+                    code:
+`name = "Zenith"
+age = 18
+
+print(name)
+print(age)`
                 }
             },
-            quiz: { q: "ถ้าต้องการเก็บทศนิยมควรใช้ข้อมูลชนิดใด?", options: ["int", "float", "str", "bool"], ans: 1 }
+
+            quiz: {
+                q: "เครื่องหมายใดใช้กำหนดค่าให้ตัวแปร?",
+                options: ["=", "+", "*", "=="],
+                ans: 0
+            }
         },
+
         {
             id: 3,
+            title: "Input",
+            desc: "รับค่าจากผู้ใช้",
+
             content: {
-                th: { 
-                    title: "บทที่ 3: ตัวดำเนินการและการคำนวณ", 
-                    desc: "ตัวดำเนินการ (Operators) คือเครื่องหมายที่ใช้คำนวณทางคณิตศาสตร์และเปรียบเทียบตรรกะ เช่น เครื่องหมายบวก (+) ลบ (-) คูณ (*) หาร (/) รวมถึงเครื่องหมายพิเศษอย่างการหารเอาเศษ (%) และการยกกำลัง (**)",
-                    code: "# คำนวณราคาสินค้ารวมภาษี\nprice = 100\nvat = price * 0.07\ntotal_price = price + vat\nprint(total_price)  # ผลลัพธ์: 107.0"
-                },
-                en: { 
-                    title: "Chapter 3: Operators & Expressions", 
-                    desc: "Operators are used to perform operations on variables and values, including arithmetic operators (+, -, *, /) and modulus (%).",
-                    code: "total = 100 + (100 * 0.07)"
+                th: {
+                    title: "Input",
+                    desc: "ใช้ input() รับข้อมูล",
+
+                    code:
+`username = input("ชื่อ: ")
+
+print("สวัสดี", username)`
                 }
             },
-            quiz: { q: "เครื่องหมายใดใช้สำหรับการหารเอาเศษ (Modulus)?", options: ["/", "//", "%", "**"], ans: 2 }
+
+            quiz: {
+                q: "input() ใช้ทำอะไร?",
+                options: [
+                    "รับข้อมูล",
+                    "ลบข้อมูล",
+                    "คำนวณ",
+                    "ปิดโปรแกรม"
+                ],
+                ans: 0
+            }
+        },
+
+        {
+            id: 4,
+            title: "Data Types",
+            desc: "ชนิดข้อมูล",
+
+            content: {
+                th: {
+                    title: "ชนิดข้อมูล",
+                    desc: "Python มี string number boolean เป็นต้น",
+
+                    code:
+`name = "Zenith"
+age = 18
+price = 99.99
+isAdmin = True
+
+print(type(name))
+print(type(age))`
+                }
+            },
+
+            quiz: {
+                q: "True และ False คือชนิดข้อมูลอะไร?",
+                options: [
+                    "String",
+                    "Boolean",
+                    "Float",
+                    "Array"
+                ],
+                ans: 1
+            }
+        },
+
+        {
+            id: 5,
+            title: "Math Operators",
+            desc: "เครื่องหมายคำนวณ",
+
+            content: {
+                th: {
+                    title: "Operators",
+                    desc: "ใช้คำนวณตัวเลข",
+
+                    code:
+`a = 10
+b = 5
+
+print(a + b)
+print(a - b)
+print(a * b)
+print(a / b)`
+                }
+            },
+
+            quiz: {
+                q: "10 * 5 ได้เท่าไร?",
+                options: ["15", "20", "50", "100"],
+                ans: 2
+            }
+        },
+
+        {
+            id: 6,
+            title: "If Else",
+            desc: "เงื่อนไข",
+
+            content: {
+                th: {
+                    title: "If Else",
+                    desc: "ใช้ตรวจสอบเงื่อนไข",
+
+                    code:
+`age = 18
+
+if age >= 18:
+    print("ผู้ใหญ่")
+else:
+    print("เด็ก")`
+                }
+            },
+
+            quiz: {
+                q: "if ใช้ทำอะไร?",
+                options: [
+                    "สร้างตัวแปร",
+                    "สร้างเงื่อนไข",
+                    "ลบข้อมูล",
+                    "สร้างเว็บ"
+                ],
+                ans: 1
+            }
+        },
+
+        {
+            id: 7,
+            title: "Loops",
+            desc: "การวนลูป",
+
+            content: {
+                th: {
+                    title: "For Loop",
+                    desc: "ใช้ทำงานซ้ำ",
+
+                    code:
+`for i in range(5):
+    print(i)`
+                }
+            },
+
+            quiz: {
+                q: "range(5) ทำงานกี่รอบ?",
+                options: ["3", "4", "5", "6"],
+                ans: 2
+            }
+        },
+
+        {
+            id: 8,
+            title: "While Loop",
+            desc: "ลูปแบบเงื่อนไข",
+
+            content: {
+                th: {
+                    title: "While Loop",
+                    desc: "ทำงานจนกว่าเงื่อนไขจะเป็น False",
+
+                    code:
+`count = 1
+
+while count <= 5:
+    print(count)
+    count += 1`
+                }
+            },
+
+            quiz: {
+                q: "while ใช้อะไรควบคุม?",
+                options: [
+                    "เงื่อนไข",
+                    "สี",
+                    "ไฟล์",
+                    "อินเทอร์เน็ต"
+                ],
+                ans: 0
+            }
+        },
+
+        {
+            id: 9,
+            title: "Functions",
+            desc: "สร้างฟังก์ชัน",
+
+            content: {
+                th: {
+                    title: "Functions",
+                    desc: "ฟังก์ชันช่วยให้โค้ดเป็นระเบียบ",
+
+                    code:
+`def hello():
+    print("Hello")
+
+hello()`
+                }
+            },
+
+            quiz: {
+                q: "def ใช้ทำอะไร?",
+                options: [
+                    "สร้างฟังก์ชัน",
+                    "ลบฟังก์ชัน",
+                    "สร้าง loop",
+                    "สร้างตัวแปร"
+                ],
+                ans: 0
+            }
+        },
+
+        {
+            id: 10,
+            title: "Lists",
+            desc: "เก็บข้อมูลหลายค่า",
+
+            content: {
+                th: {
+                    title: "Lists",
+                    desc: "List ใช้เก็บหลายข้อมูล",
+
+                    code:
+`fruits = ["Apple", "Banana", "Orange"]
+
+print(fruits[0])`
+                }
+            },
+
+            quiz: {
+                q: "List ใช้อะไร?",
+                options: [
+                    "เก็บหลายข้อมูล",
+                    "สร้างเว็บ",
+                    "ต่ออินเทอร์เน็ต",
+                    "สร้างเกม"
+                ],
+                ans: 0
+            }
+        },
+
+        {
+            id: 11,
+            title: "Dictionary",
+            desc: "เก็บข้อมูลแบบ key value",
+
+            content: {
+                th: {
+                    title: "Dictionary",
+                    desc: "เก็บข้อมูลแบบ key:value",
+
+                    code:
+`user = {
+    "name": "Zenith",
+    "age": 18
+}
+
+print(user["name"])`
+                }
+            },
+
+            quiz: {
+                q: "Dictionary เก็บข้อมูลแบบใด?",
+                options: [
+                    "key:value",
+                    "HTML",
+                    "Loop",
+                    "Boolean"
+                ],
+                ans: 0
+            }
+        },
+
+        {
+            id: 12,
+            title: "Real Project",
+            desc: "โปรเจกต์จริง",
+
+            content: {
+                th: {
+                    title: "โปรแกรมคำนวณเกรด",
+                    desc: "ตัวอย่างโปรแกรมที่ใช้จริง",
+
+                    code:
+`score = int(input("คะแนน: "))
+
+if score >= 80:
+    print("A")
+elif score >= 70:
+    print("B")
+elif score >= 60:
+    print("C")
+else:
+    print("F")`
+                }
+            },
+
+            quiz: {
+                q: "elif ใช้ทำอะไร?",
+                options: [
+                    "เพิ่มเงื่อนไข",
+                    "สร้างเว็บ",
+                    "สร้างตัวแปร",
+                    "จบโปรแกรม"
+                ],
+                ans: 0
+            }
         }
+
     ]
 };

@@ -250,10 +250,13 @@
         if (loggedInUser) {
             const authZone = document.getElementById('auth-zone');
             if (authZone) {
-                // อัปเกรดแถบเมนูขวาบนให้แสดงผลชื่อผู้ใช้อย่างล้ำลึกพร้อมปุ่มออกจากระบบ
+                // ดึงค่า Progress มาแสดงผล ถ้ายังไม่มีให้เริ่มต้นที่ 0
+                const progress = localStorage.getItem('zenith_progress') || '0';
+                
+                // อัปเกรดแถบเมนูขวาบนให้แสดงผลชื่อผู้ใช้อย่างล้ำลึกพร้อมปุ่มออกจากระบบและ Progress %
                 authZone.innerHTML = `
                     <span class="text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest border border-white/10 bg-white/5 px-4 py-2 rounded-full">
-                        👋 HI, ${loggedInUser}
+                        👋 HI, ${loggedInUser} (${progress}%)
                     </span>
                     <button onclick="logout()" class="text-zinc-500 hover:text-red-400 text-[9px] md:text-[10px] font-black uppercase tracking-widest transition">
                         Logout
@@ -265,6 +268,7 @@
 
     function logout() {
         if (confirm("คุณต้องการออกจากระบบใช่หรือไม่?")) {
+            // ลบข้อมูลที่เกี่ยวข้องกับ session ออกให้หมดเพื่อความสะอาด
             localStorage.removeItem('zenith_user');
             window.location.reload(); // รีเฟรชหน้าเว็บเพื่อคืนค่าเดิม
         }

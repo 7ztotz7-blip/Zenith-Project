@@ -68,24 +68,24 @@
 
         <div class="space-y-5">
             <div class="perk-item">
-                <span>⚡</span>
-                <div><p class="text-white font-bold text-sm">ระบบ XP & Level</p><p class="text-[11px]">สะสม XP และเลเวลอัพตามทักษะของคุณ</p></div>
+                <span>📊</span>
+                <div><p class="text-white font-bold text-sm">ระบบบันทึก Progress</p><p class="text-[11px]">ติดตามความคืบหน้าการเรียนรู้ของคุณแบบเรียลไทม์</p></div>
             </div>
             <div class="perk-item">
                 <span>🔥</span>
-                <div><p class="text-white font-bold text-sm">Streak ประจำวัน</p><p class="text-[11px]">เรียนทุกวันเพื่อรักษา Streak และรับ bonus</p></div>
+                <div><p class="text-white font-bold text-sm">Streak ประจำวัน</p><p class="text-[11px]">เรียนรู้ต่อเนื่องในทุกๆ วันเพื่อรักษาสถิติการฝึกฝน</p></div>
             </div>
             <div class="perk-item">
                 <span>🏆</span>
-                <div><p class="text-white font-bold text-sm">Achievement Badges</p><p class="text-[11px]">ปลดล็อค badge สะสมผ่านความสำเร็จต่างๆ</p></div>
+                <div><p class="text-white font-bold text-sm">Achievement Badges</p><p class="text-[11px]">ปลดล็อคตราความสำเร็จเมื่อเรียนจบแต่ละหลักสูตร</p></div>
             </div>
             <div class="perk-item">
                 <span>🔓</span>
-                <div><p class="text-white font-bold text-sm">Unlock ระบบ</p><p class="text-[11px]">ผ่าน quiz เพื่อเปิดบทเรียนถัดไป</p></div>
+                <div><p class="text-white font-bold text-sm">Unlock ควิซท้ายบท</p><p class="text-[11px]">ผ่านแบบทดสอบความรู้เพื่อก้าวเข้าสู่เนื้อหาขั้นต่อไป</p></div>
             </div>
             <div class="perk-item">
                 <span>🌐</span>
-                <div><p class="text-white font-bold text-sm">รองรับ 2 ภาษา</p><p class="text-[11px]">เรียนได้ทั้งภาษาไทยและอังกฤษ</p></div>
+                <div><p class="text-white font-bold text-sm">สถาปัตยกรรมระดับสากล</p><p class="text-[11px]">โครงสร้างเนื้อหาถูกจูนมาเพื่อนักพัฒนารุ่นใหม่</p></div>
             </div>
         </div>
 
@@ -122,12 +122,12 @@
                 <p class="text-[10px] text-gray-600 uppercase tracking-widest font-black mb-2">เริ่มต้นด้วย</p>
                 <div class="flex gap-2">
                     <div class="text-center p-2 flex-1">
-                        <p class="text-xl font-black text-[#a855f7]">0 XP</p>
-                        <p class="text-[9px] text-gray-600">เริ่มต้น</p>
+                        <p class="text-xl font-black text-[#a855f7]">0/30</p>
+                        <p class="text-[9px] text-gray-600">บทเรียน</p>
                     </div>
                     <div class="text-center p-2 flex-1">
-                        <p class="text-xl font-black text-white">LV 1</p>
-                        <p class="text-[9px] text-gray-600">Level</p>
+                        <p class="text-xl font-black text-white">0%</p>
+                        <p class="text-[9px] text-gray-600">Progress</p>
                     </div>
                     <div class="text-center p-2 flex-1">
                         <p class="text-xl font-black text-[#2dd4bf]">0🔥</p>
@@ -164,17 +164,17 @@
             return;
         }
 
-        // บันทึกข้อมูลและเริ่มเซ็ตค่าเริ่มต้น (แก้ไข Streak ให้เริ่มต้นที่ 0 ให้ตรงกับภาพหน้าจอ UI)
+        // 💾 บันทึกข้อมูลเข้าเบราว์เซอร์ด้วยสคีมาใหม่ (ตัดระบบ XP & Level)
         localStorage.setItem('zenith_user', name);
-        localStorage.setItem('zenith_xp', '0');
-        localStorage.setItem('zenith_streak', '0'); 
+        localStorage.setItem('zenith_completed_lessons', '0'); // จำนวนบทเรียนที่สำเร็จ
+        localStorage.setItem('zenith_progress', '0');          // เปอร์เซ็นต์ความสำเร็จภาพรวม
+        localStorage.setItem('zenith_streak', '0');            // จำนวนวันเข้าใช้งานต่อเนื่อง
         localStorage.setItem('zenith_last_date', new Date().toDateString());
         localStorage.setItem('zenith_achievements', '[]');
 
         window.location.href = 'index.html';
     }
 
-    // ฟังก์ชันตรวจสอบการกดปุ่ม Enter เฉพาะเมื่อทำงานอยู่ใน Input Field
     function checkEnter(event) {
         if (event.key === 'Enter') {
             handleRegister();
