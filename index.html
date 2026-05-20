@@ -5,242 +5,274 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zenith | Mastery. Code. Evolution.</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Kanit', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; }
+        body { 
+            font-family: 'Kanit', sans-serif; 
+            overflow-x: hidden; 
+        }
 
-        /* Full Page Video Background */
+        /* ❄️ สไตล์พื้นหลังไล่เฉดสีโหมดสว่าง (Arctic Theme) */
+        body {
+            background: linear-gradient(135deg, #F4F9FF 0%, #E8F5FF 50%, #D4E9FF 100%);
+            background-attachment: fixed;
+        }
+
+        /* 🔮 สลับกลับเป็นพื้นหลังมืดสนิทเมื่ออยู่โหมดมืด */
+        body.dark {
+            background: #0b0713;
+        }
+
+        /* 🎥 วิดีโอพื้นหลังโหมดมืด (ชัดเจน 65%) */
         #bg-video {
-            position: fixed;
-            right: 0; bottom: 0;
+            position: fixed; right: 0; bottom: 0;
             min-width: 100%; min-height: 100%;
-            z-index: -2;
-            object-fit: cover;
-            opacity: 0.6;
-            filter: saturate(1.2) brightness(0.9);
+            z-index: -2; object-fit: cover;
+            opacity: 0.65;
+            filter: saturate(1);
+            display: none;
         }
-
-        @media (max-width: 768px) {
-            #bg-video { opacity: 0.3; }
+        .dark #bg-video {
+            display: block;
         }
-
+        
         .video-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 40%, #050505 120%);
+            position: fixed; inset: 0;
             z-index: -1;
             pointer-events: none;
+            background: transparent;
+        }
+        .dark .video-overlay {
+            background: radial-gradient(circle at 50% 50%, rgba(11, 7, 19, 0.2) 0%, #0b0713 90%);
         }
 
-        /* Glassmorphic Cards Design */
+        /* 🤍 ดีไซน์กล่องการ์ดแนวโปร่งแสงมีมิติ รองรับการไล่เฉดของพื้นหลัง (Light Mode) */
         .zenith-card {
-            background: rgba(13, 13, 14, 0.6);
-            border: 1px solid rgba(168, 85, 247, 0.1);
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(0, 80, 216, 0.1);
             backdrop-filter: blur(12px);
-            border-radius: 32px;
+            box-shadow: 0 8px 32px 0 rgba(0, 80, 216, 0.03);
+            border-radius: 24px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        .zenith-card:hover {
-            transform: translateY(-10px) scale(1.02);
+        .zenith-card:hover { 
+            transform: translateY(-8px);
+            border-color: #0050D8; /* ขอบเรืองแสงสีน้ำเงิน Arctic ตอน Hover */
+            box-shadow: 0 20px 40px rgba(0, 80, 216, 0.1);
+            background: rgba(255, 255, 255, 0.95);
         }
 
-        /* Hover Effects - อัปเดตสีแมตช์ตามรายวิชาใหม่ */
-        .card-python:hover { border-color: #2dd4bf; box-shadow: 0 0 40px rgba(45, 212, 191, 0.25); }
-        .card-js:hover { border-color: #eab308; box-shadow: 0 0 40px rgba(234, 179, 8, 0.25); }
-        .card-css:hover { border-color: #38bdf8; box-shadow: 0 0 40px rgba(56, 189, 248, 0.25); }
-        .card-html:hover { border-color: #f97316; box-shadow: 0 0 40px rgba(249, 115, 22, 0.25); }
-        .card-php:hover { border-color: #777bb4; box-shadow: 0 0 40px rgba(119, 123, 180, 0.25); }
-        .card-sql:hover { border-color: #00758f; box-shadow: 0 0 40px rgba(0, 117, 143, 0.25); }
-
-        .nav-blur {
-            background: rgba(5, 5, 5, 0.7);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        /* 🔮 ดีไซน์การ์ดเมื่อสลับเข้าโหมดมืด */
+        .dark .zenith-card {
+            background: rgba(25, 18, 44, 0.45);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            backdrop-filter: blur(24px);
+            box-shadow: none;
+        }
+        .dark .zenith-card:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.15);
         }
 
-        .img-python { background: linear-gradient(135deg, #064e3b 0%, #0d9488 100%); }
-        .img-js { background: linear-gradient(135deg, #713f12 0%, #eab308 100%); }
-        .img-css { background: linear-gradient(135deg, #0369a1 0%, #38bdf8 100%); }
+        /* สีไล่เฉดของกล่องเก็บรูปภาพวิชา (ในโหมดสว่างปรับเป็นโทนอาร์กติกอ่อน ๆ) */
+        .img-python { background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%); }
+        .img-js { background: linear-gradient(135deg, #fffde6 0%, #fef9c3 100%); }
+        .img-css { background: linear-gradient(135deg, #F4F9FF 0%, #E8F5FF 100%); }
+
+        .dark .img-python { background: linear-gradient(135deg, rgba(13,148,136,0.15) 0%, rgba(45,212,191,0.35) 100%); }
+        .dark .img-js { background: linear-gradient(135deg, rgba(202,138,4,0.15) 0%, rgba(253,224,71,0.35) 100%); }
+        .dark .img-css { background: linear-gradient(135deg, rgba(2,132,199,0.15) 0%, rgba(56,189,248,0.35) 100%); }
 
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: #E8F5FF; }
+        .dark ::-webkit-scrollbar-track { background: #0b0713; }
+        ::-webkit-scrollbar-thumb { background: #0050D8/30; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #3b2d54; }
     </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
 </head>
-<body>
+<body class="text-slate-800 dark:text-gray-200 transition-colors duration-300">
 
 <video autoplay loop muted playsinline id="bg-video">
     <source src="gg-video.mp4" type="video/mp4">
 </video>
 <div class="video-overlay"></div>
 
-<nav class="fixed top-0 w-full z-50 h-auto py-4 md:h-20 flex items-center justify-between px-6 md:px-10 nav-blur">
+<nav class="fixed top-0 w-full z-50 h-auto py-4 md:h-20 flex items-center justify-between px-6 md:px-10 border-b border-blue-100 bg-[#F4F9FF]/80 dark:bg-[#0b0713]/70 dark:border-purple-950/40 backdrop-filter backdrop-blur-xl transition-colors duration-300">
     <div class="flex items-center gap-4 md:gap-12">
-        <h1 class="text-xl md:text-2xl font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
-        <div class="hidden lg:flex items-center gap-8 text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">
-            <a href="#courses" class="hover:text-[#a855f7] transition-all">คอร์สทั้งหมด</a>
-            <a href="#career-path" class="hover:text-[#a855f7] transition-all">เส้นทางอาชีพ</a>
-            <a href="#about" class="hover:text-[#a855f7] transition-all">เกี่ยวกับเรา</a>
+        <h1 class="text-xl md:text-2xl font-black text-[#0050D8] dark:text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
+        <div class="hidden lg:flex items-center gap-8 text-[11px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-[0.2em]">
+            <a href="#courses" class="hover:text-[#0050D8] dark:hover:text-purple-400 transition-all">คอร์สทั้งหมด</a>
+            <a href="#career-path" class="hover:text-[#0050D8] dark:hover:text-purple-400 transition-all">เส้นทางอาชีพ</a>
+            <a href="#about" class="hover:text-[#0050D8] dark:hover:text-purple-400 transition-all">เกี่ยวกับเรา</a>
         </div>
     </div>
     
-    <div id="auth-zone" class="flex items-center gap-3 md:gap-6">
-        <a href="login.html" id="signin-btn" class="text-gray-400 hover:text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest transition">
-            Sign In
-        </a>
-        <a href="register.html" id="getstarted-btn" class="bg-[#a855f7] text-white px-4 py-2 md:px-8 md:py-3 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] shadow-lg shadow-purple-500/20 hover:scale-105 transition-all">
-            Get Started
-        </a>
+    <div class="flex items-center gap-3">
+        <button id="theme-toggle" class="p-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-[#0050D8] dark:text-purple-300 transition-all flex items-center justify-center">
+            <svg id="theme-toggle-dark-icon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 14.142l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706-.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zM4 10a1 1 0 100-2H3a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+        </button>
+
+        <div id="auth-zone" class="flex items-center gap-3">
+            <a href="login.html" id="signin-btn" class="text-slate-500 dark:text-gray-400 hover:text-[#0050D8] dark:hover:text-white text-[10px] font-bold uppercase tracking-widest transition px-2">
+                Sign In
+            </a>
+            <a href="register.html" id="getstarted-btn" class="bg-[#0050D8] dark:bg-[#a855f7] text-white px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.15em] shadow-md hover:bg-[#003bb0] dark:hover:bg-[#9333ea] transition-all">
+                Get Started
+            </a>
+        </div>
     </div>
 </nav>
 
-<header class="relative w-full flex flex-col items-center justify-center text-center px-4 pt-32 pb-6">
-    <div class="relative">
-        <p class="text-[#a855f7] text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] mb-1 opacity-80">Next-Gen Learning Platform</p>
-        <h2 class="text-4xl md:text-5xl font-black text-white tracking-tighter italic leading-none drop-shadow-[0_0_20px_rgba(168,85,247,0.4)]">ZENITH</h2>
-        <p class="text-[#2dd4bf] text-[8px] md:text-[9px] mt-1 font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Mastery • Evolution</p>
-    </div>
-</header>
+<section class="max-w-6xl mx-auto px-6 md:px-8 mt-28 mb-8">
+    <div class="bg-white/90 dark:bg-[#130d22]/80 border border-blue-100/60 dark:border-purple-950/40 rounded-[24px] px-5 md:px-8 py-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4 transition-all duration-300">
+        <div class="flex-1">
+            <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-[#0050D8] dark:text-purple-400 mb-1.5">Zenith Classroom</p>
+            <h1 class="text-2xl md:text-3xl font-black text-slate-800 dark:text-white tracking-tight leading-tight mb-2">เรียนเขียนโค้ดแบบใช้งานจริง</h1>
+            <p class="text-slate-500 dark:text-gray-400 text-xs md:text-sm leading-relaxed max-w-2xl">เรียน HTML, CSS, JavaScript, Python, PHP และ SQL พร้อมตัวอย่างจริงและแบบฝึกหัด</p>
+        </div>
 
-<section class="max-w-xl mx-auto grid grid-cols-3 gap-3 px-6 mb-8 text-center relative z-10">
-    <div class="bg-white/5 border border-white/5 backdrop-blur-md py-3 px-2 rounded-2xl flex flex-col justify-center">
-        <p class="text-xl md:text-2xl font-black text-[#a855f7] italic leading-none">6</p>
-        <p class="text-gray-500 text-[8px] font-bold uppercase tracking-widest mt-0.5">Modules</p>
-    </div>
-    <div class="bg-white/5 border border-white/5 backdrop-blur-md py-3 px-2 rounded-2xl flex flex-col justify-center">
-        <p class="text-xl md:text-2xl font-black text-[#2dd4bf] italic leading-none">30</p>
-        <p class="text-gray-500 text-[8px] font-bold uppercase tracking-widest mt-0.5">Lessons</p>
-    </div>
-    <div class="bg-white/5 border border-white/5 backdrop-blur-md py-3 px-2 rounded-2xl flex flex-col justify-center">
-        <p class="text-xl md:text-2xl font-black text-yellow-500 italic leading-none">100%</p>
-        <p class="text-gray-500 text-[8px] font-bold uppercase tracking-widest mt-0.5">Free</p>
+        <div class="flex gap-3">
+            <div class="bg-[#E8F5FF]/40 dark:bg-purple-950/40 border border-blue-100/50 dark:border-purple-900/30 rounded-xl px-5 py-3 min-w-[95px] text-center">
+                <p id="visitor-count" class="text-2xl font-black text-[#0050D8] dark:text-[#a855f7] leading-none">0</p>
+                <span class="text-[9px] uppercase tracking-widest font-bold text-slate-400 dark:text-purple-400/60">Visitors</span>
+            </div>
+            <div class="bg-[#E8F5FF]/40 dark:bg-purple-950/40 border border-blue-100/50 dark:border-purple-900/30 rounded-xl px-5 py-3 min-w-[95px] text-center">
+                <p id="today-date" class="text-2xl font-black text-blue-500 dark:text-teal-400 leading-none">-- --</p>
+                <span class="text-[9px] uppercase tracking-widest font-bold text-slate-400 dark:text-teal-400/60">Today</span>
+            </div>
+        </div>
     </div>
 </section>
 
-<main class="max-w-7xl mx-auto pt-2 pb-12 px-6 md:px-10" id="courses">
-    <div class="flex flex-col mb-8 border-l-[3px] border-[#a855f7] pl-4">
-        <h3 class="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter leading-none">Available Modules</h3>
-        <p class="text-zinc-500 text-[8px] font-black mt-1 uppercase tracking-[0.2em]">Choose your path to mastery</p>
+<main class="max-w-7xl mx-auto pt-6 pb-16 px-6 md:px-10" id="courses">
+    <div class="flex flex-col mb-8 border-l-[3px] border-[#0050D8] dark:border-[#a855f7] pl-4">
+        <h3 class="text-lg md:text-xl font-black text-slate-800 dark:text-white uppercase italic tracking-tighter leading-none">Available Modules</h3>
+        <p class="text-[#0050D8]/70 dark:text-purple-400/60 text-[8px] font-bold mt-1 uppercase tracking-[0.2em]">Choose your path to mastery</p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         
-        <div class="zenith-card card-python p-5 flex flex-col">
+        <div class="zenith-card p-5 flex flex-col">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[8px] font-black bg-[#2dd4bf]/10 text-[#2dd4bf] border border-[#2dd4bf]/20 px-2 py-0.5 rounded-full uppercase tracking-wider">Beginner</span>
-                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 45 นาที</span>
+                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-teal-950/30 dark:text-teal-300 dark:border-teal-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Beginner</span>
+                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">12 บทเรียน • 45 นาที</span>
             </div>
-            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-python mb-4 p-6">
-                <img src="python-logo.png" alt="Python Logo" class="h-full w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]">
+            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-python mb-4 p-6 shadow-inner">
+                <img src="python-logo.png" alt="Python Logo" class="h-full w-auto object-contain drop-shadow-md">
             </div>
-            <h4 class="text-lg md:text-xl font-black text-white mb-1 italic uppercase">Python</h4>
-            <p class="text-gray-500 text-[11px] leading-relaxed mb-4 flex-grow">Master the art of efficiency. Build advanced scripts to automate your digital world.</p>
+            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">Python</h4>
+            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">Master the art of efficiency. Build advanced scripts to automate your digital world.</p>
             <a href="course.html?course=python">
-                <button class="w-full py-2.5 bg-white/5 border border-white/10 hover:bg-[#2dd4bf] hover:text-black hover:border-[#2dd4bf] text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
+                <button class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
-        <div class="zenith-card card-js p-5 flex flex-col">
+        <div class="zenith-card p-5 flex flex-col">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[8px] font-black bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
-                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 60 นาที</span>
+                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-amber-950/30 dark:text-amber-300 dark:border-amber-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
+                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">5 บทเรียน • 60 นาที</span>
             </div>
-            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-js mb-4 p-6">
-                <img src="assets/img/js-logo.png" alt="JavaScript Logo" class="h-full w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'">
+            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-js mb-4 p-6 shadow-inner">
+                <img src="assets/img/js-logo.png" alt="JavaScript Logo" class="h-full w-auto object-contain drop-shadow-md" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'">
             </div>
-            <h4 class="text-lg md:text-xl font-black text-white mb-1 italic uppercase">JavaScript</h4>
-            <p class="text-gray-500 text-[11px] leading-relaxed mb-4 flex-grow">Beyond the basics. Deep dive into ES6+ and the core of modern web architecture.</p>
+            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">JavaScript</h4>
+            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">Beyond the basics. Deep dive into ES6+ and the core of modern web architecture.</p>
             <a href="course.html?course=javascript">
-                <button class="w-full py-2.5 bg-white/5 border border-white/10 hover:bg-yellow-500 hover:text-black hover:border-yellow-500 text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
+                <button class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
-        <div class="zenith-card card-css p-5 flex flex-col">
+        <div class="zenith-card p-5 flex flex-col">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[8px] font-black bg-sky-500/10 text-sky-400 border border-sky-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
-                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 50 นาที</span>
+                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-sky-950/30 dark:text-sky-300 dark:border-sky-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
+                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">5 บทเรียน • 50 นาที</span>
             </div>
-            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-css mb-4 p-6">
-                <img src="assets/img/css-logo.png" alt="CSS Logo" class="h-full w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg'">
+            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-css mb-4 p-6 shadow-inner">
+                <img src="assets/img/css-logo.png" alt="CSS Logo" class="h-full w-auto object-contain drop-shadow-md" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg'">
             </div>
-            <h4 class="text-lg md:text-xl font-black text-white mb-1 italic uppercase">CSS Styling</h4>
-            <p class="text-gray-500 text-[11px] leading-relaxed mb-4 flex-grow">Master interface design. Learn modern Glassmorphism, layout architecture and sleek UI animations.</p>
+            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">CSS Styling</h4>
+            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">Master interface design. Learn modern Glassmorphism, layout architecture and sleek UI animations.</p>
             <a href="course.html?course=css">
-                <button class="w-full py-2.5 bg-white/5 border border-white/10 hover:bg-[#38bdf8] hover:text-black hover:border-[#38bdf8] text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
+                <button class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
-        <div class="zenith-card card-html p-5 flex flex-col">
+        <div class="zenith-card p-5 flex flex-col">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[8px] font-black bg-orange-500/10 text-orange-500 border border-orange-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider">Beginner</span>
-                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 30 นาที</span>
+                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-orange-950/30 dark:text-orange-300 dark:border-orange-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Beginner</span>
+                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">5 บทเรียน • 30 นาที</span>
             </div>
-            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center mb-4 p-6" style="background: linear-gradient(135deg, #7c2d12 0%, #f97316 100%);">
-                <img src="assets/img/html-logo.png" alt="HTML Logo" class="h-full w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'">
+            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center mb-4 p-6 shadow-inner" style="background: linear-gradient(135deg, #fffaf5 0%, #ffedd5 100%);">
+                <img src="assets/img/html-logo.png" alt="HTML Logo" class="h-full w-auto object-contain drop-shadow-md" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'">
             </div>
-            <h4 class="text-lg md:text-xl font-black text-white mb-1 italic uppercase">HTML Structure</h4>
-            <p class="text-gray-500 text-[11px] leading-relaxed mb-4 flex-grow">The blueprint of the web. Learn to structure content and define the core web elements.</p>
+            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">HTML Structure</h4>
+            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">The blueprint of the web. Learn to structure content and define the core web elements.</p>
             <a href="course.html?course=html">
-                <button class="w-full py-2.5 bg-white/5 border border-white/10 hover:bg-orange-500 hover:text-white hover:border-orange-500 text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
+                <button class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
-        <div class="zenith-card card-php p-5 flex flex-col">
+        <div class="zenith-card p-5 flex flex-col">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[8px] font-black bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
-                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 50 นาที</span>
+                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-indigo-950/30 dark:text-indigo-300 dark:border-indigo-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
+                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">5 บทเรียน • 50 นาที</span>
             </div>
-            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center mb-4 p-6" style="background: linear-gradient(135deg, #1e1b4b 0%, #6366f1 100%);">
-                <img src="assets/img/php-logo.png" alt="PHP Logo" class="h-full w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg'">
+            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center mb-4 p-6 shadow-inner" style="background: linear-gradient(135deg, #fafaff 0%, #e0e7ff 100%);">
+                <img src="assets/img/php-logo.png" alt="PHP Logo" class="h-full w-auto object-contain drop-shadow-md" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg'">
             </div>
-            <h4 class="text-lg md:text-xl font-black text-white mb-1 italic uppercase">PHP</h4>
-            <p class="text-gray-500 text-[11px] leading-relaxed mb-4 flex-grow">Server-side powerhouse. Master back-end logic and dynamic content generation.</p>
+            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">PHP</h4>
+            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">Server-side powerhouse. Master back-end logic and dynamic content generation.</p>
             <a href="course.html?course=php">
-                <button class="w-full py-2.5 bg-white/5 border border-white/10 hover:bg-indigo-500 hover:text-white hover:border-indigo-500 text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
+                <button class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
-        <div class="zenith-card card-sql p-5 flex flex-col">
+        <div class="zenith-card p-5 flex flex-col">
             <div class="flex justify-between items-center mb-3">
-                <span class="text-[8px] font-black bg-sky-500/10 text-sky-400 border border-sky-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
-                <span class="text-[9px] text-gray-500 font-bold">5 บทเรียน • 40 นาที</span>
+                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-sky-950/30 dark:text-sky-300 dark:border-sky-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
+                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">4 บทเรียน • 40 นาที</span>
             </div>
-            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center mb-4 p-6" style="background: linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 100%);">
-                <img src="assets/img/sql-logo.png" alt="SQL Logo" class="h-full w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'">
+            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center mb-4 p-6 shadow-inner" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+                <img src="assets/img/sql-logo.png" alt="SQL Logo" class="h-full w-auto object-contain drop-shadow-md" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'">
             </div>
-            <h4 class="text-lg md:text-xl font-black text-white mb-1 italic uppercase">SQL Database</h4>
-            <p class="text-gray-500 text-[11px] leading-relaxed mb-4 flex-grow">Control the data flow. Learn to manage, query, and optimize relational databases.</p>
+            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">SQL Database</h4>
+            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">Control the data flow. Learn to manage, query, and optimize relational databases.</p>
             <a href="course.html?course=sql">
-                <button class="w-full py-2.5 bg-white/5 border border-white/10 hover:bg-sky-500 hover:text-black hover:border-sky-500 text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
+                <button class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
             </a>
         </div>
 
     </div>
 </main>
 
-<section id="career-path" class="max-w-7xl mx-auto py-12 px-6 md:px-10 border-t border-white/5">
-    <div class="flex flex-col mb-8 border-l-[3px] border-[#2dd4bf] pl-4">
-        <h3 class="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter leading-none">Career Roadmap</h3>
-        <p class="text-zinc-500 text-[8px] font-black mt-1 uppercase tracking-[0.2em]">สิ่งที่คุณจะเป็นได้หลังจากเรียนจบเว็บบล็อกนี้</p>
+<section id="career-path" class="max-w-7xl mx-auto py-16 px-6 md:px-10 border-t border-blue-100">
+    <div class="flex flex-col mb-8 border-l-[3px] border-[#0050D8] pl-4">
+        <h3 class="text-lg md:text-xl font-black text-slate-800 dark:text-white uppercase italic tracking-tighter leading-none">Career Roadmap</h3>
+        <p class="text-slate-400 dark:text-purple-400/60 text-[8px] font-bold mt-1 uppercase tracking-[0.2em]">สิ่งที่คุณจะเป็นได้หลังจากเรียนจบเว็บบล็อกนี้</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-white/5 border border-white/5 p-5 rounded-2xl backdrop-blur-md">
-            <h5 class="text-base font-black text-[#2dd4bf] italic mb-1">FRONT-END DEVELOPER</h5>
-            <p class="text-gray-400 text-xs leading-relaxed">เลือกเรียนคอร์ส HTML Structure ➔ CSS Styling ➔ JavaScript เพื่อพัฒนา Interface และ UI/UX ระดับสูง</p>
+        <div class="bg-white/80 dark:bg-[#130d22]/50 border border-blue-100/60 dark:border-purple-950/40 p-6 rounded-2xl shadow-sm backdrop-blur-md">
+            <h5 class="text-base font-black text-[#0050D8] dark:text-teal-400 italic mb-1">FRONT-END DEVELOPER</h5>
+            <p class="text-slate-500 dark:text-gray-400 text-xs leading-relaxed">เลือกเรียนคอร์ส HTML Structure ➔ CSS Styling ➔ JavaScript เพื่อพัฒนา Interface และ UI/UX ระดับสูง</p>
         </div>
-        <div class="bg-white/5 border border-white/5 p-5 rounded-2xl backdrop-blur-md">
-            <h5 class="text-base font-black text-[#a855f7] italic mb-1">BACK-END DEVELOPER</h5>
-            <p class="text-gray-400 text-xs leading-relaxed">เลือกเรียนคอร์ส Python ➔ PHP ➔ SQL Database เพื่อจัดการเซิร์ฟเวอร์และสถาปัตยกรรมข้อมูล</p>
+        <div class="bg-white/80 dark:bg-[#130d22]/50 border border-blue-100/60 dark:border-purple-950/40 p-6 rounded-2xl shadow-sm backdrop-blur-md">
+            <h5 class="text-base font-black text-blue-500 dark:text-purple-400 italic mb-1">BACK-END DEVELOPER</h5>
+            <p class="text-slate-500 dark:text-gray-400 text-xs leading-relaxed">เลือกเรียนคอร์ส Python ➔ PHP ➔ SQL Database เพื่อจัดการเซิร์ฟเวอร์และสถาปัตยกรรมข้อมูล</p>
         </div>
     </div>
 </section>
 
-<footer class="bg-black/80 backdrop-blur-md border-t border-white/5 py-8" id="about">
+<footer class="bg-white/40 dark:bg-transparent border-t border-blue-100 dark:border-purple-950/40 py-10" id="about">
     <div class="max-w-7xl mx-auto px-6 md:px-10 text-center flex flex-col gap-2">
-        <h2 class="text-xl font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h2>
-        <p class="text-gray-600 text-[8px] md:text-[9px] uppercase tracking-widest">© 2026 Senior Project · วิทยาลัยเทคนิคลำพูน</p>
+        <h2 class="text-xl font-black text-[#0050D8] dark:text-[#a855f7] italic tracking-tighter">ZENITH.</h2>
+        <p class="text-slate-400 dark:text-purple-400/60 text-[8px] md:text-[9px] uppercase tracking-widest">© 2026 Senior Project · วิทยาลัยเทคนิคลำพูน</p>
     </div>
 </footer>
 
@@ -250,15 +282,12 @@
         if (loggedInUser) {
             const authZone = document.getElementById('auth-zone');
             if (authZone) {
-                // ดึงค่า Progress มาแสดงผล ถ้ายังไม่มีให้เริ่มต้นที่ 0
                 const progress = localStorage.getItem('zenith_progress') || '0';
-                
-                // อัปเกรดแถบเมนูขวาบนให้แสดงผลชื่อผู้ใช้อย่างล้ำลึกพร้อมปุ่มออกจากระบบและ Progress %
                 authZone.innerHTML = `
-                    <span class="text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest border border-white/10 bg-white/5 px-4 py-2 rounded-full">
+                    <span class="text-slate-700 dark:text-purple-200 text-[9px] md:text-[10px] font-bold uppercase tracking-widest border border-blue-100 bg-white/90 px-4 py-2 rounded-full">
                         👋 HI, ${loggedInUser} (${progress}%)
                     </span>
-                    <button onclick="logout()" class="text-zinc-500 hover:text-red-400 text-[9px] md:text-[10px] font-black uppercase tracking-widest transition">
+                    <button onclick="logout()" class="text-slate-400 hover:text-red-500 text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition">
                         Logout
                     </button>
                 `;
@@ -268,12 +297,55 @@
 
     function logout() {
         if (confirm("คุณต้องการออกจากระบบใช่หรือไม่?")) {
-            // ลบข้อมูลที่เกี่ยวข้องกับ session ออกให้หมดเพื่อความสะอาด
             localStorage.removeItem('zenith_user');
-            window.location.reload(); // รีเฟรชหน้าเว็บเพื่อคืนค่าเดิม
+            window.location.reload();
         }
     }
 </script>
 
+<script>
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        lightIcon.classList.remove('hidden');
+    } else {
+        document.documentElement.classList.remove('dark');
+        darkIcon.classList.remove('hidden');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+        darkIcon.classList.toggle('hidden');
+        lightIcon.classList.toggle('hidden');
+
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        }
+    });
+</script>
+
+<script>
+    let visitors = localStorage.getItem("zenith_visitors");
+    if (!visitors) {
+        visitors = 1;
+    } else {
+        visitors = parseInt(visitors) + 1;
+    }
+    localStorage.setItem("zenith_visitors", visitors);
+    document.getElementById("visitor-count").innerText = visitors;
+
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("th-TH", {
+        day: "numeric",
+        month: "short"
+    });
+    document.getElementById("today-date").innerText = formattedDate;
+</script>
 </body>
 </html>

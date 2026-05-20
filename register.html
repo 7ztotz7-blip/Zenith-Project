@@ -3,54 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenith | Create Account</title>
+    <title>Zenith | Create Account (Light Mode)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Kanit', sans-serif; background: #050505; color: #fff; min-height: 100vh; }
+        body { 
+            font-family: 'Kanit', sans-serif; 
+            background: #fdfdfd; 
+            color: #1f2937; 
+            min-height: 100vh; 
+        }
 
+        /* ปรับวิดีโอพื้นหลังให้สว่าง นุ่มนวล ไม่แย่งสายตา */
         #bg-video {
             position: fixed; right: 0; bottom: 0;
             min-width: 100%; min-height: 100%;
             z-index: -2; object-fit: cover;
-            opacity: 0.2; filter: saturate(0.6);
+            opacity: 0.04; filter: saturate(0.2);
         }
+        
         .video-overlay {
             position: fixed; inset: 0;
-            background: radial-gradient(circle at 70% 30%, rgba(168,85,247,0.08) 0%, #050505 65%);
+            background: radial-gradient(circle at 70% 30%, rgba(168,85,247,0.04) 0%, #fdfdfd 70%);
             z-index: -1;
         }
 
+        /* บล็อกการ์ดสไตล์ Minimalist Light Mode เล่นมิติความโปร่งใสด้วยเงาจางๆ */
         .auth-card {
-            background: rgba(10, 10, 12, 0.85);
-            border: 1px solid rgba(168, 85, 247, 0.2);
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(168, 85, 247, 0.12);
             backdrop-filter: blur(24px);
             border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
         }
 
         .auth-input {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.06);
             border-radius: 16px;
             padding: 14px 18px;
             width: 100%;
-            color: white;
+            color: #111827;
             outline: none;
             font-family: 'Kanit', sans-serif;
             font-size: 14px;
             transition: all 0.3s;
         }
-        .auth-input:focus { border-color: #a855f7; box-shadow: 0 0 20px rgba(168,85,247,0.15); }
-        .auth-input::placeholder { color: #52525b; }
+        .auth-input:focus { 
+            border-color: #a855f7; 
+            background: #ffffff;
+            box-shadow: 0 0 20px rgba(168,85,247,0.08); 
+        }
+        .auth-input::placeholder { color: #9ca3af; }
 
         @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
         .fade-up { animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both; }
         .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
 
-        .perk-item { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #71717a; }
-        .perk-item span:first-child { font-size: 16px; }
+        .perk-item { display: flex; align-items: center; gap: 12px; font-size: 13px; color: #4b5563; }
+        .perk-item span:first-child { font-size: 18px; }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-6">
@@ -60,126 +71,100 @@
 </video>
 <div class="video-overlay"></div>
 
-<div class="w-full max-w-4xl grid md:grid-cols-2 gap-8 items-center">
+<div class="w-full max-w-4xl grid md:grid-cols-2 gap-12 items-center">
 
     <div class="hidden md:block fade-up">
         <a href="index.html" class="text-4xl font-black text-[#a855f7] italic tracking-tighter block mb-3">ZENITH.</a>
-        <p class="text-gray-500 text-sm mb-10 uppercase tracking-widest">เริ่มต้นเส้นทาง Mastery ของคุณ</p>
+        <p class="text-gray-400 text-sm mb-10 uppercase tracking-widest font-semibold">เริ่มต้นเส้นทาง Mastery ของคุณ</p>
 
         <div class="space-y-5">
             <div class="perk-item">
                 <span>📊</span>
-                <div><p class="text-white font-bold text-sm">ระบบบันทึก Progress</p><p class="text-[11px]">ติดตามความคืบหน้าการเรียนรู้ของคุณแบบเรียลไทม์</p></div>
+                <div><p class="text-gray-900 font-bold text-sm">ระบบบันทึก Progress บน Cloud</p><p class="text-[11px] text-gray-500">ติดตามความคืบหน้าการเรียนรู้ของคุณผ่านระบบหลังบ้าน Firebase</p></div>
             </div>
             <div class="perk-item">
                 <span>🔥</span>
-                <div><p class="text-white font-bold text-sm">Streak ประจำวัน</p><p class="text-[11px]">เรียนรู้ต่อเนื่องในทุกๆ วันเพื่อรักษาสถิติการฝึกฝน</p></div>
+                <div><p class="text-gray-900 font-bold text-sm">Streak ประจำวัน</p><p class="text-[11px] text-gray-500">เรียนรู้ต่อเนื่องในทุกๆ วันเพื่อรักษาสถิติการฝึกฝน</p></div>
             </div>
             <div class="perk-item">
                 <span>🏆</span>
-                <div><p class="text-white font-bold text-sm">Achievement Badges</p><p class="text-[11px]">ปลดล็อคตราความสำเร็จเมื่อเรียนจบแต่ละหลักสูตร</p></div>
+                <div><p class="text-gray-900 font-bold text-sm">Achievement Badges</p><p class="text-[11px] text-gray-500">ปลดล็อคตราความสำเร็จเมื่อเรียนจบแต่ละหลักสูตร</p></div>
             </div>
             <div class="perk-item">
                 <span>🔓</span>
-                <div><p class="text-white font-bold text-sm">Unlock ควิซท้ายบท</p><p class="text-[11px]">ผ่านแบบทดสอบความรู้เพื่อก้าวเข้าสู่เนื้อหาขั้นต่อไป</p></div>
-            </div>
-            <div class="perk-item">
-                <span>🌐</span>
-                <div><p class="text-white font-bold text-sm">สถาปัตยกรรมระดับสากล</p><p class="text-[11px]">โครงสร้างเนื้อหาถูกจูนมาเพื่อนักพัฒนารุ่นใหม่</p></div>
+                <div><p class="text-gray-900 font-bold text-sm">Unlock ควิซท้ายบท</p><p class="text-[11px] text-gray-500">ผ่านแบบทดสอบความรู้เพื่อก้าวเข้าสู่เนื้อหาขั้นต่อไป</p></div>
             </div>
         </div>
 
-        <div class="mt-10 bg-white/[0.02] border border-white/5 rounded-2xl p-5">
-            <p class="text-[10px] text-gray-600 uppercase tracking-widest font-black mb-3">คอร์สที่มีให้เรียน</p>
+        <div class="mt-10 bg-black/[0.01] border border-black/5 rounded-2xl p-5">
+            <p class="text-[10px] text-gray-400 uppercase tracking-widest font-black mb-3">คอร์สที่มีให้เรียน</p>
             <div class="flex flex-wrap gap-3">
-                <span class="text-xs font-black bg-[#2dd4bf]/10 text-[#2dd4bf] border border-[#2dd4bf]/20 px-3 py-1.5 rounded-full">🐍 Python</span>
-                <span class="text-xs font-black bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-3 py-1.5 rounded-full">💛 JavaScript</span>
-                <span class="text-xs font-black bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1.5 rounded-full">🎨 CSS Styling</span>
+                <span class="text-xs font-bold bg-teal-50 text-teal-600 border border-teal-200/50 px-3 py-1.5 rounded-full">🐍 Python</span>
+                <span class="text-xs font-bold bg-amber-50 text-amber-600 border border-amber-200/50 px-3 py-1.5 rounded-full">💛 JavaScript</span>
+                <span class="text-xs font-bold bg-blue-50 text-blue-600 border border-blue-200/50 px-3 py-1.5 rounded-full">🎨 CSS Styling</span>
             </div>
         </div>
     </div>
 
     <div class="auth-card p-10 relative overflow-hidden fade-up delay-1">
-        <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#a855f7] to-transparent"></div>
-        <div class="absolute -top-20 -right-20 w-40 h-40 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#a855f7] to-transparent"></div>
+    <div class="absolute -top-20 -right-20 w-40 h-40 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div class="md:hidden text-center mb-6">
-            <a href="index.html" class="text-2xl font-black text-[#a855f7] italic">ZENITH.</a>
+    <div class="md:hidden text-center mb-6">
+        <a href="index.html" class="text-2xl font-black text-[#a855f7] italic">ZENITH.</a>
+    </div>
+
+    <h1 class="text-2xl font-black text-white italic tracking-tight mb-1">CREATE ACCOUNT</h1>
+    <p class="text-gray-600 text-[11px] uppercase tracking-widest mb-8">ฟรี ไม่มีค่าใช้จ่าย</p>
+
+    <div id="errorMsg" class="hidden bg-red-500/10 border border-red-500/30 text-red-400 text-xs px-4 py-3 rounded-2xl mb-6 font-bold"></div>
+
+    <form id="registerForm" class="flex flex-col gap-4">
+        <div>
+            <label class="text-[10px] text-gray-500 uppercase tracking-widest font-black ml-1 block mb-1.5">ชื่อของคุณ</label>
+            <input type="text" id="regName" placeholder="ชื่อที่ใช้แสดงในระบบ" required class="auth-input">
         </div>
 
-        <h1 class="text-2xl font-black text-white italic tracking-tight mb-1">CREATE ACCOUNT</h1>
-        <p class="text-gray-600 text-[11px] uppercase tracking-widest mb-8">ฟรี ไม่มีค่าใช้จ่าย</p>
+        <div>
+            <label class="text-[10px] text-gray-500 uppercase tracking-widest font-black ml-1 block mb-1.5">อีเมลสำหรับใช้ล็อกอิน</label>
+            <input type="email" id="regEmail" placeholder="example@email.com" required class="auth-input">
+        </div>
 
-        <div id="errorMsg" class="hidden bg-red-500/10 border border-red-500/30 text-red-400 text-xs px-4 py-3 rounded-2xl mb-6 font-bold"></div>
+        <div>
+            <label class="text-[10px] text-gray-500 uppercase tracking-widest font-black ml-1 block mb-1.5">รหัสผ่าน (6 ตัวขึ้นไป)</label>
+            <input type="password" id="regPassword" placeholder="••••••••" required class="auth-input">
+        </div>
 
-        <div class="flex flex-col gap-4">
-            <div>
-                <label class="text-[10px] text-gray-500 uppercase tracking-widest font-black ml-1 block mb-1.5">ชื่อของคุณ</label>
-                <input type="text" id="regName" placeholder="ชื่อที่ใช้แสดงในระบบ" class="auth-input" onkeydown="checkEnter(event)">
-            </div>
-
-            <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
-                <p class="text-[10px] text-gray-600 uppercase tracking-widest font-black mb-2">เริ่มต้นด้วย</p>
-                <div class="flex gap-2">
-                    <div class="text-center p-2 flex-1">
-                        <p class="text-xl font-black text-[#a855f7]">0/30</p>
-                        <p class="text-[9px] text-gray-600">บทเรียน</p>
-                    </div>
-                    <div class="text-center p-2 flex-1">
-                        <p class="text-xl font-black text-white">0%</p>
-                        <p class="text-[9px] text-gray-600">Progress</p>
-                    </div>
-                    <div class="text-center p-2 flex-1">
-                        <p class="text-xl font-black text-[#2dd4bf]">0🔥</p>
-                        <p class="text-[9px] text-gray-600">Streak</p>
-                    </div>
+        <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+            <p class="text-[10px] text-gray-600 uppercase tracking-widest font-black mb-2">เริ่มต้นด้วย</p>
+            <div class="flex gap-2">
+                <div class="text-center p-2 flex-1">
+                    <p class="text-xl font-black text-[#a855f7]">0/30</p>
+                    <p class="text-[9px] text-gray-600">บทเรียน</p>
+                </div>
+                <div class="text-center p-2 flex-1">
+                    <p class="text-xl font-black text-white">0%</p>
+                    <p class="text-[9px] text-gray-600">Progress</p>
+                </div>
+                <div class="text-center p-2 flex-1">
+                    <p class="text-xl font-black text-[#2dd4bf]">0🔥</p>
+                    <p class="text-[9px] text-gray-600">Streak</p>
                 </div>
             </div>
-
-            <button onclick="handleRegister()" class="w-full py-4 bg-[#a855f7] hover:bg-purple-500 active:scale-95 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] shadow-lg shadow-purple-500/25 transition-all">
-                เริ่มต้นเดินทาง →
-            </button>
         </div>
 
-        <p class="text-center text-gray-600 text-[11px] mt-8 uppercase tracking-widest">
-            มีบัญชีอยู่แล้ว?
-            <a href="login.html" class="text-[#a855f7] font-black hover:text-purple-400 transition ml-1">เข้าสู่ระบบ</a>
-        </p>
-    </div>
+        <button type="submit" class="w-full py-4 bg-[#a855f7] hover:bg-purple-500 active:scale-95 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] shadow-lg shadow-purple-500/25 transition-all">
+            เริ่มต้นเดินทาง →
+        </button>
+    </form>
+
+    <p class="text-center text-gray-600 text-[11px] mt-8 uppercase tracking-widest">
+        มีบัญชีอยู่แล้ว?
+        <a href="login.html" class="text-[#a855f7] font-black hover:text-purple-400 transition ml-1">เข้าสู่ระบบ</a>
+    </p>
 </div>
 
-<script>
-    function handleRegister() {
-        const name = document.getElementById('regName').value.trim();
-        const err  = document.getElementById('errorMsg');
 
-        if (!name) {
-            err.textContent = 'กรุณาระบุชื่อก่อนนะครับ';
-            err.classList.remove('hidden');
-            return;
-        }
-        if (name.length < 2) {
-            err.textContent = 'ชื่อต้องมีอย่างน้อย 2 ตัวอักษรครับ';
-            err.classList.remove('hidden');
-            return;
-        }
-
-        // 💾 บันทึกข้อมูลเข้าเบราว์เซอร์ด้วยสคีมาใหม่ (ตัดระบบ XP & Level)
-        localStorage.setItem('zenith_user', name);
-        localStorage.setItem('zenith_completed_lessons', '0'); // จำนวนบทเรียนที่สำเร็จ
-        localStorage.setItem('zenith_progress', '0');          // เปอร์เซ็นต์ความสำเร็จภาพรวม
-        localStorage.setItem('zenith_streak', '0');            // จำนวนวันเข้าใช้งานต่อเนื่อง
-        localStorage.setItem('zenith_last_date', new Date().toDateString());
-        localStorage.setItem('zenith_achievements', '[]');
-
-        window.location.href = 'index.html';
-    }
-
-    function checkEnter(event) {
-        if (event.key === 'Enter') {
-            handleRegister();
-        }
-    }
-</script>
+<script type="module" src="assets/js/auth.js"></script>
 </body>
 </html>
