@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith | Certificate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Kanit', sans-serif; background: #050505; color: #fff; overflow-x: hidden; }
+        #bg-video {
+            position: fixed; right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            z-index: -2; object-fit: cover;
+            opacity: 0.13; filter: brightness(0.4);
+        }
+        .video-overlay {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, rgba(168,85,247,0.06), #050505 70%);
+        }
+        .geo-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+                linear-gradient(90deg,rgba(255,255,255,0.012) 1px, transparent 1px);
+            background-size: 44px 44px;
+        }
+
+        /* CERTIFICATE CARD */
+        .cert-card {
+            background: linear-gradient(135deg, #0d0d14 0%, #130d22 50%, #0d0d14 100%);
+            border: 1px solid rgba(168,85,247,0.3);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cert-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 10% 0%,  rgba(168,85,247,0.12), transparent 50%),
+                radial-gradient(ellipse at 90% 100%, rgba(45,212,191,0.08),  transparent 50%);
+            pointer-events: none;
+        }
+        .cert-corner {
+            position: absolute; width: 60px; height: 60px;
+            border-color: rgba(168,85,247,0.4);
+            border-style: solid;
+        }
+        .cert-corner-tl { top: 16px; left: 16px;  border-width: 2px 0 0 2px; border-radius: 4px 0 0 0; }
+        .cert-corner-tr { top: 16px; right: 16px; border-width: 2px 2px 0 0; border-radius: 0 4px 0 0; }
+        .cert-corner-bl { bottom: 16px; left: 16px;  border-width: 0 0 2px 2px; border-radius: 0 0 0 4px; }
+        .cert-corner-br { bottom: 16px; right: 16px; border-width: 0 2px 2px 0; border-radius: 0 0 4px 0; }
+
+        .cert-title-font { font-family: 'Playfair Display', serif; }
+        .cert-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(168,85,247,0.5), rgba(45,212,191,0.5), transparent);
+        }
+
+        /* EMPTY STATE */
+        .glass {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+        }
+
+        /* COURSE BADGE */
+        .course-badge {
+            background: rgba(168,85,247,0.1);
+            border: 1px solid rgba(168,85,247,0.2);
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+        .course-badge.earned {
+            background: rgba(45,212,191,0.1);
+            border-color: rgba(45,212,191,0.3);
+        }
+
+        @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        .fade-up { animation: fadeUp 0.5s ease both; }
+        .fade-up-d1 { animation: fadeUp 0.5s 0.1s ease both; }
+        .fade-up-d2 { animation: fadeUp 0.5s 0.2s ease both; }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
+
+        /* PRINT STYLES */
+        @media print {
+            body { background: white !important; }
+            #bg-video, .video-overlay, .geo-bg, nav, #printBtn, #backBtn, #noCertSection { display: none !important; }
+            #certSection { display: block !important; }
+            .cert-card { border: 2px solid #a855f7 !important; break-inside: avoid; }
+            main { padding-top: 0 !important; }
+        }
+    </style>
+</head>
+<body class="geo-bg min-h-screen">
+
+<video autoplay loop muted playsinline id="bg-video">
+    <source src="gg-video.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 w-full z-50 h-16 flex items-center justify-between px-6
+            bg-[#050505]/75 backdrop-blur-md border-b border-white/[0.04]">
+    <a href="profile.html"
+       class="flex items-center gap-2 text-zinc-500 hover:text-white font-bold text-[10px] uppercase tracking-widest transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/>
+        </svg>
+        โปรไฟล์
+    </a>
+    <h1 class="text-xl font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
+    <button id="printBtn"
+            type="button"
+            onclick="window.print()"
+            class="hidden text-[10px] font-black uppercase tracking-widest px-4 py-2
+                   bg-[#a855f7]/15 border border-[#a855f7]/30 text-[#c084fc]
+                   rounded-xl hover:bg-[#a855f7]/25 transition">
+        🖨 พิมพ์ / Save PDF
+    </button>
+</nav>
+
+<!-- LOADING -->
+<div id="loadingState" class="flex items-center justify-center min-h-screen">
+    <div class="text-center">
+        <div class="w-8 h-8 border-2 border-[#a855f7] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-zinc-600 text-[10px] font-bold uppercase tracking-widest">กำลังโหลด...</p>
+    </div>
+</div>
+
+<main class="max-w-4xl mx-auto pt-24 pb-16 px-6">
+
+    <!-- NO CERT STATE -->
+    <div id="noCertSection" class="hidden">
+        <div class="glass p-12 text-center fade-up">
+            <div class="text-5xl mb-4">🎓</div>
+            <h2 class="text-xl font-black mb-3">ยังไม่มีใบประกาศ</h2>
+            <p class="text-zinc-500 text-sm leading-relaxed mb-6 max-w-sm mx-auto">
+                เรียนจบอย่างน้อย 1 คอร์สก่อนนะ<br>แล้วใบประกาศจะปรากฏที่นี่
+            </p>
+            <a href="index.html"
+               class="inline-block bg-[#a855f7] text-black font-black text-[10px] uppercase tracking-widest px-8 py-3 rounded-xl hover:bg-[#c084fc] transition">
+                ไปเรียนต่อ →
+            </a>
+        </div>
+    </div>
+
+    <!-- CERTIFICATES -->
+    <div id="certSection" class="hidden space-y-8"></div>
+
+    <!-- PROGRESS SUMMARY -->
+    <div id="progressSection" class="hidden glass p-6 mt-8 fade-up-d2">
+        <p class="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-4">วิชาทั้งหมด</p>
+        <div id="badgeGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+    </div>
+
+</main>
+
+<script type="module">
+    import { auth } from './assets/js/firebase.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const COURSES = [
+        { key: 'python',     label: 'Python',      total: 12, color: '#2dd4bf', emoji: '🐍' },
+        { key: 'javascript', label: 'JavaScript',  total: 10, color: '#f7df1e', emoji: '⚡' },
+        { key: 'css',        label: 'CSS Styling', total: 10, color: '#38bdf8', emoji: '🎨' },
+        { key: 'html',       label: 'HTML',        total: 10, color: '#e34f26', emoji: '🏗️' },
+        { key: 'php',        label: 'PHP Backend', total: 10, color: '#777bb4', emoji: '🔧' },
+        { key: 'sql',        label: 'SQL Database',total: 10, color: '#00758f', emoji: '🗄️' },
+    ];
+
+    function formatDate() {
+        return new Date().toLocaleDateString('th-TH', {
+            day: 'numeric', month: 'long', year: 'numeric'
+        });
+    }
+
+    function buildCertCard(course, username) {
+        return `
+        <div class="cert-card p-8 md:p-12 fade-up">
+            <div class="cert-corner cert-corner-tl"></div>
+            <div class="cert-corner cert-corner-tr"></div>
+            <div class="cert-corner cert-corner-bl"></div>
+            <div class="cert-corner cert-corner-br"></div>
+
+            <div class="relative z-10 text-center">
+                <p class="text-[10px] font-black uppercase tracking-[0.3em] text-[#a855f7] mb-2">Zenith Classroom</p>
+                <p class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-6">Certificate of Completion</p>
+
+                <div class="cert-divider mb-6"></div>
+
+                <p class="text-zinc-400 text-xs uppercase tracking-widest mb-3">มอบให้แก่</p>
+                <h2 class="cert-title-font text-3xl md:text-4xl font-bold text-white mb-6">${username}</h2>
+
+                <p class="text-zinc-400 text-xs leading-relaxed mb-4">
+                    ได้ศึกษาและผ่านบทเรียนทั้งหมดของวิชา
+                </p>
+
+                <div class="inline-flex items-center gap-3 px-6 py-3 rounded-2xl mb-6"
+                     style="background:${course.color}15; border:1px solid ${course.color}40">
+                    <span class="text-2xl">${course.emoji}</span>
+                    <span class="font-black text-xl" style="color:${course.color}">${course.label}</span>
+                </div>
+
+                <p class="text-zinc-500 text-xs mb-8">
+                    ครบ ${course.total} บทเรียน · ${course.total} Quiz
+                </p>
+
+                <div class="cert-divider mb-6"></div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-zinc-500">
+                    <div class="text-center sm:text-left">
+                        <p class="font-black text-white text-sm mb-0.5">ZENITH.</p>
+                        <p class="uppercase tracking-widest">Zenith Classroom</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="font-black text-white text-xs mb-0.5">${formatDate()}</p>
+                        <p class="uppercase tracking-widest">วันที่ออกใบประกาศ</p>
+                    </div>
+                    <div class="text-center sm:text-right">
+                        <p class="font-black text-white text-xs mb-0.5">วิทยาลัยเทคนิคลำพูน</p>
+                        <p class="uppercase tracking-widest">Senior Project 2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            window.location.href = 'landing.html';
+            return;
+        }
+
+        document.getElementById('loadingState').classList.add('hidden');
+
+        const username = user.displayName || user.email.split('@')[0];
+        const certSection  = document.getElementById('certSection');
+        const noCertSection = document.getElementById('noCertSection');
+        const progressSection = document.getElementById('progressSection');
+        const badgeGrid = document.getElementById('badgeGrid');
+
+        let completedCourses = [];
+
+        COURSES.forEach(course => {
+            const unlocked = parseInt(localStorage.getItem(`zenith_progress_${course.key}`) || '1');
+            const done = Math.max(0, unlocked - 1);
+            const completed = done >= course.total;
+
+            if (completed) completedCourses.push(course);
+
+            const badge = document.createElement('div');
+            badge.className = `course-badge ${completed ? 'earned' : ''} p-3 flex items-center gap-2`;
+            badge.innerHTML = `
+                <span class="text-lg">${course.emoji}</span>
+                <div class="min-w-0">
+                    <p class="font-black text-xs ${completed ? 'text-[#2dd4bf]' : 'text-zinc-500'}">${course.label}</p>
+                    <p class="text-[9px] ${completed ? 'text-[#2dd4bf]/70' : 'text-zinc-700'} font-bold uppercase tracking-wider">
+                        ${completed ? '✓ จบแล้ว' : `${done}/${course.total} บท`}
+                    </p>
+                </div>
+            `;
+            badgeGrid.appendChild(badge);
+        });
+
+        progressSection.classList.remove('hidden');
+
+        if (completedCourses.length === 0) {
+            noCertSection.classList.remove('hidden');
+        } else {
+            certSection.classList.remove('hidden');
+            document.getElementById('printBtn').classList.remove('hidden');
+            completedCourses.forEach(course => {
+                certSection.innerHTML += buildCertCard(course, username);
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

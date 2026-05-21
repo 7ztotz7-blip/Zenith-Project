@@ -218,8 +218,11 @@ body{
         ZENITH.
     </h1>
 
+    <a href="profile.html" class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-[#a855f7] transition hidden sm:block mr-2">Profile</a>
+
     <select
         id="langSelect"
+        title="เลือกภาษา"
         onchange="changeLanguage()"
         class="bg-zinc-900 border border-white/10 rounded-xl px-2 py-1 text-xs">
 
@@ -253,8 +256,7 @@ body{
 
             <div class="w-full h-1.5 rounded-full bg-zinc-900 mt-2 overflow-hidden">
                 <div id="sidebarProgress"
-                     class="h-full bg-[#a855f7] rounded-full"
-                     style="width:0%">
+                     class="h-full bg-[#a855f7] rounded-full w-0">
                 </div>
             </div>
 
@@ -302,6 +304,7 @@ body{
             <!-- QUIZ BUTTON -->
 
             <button
+                type="button"
                 id="startQuizBtn"
                 onclick="switchToQuizMode()"
                 class="w-full py-5 rounded-2xl font-black bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-[1.01] transition">
@@ -332,6 +335,7 @@ body{
             <!-- NEXT -->
 
             <button
+                type="button"
                 id="nextLessonBtn"
                 onclick="nextLesson()"
                 class="hidden w-full mt-8 py-4 rounded-2xl font-black bg-gradient-to-r from-[#a855f7] to-[#2dd4bf] text-black">

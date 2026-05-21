@@ -3,114 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenith | Sign In</title>
+    <title>Zenith | Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800;900&display=swap" rel="stylesheet">
-    <style>
-        body { 
-            font-family: 'Kanit', sans-serif; 
-            background: #fdfdfd; 
-            color: #1f2937; 
-            min-height: 100vh; 
-        }
-
-        #bg-video {
-            position: fixed; right: 0; bottom: 0;
-            min-width: 100%; min-height: 100%;
-            z-index: -2; object-fit: cover;
-            opacity: 0.04; filter: saturate(0.2);
-        }
-        
-        .video-overlay {
-            position: fixed; inset: 0;
-            background: radial-gradient(circle at 70% 30%, rgba(168,85,247,0.04) 0%, #fdfdfd 70%);
-            z-index: -1;
-        }
-
-        .auth-card {
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(168, 85, 247, 0.12);
-            backdrop-filter: blur(24px);
-            border-radius: 32px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
-        }
-
-        .auth-input {
-            background: rgba(0,0,0,0.02);
-            border: 1px solid rgba(0,0,0,0.06);
-            border-radius: 16px;
-            padding: 14px 18px;
-            width: 100%;
-            color: #111827;
-            outline: none;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        .auth-input:focus { 
-            border-color: #a855f7; 
-            background: #ffffff;
-            box-shadow: 0 0 20px rgba(168,85,247,0.08); 
-        }
-        .auth-input::placeholder { color: #9ca3af; }
-
-        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-        .fade-up { animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script>tailwind.config = { darkMode: 'class' }</script>
 </head>
-<body class="flex items-center justify-center min-h-screen p-6">
+<body class="flex items-center justify-center min-h-screen px-6">
 
-<video autoplay loop muted playsinline id="bg-video">
-    <source src="gg-video.mp4" type="video/mp4">
-</video>
-<div class="video-overlay"></div>
-
-<div class="w-full max-w-4xl grid md:grid-cols-2 gap-12 items-center">
-
-    <div class="hidden md:block fade-up">
-        <a href="index.html" class="text-4xl font-black text-[#a855f7] italic tracking-tighter block mb-3">ZENITH.</a>
-        <p class="text-gray-400 text-sm mb-6 uppercase tracking-widest font-semibold">ยินดีต้อนรับกลับสู่พื้นที่แห่งการเรียนรู้</p>
-        <p class="text-gray-500 text-sm leading-relaxed max-w-sm">
-            เข้าสู่ระบบเพื่อสะสม Streak วันเรียนต่อเนื่อง ทำแบบทดสอบเก็บ Achievements และลุยบทเรียนโปรแกรมมิ่งธุรกิจดิจิทัลต่อได้ทันที
-        </p>
-    </div>
-
-    <div class="auth-card p-10 relative overflow-hidden fade-up">
-        <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#a855f7] to-transparent"></div>
-
-        <div class="md:hidden text-center mb-6">
-            <a href="index.html" class="text-2xl font-black text-[#a855f7] italic">ZENITH.</a>
+    <div class="w-full max-w-md p-8 bg-white/80 dark:bg-[#19122c]/50 border border-blue-200 dark:border-purple-950/40 backdrop-blur-xl rounded-[24px] shadow-xl">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-black text-[#0050D8] dark:text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-purple-400/60 mt-1">Welcome Back</p>
         </div>
 
-        <h1 class="text-2xl font-black text-gray-900 italic tracking-tight mb-1">SIGN IN</h1>
-        <p class="text-gray-400 text-[11px] uppercase tracking-widest mb-6">กรอกบัญชีผู้ใช้งานของคุณ</p>
-
-        <div id="errorMsg" class="hidden bg-red-50 border border-red-200 text-red-600 text-xs px-4 py-3 rounded-2xl mb-5 font-bold"></div>
-
-        <form id="loginForm" class="flex flex-col gap-5">
+        <form id="login-form" class="space-y-4">
             <div>
-                <label class="text-[10px] text-gray-400 uppercase tracking-widest font-black ml-1 block mb-1.5">อีเมลผู้ใช้งาน</label>
-                <input type="email" id="loginEmail" placeholder="example@email.com" required class="auth-input">
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Email Address</label>
+                <input type="email" id="login-email" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#0050D8] dark:bg-slate-900 dark:border-purple-950/60 dark:text-white" placeholder="your@email.com">
             </div>
-
             <div>
-                <div class="flex justify-between items-center ml-1 mb-1.5">
-                    <label class="text-[10px] text-gray-400 uppercase tracking-widest font-black">รหัสผ่าน</label>
-                </div>
-                <input type="password" id="loginPassword" placeholder="••••••••" required class="auth-input">
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Password</label>
+                <input type="password" id="login-password" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#0050D8] dark:bg-slate-900 dark:border-purple-950/60 dark:text-white" placeholder="••••••••">
             </div>
-
-            <button type="submit" class="w-full py-4 bg-[#a855f7] hover:bg-purple-600 active:scale-95 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] shadow-md shadow-purple-500/10 transition-all mt-4">
-                เข้าสู่บทเรียน →
+            
+            <button type="submit" id="submit-btn" class="w-full bg-[#0050D8] dark:bg-[#a855f7] text-white py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:opacity-90 transition-all mt-2">
+                Sign In
             </button>
         </form>
 
-        <p class="text-center text-gray-400 text-[11px] mt-8 uppercase tracking-widest">
-            ยังไม่มีบัญชีเรียน?
-            <a href="register.html" class="text-[#a855f7] font-black hover:text-purple-500 transition ml-1">สร้างบัญชีฟรี</a>
+        <p class="text-center text-xs text-slate-500 dark:text-gray-400 mt-6">
+            ยังไม่มีบัญชีสมาชิก? <a href="register.html" class="text-[#0050D8] dark:text-[#a855f7] font-bold hover:underline">สมัครสมาชิกใหม่ที่นี่</a>
         </p>
     </div>
-</div>
 
-<script type="module" src="assets/js/auth.js"></script>
+    <script type="module">
+        import { loginUser, checkAuthState } from './assets/js/auth.js';
+
+        checkAuthState('auth_page');
+
+        function translateLoginError(errorMsg) {
+            if (errorMsg.includes('invalid-credential') || errorMsg.includes('user-not-found') || errorMsg.includes('wrong-password')) {
+                return 'อีเมลหรือรหัสผ่านไม่ถูกต้อง โปรดตรวจสอบอีกครั้ง';
+            }
+            if (errorMsg.includes('too-many-requests')) {
+                return 'บัญชีนี้ถูกระงับชั่วคราวเนื่องจากลองรหัสผ่านผิดมากเกินไป ลองใหม่อีกครั้งภายหลัง';
+            }
+            return errorMsg;
+        }
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const btn = document.getElementById('submit-btn');
+
+            btn.innerText = "AUTHENTICATING...";
+            btn.disabled = true;
+
+            const result = await loginUser(email, password);
+
+            if (result.success) {
+                window.location.href = 'index.html';
+            } else {
+                alert(translateLoginError(result.error));
+                btn.innerText = "SIGN IN";
+                btn.disabled = false;
+            }
+        });
+    </script>
 </body>
 </html>

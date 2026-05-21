@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith | Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Kanit', sans-serif; background: #050505; color: #fff; overflow-x: hidden; }
+        #bg-video {
+            position: fixed; right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            z-index: -2; object-fit: cover;
+            opacity: 0.15; filter: brightness(0.4);
+        }
+        .video-overlay {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, rgba(168,85,247,0.05), #050505 70%);
+        }
+        .geo-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+                linear-gradient(90deg,rgba(255,255,255,0.012) 1px, transparent 1px);
+            background-size: 44px 44px;
+        }
+        .glass {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+        }
+        .progress-track { background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden; height: 6px; }
+        .progress-fill { height: 100%; border-radius: 99px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        .fade-up { animation: fadeUp 0.5s ease both; }
+        .fade-up-d1 { animation: fadeUp 0.5s 0.1s ease both; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
+    </style>
+</head>
+<body class="geo-bg min-h-screen">
+
+<video autoplay loop muted playsinline id="bg-video">
+    <source src="gg-video.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 w-full z-50 h-16 flex items-center justify-between px-6
+            bg-[#050505]/75 backdrop-blur-md border-b border-white/[0.04]">
+    <a href="index.html"
+       class="flex items-center gap-2 text-zinc-500 hover:text-white font-bold text-[10px] uppercase tracking-widest transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/>
+        </svg>
+        กลับหน้าหลัก
+    </a>
+    <h1 class="text-xl font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
+    <div class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest hidden sm:block">My Profile</div>
+</nav>
+
+<!-- LOADING STATE -->
+<div id="loadingState" class="flex items-center justify-center min-h-screen">
+    <div class="text-center">
+        <div class="w-8 h-8 border-2 border-[#a855f7] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-zinc-600 text-[10px] font-bold uppercase tracking-widest">กำลังโหลดข้อมูลโปรไฟล์...</p>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="mainContent" class="hidden max-w-3xl mx-auto pt-24 pb-16 px-6">
+
+    <!-- PROFILE CARD -->
+    <div class="glass p-8 mb-6 fade-up flex flex-col sm:flex-row items-center sm:items-start gap-6">
+        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#a855f7] to-[#2dd4bf] flex items-center justify-center flex-shrink-0">
+            <span id="avatarLetter" class="text-3xl font-black text-black">Z</span>
+        </div>
+        <div class="flex-1 text-center sm:text-left">
+            <p class="text-[10px] text-[#a855f7] font-black uppercase tracking-widest mb-1">Zenith Learner</p>
+            <h2 id="displayName" class="text-2xl font-black tracking-tight mb-1">—</h2>
+            <p id="displayEmail" class="text-zinc-400 text-sm mb-4">—</p>
+            <div class="flex flex-wrap justify-center sm:justify-start gap-3">
+                <span id="statLessons" class="text-[10px] bg-[#a855f7]/10 border border-[#a855f7]/20 text-[#c084fc] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
+                    0 บทเรียน
+                </span>
+                <span id="statCourses" class="text-[10px] bg-[#2dd4bf]/10 border border-[#2dd4bf]/20 text-[#2dd4bf] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
+                    0 / 6 วิชา
+                </span>
+                <a href="certificate.html"
+                   class="text-[10px] bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full font-bold uppercase tracking-wider hover:bg-yellow-500/20 transition">
+                    🏆 ใบประกาศ
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROGRESS SECTION -->
+    <div class="glass p-6 fade-up-d1">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <p class="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-0.5">ความก้าวหน้า</p>
+                <h3 class="font-black text-base">สถิติการเรียน</h3>
+            </div>
+            <div id="overallPct" class="text-3xl font-black text-[#a855f7]">0%</div>
+        </div>
+
+        <div id="courseProgress" class="space-y-5"></div>
+    </div>
+
+</main>
+
+<script type="module">
+    import { auth, db } from './assets/js/firebase.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const COURSES = [
+        { key: 'python',     label: 'Python',     total: 12, color: '#2dd4bf' },
+        { key: 'javascript', label: 'JavaScript',  total: 10, color: '#f7df1e' },
+        { key: 'css',        label: 'CSS Styling', total: 10, color: '#38bdf8' },
+        { key: 'html',       label: 'HTML',        total: 10, color: '#e34f26' },
+        { key: 'php',        label: 'PHP Backend', total: 10, color: '#777bb4' },
+        { key: 'sql',        label: 'SQL Database',total: 10, color: '#00758f' },
+    ];
+
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            window.location.href = 'landing.html';
+            return;
+        }
+
+        document.getElementById('loadingState').classList.add('hidden');
+        document.getElementById('mainContent').classList.remove('hidden');
+
+        const username = user.displayName || user.email.split('@')[0];
+        document.getElementById('displayName').textContent = username;
+        document.getElementById('displayEmail').textContent = user.email;
+        document.getElementById('avatarLetter').textContent = username[0].toUpperCase();
+
+        let totalDone = 0;
+        let totalLessons = 0;
+        let coursesStarted = 0;
+
+        const container = document.getElementById('courseProgress');
+        container.innerHTML = '';
+
+        COURSES.forEach(course => {
+            const unlocked = parseInt(localStorage.getItem(`zenith_progress_${course.key}`) || '1');
+            const done = Math.max(0, unlocked - 1);
+            const pct = Math.min(Math.round((done / course.total) * 100), 100);
+
+            totalDone += done;
+            totalLessons += course.total;
+            if (done > 0) coursesStarted++;
+
+            const row = document.createElement('div');
+            row.innerHTML = `
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:${course.color}"></span>
+                        <span class="text-sm font-bold">${course.label}</span>
+                    </div>
+                    <span class="text-[11px] font-black" style="color:${course.color}">${done} / ${course.total} บท</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width:0%; background:${course.color}" data-target="${pct}"></div>
+                </div>
+            `;
+            container.appendChild(row);
+        });
+
+        const overallPct = totalLessons > 0 ? Math.round((totalDone / totalLessons) * 100) : 0;
+        document.getElementById('overallPct').textContent = overallPct + '%';
+        document.getElementById('statLessons').textContent = totalDone + ' บทเรียน';
+        document.getElementById('statCourses').textContent = coursesStarted + ' / 6 วิชา';
+
+        setTimeout(() => {
+            document.querySelectorAll('.progress-fill').forEach(bar => {
+                bar.style.width = bar.dataset.target + '%';
+            });
+        }, 300);
+    });
+</script>
+
+</body>
+</html>

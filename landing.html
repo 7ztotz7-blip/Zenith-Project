@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith — เรียนโค้ด เปลี่ยนชีวิต</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Kanit', sans-serif; background: #050505; color: #fff; overflow-x: hidden; }
+
+        /* VIDEO BG */
+        #bg-video {
+            position: fixed; right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            z-index: -2; object-fit: cover;
+            opacity: 0.18; filter: saturate(0.8) brightness(0.5);
+        }
+        .video-overlay {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background: radial-gradient(ellipse at 50% 0%, rgba(168,85,247,0.06) 0%, #050505 70%);
+        }
+        .geo-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.013) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.013) 1px, transparent 1px);
+            background-size: 44px 44px;
+        }
+
+        /* HERO */
+        .hero-glow {
+            position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+            width: 700px; height: 700px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-title-gradient {
+            background: linear-gradient(135deg, #fff 0%, #e4e4e7 40%, #a855f7 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        /* GLASS CARD */
+        .glass-card {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.06);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .glass-card:hover {
+            background: rgba(168,85,247,0.06);
+            border-color: rgba(168,85,247,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(168,85,247,0.1);
+        }
+
+        /* COURSE CARD color dots */
+        .dot-python  { background: #2dd4bf; }
+        .dot-js      { background: #f7df1e; }
+        .dot-css     { background: #38bdf8; }
+        .dot-html    { background: #e34f26; }
+        .dot-php     { background: #777bb4; }
+        .dot-sql     { background: #00758f; }
+
+        /* STEPS */
+        .step-line::after {
+            content: '';
+            position: absolute; top: 28px; left: calc(50% + 28px);
+            width: calc(100% - 56px); height: 1px;
+            background: linear-gradient(90deg, rgba(168,85,247,0.4), rgba(45,212,191,0.4));
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes pulse-slow { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
+        .animate-fade-up { animation: fadeUp 0.7s ease both; }
+        .delay-1 { animation-delay: 0.15s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.45s; }
+        .delay-4 { animation-delay: 0.6s; }
+
+        /* SCROLL REVEAL */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* PROGRESS BAR ZERO */
+        .progress-zero { width: 0%; }
+
+        /* CTA INNER GLOW */
+        .cta-inner-glow {
+            background: radial-gradient(ellipse at 50% 120%, rgba(168,85,247,0.1), transparent 65%);
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
+
+        /* BADGE */
+        .badge-purple { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.25); color: #c084fc; }
+        .badge-teal   { background: rgba(45,212,191,0.12);  border: 1px solid rgba(45,212,191,0.25);  color: #2dd4bf; }
+
+        /* STAT CARD */
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+        }
+
+        /* BTN */
+        .btn-primary {
+            background: #a855f7; color: #000;
+            font-weight: 900; border-radius: 14px;
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover { background: #c084fc; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(168,85,247,0.35); }
+        .btn-outline {
+            background: transparent; color: #fff;
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 14px;
+            font-weight: 700; transition: all 0.2s ease;
+        }
+        .btn-outline:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); }
+
+        @media (max-width: 640px) {
+            .hero-glow { width: 340px; height: 340px; }
+        }
+    </style>
+</head>
+<body class="geo-bg">
+
+<!-- VIDEO BACKGROUND -->
+<video autoplay loop muted playsinline id="bg-video">
+    <source src="gg-video.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav class="fixed top-0 w-full z-50 h-16 flex items-center justify-between px-6 md:px-10
+            bg-[#050505]/70 backdrop-blur-md border-b border-white/[0.04]">
+
+    <a href="landing.html" class="text-2xl font-black text-[#a855f7] italic tracking-tighter select-none">ZENITH.</a>
+
+    <div class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest text-zinc-400">
+        <a href="#courses"  class="hover:text-white transition">คอร์ส</a>
+        <a href="#howitworks" class="hover:text-white transition">วิธีเรียน</a>
+        <a href="#about"    class="hover:text-white transition">เกี่ยวกับ</a>
+    </div>
+
+    <div class="flex items-center gap-3">
+        <a href="login.html"
+           class="btn-outline px-5 py-2 text-[10px] uppercase tracking-widest hidden sm:block">
+            Sign In
+        </a>
+        <a href="register.html"
+           class="btn-primary px-5 py-2 text-[10px] uppercase tracking-widest">
+            Get Started
+        </a>
+    </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16">
+    <div class="hero-glow"></div>
+
+    <!-- Badge -->
+    <div class="badge-purple inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-8 animate-fade-up">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#a855f7] animate-pulse"></span>
+        เรียนฟรี 100% · ไม่ต้องใช้บัตรเครดิต
+    </div>
+
+    <!-- Headline -->
+    <h1 class="hero-title-gradient text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.0] mb-6 animate-fade-up delay-1 max-w-4xl">
+        เขียนโค้ด<br>เปลี่ยนชีวิต
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-zinc-400 text-base md:text-lg max-w-2xl leading-relaxed mb-10 animate-fade-up delay-2">
+        เรียน HTML, CSS, JavaScript, Python, PHP และ SQL<br class="hidden md:block">
+        พร้อมแบบฝึกหัดและ Quiz ทุกบท · เริ่มต้นได้ทันทีวันนี้
+    </p>
+
+    <!-- CTA Buttons -->
+    <div class="flex flex-col sm:flex-row items-center gap-4 mb-16 animate-fade-up delay-3">
+        <a href="register.html"
+           class="btn-primary px-8 py-4 text-sm uppercase tracking-widest w-full sm:w-auto text-center">
+            เริ่มเรียนฟรีเลย →
+        </a>
+        <a href="login.html"
+           class="btn-outline px-8 py-4 text-sm uppercase tracking-widest w-full sm:w-auto text-center">
+            มีบัญชีแล้ว? Sign In
+        </a>
+    </div>
+
+    <!-- Social proof strip -->
+    <div class="flex flex-wrap items-center justify-center gap-6 text-[11px] text-zinc-500 font-bold uppercase tracking-widest animate-fade-up delay-4">
+        <span class="flex items-center gap-1.5"><span class="text-[#2dd4bf]">✓</span> 6 วิชา</span>
+        <span class="w-px h-3 bg-zinc-700"></span>
+        <span class="flex items-center gap-1.5"><span class="text-[#a855f7]">✓</span> 60+ บทเรียน</span>
+        <span class="w-px h-3 bg-zinc-700"></span>
+        <span class="flex items-center gap-1.5"><span class="text-[#f7df1e]">✓</span> Quiz ทุกบท</span>
+        <span class="w-px h-3 bg-zinc-700"></span>
+        <span class="flex items-center gap-1.5"><span class="text-[#e34f26]">✓</span> ระบบ Progress</span>
+    </div>
+
+    <!-- Scroll arrow -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-zinc-600 animate-bounce">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+    </div>
+</section>
+
+<!-- ══════════════ STATS ══════════════ -->
+<section class="max-w-5xl mx-auto px-6 py-16">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 reveal">
+        <div class="stat-card p-6 text-center">
+            <p class="text-4xl font-black text-[#a855f7] mb-1">6</p>
+            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">วิชาหลัก</p>
+        </div>
+        <div class="stat-card p-6 text-center">
+            <p class="text-4xl font-black text-[#2dd4bf] mb-1">60+</p>
+            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">บทเรียน</p>
+        </div>
+        <div class="stat-card p-6 text-center">
+            <p class="text-4xl font-black text-[#f7df1e] mb-1">60+</p>
+            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">Quiz ฝึกหัด</p>
+        </div>
+        <div class="stat-card p-6 text-center">
+            <p class="text-4xl font-black text-white mb-1">∞</p>
+            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">ฟรีตลอดกาล</p>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════ COURSES ══════════════ -->
+<section id="courses" class="max-w-6xl mx-auto px-6 pb-24">
+
+    <div class="text-center mb-12 reveal">
+        <p class="text-[10px] font-black text-[#a855f7] uppercase tracking-widest mb-3">หลักสูตร</p>
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-4">เลือกเรียนได้ทุกวิชา</h2>
+        <p class="text-zinc-500 text-sm max-w-lg mx-auto leading-relaxed">
+            ครอบคลุม Frontend, Backend และ Database ครบในที่เดียว
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Python -->
+        <div class="glass-card p-6 reveal">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-[#2dd4bf]/10">
+                    <span class="text-xl">🐍</span>
+                </div>
+                <div>
+                    <p class="font-black text-sm">Python</p>
+                    <p class="text-[10px] text-zinc-500 uppercase tracking-wider">12 บทเรียน</p>
+                </div>
+                <span class="ml-auto text-[9px] badge-teal px-2 py-0.5 rounded-full font-bold uppercase">Beginner</span>
+            </div>
+            <p class="text-zinc-400 text-xs leading-relaxed">Variables, Loops, Functions, Lists, Dictionary และ Real Project จบครบในคอร์สเดียว</p>
+            <div class="mt-4 w-full bg-zinc-900 rounded-full h-1">
+                <div class="h-1 rounded-full bg-[#2dd4bf] progress-zero"></div>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <div class="glass-card p-6 reveal">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10">
+                    <span class="text-xl">⚡</span>
+                </div>
+                <div>
+                    <p class="font-black text-sm">JavaScript</p>
+                    <p class="text-[10px] text-zinc-500 uppercase tracking-wider">10 บทเรียน</p>
+                </div>
+                <span class="ml-auto text-[9px] bg-yellow-500/10 border border-yellow-500/25 text-yellow-400 px-2 py-0.5 rounded-full font-bold uppercase">Inter</span>
+            </div>
+            <p class="text-zinc-400 text-xs leading-relaxed">DOM, Events, Arrays, Objects และ ES6+ ทำให้เว็บไซต์มีชีวิตชีวา</p>
+            <div class="mt-4 w-full bg-zinc-900 rounded-full h-1">
+                <div class="h-1 rounded-full bg-yellow-400 progress-zero"></div>
+            </div>
+        </div>
+
+        <!-- CSS -->
+        <div class="glass-card p-6 reveal">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-sky-500/10">
+                    <span class="text-xl">🎨</span>
+                </div>
+                <div>
+                    <p class="font-black text-sm">CSS Styling</p>
+                    <p class="text-[10px] text-zinc-500 uppercase tracking-wider">10 บทเรียน</p>
+                </div>
+                <span class="ml-auto text-[9px] bg-sky-500/10 border border-sky-500/25 text-sky-400 px-2 py-0.5 rounded-full font-bold uppercase">Inter</span>
+            </div>
+            <p class="text-zinc-400 text-xs leading-relaxed">Flexbox, Grid, Animation และ Responsive Design ทำเว็บสวยในทุกขนาดหน้าจอ</p>
+            <div class="mt-4 w-full bg-zinc-900 rounded-full h-1">
+                <div class="h-1 rounded-full bg-sky-400 progress-zero"></div>
+            </div>
+        </div>
+
+        <!-- HTML -->
+        <div class="glass-card p-6 reveal">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-orange-500/10">
+                    <span class="text-xl">🏗️</span>
+                </div>
+                <div>
+                    <p class="font-black text-sm">HTML Structure</p>
+                    <p class="text-[10px] text-zinc-500 uppercase tracking-wider">10 บทเรียน</p>
+                </div>
+                <span class="ml-auto text-[9px] bg-orange-500/10 border border-orange-500/25 text-orange-400 px-2 py-0.5 rounded-full font-bold uppercase">Beginner</span>
+            </div>
+            <p class="text-zinc-400 text-xs leading-relaxed">Tags, Links, Forms, Images และ Semantic HTML สร้างโครงสร้างเว็บอย่างมืออาชีพ</p>
+            <div class="mt-4 w-full bg-zinc-900 rounded-full h-1">
+                <div class="h-1 rounded-full bg-orange-400 progress-zero"></div>
+            </div>
+        </div>
+
+        <!-- PHP -->
+        <div class="glass-card p-6 reveal">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-indigo-500/10">
+                    <span class="text-xl">🔧</span>
+                </div>
+                <div>
+                    <p class="font-black text-sm">PHP Backend</p>
+                    <p class="text-[10px] text-zinc-500 uppercase tracking-wider">10 บทเรียน</p>
+                </div>
+                <span class="ml-auto text-[9px] bg-indigo-500/10 border border-indigo-500/25 text-indigo-400 px-2 py-0.5 rounded-full font-bold uppercase">Inter</span>
+            </div>
+            <p class="text-zinc-400 text-xs leading-relaxed">Variables, Functions, Forms, MySQL Connection และ Login System พัฒนา Backend จริง</p>
+            <div class="mt-4 w-full bg-zinc-900 rounded-full h-1">
+                <div class="h-1 rounded-full bg-indigo-400 progress-zero"></div>
+            </div>
+        </div>
+
+        <!-- SQL -->
+        <div class="glass-card p-6 reveal">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-cyan-500/10">
+                    <span class="text-xl">🗄️</span>
+                </div>
+                <div>
+                    <p class="font-black text-sm">SQL Database</p>
+                    <p class="text-[10px] text-zinc-500 uppercase tracking-wider">10 บทเรียน</p>
+                </div>
+                <span class="ml-auto text-[9px] bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 px-2 py-0.5 rounded-full font-bold uppercase">Inter</span>
+            </div>
+            <p class="text-zinc-400 text-xs leading-relaxed">SELECT, INSERT, UPDATE, DELETE, WHERE และ JOIN จัดการฐานข้อมูลอย่างมืออาชีพ</p>
+            <div class="mt-4 w-full bg-zinc-900 rounded-full h-1">
+                <div class="h-1 rounded-full bg-cyan-400 progress-zero"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══════════════ HOW IT WORKS ══════════════ -->
+<section id="howitworks" class="max-w-5xl mx-auto px-6 pb-24">
+
+    <div class="text-center mb-12 reveal">
+        <p class="text-[10px] font-black text-[#2dd4bf] uppercase tracking-widest mb-3">วิธีเรียน</p>
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight">3 ขั้นตอน เรียนได้เลย</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div class="glass-card p-8 text-center reveal">
+            <div class="w-14 h-14 rounded-2xl bg-[#a855f7]/15 border border-[#a855f7]/20 flex items-center justify-center mx-auto mb-5">
+                <span class="text-2xl">📝</span>
+            </div>
+            <p class="text-[10px] text-[#a855f7] font-black uppercase tracking-widest mb-2">Step 1</p>
+            <h3 class="font-black text-base mb-2">สมัครสมาชิกฟรี</h3>
+            <p class="text-zinc-500 text-xs leading-relaxed">ใช้เวลาไม่ถึง 1 นาที ไม่ต้องใช้บัตรเครดิต ไม่มีค่าใช้จ่ายแอบแฝง</p>
+        </div>
+
+        <div class="glass-card p-8 text-center reveal">
+            <div class="w-14 h-14 rounded-2xl bg-[#2dd4bf]/15 border border-[#2dd4bf]/20 flex items-center justify-center mx-auto mb-5">
+                <span class="text-2xl">💻</span>
+            </div>
+            <p class="text-[10px] text-[#2dd4bf] font-black uppercase tracking-widest mb-2">Step 2</p>
+            <h3 class="font-black text-base mb-2">เรียนทีละบท</h3>
+            <p class="text-zinc-500 text-xs leading-relaxed">อ่านเนื้อหา ดูโค้ดตัวอย่าง แล้วทำ Quiz เพื่อปลดล็อกบทถัดไป</p>
+        </div>
+
+        <div class="glass-card p-8 text-center reveal">
+            <div class="w-14 h-14 rounded-2xl bg-yellow-500/15 border border-yellow-500/20 flex items-center justify-center mx-auto mb-5">
+                <span class="text-2xl">🏆</span>
+            </div>
+            <p class="text-[10px] text-yellow-400 font-black uppercase tracking-widest mb-2">Step 3</p>
+            <h3 class="font-black text-base mb-2">ติดตาม Progress</h3>
+            <p class="text-zinc-500 text-xs leading-relaxed">ระบบจดจำความก้าวหน้าของคุณ เรียนต่อได้ทุกเมื่อจากทุกที่</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══════════════ FINAL CTA ══════════════ -->
+<section class="max-w-4xl mx-auto px-6 pb-28 text-center reveal" id="about">
+
+    <div class="glass-card p-12 md:p-16 relative overflow-hidden">
+        <!-- bg glow inside card -->
+        <div class="absolute inset-0 pointer-events-none cta-inner-glow"></div>
+
+        <div class="relative z-10">
+            <p class="text-[10px] font-black text-[#a855f7] uppercase tracking-widest mb-4">พร้อมแล้วหรือยัง?</p>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-5 leading-tight">
+                เริ่มต้นการเดินทาง<br>
+                <span class="text-[#a855f7]">สายโค้ดวันนี้</span>
+            </h2>
+            <p class="text-zinc-400 text-sm md:text-base max-w-xl mx-auto leading-relaxed mb-10">
+                เรียนฟรี ไม่มีเงื่อนไข ไม่หมดอายุ<br>
+                สมัครครั้งเดียว เข้าถึงได้ทุกคอร์สตลอดไป
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="register.html"
+                   class="btn-primary px-10 py-4 text-sm uppercase tracking-widest w-full sm:w-auto text-center">
+                    สมัครสมาชิกฟรี — เริ่มเลย!
+                </a>
+                <a href="login.html"
+                   class="btn-outline px-10 py-4 text-sm uppercase tracking-widest w-full sm:w-auto text-center">
+                    เข้าสู่ระบบ
+                </a>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="border-t border-white/[0.05] py-10 text-center">
+    <h2 class="text-xl font-black text-[#a855f7] italic tracking-tighter mb-2">ZENITH.</h2>
+    <p class="text-zinc-600 text-[10px] uppercase tracking-widest">© 2026 Senior Project · วิทยาลัยเทคนิคลำพูน</p>
+</footer>
+
+<!-- ══════════════ FIREBASE AUTH CHECK ══════════════ -->
+<script type="module">
+    import { auth } from './assets/js/firebase.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            window.location.href = 'index.html';
+        }
+    });
+</script>
+
+<!-- ══════════════ SCROLL REVEAL ══════════════ -->
+<script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                entry.target.style.transitionDelay = (i % 3) * 0.1 + 's';
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
