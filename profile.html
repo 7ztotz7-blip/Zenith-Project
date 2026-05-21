@@ -92,6 +92,10 @@
                    class="text-[10px] bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full font-bold uppercase tracking-wider hover:bg-yellow-500/20 transition">
                     🏆 ใบประกาศ
                 </a>
+                <a href="settings.html"
+                   class="text-[10px] bg-zinc-800 border border-zinc-700 text-zinc-400 px-3 py-1 rounded-full font-bold uppercase tracking-wider hover:bg-zinc-700 transition">
+                    ⚙️ Settings
+                </a>
             </div>
         </div>
     </div>
@@ -114,6 +118,7 @@
 <script type="module">
     import { auth, db } from './assets/js/firebase.js';
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { syncFromFirestore } from './assets/js/progress.js';
 
     const COURSES = [
         { key: 'python',     label: 'Python',     total: 12, color: '#2dd4bf' },
@@ -124,11 +129,13 @@
         { key: 'sql',        label: 'SQL Database',total: 10, color: '#00758f' },
     ];
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         if (!user) {
             window.location.href = 'landing.html';
             return;
         }
+
+        await syncFromFirestore();
 
         document.getElementById('loadingState').classList.add('hidden');
         document.getElementById('mainContent').classList.remove('hidden');

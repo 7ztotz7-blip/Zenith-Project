@@ -43,10 +43,12 @@ function unlockNextLesson() {
 
     if (currentLessonId >= current) {
 
-        localStorage.setItem(
-            key,
-            currentLessonId + 1
-        );
+        const nextLevel = currentLessonId + 1;
+        localStorage.setItem(key, nextLevel);
+
+        if (typeof window._zenithSaveProgress === 'function') {
+            window._zenithSaveProgress(getCourseType(), nextLevel);
+        }
     }
 }
 
@@ -576,6 +578,8 @@ function setLesson(id) {
         top: 0,
         behavior: 'smooth'
     });
+
+    if (typeof closeDrawer === 'function') closeDrawer();
 }
 
 // ──────────────────────────────────────────
