@@ -6,74 +6,131 @@
     <title>Zenith | Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script>tailwind.config = { darkMode: 'class' }</script>
+    <style>
+        body { font-family: 'Kanit', sans-serif; background: linear-gradient(135deg, #07040f 0%, #0d0818 100%); }
+        #zenith-toast {
+            position: fixed; bottom: 32px; left: 50%;
+            transform: translateX(-50%) translateY(16px);
+            background: #18111f; border: 1px solid rgba(168,85,247,0.3);
+            color: #fff; padding: 13px 24px; border-radius: 16px;
+            font-size: 13px; font-weight: 700; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease; z-index: 9999;
+            white-space: nowrap; box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            font-family: 'Kanit', sans-serif;
+        }
+        #zenith-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    </style>
 </head>
 <body class="flex items-center justify-center min-h-screen px-6">
 
-    <div class="w-full max-w-md p-8 bg-white/80 dark:bg-[#19122c]/50 border border-blue-200 dark:border-purple-950/40 backdrop-blur-xl rounded-[24px] shadow-xl">
-        <div class="text-center mb-6">
-            <h1 class="text-3xl font-black text-[#0050D8] dark:text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
-            <p class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-purple-400/60 mt-1">Create your account</p>
-        </div>
+<div id="zenith-toast"></div>
 
-        <form id="register-form" class="space-y-4">
-            <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Username</label>
-                <input type="text" id="reg-username" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#0050D8] dark:bg-slate-900 dark:border-purple-950/60 dark:text-white" placeholder="ชื่อผู้ใช้งาน">
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Email Address</label>
-                <input type="email" id="reg-email" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#0050D8] dark:bg-slate-900 dark:border-purple-950/60 dark:text-white" placeholder="your@email.com">
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Password</label>
-                <input type="password" id="reg-password" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#0050D8] dark:bg-slate-900 dark:border-purple-950/60 dark:text-white" placeholder="•••••••• (ขั้นต่ำ 6 ตัวอักษร)">
-            </div>
-            
-            <button type="submit" id="reg-btn" class="w-full bg-[#0050D8] dark:bg-[#a855f7] text-white py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:opacity-90 transition-all mt-2">
-                Sign Up
-            </button>
-        </form>
-
-        <p class="text-center text-xs text-slate-500 dark:text-gray-400 mt-6">
-            มีบัญชีอยู่แล้ว? <a href="login.html" class="text-[#0050D8] dark:text-[#a855f7] font-bold hover:underline">เข้าสู่ระบบที่นี่</a>
-        </p>
+<div class="w-full max-w-md p-8 bg-white/[0.05] border border-purple-950/50 backdrop-blur-xl rounded-[24px] shadow-2xl">
+    <div class="text-center mb-6">
+        <h1 class="text-3xl font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
+        <p class="text-xs font-bold uppercase tracking-widest text-purple-400/60 mt-1">Create your account</p>
     </div>
 
-    <script type="module">
-        import { registerUser, checkAuthState } from './assets/js/auth.js';
+    <form id="register-form" class="space-y-4">
+        <div>
+            <label class="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">Username</label>
+            <input type="text" id="reg-username" required
+                class="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-[#a855f7] placeholder-zinc-600 transition"
+                placeholder="ชื่อผู้ใช้งาน">
+        </div>
 
-        checkAuthState('auth_page');
+        <div>
+            <label class="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">Email Address</label>
+            <input type="email" id="reg-email" required
+                class="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-[#a855f7] placeholder-zinc-600 transition"
+                placeholder="your@email.com">
+        </div>
 
-        function translateAuthError(errorMsg) {
-            if (errorMsg.includes('email-already-in-use')) return 'อีเมลนี้ถูกใช้งานไปแล้วในระบบ';
-            if (errorMsg.includes('weak-password')) return 'รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร';
-            if (errorMsg.includes('invalid-email')) return 'รูปแบบอีเมลไม่ถูกต้อง';
-            return errorMsg;
+        <div>
+            <label class="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">Password</label>
+            <div class="relative">
+                <input type="password" id="reg-password" required
+                    class="w-full px-4 py-3 pr-11 bg-white/[0.05] border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-[#a855f7] placeholder-zinc-600 transition"
+                    placeholder="•••••••• (ขั้นต่ำ 6 ตัวอักษร)">
+                <button type="button" onclick="togglePw('reg-password', this)" title="แสดง/ซ่อนรหัสผ่าน"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition">
+                    <svg class="w-4 h-4 eye-closed" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                    </svg>
+                    <svg class="w-4 h-4 eye-open hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <button type="submit" id="reg-btn"
+            class="w-full bg-[#a855f7] text-black py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:opacity-90 active:scale-[0.98] transition-all mt-2">
+            Sign Up
+        </button>
+    </form>
+
+    <p class="text-center text-xs text-zinc-500 mt-6">
+        มีบัญชีอยู่แล้ว?
+        <a href="login.html" class="text-[#a855f7] font-bold hover:underline">เข้าสู่ระบบที่นี่</a>
+    </p>
+</div>
+
+<script type="module">
+    import { registerUser, checkAuthState } from './assets/js/auth.js';
+
+    checkAuthState('auth_page');
+
+    function showToast(msg, isError = false) {
+        const t = document.getElementById('zenith-toast');
+        t.textContent = msg;
+        t.style.borderColor = isError ? 'rgba(239,68,68,0.5)' : 'rgba(168,85,247,0.4)';
+        t.classList.remove('show');
+        void t.offsetWidth;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3200);
+    }
+
+    window.togglePw = function(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const isHidden = input.type === 'password';
+        input.type = isHidden ? 'text' : 'password';
+        btn.querySelector('.eye-closed').classList.toggle('hidden', isHidden);
+        btn.querySelector('.eye-open').classList.toggle('hidden', !isHidden);
+    };
+
+    function translateAuthError(msg) {
+        if (msg.includes('email-already-in-use'))
+            return '❌ อีเมลนี้ถูกใช้งานไปแล้วในระบบ';
+        if (msg.includes('weak-password'))
+            return '❌ รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร';
+        if (msg.includes('invalid-email'))
+            return '❌ รูปแบบอีเมลไม่ถูกต้อง';
+        return '❌ เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
+    }
+
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('reg-username').value.trim();
+        const email    = document.getElementById('reg-email').value.trim();
+        const password = document.getElementById('reg-password').value;
+        const btn      = document.getElementById('reg-btn');
+
+        btn.innerText = 'CREATING ACCOUNT...';
+        btn.disabled = true;
+
+        const result = await registerUser(email, password, username);
+
+        if (result.success) {
+            showToast('✓ สมัครสมาชิกสำเร็จ ยินดีต้อนรับ!');
+            setTimeout(() => window.location.href = 'index.html', 1200);
+        } else {
+            showToast(translateAuthError(result.error), true);
+            btn.innerText = 'SIGN UP';
+            btn.disabled = false;
         }
-
-        document.getElementById('register-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const username = document.getElementById('reg-username').value.trim();
-            const email = document.getElementById('reg-email').value.trim();
-            const password = document.getElementById('reg-password').value;
-            const btn = document.getElementById('reg-btn');
-
-            btn.innerText = "CREATING ACCOUNT...";
-            btn.disabled = true;
-
-            const result = await registerUser(email, password, username);
-
-            if (result.success) {
-                alert("สมัครสมาชิกสำเร็จ ยินดีต้อนรับครับ!");
-                window.location.href = 'index.html';
-            } else {
-                alert("เกิดข้อผิดพลาด: " + translateAuthError(result.error));
-                btn.innerText = "SIGN UP";
-                btn.disabled = false;
-            }
-        });
-    </script>
+    });
+</script>
 </body>
 </html>

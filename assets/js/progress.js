@@ -28,3 +28,23 @@ export async function saveToFirestore(courseKey, level) {
         }, { merge: true });
     } catch (_) {}
 }
+
+export async function saveQuizScore(courseKey, lessonId) {
+    const user = auth.currentUser;
+    if (!user) return;
+    try {
+        const scoreKey = `${courseKey}_${lessonId}`;
+        await setDoc(doc(db, 'users', user.uid), {
+            quizScores: { [scoreKey]: Date.now() }
+        }, { merge: true });
+    } catch (_) {}
+}
+
+export async function getUserData() {
+    const user = auth.currentUser;
+    if (!user) return null;
+    try {
+        const snap = await getDoc(doc(db, 'users', user.uid));
+        return snap.exists() ? snap.data() : null;
+    } catch (_) { return null; }
+}

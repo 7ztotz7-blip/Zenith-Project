@@ -58,7 +58,7 @@
         กลับหน้าหลัก
     </a>
     <h1 class="text-xl font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
-    <div class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest hidden sm:block">My Profile</div>
+    <a href="dashboard.html" class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-[#a855f7] transition hidden sm:block">Dashboard</a>
 </nav>
 
 <!-- LOADING STATE -->
@@ -131,7 +131,7 @@
 
     onAuthStateChanged(auth, async (user) => {
         if (!user) {
-            window.location.href = 'landing.html';
+            window.location.href = 'login.html';
             return;
         }
 

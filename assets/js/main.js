@@ -334,6 +334,10 @@ function checkAns(selected, correct, btn) {
 
         unlockNextLesson();
 
+        if (typeof window._zenithSaveQuizScore === 'function') {
+            window._zenithSaveQuizScore(getCourseType(), currentLessonId);
+        }
+
         setTimeout(() => {
 
             const nextBtn =

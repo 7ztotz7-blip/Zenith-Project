@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Kanit', sans-serif; background: #050505; color: #fff; overflow-x: hidden; }
+
+        #bg-video {
+            position: fixed; right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            z-index: -2; object-fit: cover;
+            opacity: 0.12; filter: brightness(0.4);
+        }
+        .video-overlay {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, rgba(168,85,247,0.07), #050505 70%);
+        }
+        .geo-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+                linear-gradient(90deg,rgba(255,255,255,0.012) 1px, transparent 1px);
+            background-size: 44px 44px;
+        }
+
+        /* GLASS */
+        .glass {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+        }
+
+        /* STAT CARD */
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            transition: border-color 0.2s ease;
+        }
+
+        /* COURSE CARD */
+        .course-card {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            transition: all 0.25s ease;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        .course-card:hover {
+            border-color: rgba(168,85,247,0.35);
+            background: rgba(168,85,247,0.05);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(168,85,247,0.1);
+        }
+
+        /* BADGE */
+        .badge-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 18px;
+            opacity: 0.3;
+            transition: all 0.25s ease;
+        }
+        .badge-item.earned {
+            opacity: 1;
+        }
+        .badge-item.earned.purple {
+            border-color: rgba(168,85,247,0.35);
+            background: rgba(168,85,247,0.08);
+        }
+        .badge-item.earned.teal {
+            border-color: rgba(45,212,191,0.35);
+            background: rgba(45,212,191,0.08);
+        }
+        .badge-item.earned.gold {
+            border-color: rgba(251,191,36,0.35);
+            background: rgba(251,191,36,0.08);
+        }
+
+        /* PROGRESS BAR */
+        .bar-fill { transition: width 1.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        /* SKELETON */
+        @keyframes skeletonShimmer {
+            0%   { background-position: -600px 0; }
+            100% { background-position:  600px 0; }
+        }
+        .skel {
+            background: linear-gradient(90deg,
+                rgba(168,85,247,0.05) 25%,
+                rgba(168,85,247,0.14) 50%,
+                rgba(168,85,247,0.05) 75%);
+            background-size: 1200px 100%;
+            animation: skeletonShimmer 1.8s infinite linear;
+            border-radius: 10px;
+        }
+        @keyframes skelFadeOut { to { opacity: 0; pointer-events: none; } }
+        .skel-out { animation: skelFadeOut 0.4s ease forwards; }
+
+        /* FADE ANIMATIONS */
+        @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+        .fade-up    { animation: fadeUp 0.5s ease both; }
+        .fade-up-d1 { animation: fadeUp 0.5s 0.08s ease both; }
+        .fade-up-d2 { animation: fadeUp 0.5s 0.16s ease both; }
+        .fade-up-d3 { animation: fadeUp 0.5s 0.26s ease both; }
+        .fade-up-d4 { animation: fadeUp 0.5s 0.36s ease both; }
+
+        /* XP GLOW */
+        .xp-glow { text-shadow: 0 0 20px rgba(251,191,36,0.5); }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
+    </style>
+</head>
+<body class="geo-bg min-h-screen">
+
+<video autoplay loop muted playsinline id="bg-video">
+    <source src="gg-video.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 w-full z-50 h-16 flex items-center justify-between px-6 bg-[#050505]/75 backdrop-blur-md border-b border-white/[0.04]">
+    <a href="index.html"
+       class="flex items-center gap-2 text-zinc-500 hover:text-white font-bold text-[10px] uppercase tracking-widest transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/>
+        </svg>
+        หน้าหลัก
+    </a>
+    <h1 class="text-xl font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
+    <div class="flex items-center gap-4">
+        <a href="certificate.html" class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-[#a855f7] transition hidden sm:block">ใบประกาศ</a>
+        <a href="profile.html"     class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest hover:text-[#a855f7] transition hidden sm:block">Profile</a>
+    </div>
+</nav>
+
+<!-- ══ SKELETON ══ -->
+<div id="skelOverlay" class="pt-16 min-h-screen">
+    <div class="max-w-5xl mx-auto px-6 pt-10 pb-16 space-y-8">
+        <div>
+            <div class="skel h-3 w-20 mb-3 rounded"></div>
+            <div class="skel h-9 w-64 mb-2 rounded-xl"></div>
+            <div class="skel h-4 w-44 rounded"></div>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+            <div class="skel h-24 rounded-2xl"></div>
+            <div class="skel h-24 rounded-2xl"></div>
+            <div class="skel h-24 rounded-2xl"></div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="skel h-32 rounded-2xl"></div>
+            <div class="skel h-32 rounded-2xl"></div>
+            <div class="skel h-32 rounded-2xl"></div>
+            <div class="skel h-32 rounded-2xl"></div>
+            <div class="skel h-32 rounded-2xl opacity-60"></div>
+            <div class="skel h-32 rounded-2xl opacity-30"></div>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="skel h-28 rounded-2xl"></div>
+            <div class="skel h-28 rounded-2xl"></div>
+            <div class="skel h-28 rounded-2xl opacity-60"></div>
+            <div class="skel h-28 rounded-2xl opacity-30"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ MAIN CONTENT ══ -->
+<main id="mainContent" class="hidden max-w-5xl mx-auto pt-24 pb-20 px-6 space-y-10">
+
+    <!-- PAGE HEADER -->
+    <div class="fade-up">
+        <p class="text-[10px] text-[#a855f7] font-black uppercase tracking-widest mb-1">Dashboard</p>
+        <h1 id="greetingText" class="text-3xl font-black tracking-tight">สวัสดี!</h1>
+        <p class="text-zinc-500 text-sm mt-1">ติดตามความก้าวหน้าและ Achievement ของคุณ</p>
+    </div>
+
+    <!-- ── STATS ROW ── -->
+    <div class="grid grid-cols-3 gap-3 md:gap-5 fade-up-d1">
+        <div class="stat-card p-5 text-center">
+            <p id="statLessons" class="text-3xl md:text-4xl font-black text-[#a855f7]">0</p>
+            <p class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mt-1">บทสำเร็จ</p>
+        </div>
+        <div class="stat-card p-5 text-center">
+            <p id="statCourses" class="text-3xl md:text-4xl font-black text-[#2dd4bf]">0</p>
+            <p class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mt-1">คอร์สจบ</p>
+        </div>
+        <div class="stat-card p-5 text-center">
+            <p id="statXP" class="text-3xl md:text-4xl font-black text-yellow-400 xp-glow">0</p>
+            <p class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mt-1">XP Points</p>
+        </div>
+    </div>
+
+    <!-- ── OVERALL PROGRESS BAR ── -->
+    <div id="overallSection" class="glass p-6 fade-up-d2">
+        <div class="flex items-center justify-between mb-3">
+            <div>
+                <p class="font-black text-sm">ภาพรวมทั้งหมด</p>
+                <p id="overallText" class="text-zinc-500 text-xs mt-0.5">0 / 62 บทเรียน</p>
+            </div>
+            <p id="overallPct" class="font-black text-2xl text-[#a855f7]">0%</p>
+        </div>
+        <div class="w-full h-2 bg-zinc-900 rounded-full overflow-hidden">
+            <div id="overallBar"
+                 class="h-full rounded-full bar-fill"
+                 style="width:0%; background: linear-gradient(90deg,#a855f7,#2dd4bf)">
+            </div>
+        </div>
+    </div>
+
+    <!-- ── COURSE PROGRESS CARDS ── -->
+    <div class="fade-up-d2">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="font-black text-sm uppercase tracking-widest">ความก้าวหน้าแต่ละวิชา</h2>
+            <a href="index.html" class="text-[10px] font-black text-[#a855f7] hover:underline uppercase tracking-widest">ไปเรียนต่อ →</a>
+        </div>
+        <div id="progressGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </div>
+
+    <!-- ── ACHIEVEMENTS ── -->
+    <div class="fade-up-d3">
+        <div class="mb-4">
+            <h2 class="font-black text-sm uppercase tracking-widest">Achievements</h2>
+            <p class="text-zinc-600 text-[10px] font-bold uppercase tracking-wider mt-0.5">
+                <span id="badgeCount">0</span> / <span id="badgeTotal">0</span> ปลดล็อกแล้ว
+            </p>
+        </div>
+        <div id="badgeGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"></div>
+    </div>
+
+    <!-- ── QUICK LINKS ── -->
+    <div class="fade-up-d4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <a href="certificate.html"
+           class="glass p-5 flex items-center gap-4 hover:border-[#a855f7]/40 transition group">
+            <span class="text-2xl">🎓</span>
+            <div>
+                <p class="font-black text-sm group-hover:text-[#a855f7] transition">ใบประกาศ</p>
+                <p class="text-zinc-600 text-[10px]">ดูใบประกาศที่ได้รับ</p>
+            </div>
+        </a>
+        <a href="settings.html"
+           class="glass p-5 flex items-center gap-4 hover:border-[#a855f7]/40 transition group">
+            <span class="text-2xl">⚙️</span>
+            <div>
+                <p class="font-black text-sm group-hover:text-[#a855f7] transition">ตั้งค่า</p>
+                <p class="text-zinc-600 text-[10px]">ภาษา & Progress Reset</p>
+            </div>
+        </a>
+        <a href="profile.html"
+           class="glass p-5 flex items-center gap-4 hover:border-[#a855f7]/40 transition group">
+            <span class="text-2xl">👤</span>
+            <div>
+                <p class="font-black text-sm group-hover:text-[#a855f7] transition">โปรไฟล์</p>
+                <p class="text-zinc-600 text-[10px]">ข้อมูลบัญชีของคุณ</p>
+            </div>
+        </a>
+    </div>
+
+</main>
+
+<script type="module">
+    import { auth } from './assets/js/firebase.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { syncFromFirestore } from './assets/js/progress.js';
+
+    const COURSES = [
+        { key: 'python',     label: 'Python',       total: 12, color: '#2dd4bf', emoji: '🐍' },
+        { key: 'javascript', label: 'JavaScript',   total: 10, color: '#f7df1e', emoji: '⚡' },
+        { key: 'css',        label: 'CSS Styling',  total: 10, color: '#38bdf8', emoji: '🎨' },
+        { key: 'html',       label: 'HTML',         total: 10, color: '#e34f26', emoji: '🏗️' },
+        { key: 'php',        label: 'PHP Backend',  total: 10, color: '#777bb4', emoji: '🔧' },
+        { key: 'sql',        label: 'SQL Database', total: 10, color: '#00758f', emoji: '🗄️' },
+    ];
+    const TOTAL_LESSONS = COURSES.reduce((s, c) => s + c.total, 0); // 62
+
+    const BADGES = [
+        { emoji: '🎯', name: 'First Step',   desc: 'เริ่มเรียนบทแรก',          color: 'teal',   check: d => d.totalDone >= 1 },
+        { emoji: '⚡', name: 'Quiz Streak',  desc: 'ผ่าน Quiz 10 ข้อ',          color: 'purple', check: d => d.totalDone >= 10 },
+        { emoji: '🏃', name: 'Halfway',      desc: 'เรียนครึ่งทางของคอร์สใดก็ได้',color: 'purple', check: d => d.courses.some(c => c.pct >= 50) },
+        { emoji: '🐍', name: 'Python Pro',   desc: 'จบคอร์ส Python ครบ 12 บท',  color: 'teal',   check: d => d.courses.find(c => c.key==='python')?.done  >= 12 },
+        { emoji: '⚡', name: 'JS Wizard',    desc: 'จบคอร์ส JavaScript ครบ 10 บท',color:'gold',   check: d => d.courses.find(c => c.key==='javascript')?.done >= 10 },
+        { emoji: '🎨', name: 'CSS Artist',   desc: 'จบคอร์ส CSS ครบ 10 บท',     color: 'teal',   check: d => d.courses.find(c => c.key==='css')?.done  >= 10 },
+        { emoji: '🏗️', name: 'HTML Hero',    desc: 'จบคอร์ส HTML ครบ 10 บท',    color: 'teal',   check: d => d.courses.find(c => c.key==='html')?.done  >= 10 },
+        { emoji: '🔧', name: 'PHP Master',   desc: 'จบคอร์ส PHP ครบ 10 บท',     color: 'purple', check: d => d.courses.find(c => c.key==='php')?.done  >= 10 },
+        { emoji: '🗄️', name: 'SQL Expert',   desc: 'จบคอร์ส SQL ครบ 10 บท',     color: 'teal',   check: d => d.courses.find(c => c.key==='sql')?.done  >= 10 },
+        { emoji: '🎓', name: 'Polyglot',     desc: 'จบ 3 คอร์สขึ้นไป',          color: 'gold',   check: d => d.completedCount >= 3 },
+        { emoji: '💎', name: 'Dedication',   desc: 'เรียน 30 บทขึ้นไป',         color: 'purple', check: d => d.totalDone >= 30 },
+        { emoji: '🏆', name: 'Full Stack',   desc: 'จบครบทุกคอร์ส 6 วิชา',      color: 'gold',   check: d => d.completedCount >= 6 },
+    ];
+
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) { window.location.href = 'login.html'; return; }
+
+        await syncFromFirestore();
+
+        // ── Build stats ──
+        const courseStats = COURSES.map(c => {
+            const unlocked = parseInt(localStorage.getItem(`zenith_progress_${c.key}`) || '1');
+            const done     = Math.max(0, unlocked - 1);
+            const pct      = Math.min(Math.round((done / c.total) * 100), 100);
+            return { ...c, done, pct, completed: done >= c.total };
+        });
+
+        const totalDone      = courseStats.reduce((s, c) => s + c.done, 0);
+        const completedCount = courseStats.filter(c => c.completed).length;
+        const xp             = totalDone * 10;
+        const overallPct     = Math.round((totalDone / TOTAL_LESSONS) * 100);
+        const dashData       = { courses: courseStats, totalDone, completedCount };
+
+        // ── Greeting ──
+        const username = user.displayName || user.email.split('@')[0];
+        document.getElementById('greetingText').textContent = `สวัสดี, ${username}!`;
+
+        // ── Stats counters ──
+        animateCount('statLessons', totalDone);
+        animateCount('statCourses', completedCount);
+        animateCount('statXP', xp);
+
+        // ── Overall bar ──
+        document.getElementById('overallText').textContent = `${totalDone} / ${TOTAL_LESSONS} บทเรียน`;
+        document.getElementById('overallPct').textContent  = overallPct + '%';
+        setTimeout(() => {
+            document.getElementById('overallBar').style.width = overallPct + '%';
+        }, 300);
+
+        // ── Course progress cards ──
+        const grid = document.getElementById('progressGrid');
+        courseStats.forEach(c => {
+            const card = document.createElement('a');
+            card.href = `course.html?course=${c.key}`;
+            card.className = 'course-card p-5';
+            card.innerHTML = `
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                         style="background:${c.color}18">${c.emoji}</div>
+                    <div class="min-w-0 flex-1">
+                        <p class="font-black text-sm truncate">${c.label}</p>
+                        <p class="text-[10px] font-bold uppercase tracking-wider" style="color:${c.color}">
+                            ${c.completed ? '✓ จบแล้ว' : `${c.done} / ${c.total} บท`}
+                        </p>
+                    </div>
+                    <p class="font-black text-sm flex-shrink-0" style="color:${c.color}">${c.pct}%</p>
+                </div>
+                <div class="w-full bg-zinc-900 rounded-full h-1.5 overflow-hidden">
+                    <div class="h-full rounded-full bar-fill" style="width:0%;background:${c.color}" data-target="${c.pct}"></div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        setTimeout(() => {
+            document.querySelectorAll('.bar-fill').forEach(bar => {
+                bar.style.width = bar.dataset.target + '%';
+            });
+        }, 250);
+
+        // ── Badges ──
+        const badgeGrid = document.getElementById('badgeGrid');
+        let earnedCount = 0;
+        BADGES.forEach(badge => {
+            const earned = badge.check(dashData);
+            if (earned) earnedCount++;
+            const div = document.createElement('div');
+            div.className = `badge-item p-4 text-center ${earned ? 'earned ' + badge.color : ''}`;
+            div.innerHTML = `
+                <div class="text-3xl mb-2">${badge.emoji}</div>
+                <p class="font-black text-xs leading-tight ${earned ? 'text-white' : 'text-zinc-600'}">${badge.name}</p>
+                <p class="text-[10px] mt-1 leading-tight ${earned ? 'text-zinc-400' : 'text-zinc-700'}">${badge.desc}</p>
+                ${earned ? `<p class="text-[9px] mt-2 font-black uppercase tracking-wider" style="color:#2dd4bf">✓ ได้แล้ว</p>` : ''}
+            `;
+            badgeGrid.appendChild(div);
+        });
+
+        document.getElementById('badgeCount').textContent = earnedCount;
+        document.getElementById('badgeTotal').textContent = BADGES.length;
+
+        // ── Fade skeleton → show content ──
+        const skel = document.getElementById('skelOverlay');
+        skel.classList.add('skel-out');
+        setTimeout(() => {
+            skel.style.display = 'none';
+            document.getElementById('mainContent').classList.remove('hidden');
+        }, 420);
+    });
+
+    function animateCount(elId, target) {
+        const el = document.getElementById(elId);
+        if (!el || target === 0) { if (el) el.textContent = 0; return; }
+        let cur = 0;
+        const step = Math.max(1, Math.ceil(target / 30));
+        const timer = setInterval(() => {
+            cur = Math.min(cur + step, target);
+            el.textContent = cur;
+            if (cur >= target) clearInterval(timer);
+        }, 40);
+    }
+</script>
+
+</body>
+</html>
