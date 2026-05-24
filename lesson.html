@@ -434,8 +434,11 @@ body{
                      class="space-y-4">
                 </div>
 
-                <div id="quizFeedback"
-                     class="mt-5 font-bold">
+                <div id="quizFeedback" class="mt-5 font-bold"></div>
+
+                <div id="cloudSaveIndicator"
+                     class="mt-2 text-[11px] font-bold opacity-0 transition-opacity duration-300"
+                     style="color:#2dd4bf">
                 </div>
 
             </div>
@@ -463,14 +466,32 @@ body{
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { syncFromFirestore, saveToFirestore, saveQuizScore } from './assets/js/progress.js';
 
+    function showCloudIndicator(msg, ok = true) {
+        const el = document.getElementById('cloudSaveIndicator');
+        if (!el) return;
+        el.textContent = msg;
+        el.style.color   = ok ? '#2dd4bf' : '#ef4444';
+        el.style.opacity = '1';
+        setTimeout(() => { el.style.opacity = '0'; }, 3500);
+    }
+
     onAuthStateChanged(auth, async (user) => {
         if (!user) {
             window.location.href = 'login.html';
             return;
         }
         await syncFromFirestore();
-        window._zenithSaveProgress  = saveToFirestore;
-        window._zenithSaveQuizScore = saveQuizScore;
+
+        // Wrap saveToFirestore เพื่อแสดงสถานะ save บน UI
+        window._zenithSaveProgress = async (courseKey, level) => {
+            const ok = await saveToFirestore(courseKey, level);
+            showCloudIndicator(ok ? '☁ บันทึกลง Cloud แล้ว' : '⚠ บันทึกไม่สำเร็จ ลองใหม่', ok);
+        };
+
+        // Wrap saveQuizScore เช่นกัน
+        window._zenithSaveQuizScore = async (courseKey, lessonId) => {
+            await saveQuizScore(courseKey, lessonId);
+        };
     });
 </script>
 
