@@ -256,7 +256,7 @@ body{
 <nav class="fixed top-0 w-full h-14 z-50 flex items-center justify-between px-6 bg-black/50 backdrop-blur-md border-b border-white/5">
 
     <a id="backBtn"
-       href="course.html"
+       href="index.html"
        class="text-zinc-500 hover:text-white transition font-bold text-xs uppercase tracking-widest">
 
        ← กลับ
@@ -526,8 +526,7 @@ window.courseType = params.get('course') || 'python';
 
 currentLessonId = parseInt(params.get('id') || '1');
 
-document.getElementById('backBtn').href =
-`course.html?course=${window.courseType}`;
+document.getElementById('backBtn').href = 'index.html';
 
 const ds = document.createElement('script');
 

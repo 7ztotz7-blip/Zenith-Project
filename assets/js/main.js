@@ -494,7 +494,7 @@ function showCompletionScene() {
             </p>
 
             <a
-                href="course.html?course=${getCourseType()}"
+                href="index.html"
                 style="
                     display:block;
                     padding:16px;

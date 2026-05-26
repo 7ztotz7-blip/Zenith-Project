@@ -19,18 +19,4 @@ window.toggleTheme = function () {
     } else {
         document.documentElement.classList.remove('dark');
     }
-    updateThemeIcons();
 };
-
-function updateThemeIcons() {
-    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-    document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
-        // Sun icon = shown in dark mode (click to go light)
-        const sun  = btn.querySelector('.icon-sun');
-        const moon = btn.querySelector('.icon-moon');
-        if (sun)  sun.style.display  = theme === 'dark'  ? 'block' : 'none';
-        if (moon) moon.style.display = theme === 'light' ? 'block' : 'none';
-    });
-}
-
-document.addEventListener('DOMContentLoaded', updateThemeIcons);
