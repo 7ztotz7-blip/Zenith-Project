@@ -247,3 +247,35 @@ footer { background: var(--bg-nav) !important; border-top-color: var(--border-su
 [data-theme="dark"]  .theme-toggle-btn .icon-sun  { display: block; }
 /* แสดง moon ในโหมดสว่าง (กดเพื่อไปมืด) */
 [data-theme="light"] .theme-toggle-btn .icon-moon { display: block; }
+
+/* ============================================================
+   TAILWIND dark: CLASS OVERRIDES — ป้องกัน dark: apply ใน light mode
+   ใช้ [data-theme="light"] ความ specificity สูงกว่า .dark prefix
+   ============================================================ */
+
+/* ── Backgrounds ─── */
+[data-theme="light"] .dark\:bg-\[\#130d22\]\/80,
+[data-theme="light"] .dark\:bg-\[\#0b0713\]\/70,
+[data-theme="light"] .dark\:bg-\[\#050505\]\/75 { background: var(--bg-card) !important;
+                                                   border-color: var(--border-subtle) !important; }
+
+[data-theme="light"] .dark\:bg-purple-950\/40,
+[data-theme="light"] .dark\:bg-purple-950\/60  { background: var(--bg-input) !important;
+                                                  border-color: var(--border) !important; }
+
+/* ── Borders ─── */
+[data-theme="light"] .dark\:border-purple-950\/40,
+[data-theme="light"] .dark\:border-purple-950\/60 { border-color: var(--border) !important; }
+[data-theme="light"] .dark\:border-purple-900\/30  { border-color: var(--border-subtle) !important; }
+[data-theme="light"] .dark\:border-white\/\[0\.04\] { border-color: var(--border-subtle) !important; }
+
+/* ── Text ─── */
+[data-theme="light"] .dark\:text-white             { color: var(--text-primary)   !important; }
+[data-theme="light"] .dark\:text-gray-200,
+[data-theme="light"] .dark\:text-gray-300,
+[data-theme="light"] .dark\:text-gray-400          { color: var(--text-secondary) !important; }
+[data-theme="light"] .dark\:text-\[\#a855f7\]      { color: var(--accent)         !important; }
+[data-theme="light"] .dark\:text-purple-400        { color: var(--accent)         !important; }
+[data-theme="light"] .dark\:text-teal-400          { color: var(--accent2)        !important; }
+[data-theme="light"] .dark\:text-\[\#2dd4bf\]      { color: var(--accent2)        !important; }
+[data-theme="light"] .dark\:text-\[\#0050D8\]      { color: var(--accent)         !important; }

@@ -171,6 +171,15 @@ function updateUI() {
         }
     }
 
+    // INTERACTIVE EDITOR
+
+    if (typeof window.initCodeEditor === 'function') {
+        window.initCodeEditor(
+            currentContent.code || null,
+            getCourseType()
+        );
+    }
+
     // QUIZ
 
     const questionText =

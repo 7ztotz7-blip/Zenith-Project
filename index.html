@@ -3,7 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenith | Mastery. Code. Evolution.</title>
+    <title>ZENITH | สื่อการเรียนรู้โค้ดดิ้ง</title>
+    <!-- SEO -->
+    <meta name="description" content="เลือกคอร์สโปรแกรมมิ่งที่ชอบ Python, JavaScript, C++, Java, HTML, CSS เรียนฟรีบน ZENITH แพลตฟอร์มเรียนโค้ดภาษาไทย">
+    <meta name="keywords" content="คอร์สเรียนโค้ด, Python, JavaScript, C++, Java, HTML, CSS, เรียนโปรแกรมมิ่งฟรี, ZENITH">
+    <meta name="author" content="ZENITH">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph -->
+    <meta property="og:title" content="ZENITH | สื่อการเรียนรู้โค้ดดิ้ง">
+    <meta property="og:description" content="เลือกคอร์สโปรแกรมมิ่งที่ชอบ Python, JavaScript, C++, Java, HTML, CSS เรียนฟรีบน ZENITH">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zenith-alpha-lyart.vercel.app/">
+    <meta property="og:image" content="https://zenith-alpha-lyart.vercel.app/python-logo.png">
+    <meta property="og:site_name" content="ZENITH">
+    <meta property="og:locale" content="th_TH">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ZENITH | สื่อการเรียนรู้โค้ดดิ้ง">
+    <meta name="twitter:description" content="เลือกคอร์สโปรแกรมมิ่งที่ชอบ Python, JavaScript, C++, Java, HTML, CSS เรียนฟรีบน ZENITH">
+    <meta name="twitter:image" content="https://zenith-alpha-lyart.vercel.app/python-logo.png">
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="favicon.svg">
     <script src="assets/js/theme.js"></script>
     <link rel="stylesheet" href="assets/css/theme-variables.css">
     <script>tailwind.config = { darkMode: 'class' }</script>
@@ -68,6 +89,9 @@
         .img-python { background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%); }
         .img-js     { background: linear-gradient(135deg, #fffde6 0%, #fef9c3 100%); }
         .img-css    { background: linear-gradient(135deg, #F4F9FF 0%, #E8F5FF 100%); }
+        .img-cpp    { background: linear-gradient(135deg, #e8f0ff 0%, #dbeafe 100%); }
+        .img-java   { background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%); }
+        .img-html   { background: linear-gradient(135deg, #fffaf5 0%, #ffedd5 100%); }
 
         ::-webkit-scrollbar { width: 8px; }
         html[data-theme="light"] ::-webkit-scrollbar-track { background: #E8F5FF; }
@@ -111,7 +135,7 @@
         <div class="flex-1">
             <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-[#0050D8] dark:text-purple-400 mb-1.5">Zenith Classroom</p>
             <h1 class="text-2xl md:text-3xl font-black text-slate-800 dark:text-white tracking-tight leading-tight mb-2">เรียนเขียนโค้ดแบบใช้งานจริง</h1>
-            <p class="text-slate-500 dark:text-gray-400 text-xs md:text-sm leading-relaxed max-w-2xl">เรียน HTML, CSS, JavaScript, Python, PHP และ SQL พร้อมตัวอย่างจริงและแบบฝึกหัด</p>
+            <p class="text-slate-500 dark:text-gray-400 text-xs md:text-sm leading-relaxed max-w-2xl">เรียน Python, JavaScript, C++, Java, HTML, CSS พร้อมตัวอย่างจริงและแบบฝึกหัด</p>
         </div>
 
         <div class="flex gap-3">
@@ -181,6 +205,72 @@
 
         <div class="zenith-card p-5 flex flex-col">
             <div class="flex justify-between items-center mb-3">
+                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-blue-950/30 dark:text-blue-300 dark:border-blue-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
+                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">10 บทเรียน • 55 นาที</span>
+            </div>
+            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-cpp mb-4 p-6 shadow-inner">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++ Logo" class="h-full w-auto object-contain drop-shadow-md">
+            </div>
+            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">C++</h4>
+            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">System-level powerhouse. Master memory management, performance computing, and game development foundations.</p>
+            <div class="mb-3 px-0.5">
+                <div class="flex justify-between text-[9px] font-bold text-slate-400 dark:text-zinc-500 mb-1">
+                    <span>Progress</span>
+                    <span id="pct-cpp">0%</span>
+                </div>
+                <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-zinc-900 overflow-hidden">
+                    <div id="bar-cpp" class="h-full rounded-full w-0 transition-all duration-700" style="background:#00599C"></div>
+                </div>
+            </div>
+            <button onclick="checkAccess('cpp')" class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
+        </div>
+
+        <div class="zenith-card p-5 flex flex-col">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-orange-950/30 dark:text-orange-300 dark:border-orange-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
+                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">10 บทเรียน • 55 นาที</span>
+            </div>
+            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-java mb-4 p-6 shadow-inner">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java Logo" class="h-full w-auto object-contain drop-shadow-md">
+            </div>
+            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">Java</h4>
+            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">Write once, run anywhere. Explore OOP, JVM architecture, and enterprise-grade software engineering.</p>
+            <div class="mb-3 px-0.5">
+                <div class="flex justify-between text-[9px] font-bold text-slate-400 dark:text-zinc-500 mb-1">
+                    <span>Progress</span>
+                    <span id="pct-java">0%</span>
+                </div>
+                <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-zinc-900 overflow-hidden">
+                    <div id="bar-java" class="h-full rounded-full w-0 transition-all duration-700" style="background:#f89820"></div>
+                </div>
+            </div>
+            <button onclick="checkAccess('java')" class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
+        </div>
+
+        <div class="zenith-card p-5 flex flex-col">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-orange-950/30 dark:text-orange-300 dark:border-orange-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Beginner</span>
+                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">10 บทเรียน • 30 นาที</span>
+            </div>
+            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center img-html mb-4 p-6 shadow-inner">
+                <img src="assets/img/html-logo.png" alt="HTML Logo" class="h-full w-auto object-contain drop-shadow-md" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'">
+            </div>
+            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">HTML Structure</h4>
+            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">The blueprint of the web. Learn to structure content and define the core web elements.</p>
+            <div class="mb-3 px-0.5">
+                <div class="flex justify-between text-[9px] font-bold text-slate-400 dark:text-zinc-500 mb-1">
+                    <span>Progress</span>
+                    <span id="pct-html">0%</span>
+                </div>
+                <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-zinc-900 overflow-hidden">
+                    <div id="bar-html" class="h-full rounded-full w-0 transition-all duration-700" style="background:#e34f26"></div>
+                </div>
+            </div>
+            <button onclick="checkAccess('html')" class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
+        </div>
+
+        <div class="zenith-card p-5 flex flex-col">
+            <div class="flex justify-between items-center mb-3">
                 <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-sky-950/30 dark:text-sky-300 dark:border-sky-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
                 <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">10 บทเรียน • 50 นาที</span>
             </div>
@@ -201,72 +291,6 @@
             <button onclick="checkAccess('css')" class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
         </div>
 
-        <div class="zenith-card p-5 flex flex-col">
-            <div class="flex justify-between items-center mb-3">
-                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-orange-950/30 dark:text-orange-300 dark:border-orange-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Beginner</span>
-                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">10 บทเรียน • 30 นาที</span>
-            </div>
-            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center mb-4 p-6 shadow-inner" style="background: linear-gradient(135deg, #fffaf5 0%, #ffedd5 100%);">
-                <img src="assets/img/html-logo.png" alt="HTML Logo" class="h-full w-auto object-contain drop-shadow-md" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'">
-            </div>
-            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">HTML Structure</h4>
-            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">The blueprint of the web. Learn to structure content and define the core web elements.</p>
-            <div class="mb-3 px-0.5">
-                <div class="flex justify-between text-[9px] font-bold text-slate-400 dark:text-zinc-500 mb-1">
-                    <span>Progress</span>
-                    <span id="pct-html">0%</span>
-                </div>
-                <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-zinc-900 overflow-hidden">
-                    <div id="bar-html" class="h-full rounded-full w-0 transition-all duration-700" style="background:#e34f26"></div>
-                </div>
-            </div>
-            <button onclick="checkAccess('html')" class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
-        </div>
-
-        <div class="zenith-card p-5 flex flex-col">
-            <div class="flex justify-between items-center mb-3">
-                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-indigo-950/30 dark:text-indigo-300 dark:border-indigo-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
-                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">10 บทเรียน • 50 นาที</span>
-            </div>
-            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center mb-4 p-6 shadow-inner" style="background: linear-gradient(135deg, #fafaff 0%, #e0e7ff 100%);">
-                <img src="assets/img/php-logo.png" alt="PHP Logo" class="h-full w-auto object-contain drop-shadow-md" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg'">
-            </div>
-            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">PHP</h4>
-            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">Server-side powerhouse. Master back-end logic and dynamic content generation.</p>
-            <div class="mb-3 px-0.5">
-                <div class="flex justify-between text-[9px] font-bold text-slate-400 dark:text-zinc-500 mb-1">
-                    <span>Progress</span>
-                    <span id="pct-php">0%</span>
-                </div>
-                <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-zinc-900 overflow-hidden">
-                    <div id="bar-php" class="h-full rounded-full w-0 transition-all duration-700" style="background:#777bb4"></div>
-                </div>
-            </div>
-            <button onclick="checkAccess('php')" class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
-        </div>
-
-        <div class="zenith-card p-5 flex flex-col">
-            <div class="flex justify-between items-center mb-3">
-                <span class="text-[8px] font-bold bg-slate-50 text-slate-600 border border-slate-200 dark:bg-sky-950/30 dark:text-sky-300 dark:border-sky-900/50 px-2 py-0.5 rounded-full uppercase tracking-wider">Intermediate</span>
-                <span class="text-[9px] text-slate-400 dark:text-gray-400 font-medium">10 บทเรียน • 40 นาที</span>
-            </div>
-            <div class="h-36 md:h-40 rounded-[20px] flex items-center justify-center mb-4 p-6 shadow-inner" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
-                <img src="assets/img/sql-logo.png" alt="SQL Logo" class="h-full w-auto object-contain drop-shadow-md" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'">
-            </div>
-            <h4 class="text-lg md:text-xl font-black text-slate-800 dark:text-white mb-1 italic uppercase">SQL Database</h4>
-            <p class="text-slate-500 dark:text-gray-400 text-[11px] leading-relaxed mb-4 flex-grow">Control the data flow. Learn to manage, query, and optimize relational databases.</p>
-            <div class="mb-3 px-0.5">
-                <div class="flex justify-between text-[9px] font-bold text-slate-400 dark:text-zinc-500 mb-1">
-                    <span>Progress</span>
-                    <span id="pct-sql">0%</span>
-                </div>
-                <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-zinc-900 overflow-hidden">
-                    <div id="bar-sql" class="h-full rounded-full w-0 transition-all duration-700" style="background:#00758f"></div>
-                </div>
-            </div>
-            <button onclick="checkAccess('sql')" class="w-full py-2.5 bg-white/80 border border-blue-100 dark:bg-purple-950/30 dark:border-purple-900/30 dark:text-purple-200 hover:bg-[#0050D8] hover:text-white hover:border-[#0050D8] dark:hover:bg-[#a855f7] dark:hover:border-[#a855f7] text-slate-700 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all duration-300">Start Learning →</button>
-        </div>
-
     </div>
 </main>
 
@@ -282,7 +306,7 @@
         </div>
         <div class="bg-white/80 dark:bg-[#130d22]/50 border border-blue-100/60 dark:border-purple-950/40 p-6 rounded-2xl shadow-sm backdrop-blur-md">
             <h5 class="text-base font-black text-blue-500 dark:text-purple-400 italic mb-1">BACK-END DEVELOPER</h5>
-            <p class="text-slate-500 dark:text-gray-400 text-xs leading-relaxed">เลือกเรียนคอร์ส Python ➔ PHP ➔ SQL Database เพื่อจัดการเซิร์ฟเวอร์และสถาปัตยกรรมข้อมูล</p>
+            <p class="text-slate-500 dark:text-gray-400 text-xs leading-relaxed">เลือกเรียนคอร์ส Python ➔ Java ➔ C++ เพื่อพัฒนาซอฟต์แวร์ระดับสูงและระบบที่มีประสิทธิภาพ</p>
         </div>
     </div>
 </section>
@@ -303,11 +327,10 @@
     const COURSES = [
         { key: 'python',     total: 12 },
         { key: 'javascript', total: 10 },
-        { key: 'css',        total: 10 },
+        { key: 'cpp',        total: 10 },
+        { key: 'java',       total: 10 },
         { key: 'html',       total: 10 },
-        { key: 'php',        total: 10 },
-        { key: 'sql',        total: 10 },
-        { key: 'react',      total: 10 },
+        { key: 'css',        total: 10 },
     ];
 
     function getLastLesson(courseKey) {

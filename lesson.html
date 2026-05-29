@@ -4,10 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Zenith | Classroom</title>
+<title>บทเรียน | ZENITH</title>
+<!-- SEO -->
+<meta name="description" content="เรียนโปรแกรมมิ่งแบบ Interactive พร้อม Quiz และ Code Editor ทันสมัยบน ZENITH">
+<meta name="keywords" content="บทเรียน, interactive coding, quiz, code editor, ZENITH">
+<meta name="author" content="ZENITH">
+<meta name="robots" content="noindex, follow">
+<!-- Open Graph -->
+<meta property="og:title" content="บทเรียน | ZENITH">
+<meta property="og:description" content="เรียนโปรแกรมมิ่งแบบ Interactive พร้อม Quiz และ Code Editor ทันสมัยบน ZENITH">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zenith-alpha-lyart.vercel.app/lesson.html">
+<meta property="og:image" content="https://zenith-alpha-lyart.vercel.app/python-logo.png">
+<meta property="og:site_name" content="ZENITH">
+<meta property="og:locale" content="th_TH">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="บทเรียน | ZENITH">
+<meta name="twitter:description" content="เรียนโปรแกรมมิ่งแบบ Interactive พร้อม Quiz และ Code Editor ทันสมัยบน ZENITH">
+<meta name="twitter:image" content="https://zenith-alpha-lyart.vercel.app/python-logo.png">
+<!-- Favicon -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="shortcut icon" href="favicon.svg">
 
 <script src="assets/js/theme.js"></script>
 <link rel="stylesheet" href="assets/css/theme-variables.css">
+
+<!-- CodeMirror -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/sql/sql.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/php/php.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/clike/clike.min.js"></script>
+
 <script src="https://cdn.tailwindcss.com"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -130,6 +164,7 @@ body{
 
     position:relative;
 
+    -webkit-backdrop-filter:blur(18px);
     backdrop-filter:blur(18px);
 }
 
@@ -210,6 +245,92 @@ body{
 }
 @keyframes skelFadeOut { to { opacity: 0; pointer-events: none; } }
 .skel-out { animation: skelFadeOut 0.4s ease forwards; }
+
+/* CODE EDITOR */
+.editor-wrap {
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(168,85,247,0.22);
+    background: rgba(9,9,11,0.82);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+}
+.editor-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: rgba(0,0,0,0.4);
+    border-bottom: 1px solid rgba(168,85,247,0.1);
+}
+.editor-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 300px;
+}
+@media (max-width: 640px) {
+    .editor-split { grid-template-columns: 1fr; }
+    .editor-left { border-right: none !important; border-bottom: 1px solid rgba(168,85,247,0.1); }
+}
+.editor-left { border-right: 1px solid rgba(168,85,247,0.1); overflow: hidden; }
+.editor-right { display: flex; flex-direction: column; }
+.output-header {
+    padding: 8px 14px;
+    font-size: 11px; font-weight: 700;
+    color: #52525b; text-transform: uppercase; letter-spacing: .1em;
+    border-bottom: 1px solid rgba(168,85,247,0.08);
+    background: rgba(0,0,0,0.2);
+}
+.output-body {
+    padding: 14px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px; line-height: 1.7; color: #e4e4e7;
+    min-height: 200px; max-height: 300px;
+    overflow-y: auto; white-space: pre-wrap; word-break: break-word;
+    flex: 1;
+}
+.run-btn {
+    background: linear-gradient(135deg, #a855f7, #7c3aed);
+    color: white; font-weight: 900; font-size: 13px;
+    padding: 6px 18px; border-radius: 10px; border: none;
+    cursor: pointer; transition: opacity .15s, transform .15s;
+}
+.run-btn:hover { opacity: .85; }
+.run-btn:active { transform: scale(.97); }
+/* CodeMirror Zenith overrides */
+.CodeMirror {
+    height: 300px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px; line-height: 1.7 !important;
+    background: transparent !important;
+    color: #e4e4e7 !important;
+}
+.CodeMirror-gutters  { background: rgba(0,0,0,0.25) !important; border-right: 1px solid rgba(168,85,247,0.1) !important; }
+.CodeMirror-linenumber { color: #52525b !important; }
+.CodeMirror-cursor   { border-left-color: #a855f7 !important; }
+.CodeMirror-selected { background: rgba(168,85,247,0.18) !important; }
+.cm-keyword   { color: #c084fc !important; }
+.cm-string    { color: #86efac !important; }
+.cm-comment   { color: #52525b !important; font-style: italic; }
+.cm-number    { color: #fb923c !important; }
+.cm-def       { color: #60a5fa !important; }
+.cm-operator  { color: #f472b6 !important; }
+.cm-builtin   { color: #2dd4bf !important; }
+.cm-variable  { color: #e4e4e7 !important; }
+.cm-atom      { color: #fb923c !important; }
+.cm-tag       { color: #c084fc !important; }
+.cm-attribute { color: #60a5fa !important; }
+.editor-toolbar-left { display: flex; align-items: center; gap: 8px; }
+.editor-lang-label { font-size: 11px; font-weight: 700; color: #71717a; text-transform: uppercase; letter-spacing: .1em; }
+.editor-lang-badge { font-size: 11px; font-weight: 900; padding: 2px 8px; border-radius: 6px; background: rgba(168,85,247,0.15); color: #a855f7; text-transform: uppercase; }
+.output-placeholder { color: #52525b; }
+.cloud-indicator { color: #2dd4bf; }
+.out-error  { color: #ef4444; }
+.out-warn   { color: #f59e0b; }
+.out-accent { color: #a855f7; }
+.out-dim    { color: #71717a; }
+.html-preview-frame { width: 100%; height: 260px; border: none; border-radius: 4px; background: #fff; display: block; }
+.editor-fallback-ta { width: 100%; height: 300px; background: transparent; color: #e4e4e7; font-family: 'Courier New', monospace; font-size: 13px; padding: 16px; border: none; outline: none; resize: none; }
 
 /* MOBILE DRAWER */
 @media (max-width: 767px) {
@@ -415,6 +536,33 @@ body{
 
             </div>
 
+            <!-- CODE EDITOR -->
+            <div id="editorSection" class="hidden mb-8 fade-up">
+                <div class="editor-wrap">
+
+                    <div class="editor-toolbar">
+                        <div class="editor-toolbar-left">
+                            <span class="editor-lang-label">Editor</span>
+                            <span id="editorLangBadge" class="editor-lang-badge"></span>
+                        </div>
+                        <button type="button" class="run-btn" onclick="window.runCode()">▶ Run</button>
+                    </div>
+
+                    <div class="editor-split">
+                        <div class="editor-left">
+                            <div id="codeEditorEl"></div>
+                        </div>
+                        <div class="editor-right">
+                            <div class="output-header">Output</div>
+                            <div id="codeOutput" class="output-body">
+                                <span class="output-placeholder">// ผลลัพธ์จะแสดงที่นี่</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <!-- QUIZ BUTTON -->
 
             <button
@@ -443,8 +591,7 @@ body{
                 <div id="quizFeedback" class="mt-5 font-bold"></div>
 
                 <div id="cloudSaveIndicator"
-                     class="mt-2 text-[11px] font-bold opacity-0 transition-opacity duration-300"
-                     style="color:#2dd4bf">
+                     class="mt-2 text-[11px] font-bold opacity-0 transition-opacity duration-300 cloud-indicator">
                 </div>
 
             </div>
@@ -566,6 +713,156 @@ ds.onload = () => {
 
 document.head.appendChild(ds);
 
+</script>
+
+<script>
+(function () {
+    var _cm = null;
+    var _pyodide = null;
+    var _editorLang = 'javascript';
+
+    var langModeMap = {
+        python: 'python',
+        javascript: 'javascript',
+        js: 'javascript',
+        html: 'htmlmixed',
+        css: 'css',
+        php: 'php',
+        sql: 'text/x-sql',
+        cpp: 'text/x-c++src',
+        java: 'text/x-java'
+    };
+
+    window.initCodeEditor = function (code, courseType) {
+        var section = document.getElementById('editorSection');
+        if (!section) return;
+
+        if (!code) {
+            section.classList.add('hidden');
+            return;
+        }
+
+        section.classList.remove('hidden');
+        _editorLang = courseType || 'javascript';
+
+        var badge = document.getElementById('editorLangBadge');
+        var labelMap = { cpp: 'C++', java: 'Java', javascript: 'JavaScript', python: 'Python', html: 'HTML', css: 'CSS', php: 'PHP', sql: 'SQL' };
+        if (badge) badge.textContent = labelMap[_editorLang] || _editorLang;
+
+        var output = document.getElementById('codeOutput');
+        if (output) output.innerHTML = '<span class="output-placeholder">// ผลลัพธ์จะแสดงที่นี่</span>';
+
+        var editorEl = document.getElementById('codeEditorEl');
+        if (!editorEl) return;
+
+        var cmMode = langModeMap[_editorLang] || 'javascript';
+
+        if (_cm) {
+            _cm.setValue(code);
+            _cm.setOption('mode', cmMode);
+        } else if (typeof CodeMirror !== 'undefined') {
+            _cm = CodeMirror(editorEl, {
+                value: code,
+                mode: cmMode,
+                lineNumbers: true,
+                indentUnit: 4,
+                tabSize: 4,
+                indentWithTabs: false,
+                lineWrapping: true,
+                extraKeys: { Tab: function(cm) { cm.replaceSelection('    '); } }
+            });
+        } else {
+            editorEl.innerHTML = '';
+            var ta = document.createElement('textarea');
+            ta.value = code;
+            ta.className = 'editor-fallback-ta';
+            editorEl.appendChild(ta);
+        }
+    };
+
+    window.runCode = function () {
+        var code = '';
+        if (_cm) {
+            code = _cm.getValue();
+        } else {
+            var ta = document.querySelector('#codeEditorEl textarea');
+            if (ta) code = ta.value;
+        }
+        if (!code.trim()) return;
+
+        var output = document.getElementById('codeOutput');
+        if (output) output.innerHTML = '<span class="out-accent">▶ กำลังประมวลผล...</span>';
+
+        if (_editorLang === 'python') {
+            _runPython(code, output);
+        } else if (_editorLang === 'html' || _editorLang === 'htmlmixed') {
+            _runHTML(code, output);
+        } else if (_editorLang === 'sql' || _editorLang === 'php') {
+            if (output) output.innerHTML = '<span class="out-warn">⚠ ' + _editorLang.toUpperCase() + ' ไม่รองรับการรันในเบราเซอร์</span>\n<span class="out-dim">แต่คุณสามารถแก้ไขและศึกษาโค้ดได้</span>';
+        } else if (_editorLang === 'cpp' || _editorLang === 'java') {
+            if (output) output.innerHTML = '<span class="out-warn">⚠ ' + (_editorLang === 'cpp' ? 'C++' : 'Java') + ' ต้องใช้ compiler รัน</span>\n<span class="out-dim">ศึกษาโค้ดได้เลย — ลองรันบน IDE หรือ online compiler เช่น replit.com</span>';
+        } else {
+            _runJS(code, output);
+        }
+    };
+
+    function _runJS(code, output) {
+        var logs = [];
+        var _cl = console.log, _ce = console.error, _cw = console.warn;
+        console.log   = function() { logs.push(Array.from(arguments).map(_fmt).join(' ')); };
+        console.error = function() { logs.push('<span class="out-error">❌ ' + Array.from(arguments).map(_fmt).join(' ') + '</span>'); };
+        console.warn  = function() { logs.push('<span class="out-warn">⚠ '  + Array.from(arguments).map(_fmt).join(' ') + '</span>'); };
+        try {
+            new Function(code)();
+            if (output) output.innerHTML = logs.length ? logs.join('\n') : '<span class="output-placeholder">// ไม่มี output</span>';
+        } catch (e) {
+            if (output) output.innerHTML = '<span class="out-error">❌ ' + _esc(e.message) + '</span>';
+        } finally {
+            console.log = _cl; console.error = _ce; console.warn = _cw;
+        }
+    }
+
+    function _runHTML(code, output) {
+        if (!output) return;
+        var fr = document.createElement('iframe');
+        fr.className = 'html-preview-frame';
+        fr.setAttribute('sandbox', 'allow-scripts');
+        output.innerHTML = '';
+        output.appendChild(fr);
+        fr.srcdoc = code;
+    }
+
+    function _runPython(code, output) {
+        Promise.resolve().then(function () {
+            if (!_pyodide) {
+                if (output) output.innerHTML = '<span class="out-accent">⏳ โหลด Python runtime (~8MB) ครั้งแรก...</span>';
+                return _loadScript('https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js')
+                    .then(function () { return window.loadPyodide(); })
+                    .then(function (py) { _pyodide = py; });
+            }
+        }).then(function () {
+            return _pyodide.runPythonAsync('import sys, io as _io\n_z=_io.StringIO()\nsys.stdout=_z\nsys.stderr=_z\n');
+        }).then(function () {
+            return _pyodide.runPythonAsync(code);
+        }).then(function () {
+            var out = _pyodide.runPython('_z.getvalue()');
+            if (output) output.innerHTML = out ? _esc(out) : '<span class="output-placeholder">// ไม่มี output</span>';
+        }).catch(function (e) {
+            if (output) output.innerHTML = '<span class="out-error">❌ ' + _esc(e.message) + '</span>';
+        });
+    }
+
+    function _loadScript(src) {
+        return new Promise(function (res, rej) {
+            var s = document.createElement('script');
+            s.src = src; s.onload = res; s.onerror = rej;
+            document.head.appendChild(s);
+        });
+    }
+
+    function _fmt(v) { return typeof v === 'object' ? JSON.stringify(v, null, 2) : String(v); }
+    function _esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+})();
 </script>
 
 </body>

@@ -3,7 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenith | Dashboard</title>
+    <title>Dashboard | ZENITH</title>
+    <!-- SEO -->
+    <meta name="description" content="ติดตามความก้าวหน้าการเรียนโปรแกรมมิ่งของคุณและดูสถิติบน ZENITH Dashboard">
+    <meta name="keywords" content="dashboard, progress tracking, ZENITH, ความก้าวหน้าการเรียน">
+    <meta name="author" content="ZENITH">
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Dashboard | ZENITH">
+    <meta property="og:description" content="ติดตามความก้าวหน้าการเรียนโปรแกรมมิ่งของคุณบน ZENITH Dashboard">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zenith-alpha-lyart.vercel.app/dashboard.html">
+    <meta property="og:image" content="https://zenith-alpha-lyart.vercel.app/python-logo.png">
+    <meta property="og:site_name" content="ZENITH">
+    <meta property="og:locale" content="th_TH">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dashboard | ZENITH">
+    <meta name="twitter:description" content="ติดตามความก้าวหน้าการเรียนโปรแกรมมิ่งของคุณบน ZENITH Dashboard">
+    <meta name="twitter:image" content="https://zenith-alpha-lyart.vercel.app/python-logo.png">
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="favicon.svg">
     <script src="assets/js/theme.js"></script>
     <link rel="stylesheet" href="assets/css/theme-variables.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -279,10 +300,10 @@
     const COURSES = [
         { key: 'python',     label: 'Python',       total: 12, color: '#2dd4bf', emoji: '🐍' },
         { key: 'javascript', label: 'JavaScript',   total: 10, color: '#f7df1e', emoji: '⚡' },
-        { key: 'css',        label: 'CSS Styling',  total: 10, color: '#38bdf8', emoji: '🎨' },
+        { key: 'cpp',        label: 'C++',          total: 10, color: '#00599C', emoji: '⚙️' },
+        { key: 'java',       label: 'Java',         total: 10, color: '#f89820', emoji: '☕' },
         { key: 'html',       label: 'HTML',         total: 10, color: '#e34f26', emoji: '🏗️' },
-        { key: 'php',        label: 'PHP Backend',  total: 10, color: '#777bb4', emoji: '🔧' },
-        { key: 'sql',        label: 'SQL Database', total: 10, color: '#00758f', emoji: '🗄️' },
+        { key: 'css',        label: 'CSS Styling',  total: 10, color: '#38bdf8', emoji: '🎨' },
     ];
     const TOTAL_LESSONS = COURSES.reduce((s, c) => s + c.total, 0); // 62
 
