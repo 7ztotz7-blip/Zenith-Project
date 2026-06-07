@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="th">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>การแจ้งเตือน — CodePath</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="_shared.css">
+<style>
+.notif-wrap{max-width:680px}
+.notif-filter{display:flex;gap:6px;margin-bottom:1.5rem}
+.nf{padding:7px 14px;border-radius:20px;font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--border2);color:var(--text2);background:transparent;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.nf:hover{background:var(--bg4);color:var(--text)}
+.nf.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.n-group-label{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;padding:8px 0 6px;margin-top:8px}
+
+.notif{display:flex;align-items:flex-start;gap:13px;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:6px;cursor:pointer;transition:all .15s;position:relative}
+.notif:hover{border-color:var(--border2);background:var(--bg3)}
+.notif.unread{background:var(--accent-g);border-color:rgba(168,85,247,.18)}
+.notif.unread::before{content:'';position:absolute;left:-1px;top:50%;transform:translateY(-50%);width:3px;height:40%;border-radius:0 2px 2px 0;background:var(--accent)}
+.n-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.n-body{flex:1;min-width:0}
+.n-title{font-size:13.5px;font-weight:500;line-height:1.45;margin-bottom:3px}
+.n-title strong{font-weight:700;color:var(--text)}
+.n-time{font-size:11.5px;color:var(--text3)}
+.n-action{margin-top:8px}
+.n-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="index.html" class="sidebar-logo"><div class="logo-mark">CP</div>CodePath</a>
+  <div class="nav-group">
+    <div class="nav-group-label">เมนูหลัก</div>
+    <a class="nav-link" href="dashboard.html"><i class="ti ti-home"></i> Dashboard</a>
+    <a class="nav-link" href="courses.html"><i class="ti ti-books"></i> คอร์สทั้งหมด</a>
+    <a class="nav-link" href="roadmap.html"><i class="ti ti-map"></i> Learning Path</a>
+    <a class="nav-link" href="lesson.html"><i class="ti ti-code"></i> บทเรียน</a>
+    <a class="nav-link" href="community.html"><i class="ti ti-messages"></i> Community</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">โปรไฟล์</div>
+    <a class="nav-link" href="profile.html"><i class="ti ti-user"></i> โปรไฟล์ของฉัน</a>
+    <a class="nav-link" href="leaderboard.html"><i class="ti ti-trophy"></i> Leaderboard</a>
+    <a class="nav-link active" href="notifications.html"><i class="ti ti-bell"></i> การแจ้งเตือน <span class="nav-badge">3</span></a>
+    <a class="nav-link" href="settings.html"><i class="ti ti-settings"></i> ตั้งค่า</a>
+  </div>
+  <div class="sidebar-bottom">
+    <a class="user-pill" href="profile.html">
+      <div class="avatar">กา</div>
+      <div class="user-info"><div class="user-name">กานต์ มีสุข</div><div class="user-pts">🔥 320 XP · Level 4</div></div>
+      <i class="ti ti-chevron-right" style="color:var(--text3);font-size:14px;margin-left:auto"></i>
+    </a>
+  </div>
+</aside>
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title">การแจ้งเตือน</div>
+    <div class="topbar-right">
+      <button class="btn btn-sm btn-ghost" onclick="markAll()"><i class="ti ti-checks"></i> อ่านทั้งหมด</button>
+      <div class="avatar" onclick="location.href='profile.html'" style="cursor:pointer">กา</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="notif-wrap">
+      <div class="notif-filter anim-up">
+        <button class="nf on" onclick="setFilter(this)">ทั้งหมด</button>
+        <button class="nf" onclick="setFilter(this)">ยังไม่อ่าน</button>
+        <button class="nf" onclick="setFilter(this)">การเรียน</button>
+        <button class="nf" onclick="setFilter(this)">ชุมชน</button>
+        <button class="nf" onclick="setFilter(this)">รางวัล</button>
+      </div>
+
+      <div class="n-group-label">วันนี้</div>
+
+      <div class="notif unread anim-up delay-1" onclick="location.href='lesson.html'">
+        <div class="n-icon" style="background:var(--amber-g)">🔥</div>
+        <div class="n-body">
+          <div class="n-title"><strong>Streak เตือน!</strong> — อีก 3 ชั่วโมงจะหมดเวลาสำหรับวันนี้ เรียนเพื่อรักษา Streak 5 วันของคุณไว้</div>
+          <div class="n-time">15 นาทีที่แล้ว</div>
+          <div class="n-action"><button class="btn btn-sm btn-green" onclick="event.stopPropagation();location.href='lesson.html'"><i class="ti ti-player-play"></i> เรียนเลย</button></div>
+        </div>
+        <div class="n-dot"></div>
+      </div>
+
+      <div class="notif unread anim-up delay-2" onclick="location.href='community.html'">
+        <div class="n-icon" style="background:var(--blue-g)"><i class="ti ti-message" style="color:var(--blue);font-size:16px"></i></div>
+        <div class="n-body">
+          <div class="n-title"><strong>ปรีดา วิทยา</strong> ตอบคำถามของคุณใน Community — "ถูกต้องเลย! List comprehension ใช้ BUILD_LIST opcode ที่..."</div>
+          <div class="n-time">1 ชั่วโมงที่แล้ว</div>
+        </div>
+        <div class="n-dot"></div>
+      </div>
+
+      <div class="notif unread anim-up delay-3" onclick="location.href='profile.html'">
+        <div class="n-icon" style="background:var(--amber-g)">🏅</div>
+        <div class="n-body">
+          <div class="n-title">คุณปลดล็อค Badge ใหม่ — <strong>"Speed Coder"</strong> ทำ Quiz เสร็จใน 45 วินาที เยี่ยมมาก!</div>
+          <div class="n-time">3 ชั่วโมงที่แล้ว</div>
+          <div class="n-action">
+            <div class="flex gap8 mt4">
+              <div style="background:var(--amber-g);border:1px solid rgba(255,179,64,.2);border-radius:8px;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:6px"><span style="font-size:16px">⚡</span><span>Speed Coder</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="n-dot"></div>
+      </div>
+
+      <div class="n-group-label">เมื่อวาน</div>
+
+      <div class="notif anim-up" onclick="location.href='courses.html'">
+        <div class="n-icon" style="background:var(--green-g2)">🐍</div>
+        <div class="n-body">
+          <div class="n-title">คอร์ส <strong>Python สำหรับผู้เริ่มต้น</strong> อัปเดตแล้ว — เพิ่มบทที่ 24: Asyncio & Concurrency</div>
+          <div class="n-time">เมื่อวาน 18:30</div>
+        </div>
+      </div>
+
+      <div class="notif anim-up delay-1" onclick="location.href='leaderboard.html'">
+        <div class="n-icon" style="background:var(--purple-g)"><i class="ti ti-trophy" style="color:var(--purple);font-size:16px"></i></div>
+        <div class="n-body">
+          <div class="n-title">อันดับ Leaderboard ของคุณ<strong>ขึ้น 2 อันดับ</strong> มาอยู่ที่ #20 ต่อยอดอีกนิดถึง Top 10!</div>
+          <div class="n-time">เมื่อวาน 09:15</div>
+        </div>
+      </div>
+
+      <div class="notif anim-up delay-2" onclick="location.href='quiz.html'">
+        <div class="n-icon" style="background:var(--blue-g)"><i class="ti ti-help-circle" style="color:var(--blue);font-size:16px"></i></div>
+        <div class="n-body">
+          <div class="n-title">Daily Challenge ใหม่พร้อมแล้ว — <strong>3 โจทย์</strong> รวม +160 XP รีบก่อนหมดเวลาเที่ยงคืน!</div>
+          <div class="n-time">เมื่อวาน 08:00</div>
+          <div class="n-action"><button class="btn btn-sm btn-ghost" onclick="event.stopPropagation();location.href='quiz.html'"><i class="ti ti-bolt"></i> ทำ Challenge</button></div>
+        </div>
+      </div>
+
+      <div class="n-group-label">สัปดาห์ที่แล้ว</div>
+
+      <div class="notif anim-up" onclick="location.href='community.html'">
+        <div class="n-icon" style="background:var(--pink-g)"><i class="ti ti-heart" style="color:var(--pink);font-size:16px"></i></div>
+        <div class="n-body">
+          <div class="n-title"><strong>นภา จันทร์เพ็ญ</strong> และอีก 12 คน ถูกใจโพสต์ "tips Python ที่ผมเรียนรู้" ของคุณ</div>
+          <div class="n-time">3 วันที่แล้ว</div>
+        </div>
+      </div>
+
+      <div class="notif anim-up delay-1">
+        <div class="n-icon" style="background:var(--green-g2)">🎉</div>
+        <div class="n-body">
+          <div class="n-title">ยินดีด้วย! คุณเรียนครบ <strong>Level 4</strong> แล้ว ปลดล็อค Challenge ระดับ Intermediate ได้แล้ว</div>
+          <div class="n-time">5 วันที่แล้ว</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+<script>
+function setFilter(el){document.querySelectorAll('.nf').forEach(n=>n.classList.remove('on'));el.classList.add('on');}
+function markAll(){document.querySelectorAll('.notif.unread').forEach(n=>{n.classList.remove('unread');});document.querySelector('.nav-badge').style.display='none';}
+</script>
+</body></html>

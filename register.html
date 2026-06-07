@@ -1,164 +1,141 @@
-<!DOCTYPE html>
-<html lang="th">
+<!DOCTYPE html><html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สมัครสมาชิก | ZENITH</title>
-    <!-- SEO -->
-    <meta name="description" content="สมัครสมาชิก ZENITH ฟรี เริ่มต้นเรียนโปรแกรมมิ่งออนไลน์ด้วยภาษาไทยวันนี้">
-    <meta name="keywords" content="สมัครสมาชิก, register, ZENITH, เรียนโค้ดฟรี">
-    <meta name="author" content="ZENITH">
-    <meta name="robots" content="index, follow">
-    <!-- Open Graph -->
-    <meta property="og:title" content="สมัครสมาชิก | ZENITH">
-    <meta property="og:description" content="สมัครสมาชิก ZENITH ฟรี เริ่มต้นเรียนโปรแกรมมิ่งออนไลน์ด้วยภาษาไทยวันนี้">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://zenith-alpha-lyart.vercel.app/register.html">
-    <meta property="og:image" content="https://zenith-alpha-lyart.vercel.app/python-logo.png">
-    <meta property="og:site_name" content="ZENITH">
-    <meta property="og:locale" content="th_TH">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="สมัครสมาชิก | ZENITH">
-    <meta name="twitter:description" content="สมัครสมาชิก ZENITH ฟรี เริ่มต้นเรียนโปรแกรมมิ่งออนไลน์ด้วยภาษาไทยวันนี้">
-    <meta name="twitter:image" content="https://zenith-alpha-lyart.vercel.app/python-logo.png">
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="shortcut icon" href="favicon.svg">
-    <script src="assets/js/theme.js"></script>
-    <link rel="stylesheet" href="assets/css/theme-variables.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Kanit', sans-serif; background: linear-gradient(135deg, #07040f 0%, #0d0818 100%); }
-        #zenith-toast {
-            position: fixed; bottom: 32px; left: 50%;
-            transform: translateX(-50%) translateY(16px);
-            background: #18111f; border: 1px solid rgba(168,85,247,0.3);
-            color: #fff; padding: 13px 24px; border-radius: 16px;
-            font-size: 13px; font-weight: 700; opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease, transform 0.3s ease; z-index: 9999;
-            white-space: nowrap; box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-            font-family: 'Kanit', sans-serif;
-        }
-        #zenith-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>สมัครสมาชิก — ZENITH</title>
+<meta name="robots" content="index,follow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="_shared.css">
+<style>
+body { display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
+.auth-bg { position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 50% -20%,rgba(168,85,247,0.07) 0%,transparent 60%); }
+.auth-wrap { width:100%;max-width:400px; }
+.auth-logo { display:flex;align-items:center;gap:10px;margin-bottom:28px; }
+.auth-logo .logo-mark { width:36px;height:36px;border-radius:9px;font-size:15px; }
+.auth-logo-name { font-size:20px;font-weight:800;letter-spacing:-.5px; }
+.auth-card { background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3);padding:2rem; }
+.auth-title { font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px; }
+.auth-sub { font-size:13px;color:var(--text2);margin-bottom:24px; }
+.field { margin-bottom:14px; }
+.field-label { font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px; }
+.field-input {
+  width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);
+  padding:10px 14px;font-size:13.5px;font-weight:500;color:var(--text);font-family:inherit;outline:none;
+  transition:border-color .15s,box-shadow .15s;
+}
+.field-input::placeholder { color:var(--text3); }
+.field-input:focus { border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-g); }
+.pw-wrap { position:relative; }
+.pw-wrap .field-input { padding-right:42px; }
+.pw-eye { position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text3);cursor:pointer;font-size:16px; }
+.pw-eye:hover { color:var(--text2); }
+.auth-divider { height:1px;background:var(--border);margin:20px 0; }
+.auth-footer { text-align:center;font-size:13px;color:var(--text3); }
+.auth-footer a { color:var(--accent);font-weight:600; }
+.auth-footer a:hover { text-decoration:underline; }
+.w-full { width:100%; }
+.mt8 { margin-top:8px; }
+.hidden { display:none!important; }
+</style>
 </head>
-<body class="flex items-center justify-center min-h-screen px-6">
-
-<button type="button" onclick="window.toggleTheme()" class="theme-toggle-btn fixed top-4 right-4 z-50" aria-label="Toggle theme">
-    <svg class="icon-sun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M18.364 18.364l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
-    <svg class="icon-moon" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
-</button>
-
+<body>
+<div class="auth-bg"></div>
 <div id="zenith-toast"></div>
 
-<div class="w-full max-w-md p-8 bg-white/[0.05] border border-purple-950/50 backdrop-blur-xl rounded-[24px] shadow-2xl">
-    <div class="text-center mb-6">
-        <h1 class="text-3xl font-black text-[#a855f7] italic tracking-tighter">ZENITH.</h1>
-        <p class="text-xs font-bold uppercase tracking-widest text-purple-400/60 mt-1">Create your account</p>
-    </div>
+<div class="auth-wrap">
+  <div class="auth-logo">
+    <div class="logo-mark">Z</div>
+    <span class="auth-logo-name">ZENITH</span>
+  </div>
 
-    <form id="register-form" class="space-y-4">
-        <div>
-            <label class="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">Username</label>
-            <input type="text" id="reg-username" required
-                class="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-[#a855f7] placeholder-zinc-600 transition"
-                placeholder="ชื่อผู้ใช้งาน">
+  <div class="auth-card">
+    <div class="auth-title">สร้างบัญชีใหม่</div>
+    <div class="auth-sub">เรียนฟรี ไม่ต้องใช้บัตรเครดิต</div>
+
+    <form id="register-form">
+      <div class="field">
+        <div class="field-label">Username</div>
+        <input class="field-input" type="text" id="reg-username" required placeholder="ชื่อผู้ใช้งาน">
+      </div>
+
+      <div class="field">
+        <div class="field-label">Email Address</div>
+        <input class="field-input" type="email" id="reg-email" required placeholder="your@email.com">
+      </div>
+
+      <div class="field">
+        <div class="field-label">Password</div>
+        <div class="pw-wrap">
+          <input class="field-input" type="password" id="reg-password" required placeholder="•••••••• (ขั้นต่ำ 6 ตัวอักษร)">
+          <span class="pw-eye" onclick="togglePw('reg-password',this)">
+            <i class="ti ti-eye-off eye-off"></i>
+            <i class="ti ti-eye eye-on hidden"></i>
+          </span>
         </div>
+      </div>
 
-        <div>
-            <label class="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">Email Address</label>
-            <input type="email" id="reg-email" required
-                class="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-[#a855f7] placeholder-zinc-600 transition"
-                placeholder="your@email.com">
-        </div>
-
-        <div>
-            <label class="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">Password</label>
-            <div class="relative">
-                <input type="password" id="reg-password" required
-                    class="w-full px-4 py-3 pr-11 bg-white/[0.05] border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-[#a855f7] placeholder-zinc-600 transition"
-                    placeholder="•••••••• (ขั้นต่ำ 6 ตัวอักษร)">
-                <button type="button" onclick="togglePw('reg-password', this)" title="แสดง/ซ่อนรหัสผ่าน"
-                    class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition">
-                    <svg class="w-4 h-4 eye-closed" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
-                    </svg>
-                    <svg class="w-4 h-4 eye-open hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <button type="submit" id="reg-btn"
-            class="w-full bg-[#a855f7] text-black py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:opacity-90 active:scale-[0.98] transition-all mt-2">
-            Sign Up
-        </button>
+      <button type="submit" id="reg-btn" class="btn btn-green btn-lg w-full mt8">
+        <i class="ti ti-user-plus"></i> สมัครสมาชิก
+      </button>
     </form>
 
-    <p class="text-center text-xs text-zinc-500 mt-6">
-        มีบัญชีอยู่แล้ว?
-        <a href="login.html" class="text-[#a855f7] font-bold hover:underline">เข้าสู่ระบบที่นี่</a>
-    </p>
+    <div class="auth-divider"></div>
+    <div class="auth-footer">มีบัญชีอยู่แล้ว? <a href="login.html">เข้าสู่ระบบที่นี่</a></div>
+  </div>
 </div>
 
+<!-- Toast -->
+<style>
+#zenith-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9999;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+#zenith-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#zenith-toast.toast-ok{border-color:rgba(168,85,247,.3);color:var(--accent)}
+#zenith-toast.toast-error{border-color:rgba(255,91,91,.3);color:var(--red)}
+</style>
+
 <script type="module">
-    import { registerUser, checkAuthState } from './assets/js/auth.js';
+import { registerUser, checkAuthState } from './assets/js/auth.js';
 
-    checkAuthState('auth_page');
+checkAuthState('auth_page');
 
-    function showToast(msg, isError = false) {
-        const t = document.getElementById('zenith-toast');
-        t.textContent = msg;
-        t.style.borderColor = isError ? 'rgba(239,68,68,0.5)' : 'rgba(168,85,247,0.4)';
-        t.classList.remove('show');
-        void t.offsetWidth;
-        t.classList.add('show');
-        setTimeout(() => t.classList.remove('show'), 3200);
-    }
+function showToast(msg, isError = false) {
+  const t = document.getElementById('zenith-toast');
+  t.textContent = msg;
+  t.className = isError ? 'show toast-error' : 'show toast-ok';
+  setTimeout(() => t.className = '', 3200);
+}
 
-    window.togglePw = function(inputId, btn) {
-        const input = document.getElementById(inputId);
-        const isHidden = input.type === 'password';
-        input.type = isHidden ? 'text' : 'password';
-        btn.querySelector('.eye-closed').classList.toggle('hidden', isHidden);
-        btn.querySelector('.eye-open').classList.toggle('hidden', !isHidden);
-    };
+window.togglePw = function(id, el) {
+  const input = document.getElementById(id);
+  const isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
+  el.querySelector('.eye-off').classList.toggle('hidden', isHidden);
+  el.querySelector('.eye-on').classList.toggle('hidden', !isHidden);
+};
 
-    function translateAuthError(msg) {
-        if (msg.includes('email-already-in-use'))
-            return '❌ อีเมลนี้ถูกใช้งานไปแล้วในระบบ';
-        if (msg.includes('weak-password'))
-            return '❌ รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร';
-        if (msg.includes('invalid-email'))
-            return '❌ รูปแบบอีเมลไม่ถูกต้อง';
-        return '❌ เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
-    }
+function translateAuthError(msg) {
+  if (msg.includes('email-already-in-use')) return '❌ อีเมลนี้ถูกใช้งานไปแล้ว';
+  if (msg.includes('weak-password'))        return '❌ รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร';
+  if (msg.includes('invalid-email'))        return '❌ รูปแบบอีเมลไม่ถูกต้อง';
+  return '❌ เกิดข้อผิดพลาด กรุณาลองใหม่';
+}
 
-    document.getElementById('register-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const username = document.getElementById('reg-username').value.trim();
-        const email    = document.getElementById('reg-email').value.trim();
-        const password = document.getElementById('reg-password').value;
-        const btn      = document.getElementById('reg-btn');
-
-        btn.innerText = 'CREATING ACCOUNT...';
-        btn.disabled = true;
-
-        const result = await registerUser(email, password, username);
-
-        if (result.success) {
-            showToast('✓ สมัครสมาชิกสำเร็จ ยินดีต้อนรับ!');
-            setTimeout(() => window.location.href = 'index.html', 1200);
-        } else {
-            showToast(translateAuthError(result.error), true);
-            btn.innerText = 'SIGN UP';
-            btn.disabled = false;
-        }
-    });
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const username = document.getElementById('reg-username').value.trim();
+  const email    = document.getElementById('reg-email').value.trim();
+  const password = document.getElementById('reg-password').value;
+  const btn      = document.getElementById('reg-btn');
+  btn.innerHTML = '<i class="ti ti-loader-2"></i> กำลังสร้างบัญชี...'; btn.disabled = true;
+  const result = await registerUser(email, password, username);
+  if (result.success) {
+    showToast('✓ สมัครสมาชิกสำเร็จ ยินดีต้อนรับ!');
+    setTimeout(() => window.location.href = 'dashboard.html', 1200);
+  } else {
+    showToast(translateAuthError(result.error), true);
+    btn.innerHTML = '<i class="ti ti-user-plus"></i> สมัครสมาชิก'; btn.disabled = false;
+  }
+});
 </script>
-</body>
-</html>
+</body></html>

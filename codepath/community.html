@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="th">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Community — CodePath</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="_shared.css">
+<style>
+.community-layout { display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
+.post-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+.ptab { padding: 10px 18px; font-size: 13.5px; font-weight: 600; color: var(--text2); cursor: pointer; border-bottom: 2px solid transparent; transition: all .15s; }
+.ptab:hover { color: var(--text); }
+.ptab.on { color: var(--accent); border-bottom-color: var(--accent); }
+
+.compose-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r3); padding: 1.125rem; margin-bottom: 1.25rem; display: flex; align-items: flex-start; gap: 12px; }
+.compose-input { flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r2); padding: 10px 14px; font-size: 13.5px; font-family: 'Plus Jakarta Sans',sans-serif; color: var(--text); resize: none; outline: none; min-height: 44px; transition: border-color .15s; }
+.compose-input:focus { border-color: var(--border2); }
+.compose-input::placeholder { color: var(--text3); }
+
+.post-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r3); padding: 1.25rem; margin-bottom: 10px; transition: border-color .15s; cursor: pointer; }
+.post-card:hover { border-color: var(--border2); }
+.post-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.post-av { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.post-author { font-size: 13px; font-weight: 600; }
+.post-time { font-size: 11.5px; color: var(--text3); }
+.post-title { font-size: 15px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 7px; }
+.post-body { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 12px; }
+.post-code { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: .875rem; font-family: 'JetBrains Mono',monospace; font-size: 12px; line-height: 1.8; margin-bottom: 12px; overflow-x: auto; }
+.post-actions { display: flex; align-items: center; gap: 16px; }
+.post-action { display: flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--text3); cursor: pointer; transition: color .12s; }
+.post-action:hover { color: var(--text); }
+.post-action.liked { color: var(--pink); }
+.post-tags { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+.solved-badge { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--green); background: var(--green-g2); border: 1px solid rgba(0,229,160,.2); padding: 3px 9px; border-radius: 20px; }
+
+.sidebar-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r3); padding: 1.25rem; margin-bottom: 14px; }
+.sidebar-title { font-size: 13px; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 7px; }
+.trend-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; cursor: pointer; }
+.trend-item:last-child { border-bottom: none; padding-bottom: 0; }
+.trend-item:hover .trend-name { color: var(--accent); }
+.trend-num { font-size: 11px; font-weight: 700; color: var(--text3); min-width: 20px; }
+.trend-name { flex: 1; font-weight: 500; transition: color .12s; }
+.trend-count { font-size: 11px; color: var(--text3); }
+.top-member { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+.top-member:last-child { border-bottom: none; padding-bottom: 0; }
+.tm-name { flex: 1; font-size: 13px; font-weight: 500; }
+.tm-pts { font-size: 11.5px; color: var(--text2); }
+.reply-card { background: var(--bg3); border: 1px solid var(--border); border-left: 2px solid var(--border2); border-radius: 0 8px 8px 0; padding: .875rem 1rem; margin: 8px 0 8px 2rem; }
+.reply-card.best { border-left-color: var(--green); }
+.kw{color:#7DD3FC} .fn{color:var(--blue,#4D9EFF)} .str{color:var(--amber,#FFB340)} .num{color:var(--pink,#FF6EA8)} .cm{color:var(--text3,#4A5168);font-style:italic}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="index.html" class="sidebar-logo"><div class="logo-mark">CP</div>CodePath</a>
+  <div class="nav-group">
+    <div class="nav-group-label">เมนูหลัก</div>
+    <a class="nav-link" href="dashboard.html"><i class="ti ti-home"></i> Dashboard</a>
+    <a class="nav-link" href="courses.html"><i class="ti ti-books"></i> คอร์สทั้งหมด</a>
+    <a class="nav-link" href="lesson.html"><i class="ti ti-code"></i> บทเรียน</a>
+    <a class="nav-link" href="quiz.html"><i class="ti ti-help-circle"></i> แบบทดสอบ</a>
+    <a class="nav-link active" href="community.html"><i class="ti ti-messages"></i> Community <span class="nav-badge">3</span></a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">โปรไฟล์</div>
+    <a class="nav-link" href="profile.html"><i class="ti ti-user"></i> โปรไฟล์ของฉัน</a>
+    <a class="nav-link" href="leaderboard.html"><i class="ti ti-trophy"></i> Leaderboard</a>
+    <a class="nav-link" href="#"><i class="ti ti-certificate"></i> Certificate</a>
+    <a class="nav-link" href="settings.html"><i class="ti ti-settings"></i> ตั้งค่า</a>
+  </div>
+  <div class="sidebar-bottom">
+    <a class="user-pill" href="profile.html">
+      <div class="avatar">กา</div>
+      <div class="user-info"><div class="user-name">กานต์ มีสุข</div><div class="user-pts">🔥 320 XP · Level 4</div></div>
+      <i class="ti ti-chevron-right" style="color:var(--text3);font-size:14px;margin-left:auto"></i>
+    </a>
+  </div>
+</aside>
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title">Community</div>
+    <div class="topbar-right">
+      <button class="btn btn-sm btn-ghost" onclick="document.getElementById('compose-area').focus()"><i class="ti ti-edit"></i> โพสต์ใหม่</button>
+      <button class="btn btn-sm btn-ghost"><i class="ti ti-bell"></i></button>
+      <div class="avatar" onclick="location.href='profile.html'" style="cursor:pointer">กา</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="community-layout">
+      <div>
+        <div class="post-tabs">
+          <div class="ptab on" onclick="setTab(this)">🔥 ยอดนิยม</div>
+          <div class="ptab" onclick="setTab(this)">✨ ล่าสุด</div>
+          <div class="ptab" onclick="setTab(this)">❓ คำถาม</div>
+          <div class="ptab" onclick="setTab(this)">💡 แชร์โค้ด</div>
+          <div class="ptab" onclick="setTab(this)">🎉 โปรเจกต์</div>
+        </div>
+
+        <div class="compose-box anim-up">
+          <div class="avatar">กา</div>
+          <div style="flex:1">
+            <textarea class="compose-input" id="compose-area" rows="2" placeholder="แชร์ความรู้ ถามคำถาม หรือโชว์โค้ดของคุณ..."></textarea>
+            <div class="flex-between mt8">
+              <div class="flex gap8">
+                <button class="btn btn-sm btn-ghost"><i class="ti ti-code"></i> Code</button>
+                <button class="btn btn-sm btn-ghost"><i class="ti ti-tag"></i> Tag</button>
+                <button class="btn btn-sm btn-ghost"><i class="ti ti-photo"></i> รูปภาพ</button>
+              </div>
+              <button class="btn btn-sm btn-green"><i class="ti ti-send"></i> โพสต์</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 1 - Question with answer -->
+        <div class="post-card anim-up delay-1">
+          <div class="post-meta">
+            <div class="post-av" style="background:var(--blue-g);color:var(--blue)">ส</div>
+            <div>
+              <div class="post-author">สมชาย รักเรียน <span class="badge badge-blue" style="font-size:10px;margin-left:4px">Level 3</span></div>
+              <div class="post-time">2 ชั่วโมงที่แล้ว</div>
+            </div>
+            <div class="solved-badge" style="margin-left:auto"><i class="ti ti-check" style="font-size:12px"></i> แก้ได้แล้ว</div>
+          </div>
+          <div class="post-tags">
+            <span class="badge badge-green">Python</span>
+            <span class="badge badge-glass">ถามตอบ</span>
+          </div>
+          <div class="post-title">ทำไม list comprehension ถึงเร็วกว่า for loop ปกติ?</div>
+          <div class="post-body">ลอง benchmark ดูแล้วพบว่า list comprehension เร็วกว่า for loop ประมาณ 30% แต่ไม่เข้าใจว่าทำไม Python ทำงานต่างกันยังไงใต้ฝาครอบ?</div>
+          <div class="post-code"><span class="cm"># ทดสอบ</span>
+<span class="kw">import</span> timeit
+lc = timeit.timeit(<span class="str">'[x**2 for x in range(1000)]'</span>, number=<span class="num">10000</span>)
+fl = timeit.timeit(<span class="str">'''
+r=[]
+for x in range(1000): r.append(x**2)
+'''</span>, number=<span class="num">10000</span>)
+<span class="fn">print</span>(<span class="str">f"LC: {lc:.3f}s  Loop: {fl:.3f}s"</span>)</div>
+          <div class="reply-card best">
+            <div class="flex-between mb8">
+              <div class="flex-center gap8">
+                <div class="post-av" style="width:26px;height:26px;font-size:10px;background:var(--green-g2);color:var(--green)">ป</div>
+                <span style="font-size:12.5px;font-weight:600">ปรีดา วิทยา</span>
+                <span class="badge badge-green" style="font-size:10px">Best Answer</span>
+              </div>
+            </div>
+            <div style="font-size:13px;color:var(--text2);line-height:1.65">List comprehension ถูก optimize โดย Python bytecode compiler ครับ — มันใช้ <code style="color:var(--green);font-family:'JetBrains Mono',monospace;font-size:12px">LIST_APPEND</code> opcode โดยตรง ซึ่งเร็วกว่าการ lookup method <code style="color:var(--green);font-family:'JetBrains Mono',monospace;font-size:12px">.append()</code> ทุกรอบ</div>
+          </div>
+          <div class="post-actions">
+            <div class="post-action liked" onclick="this.classList.toggle('liked')"><i class="ti ti-heart" style="font-size:15px"></i> 24</div>
+            <div class="post-action"><i class="ti ti-message" style="font-size:15px"></i> 8 ตอบ</div>
+            <div class="post-action"><i class="ti ti-share" style="font-size:15px"></i> แชร์</div>
+            <div class="post-action" style="margin-left:auto"><i class="ti ti-bookmark" style="font-size:15px"></i> บันทึก</div>
+          </div>
+        </div>
+
+        <!-- Post 2 - Project showcase -->
+        <div class="post-card anim-up delay-2">
+          <div class="post-meta">
+            <div class="post-av" style="background:var(--amber-g);color:var(--amber)">น</div>
+            <div>
+              <div class="post-author">นภา จันทร์เพ็ญ <span class="badge badge-amber" style="font-size:10px;margin-left:4px">Level 5</span></div>
+              <div class="post-time">5 ชั่วโมงที่แล้ว</div>
+            </div>
+          </div>
+          <div class="post-tags">
+            <span class="badge badge-purple">JavaScript</span>
+            <span class="badge badge-glass">โปรเจกต์</span>
+            <span class="badge badge-glass">🎉 Showcase</span>
+          </div>
+          <div class="post-title">สร้าง Weather App ด้วย Vanilla JS เสร็จแล้ว! 🎊</div>
+          <div class="post-body">เรียนมา 6 สัปดาห์ สุดท้ายก็ทำโปรเจกต์แรกสำเร็จ! ใช้ OpenWeatherMap API ดึงข้อมูลจริง แสดงสภาพอากาศ 5 วัน พร้อม animation เปลี่ยนตาม condition ขอบคุณพี่ๆ ในกลุ่มที่ช่วย debug ด้วยนะคะ ❤️</div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:12px;display:flex;align-items:center;gap:14px">
+            <div style="font-size:36px">🌤️</div>
+            <div>
+              <div style="font-size:14px;font-weight:700">Weather Dashboard App</div>
+              <div class="f12 muted">Vanilla JS · OpenWeatherMap API · 280 lines</div>
+            </div>
+            <button class="btn btn-sm btn-ghost" style="margin-left:auto"><i class="ti ti-external-link"></i> Demo</button>
+          </div>
+          <div class="post-actions">
+            <div class="post-action liked"><i class="ti ti-heart" style="font-size:15px"></i> 67</div>
+            <div class="post-action"><i class="ti ti-message" style="font-size:15px"></i> 15 ตอบ</div>
+            <div class="post-action"><i class="ti ti-share" style="font-size:15px"></i> แชร์</div>
+            <div class="post-action" style="margin-left:auto"><i class="ti ti-bookmark" style="font-size:15px"></i> บันทึก</div>
+          </div>
+        </div>
+
+        <!-- Post 3 - Tips -->
+        <div class="post-card anim-up delay-3">
+          <div class="post-meta">
+            <div class="post-av" style="background:var(--purple-g);color:var(--purple)">ม</div>
+            <div>
+              <div class="post-author">มนตรี โค้ดดี <span class="badge badge-purple" style="font-size:10px;margin-left:4px">Mentor</span></div>
+              <div class="post-time">เมื่อวาน</div>
+            </div>
+          </div>
+          <div class="post-tags">
+            <span class="badge badge-glass">Python</span>
+            <span class="badge badge-glass">💡 Tips</span>
+          </div>
+          <div class="post-title">5 Python tricks ที่ทำให้โค้ดสะอาดขึ้นทันที</div>
+          <div class="post-body">มือใหม่หลายคนยังเขียน Python แบบ C/Java อยู่ ลองเปลี่ยน pattern เหล่านี้ดูครับ</div>
+          <div class="post-code"><span class="cm"># 1. Swap variables — Pythonic</span>
+a, b = b, a
+
+<span class="cm"># 2. Unpack list ด้วย *</span>
+first, *rest = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>]
+
+<span class="cm"># 3. Dict merge (Python 3.9+)</span>
+merged = {**dict1, **dict2}
+
+<span class="cm"># 4. Walrus operator</span>
+<span class="kw">if</span> (n := <span class="fn">len</span>(data)) > <span class="num">10</span>:
+    <span class="fn">print</span>(<span class="str">f"Too long: {n}"</span>)</div>
+          <div class="post-actions">
+            <div class="post-action"><i class="ti ti-heart" style="font-size:15px"></i> 142</div>
+            <div class="post-action"><i class="ti ti-message" style="font-size:15px"></i> 31 ตอบ</div>
+            <div class="post-action"><i class="ti ti-share" style="font-size:15px"></i> แชร์</div>
+            <div class="post-action" style="margin-left:auto"><i class="ti ti-bookmark" style="font-size:15px"></i> บันทึก</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div>
+        <div class="sidebar-card anim-up">
+          <div class="sidebar-title"><i class="ti ti-trending-up" style="color:var(--green);font-size:15px"></i> หัวข้อยอดนิยม</div>
+          <div class="trend-item"><span class="trend-num">#1</span><span class="trend-name">Python Basics</span><span class="trend-count">234 โพสต์</span></div>
+          <div class="trend-item"><span class="trend-num">#2</span><span class="trend-name">JavaScript ES6</span><span class="trend-count">189 โพสต์</span></div>
+          <div class="trend-item"><span class="trend-num">#3</span><span class="trend-name">React Hooks</span><span class="trend-count">156 โพสต์</span></div>
+          <div class="trend-item"><span class="trend-num">#4</span><span class="trend-name">SQL Queries</span><span class="trend-count">98 โพสต์</span></div>
+          <div class="trend-item"><span class="trend-num">#5</span><span class="trend-name">Data Science</span><span class="trend-count">87 โพสต์</span></div>
+        </div>
+
+        <div class="sidebar-card anim-up delay-1">
+          <div class="sidebar-title"><i class="ti ti-crown" style="color:var(--amber);font-size:15px"></i> Top Helpers เดือนนี้</div>
+          <div class="top-member">
+            <div class="post-av" style="width:30px;height:30px;font-size:11px;background:var(--purple-g);color:var(--purple)">ม</div>
+            <span class="tm-name">มนตรี โค้ดดี</span>
+            <span class="tm-pts">48 ตอบ</span>
+          </div>
+          <div class="top-member">
+            <div class="post-av" style="width:30px;height:30px;font-size:11px;background:var(--blue-g);color:var(--blue)">ป</div>
+            <span class="tm-name">ปรีดา วิทยา</span>
+            <span class="tm-pts">35 ตอบ</span>
+          </div>
+          <div class="top-member">
+            <div class="post-av" style="width:30px;height:30px;font-size:11px;background:var(--green-g2);color:var(--green)">ก</div>
+            <span class="tm-name">กานต์ มีสุข</span>
+            <span class="tm-pts">12 ตอบ</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card anim-up delay-2">
+          <div class="sidebar-title"><i class="ti ti-info-circle" style="color:var(--blue);font-size:15px"></i> Community Stats</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="background:var(--bg3);border-radius:var(--r2);padding:10px;text-align:center">
+              <div style="font-size:18px;font-weight:800;letter-spacing:-1px">2.4K</div>
+              <div class="f11 muted">สมาชิก</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:var(--r2);padding:10px;text-align:center">
+              <div style="font-size:18px;font-weight:800;letter-spacing:-1px">8.1K</div>
+              <div class="f11 muted">โพสต์</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:var(--r2);padding:10px;text-align:center">
+              <div style="font-size:18px;font-weight:800;letter-spacing:-1px">94%</div>
+              <div class="f11 muted">ตอบแล้ว</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:var(--r2);padding:10px;text-align:center">
+              <div style="font-size:18px;font-weight:800;letter-spacing:-1px">2h</div>
+              <div class="f11 muted">เวลาตอบเฉลี่ย</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+<script>
+function setTab(el){document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('on'));el.classList.add('on');}
+</script>
+</body></html>

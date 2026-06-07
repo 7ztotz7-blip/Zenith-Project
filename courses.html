@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html><html lang="th">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>คอร์สทั้งหมด — CodePath</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="_shared.css">
+<style>
+.search-wrap { display: flex; align-items: center; gap: 8px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r2); padding: 0 14px; height: 42px; flex: 1; max-width: 320px; }
+.search-wrap input { background: none; border: none; outline: none; font-family: 'Plus Jakarta Sans',sans-serif; font-size: 13.5px; color: var(--text); width: 100%; }
+.search-wrap input::placeholder { color: var(--text3); }
+.filter-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pill { padding: 7px 15px; border-radius: 20px; font-size: 12.5px; font-weight: 600; cursor: pointer; border: 1px solid var(--border2); color: var(--text2); background: transparent; font-family: 'Plus Jakarta Sans',sans-serif; transition: all .15s; }
+.pill:hover { background: var(--bg4); color: var(--text); }
+.pill.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.course-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.course-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r3); overflow: hidden; cursor: pointer;
+  transition: border-color .15s, transform .2s;
+  display: flex; flex-direction: column;
+}
+.course-card:hover { border-color: var(--border3); transform: translateY(-4px); }
+.course-thumb {
+  height: 140px; display: flex; align-items: center; justify-content: center;
+  font-size: 48px; position: relative; flex-shrink: 0;
+}
+.course-badge { position: absolute; top: 12px; right: 12px; }
+.course-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
+.course-tag { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+.course-name { font-size: 15.5px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 6px; }
+.course-desc { font-size: 12.5px; color: var(--text2); line-height: 1.55; margin-bottom: auto; padding-bottom: 14px; }
+.course-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); }
+.c-meta { display: flex; align-items: center; gap: 10px; font-size: 11.5px; color: var(--text3); }
+.c-meta-item { display: flex; align-items: center; gap: 4px; }
+.lv-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.rating { font-size: 11.5px; color: var(--amber); font-weight: 600; }
+.course-prog-wrap { padding: 0 1.25rem 1rem; }
+
+.featured-banner {
+  background: linear-gradient(135deg, var(--bg2) 0%, rgba(168,85,247,.05) 100%);
+  border: 1px solid rgba(168,85,247,.15);
+  border-radius: var(--r3); padding: 1.75rem;
+  display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;
+  margin-bottom: 2rem;
+}
+.feat-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.feat-title { font-size: 20px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 8px; }
+.feat-sub { font-size: 13.5px; color: var(--text2); line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="landing.html" class="sidebar-logo"><div class="logo-mark">Z</div>ZENITH</a>
+  <div class="nav-group">
+    <div class="nav-group-label">เมนูหลัก</div>
+    <a class="nav-link" href="dashboard.html"><i class="ti ti-home"></i> Dashboard</a>
+    <a class="nav-link active" href="index.html"><i class="ti ti-books"></i> คอร์สทั้งหมด</a>
+    <a class="nav-link" href="roadmap.html"><i class="ti ti-map"></i> Learning Path</a>
+    <a class="nav-link" href="lesson.html"><i class="ti ti-code"></i> บทเรียน <span class="nav-badge">5</span></a>
+    <a class="nav-link" href="quiz.html"><i class="ti ti-help-circle"></i> แบบทดสอบ</a>
+    <a class="nav-link" href="community.html"><i class="ti ti-messages"></i> Community</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">โปรไฟล์</div>
+    <a class="nav-link" href="profile.html"><i class="ti ti-user"></i> โปรไฟล์ของฉัน</a>
+    <a class="nav-link" href="leaderboard.html"><i class="ti ti-trophy"></i> Leaderboard</a>
+    <a class="nav-link" href="#"><i class="ti ti-certificate"></i> Certificate</a>
+    <a class="nav-link" href="notifications.html"><i class="ti ti-bell"></i> การแจ้งเตือน <span class="nav-badge">3</span></a>
+    <a class="nav-link" href="settings.html"><i class="ti ti-settings"></i> ตั้งค่า</a>
+  </div>
+  <div class="sidebar-bottom">
+    <a class="user-pill" href="profile.html">
+      <div class="avatar">กา</div>
+      <div class="user-info"><div class="user-name">กานต์ มีสุข</div><div class="user-pts">🔥 320 XP · Level 4</div></div>
+      <i class="ti ti-chevron-right" style="color:var(--text3);font-size:14px;margin-left:auto"></i>
+    </a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title">คอร์สทั้งหมด</div>
+    <div class="topbar-right">
+      <button class="btn btn-sm btn-ghost"><i class="ti ti-bell"></i></button>
+      <div class="avatar" onclick="location.href='profile.html'" style="cursor:pointer">กา</div>
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <!-- Featured -->
+    <div class="featured-banner anim-up">
+      <div>
+        <div class="feat-label">⚡ กำลังเรียนอยู่</div>
+        <div class="feat-title">Python สำหรับผู้เริ่มต้น</div>
+        <div class="feat-sub">คุณอยู่ที่บทที่ 5 จาก 24 บท — Lists & Loops รออยู่!</div>
+        <button class="btn btn-green" style="margin-top:1rem" onclick="location.href='lesson.html'"><i class="ti ti-player-play"></i> เรียนต่อเลย</button>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:42px;font-weight:800;color:var(--green);letter-spacing:-2px">42%</div>
+        <div class="f12 muted">เสร็จแล้ว</div>
+        <div class="prog-track thick" style="width:160px;margin-top:10px;margin-left:auto"><div class="prog-fill" style="width:42%;background:linear-gradient(90deg,var(--green2),var(--green))"></div></div>
+        <div class="f11 muted" style="margin-top:6px">10 / 24 บทเรียน</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="flex-between mb16 anim-up delay-1">
+      <div class="filter-row">
+        <button class="pill on" onclick="setPill(this)">ทั้งหมด</button>
+        <button class="pill" onclick="setPill(this)">กำลังเรียน</button>
+        <button class="pill" onclick="setPill(this)">ผู้เริ่มต้น</button>
+        <button class="pill" onclick="setPill(this)">ปานกลาง</button>
+        <button class="pill" onclick="setPill(this)">ขั้นสูง</button>
+        <button class="pill" onclick="setPill(this)">เสร็จแล้ว</button>
+      </div>
+      <div class="search-wrap">
+        <i class="ti ti-search" style="color:var(--text3);font-size:16px;flex-shrink:0"></i>
+        <input placeholder="ค้นหาคอร์ส...">
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="course-grid anim-up delay-2">
+
+      <!-- Python -->
+      <div class="course-card" onclick="location.href='lesson.html'">
+        <div class="course-thumb" style="background:linear-gradient(135deg,#071a12,#0d3322)">
+          🐍
+          <span class="course-badge badge badge-glass">ยอดนิยม 🔥</span>
+        </div>
+        <div class="course-body">
+          <div class="course-tag">Python</div>
+          <div class="course-name">Python สำหรับผู้เริ่มต้น</div>
+          <div class="course-desc">ตั้งแต่ Hello World ถึง OOP เรียนรู้ Python ที่ใช้ได้จริงในงาน Data Science และ Backend</div>
+          <div class="course-footer">
+            <div class="c-meta">
+              <div class="c-meta-item"><span class="lv-dot" style="background:var(--green)"></span> ผู้เริ่มต้น</div>
+              <div class="c-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 24 บท</div>
+            </div>
+            <span class="rating">★ 4.9</span>
+          </div>
+        </div>
+        <div class="course-prog-wrap">
+          <div class="prog-track"><div class="prog-fill" style="width:42%;background:var(--green)"></div></div>
+          <div class="f11 muted mt4">42% เสร็จแล้ว</div>
+        </div>
+      </div>
+
+      <!-- JavaScript -->
+      <div class="course-card" onclick="location.href='lesson.html'">
+        <div class="course-thumb" style="background:linear-gradient(135deg,#1a1500,#332900)">
+          📜
+          <span class="course-badge badge badge-amber">ยอดนิยม</span>
+        </div>
+        <div class="course-body">
+          <div class="course-tag">JavaScript</div>
+          <div class="course-name">JavaScript ครบจบใน 1 คอร์ส</div>
+          <div class="course-desc">จาก syntax พื้นฐาน ถึง async/await, Promises และ Modern ES2024</div>
+          <div class="course-footer">
+            <div class="c-meta">
+              <div class="c-meta-item"><span class="lv-dot" style="background:var(--green)"></span> ผู้เริ่มต้น</div>
+              <div class="c-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 32 บท</div>
+            </div>
+            <span class="rating">★ 4.8</span>
+          </div>
+        </div>
+        <div class="course-prog-wrap">
+          <div class="prog-track"><div class="prog-fill" style="width:70%;background:var(--amber)"></div></div>
+          <div class="f11 muted mt4">70% เสร็จแล้ว</div>
+        </div>
+      </div>
+
+      <!-- SQL -->
+      <div class="course-card" onclick="location.href='lesson.html'">
+        <div class="course-thumb" style="background:linear-gradient(135deg,#091520,#0f2440)">🗄️</div>
+        <div class="course-body">
+          <div class="course-tag">SQL & Database</div>
+          <div class="course-name">SQL & Database Design</div>
+          <div class="course-desc">เขียน query ได้คล่อง ออกแบบฐานข้อมูล Relational อย่างมืออาชีพ</div>
+          <div class="course-footer">
+            <div class="c-meta">
+              <div class="c-meta-item"><span class="lv-dot" style="background:var(--amber)"></span> ปานกลาง</div>
+              <div class="c-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 18 บท</div>
+            </div>
+            <span class="rating">★ 4.7</span>
+          </div>
+        </div>
+        <div class="course-prog-wrap">
+          <div class="prog-track"><div class="prog-fill" style="width:15%;background:var(--blue)"></div></div>
+          <div class="f11 muted mt4">15% เสร็จแล้ว</div>
+        </div>
+      </div>
+
+      <!-- React -->
+      <div class="course-card" onclick="location.href='lesson.html'">
+        <div class="course-thumb" style="background:linear-gradient(135deg,#0d0a20,#1a1540)">
+          ⚛️
+          <span class="course-badge badge badge-blue">ใหม่ ✨</span>
+        </div>
+        <div class="course-body">
+          <div class="course-tag">React</div>
+          <div class="course-name">React + Hooks Modern</div>
+          <div class="course-desc">สร้าง Web App ด้วย React 19, Hooks, Context API และ React Router</div>
+          <div class="course-footer">
+            <div class="c-meta">
+              <div class="c-meta-item"><span class="lv-dot" style="background:var(--amber)"></span> ปานกลาง</div>
+              <div class="c-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 28 บท</div>
+            </div>
+            <span class="rating">★ 5.0</span>
+          </div>
+        </div>
+        <div class="course-prog-wrap">
+          <div class="prog-track"></div>
+          <div class="f11 muted mt4">ยังไม่ได้เริ่ม</div>
+        </div>
+      </div>
+
+      <!-- Data Science -->
+      <div class="course-card" onclick="location.href='lesson.html'">
+        <div class="course-thumb" style="background:linear-gradient(135deg,#0f0a1a,#1e1430)">📊</div>
+        <div class="course-body">
+          <div class="course-tag">Data Science</div>
+          <div class="course-name">Data Science ด้วย Python</div>
+          <div class="course-desc">pandas, numpy, matplotlib, seaborn วิเคราะห์ข้อมูลด้วย Real Dataset</div>
+          <div class="course-footer">
+            <div class="c-meta">
+              <div class="c-meta-item"><span class="lv-dot" style="background:var(--red)"></span> ขั้นสูง</div>
+              <div class="c-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 35 บท</div>
+            </div>
+            <span class="rating">★ 4.9</span>
+          </div>
+        </div>
+        <div class="course-prog-wrap">
+          <div class="prog-track"></div>
+          <div class="f11 muted mt4">ยังไม่ได้เริ่ม</div>
+        </div>
+      </div>
+
+      <!-- TypeScript -->
+      <div class="course-card" onclick="location.href='lesson.html'">
+        <div class="course-thumb" style="background:linear-gradient(135deg,#0a1320,#102040)">
+          🌐
+          <span class="course-badge badge badge-blue">ใหม่</span>
+        </div>
+        <div class="course-body">
+          <div class="course-tag">TypeScript</div>
+          <div class="course-name">TypeScript ทีละขั้น</div>
+          <div class="course-desc">เพิ่ม type safety ให้ JavaScript ของคุณ ป้องกัน bug ก่อนรัน</div>
+          <div class="course-footer">
+            <div class="c-meta">
+              <div class="c-meta-item"><span class="lv-dot" style="background:var(--amber)"></span> ปานกลาง</div>
+              <div class="c-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 22 บท</div>
+            </div>
+            <span class="rating">★ 4.8</span>
+          </div>
+        </div>
+        <div class="course-prog-wrap">
+          <div class="prog-track"></div>
+          <div class="f11 muted mt4">ยังไม่ได้เริ่ม</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+</div>
+
+<script>
+function setPill(el) {
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+}
+</script>
+</body></html>

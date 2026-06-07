@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="th">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>เริ่มต้น — CodePath</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#080A0E;--bg2:#0D1017;--bg3:#121620;--bg4:#181D28;--bg5:#1E2433;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.10);--text:#EDF0F7;--text2:#8B92A8;--text3:#4A5168;--green:#00E5A0;--green2:#00B87D;--green-g:rgba(0,229,160,0.08);--green-g2:rgba(0,229,160,0.14);--blue:#4D9EFF;--amber:#FFB340;--purple:#A78BF5;--red:#FF5B5B;--accent:#a855f7;--accent2:#7c3aed;--accent-g:rgba(168,85,247,0.10);--accent-g2:rgba(168,85,247,0.16);--accent-glow:rgba(168,85,247,0.25);--accent-border:rgba(168,85,247,0.28)}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow-x:hidden}
+.ob-wrap{width:100%;max-width:560px;padding:2rem}
+.ob-logo{display:flex;align-items:center;justify-content:center;gap:10px;font-size:18px;font-weight:800;margin-bottom:3rem}
+.logo-mark{width:32px;height:32px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800}
+.ob-progress{display:flex;gap:6px;margin-bottom:2.5rem}
+.ob-step{flex:1;height:3px;border-radius:2px;background:var(--bg4);transition:background .3s}
+.ob-step.done{background:var(--green2)}
+.ob-step.cur{background:var(--accent)}
+.ob-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:2rem;margin-bottom:1.5rem}
+.ob-h{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+.ob-sub{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:1.75rem}
+.ob-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ob-opt{background:var(--bg3);border:1.5px solid var(--border);border-radius:12px;padding:1.125rem;cursor:pointer;transition:all .15s;text-align:left}
+.ob-opt:hover{border-color:var(--border2);background:var(--bg4)}
+.ob-opt.sel{border-color:var(--accent);background:rgba(168,85,247,.06)}
+.ob-opt-icon{font-size:28px;margin-bottom:10px}
+.ob-opt-name{font-size:13.5px;font-weight:700;margin-bottom:3px}
+.ob-opt-sub{font-size:11.5px;color:var(--text2)}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:0 18px;height:46px;border-radius:8px;font-size:14px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;border:none;transition:all .15s;width:100%;justify-content:center}
+.btn-green{background:var(--accent);color:#fff}
+.btn-green:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.btn-ghost:hover{background:var(--bg3);color:var(--text)}
+.ob-input{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:11px 14px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);outline:none;width:100%;transition:border-color .15s;margin-bottom:10px}
+.ob-input:focus{border-color:var(--border2)}
+.level-opt{display:flex;align-items:center;gap:14px;background:var(--bg3);border:1.5px solid var(--border);border-radius:12px;padding:1.125rem;cursor:pointer;transition:all .15s;margin-bottom:8px}
+.level-opt:hover{border-color:var(--border2)}
+.level-opt.sel{border-color:var(--accent);background:rgba(168,85,247,.06)}
+.level-opt:last-child{margin-bottom:0}
+.l-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.l-name{font-size:14px;font-weight:700;margin-bottom:2px}
+.l-desc{font-size:12px;color:var(--text2)}
+.check-circle{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border2);margin-left:auto;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.sel .check-circle{background:var(--accent);border-color:var(--accent)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.fade-up{animation:fadeUp .35s ease both}
+</style>
+</head>
+<body>
+<div class="ob-wrap">
+  <div class="ob-logo"><div class="logo-mark">CP</div>CodePath</div>
+  <div class="ob-progress" id="prog">
+    <div class="ob-step cur"></div>
+    <div class="ob-step"></div>
+    <div class="ob-step"></div>
+    <div class="ob-step"></div>
+  </div>
+
+  <!-- Step 1: Goal -->
+  <div id="step1" class="fade-up">
+    <div class="ob-card">
+      <div class="ob-h">ยินดีต้อนรับสู่ CodePath! 🎉</div>
+      <div class="ob-sub">บอกเราเป้าหมายของคุณ เราจะแนะนำ Learning Path ที่เหมาะสมที่สุด</div>
+      <div class="ob-grid">
+        <div class="ob-opt" onclick="sel(this)">
+          <div class="ob-opt-icon">💼</div>
+          <div class="ob-opt-name">หางานสาย Dev</div>
+          <div class="ob-opt-sub">ต้องการ Junior Developer job</div>
+        </div>
+        <div class="ob-opt" onclick="sel(this)">
+          <div class="ob-opt-icon">📊</div>
+          <div class="ob-opt-name">สาย Data Science</div>
+          <div class="ob-opt-sub">วิเคราะห์ข้อมูล Machine Learning</div>
+        </div>
+        <div class="ob-opt" onclick="sel(this)">
+          <div class="ob-opt-icon">🚀</div>
+          <div class="ob-opt-name">สร้างโปรเจกต์ส่วนตัว</div>
+          <div class="ob-opt-sub">App หรือ website ของตัวเอง</div>
+        </div>
+        <div class="ob-opt" onclick="sel(this)">
+          <div class="ob-opt-icon">📚</div>
+          <div class="ob-opt-name">เรียนรู้ทั่วไป</div>
+          <div class="ob-opt-sub">เพิ่มทักษะ Coding ทั่วไป</div>
+        </div>
+        <div class="ob-opt" onclick="sel(this)">
+          <div class="ob-opt-icon">🏢</div>
+          <div class="ob-opt-name">ใช้ในงาน</div>
+          <div class="ob-opt-sub">Automate งาน / ทำ script</div>
+        </div>
+        <div class="ob-opt" onclick="sel(this)">
+          <div class="ob-opt-icon">💡</div>
+          <div class="ob-opt-name">Freelance</div>
+          <div class="ob-opt-sub">รับงาน coding อิสระ</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-green" onclick="next(2)">ถัดไป <i class="ti ti-arrow-right"></i></button>
+  </div>
+
+  <!-- Step 2: Level -->
+  <div id="step2" style="display:none">
+    <div class="ob-card">
+      <div class="ob-h">ระดับประสบการณ์ของคุณ?</div>
+      <div class="ob-sub">ตอบตรงๆ นะ — ไม่มีคำตอบที่ผิด เราจะปรับเนื้อหาให้เหมาะสม</div>
+      <div class="level-opt" onclick="selLevel(this)">
+        <div class="l-icon" style="background:var(--green-g2)">🌱</div>
+        <div><div class="l-name">เพิ่งเริ่มต้น</div><div class="l-desc">ยังไม่เคยเขียนโค้ดเลย หรือเรียนไปนิดหน่อย</div></div>
+        <div class="check-circle"><i class="ti ti-check" style="font-size:11px;color:#000;display:none" id="ck1"></i></div>
+      </div>
+      <div class="level-opt" onclick="selLevel(this)">
+        <div class="l-icon" style="background:var(--amber-g)">🌿</div>
+        <div><div class="l-name">มีพื้นฐานบ้าง</div><div class="l-desc">เขียนโค้ดได้บ้าง แต่ยังไม่มั่นใจ</div></div>
+        <div class="check-circle"><i class="ti ti-check" style="font-size:11px;color:#000;display:none"></i></div>
+      </div>
+      <div class="level-opt" onclick="selLevel(this)">
+        <div class="l-icon" style="background:var(--blue-g)">🌳</div>
+        <div><div class="l-name">กำลังพัฒนา</div><div class="l-desc">เขียนโค้ดได้ แต่ยังขาด best practices</div></div>
+        <div class="check-circle"><i class="ti ti-check" style="font-size:11px;color:#000;display:none"></i></div>
+      </div>
+      <div class="level-opt" onclick="selLevel(this)">
+        <div class="l-icon" style="background:var(--purple-g)">🚀</div>
+        <div><div class="l-name">มีประสบการณ์แล้ว</div><div class="l-desc">เขียน code ได้ดี อยากต่อยอด</div></div>
+        <div class="check-circle"><i class="ti ti-check" style="font-size:11px;color:#000;display:none"></i></div>
+      </div>
+    </div>
+    <button class="btn btn-green" onclick="next(3)">ถัดไป <i class="ti ti-arrow-right"></i></button>
+  </div>
+
+  <!-- Step 3: Time -->
+  <div id="step3" style="display:none">
+    <div class="ob-card">
+      <div class="ob-h">มีเวลาเรียนวันละแค่ไหน?</div>
+      <div class="ob-sub">เราจะวางแผน Learning Path ให้พอดีกับตารางชีวิตของคุณ</div>
+      <div class="ob-grid">
+        <div class="ob-opt" onclick="sel(this)">
+          <div class="ob-opt-icon">⚡</div>
+          <div class="ob-opt-name">15-30 นาที</div>
+          <div class="ob-opt-sub">เรียนแบบ micro ทุกวัน</div>
+        </div>
+        <div class="ob-opt" onclick="sel(this)">
+          <div class="ob-opt-icon">🎯</div>
+          <div class="ob-opt-name">30-60 นาที</div>
+          <div class="ob-opt-sub">เรียนสม่ำเสมอ ก้าวหน้าดี</div>
+        </div>
+        <div class="ob-opt" onclick="sel(this)">
+          <div class="ob-opt-icon">💪</div>
+          <div class="ob-opt-name">1-2 ชั่วโมง</div>
+          <div class="ob-opt-sub">ก้าวหน้าเร็ว สร้างโปรเจกต์ได้</div>
+        </div>
+        <div class="ob-opt" onclick="sel(this)">
+          <div class="ob-opt-icon">🔥</div>
+          <div class="ob-opt-name">2+ ชั่วโมง</div>
+          <div class="ob-opt-sub">Bootcamp mode เต็มสปีด</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-green" onclick="next(4)">ถัดไป <i class="ti ti-arrow-right"></i></button>
+  </div>
+
+  <!-- Step 4: Recommendation -->
+  <div id="step4" style="display:none">
+    <div class="ob-card" style="background:linear-gradient(135deg,var(--bg2),rgba(168,85,247,.04));border-color:rgba(168,85,247,.15)">
+      <div style="font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">✨ แนะนำสำหรับคุณ</div>
+      <div class="ob-h">Python Developer Track</div>
+      <div class="ob-sub">จากคำตอบของคุณ เราแนะนำให้เริ่มจาก Python — ภาษาที่ง่าย เป็นที่ต้องการในตลาด และต่อยอดได้หลากหลาย</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.5rem">
+        <div style="background:var(--bg3);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:22px;margin-bottom:5px">📅</div>
+          <div style="font-size:14px;font-weight:700">4-6</div>
+          <div style="font-size:11px;color:var(--text2)">เดือน</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:22px;margin-bottom:5px">📚</div>
+          <div style="font-size:14px;font-weight:700">8</div>
+          <div style="font-size:11px;color:var(--text2)">คอร์ส</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:22px;margin-bottom:5px">🏆</div>
+          <div style="font-size:14px;font-weight:700">Certificate</div>
+          <div style="font-size:11px;color:var(--text2)">ได้เลย</div>
+        </div>
+      </div>
+      <div style="background:var(--bg4);border-radius:10px;padding:12px;font-size:13px;color:var(--text2)">
+        <strong style="color:var(--text)">เส้นทาง:</strong> Python Basics → Data Structures → OOP → Flask API → Database → Final Project
+      </div>
+    </div>
+    <button class="btn btn-green" onclick="location.href='dashboard.html'" style="margin-bottom:10px">
+      <i class="ti ti-rocket"></i> เริ่มเรียนเลย!
+    </button>
+    <button class="btn btn-ghost" onclick="location.href='roadmap.html'">ดู Learning Path ทั้งหมด</button>
+  </div>
+
+</div>
+
+<script>
+let step=1;
+function sel(el){
+  const parent=el.closest('.ob-grid,.ob-card');
+  parent.querySelectorAll('.ob-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function selLevel(el){
+  document.querySelectorAll('.level-opt').forEach(o=>{
+    o.classList.remove('sel');
+    o.querySelector('i').style.display='none';
+  });
+  el.classList.add('sel');
+  el.querySelector('i').style.display='block';
+}
+function next(n){
+  document.getElementById('step'+step).style.display='none';
+  step=n;
+  const s=document.getElementById('step'+n);
+  s.style.display='block';
+  s.style.animation='none';
+  void s.offsetWidth;
+  s.style.animation='fadeUp .35s ease both';
+  const steps=document.getElementById('prog').children;
+  for(let i=0;i<steps.length;i++){
+    steps[i].className='ob-step'+(i<n-1?' done':i===n-1?' cur':'');
+  }
+}
+</script>
+</body></html>

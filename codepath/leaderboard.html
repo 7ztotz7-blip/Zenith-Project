@@ -1,0 +1,249 @@
+<!DOCTYPE html><html lang="th">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leaderboard — CodePath</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="_shared.css">
+<style>
+.lb-layout{display:grid;grid-template-columns:1fr 280px;gap:20px}
+.period-tabs{display:flex;gap:6px;margin-bottom:1.5rem}
+.ptab{padding:7px 16px;border-radius:20px;font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--border2);color:var(--text2);background:transparent;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.ptab:hover{background:var(--bg4);color:var(--text)}
+.ptab.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:12px;margin-bottom:2rem;padding:0 1rem}
+.podium-item{display:flex;flex-direction:column;align-items:center;gap:8px}
+.p-av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;border:2.5px solid}
+.p-name{font-size:13px;font-weight:700;text-align:center}
+.p-pts{font-size:12px;color:var(--text2);text-align:center}
+.p-stand{border-radius:var(--r2) var(--r2) 0 0;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#000;width:80px}
+.p-stand.gold{background:linear-gradient(135deg,#FFD700,#FFA500)}
+.p-stand.silver{background:linear-gradient(135deg,#E8E8E8,#BDBDBD)}
+.p-stand.bronze{background:linear-gradient(135deg,#CD9B6A,#A0714F)}
+
+.lb-table{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3);overflow:hidden}
+.lb-head{display:grid;grid-template-columns:48px 1fr 120px 80px 80px;gap:0;padding:10px 16px;background:var(--bg3);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.06em;text-transform:uppercase}
+.lb-row{display:grid;grid-template-columns:48px 1fr 120px 80px 80px;gap:0;padding:13px 16px;border-bottom:1px solid var(--border);align-items:center;transition:background .12s;cursor:pointer}
+.lb-row:last-child{border-bottom:none}
+.lb-row:hover{background:var(--bg3)}
+.lb-row.me{background:var(--accent-g);border-bottom-color:var(--accent-border)}
+.lb-row.me:hover{background:var(--accent-g2)}
+.rank-num{font-size:14px;font-weight:800;letter-spacing:-.5px;text-align:center}
+.user-cell{display:flex;align-items:center;gap:11px}
+.lb-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.lb-uname{font-size:13.5px;font-weight:600}
+.lb-ulevel{font-size:11px;color:var(--text3);margin-top:1px}
+.streak-cell{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600}
+.xp-cell{font-size:14px;font-weight:700;letter-spacing:-.3px}
+.delta-cell{font-size:12px;font-weight:600;display:flex;align-items:center;gap:3px}
+
+.mini-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3);padding:1.25rem;margin-bottom:14px}
+.mini-title{font-size:13px;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:7px}
+.prize-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.prize-item:last-child{border-bottom:none;padding-bottom:0}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a href="index.html" class="sidebar-logo"><div class="logo-mark">CP</div>CodePath</a>
+  <div class="nav-group">
+    <div class="nav-group-label">เมนูหลัก</div>
+    <a class="nav-link" href="dashboard.html"><i class="ti ti-home"></i> Dashboard</a>
+    <a class="nav-link" href="courses.html"><i class="ti ti-books"></i> คอร์สทั้งหมด</a>
+    <a class="nav-link" href="roadmap.html"><i class="ti ti-map"></i> Learning Path</a>
+    <a class="nav-link" href="lesson.html"><i class="ti ti-code"></i> บทเรียน</a>
+    <a class="nav-link" href="community.html"><i class="ti ti-messages"></i> Community</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">โปรไฟล์</div>
+    <a class="nav-link" href="profile.html"><i class="ti ti-user"></i> โปรไฟล์ของฉัน</a>
+    <a class="nav-link active" href="leaderboard.html"><i class="ti ti-trophy"></i> Leaderboard</a>
+    <a class="nav-link" href="settings.html"><i class="ti ti-settings"></i> ตั้งค่า</a>
+  </div>
+  <div class="sidebar-bottom">
+    <a class="user-pill" href="profile.html">
+      <div class="avatar">กา</div>
+      <div class="user-info"><div class="user-name">กานต์ มีสุข</div><div class="user-pts">🔥 320 XP · Level 4</div></div>
+      <i class="ti ti-chevron-right" style="color:var(--text3);font-size:14px;margin-left:auto"></i>
+    </a>
+  </div>
+</aside>
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title">Leaderboard</div>
+    <div class="topbar-right">
+      <button class="btn btn-sm btn-ghost"><i class="ti ti-bell"></i></button>
+      <div class="avatar" onclick="location.href='profile.html'" style="cursor:pointer">กา</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="lb-layout">
+      <div>
+        <div class="flex-between mb16 anim-up">
+          <div class="period-tabs">
+            <button class="ptab on" onclick="setTab(this)">สัปดาห์นี้</button>
+            <button class="ptab" onclick="setTab(this)">เดือนนี้</button>
+            <button class="ptab" onclick="setTab(this)">ตลอดกาล</button>
+          </div>
+          <div class="flex gap8">
+            <button class="btn btn-sm btn-ghost"><i class="ti ti-filter"></i> กรอง Track</button>
+          </div>
+        </div>
+
+        <!-- Podium Top 3 -->
+        <div class="podium anim-up delay-1">
+          <div class="podium-item">
+            <div class="p-av" style="width:48px;height:48px;font-size:16px;background:rgba(192,192,192,.1);border-color:#C0C0C0;color:#C0C0C0">ส</div>
+            <div class="p-name">สมชาย</div>
+            <div class="p-pts">510 XP</div>
+            <div class="p-stand silver" style="height:70px">2</div>
+          </div>
+          <div class="podium-item">
+            <div style="font-size:22px;margin-bottom:4px">👑</div>
+            <div class="p-av" style="width:60px;height:60px;font-size:20px;background:rgba(255,215,0,.1);border-color:#FFD700;color:#FFD700">ป</div>
+            <div class="p-name" style="font-size:14px">ปรีดา</div>
+            <div class="p-pts">580 XP</div>
+            <div class="p-stand gold" style="height:100px">1</div>
+          </div>
+          <div class="podium-item">
+            <div class="p-av" style="width:44px;height:44px;font-size:15px;background:rgba(205,127,50,.1);border-color:#CD7F32;color:#CD7F32">น</div>
+            <div class="p-name">นภา</div>
+            <div class="p-pts">440 XP</div>
+            <div class="p-stand bronze" style="height:55px">3</div>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="lb-table anim-up delay-2">
+          <div class="lb-head">
+            <div style="text-align:center">อันดับ</div>
+            <div>ผู้เรียน</div>
+            <div>Streak</div>
+            <div>XP</div>
+            <div>เปลี่ยน</div>
+          </div>
+          <div class="lb-row" onclick="location.href='profile.html'">
+            <div class="rank-num" style="color:#FFD700">🥇</div>
+            <div class="user-cell"><div class="lb-av" style="background:rgba(255,107,74,.1);color:var(--red)">ป</div><div><div class="lb-uname">ปรีดา วิทยา</div><div class="lb-ulevel">Level 6 · Python</div></div></div>
+            <div class="streak-cell" style="color:var(--amber)">🔥 14</div>
+            <div class="xp-cell">580</div>
+            <div class="delta-cell" style="color:var(--green)"><i class="ti ti-arrow-up" style="font-size:12px"></i>—</div>
+          </div>
+          <div class="lb-row" onclick="location.href='profile.html'">
+            <div class="rank-num" style="color:#C0C0C0">🥈</div>
+            <div class="user-cell"><div class="lb-av" style="background:var(--blue-g);color:var(--blue)">ส</div><div><div class="lb-uname">สมชาย รักเรียน</div><div class="lb-ulevel">Level 5 · JavaScript</div></div></div>
+            <div class="streak-cell" style="color:var(--amber)">🔥 9</div>
+            <div class="xp-cell">510</div>
+            <div class="delta-cell" style="color:var(--green)"><i class="ti ti-arrow-up" style="font-size:12px"></i>1</div>
+          </div>
+          <div class="lb-row" onclick="location.href='profile.html'">
+            <div class="rank-num" style="color:#CD7F32">🥉</div>
+            <div class="user-cell"><div class="lb-av" style="background:var(--purple-g);color:var(--purple)">น</div><div><div class="lb-uname">นภา จันทร์เพ็ญ</div><div class="lb-ulevel">Level 5 · React</div></div></div>
+            <div class="streak-cell" style="color:var(--amber)">🔥 7</div>
+            <div class="xp-cell">440</div>
+            <div class="delta-cell" style="color:var(--red)"><i class="ti ti-arrow-down" style="font-size:12px"></i>1</div>
+          </div>
+          <div class="lb-row" onclick="location.href='profile.html'">
+            <div class="rank-num" style="color:var(--text2)">4</div>
+            <div class="user-cell"><div class="lb-av" style="background:rgba(255,179,64,.1);color:var(--amber)">ว</div><div><div class="lb-uname">วรรณา โปรแกรม</div><div class="lb-ulevel">Level 4 · Python</div></div></div>
+            <div class="streak-cell" style="color:var(--amber)">🔥 6</div>
+            <div class="xp-cell">410</div>
+            <div class="delta-cell" style="color:var(--green)"><i class="ti ti-arrow-up" style="font-size:12px"></i>2</div>
+          </div>
+          <div class="lb-row" onclick="location.href='profile.html'">
+            <div class="rank-num" style="color:var(--text2)">5</div>
+            <div class="user-cell"><div class="lb-av" style="background:rgba(255,110,168,.1);color:var(--pink)">ก</div><div><div class="lb-uname">กัญญา เทคนิค</div><div class="lb-ulevel">Level 4 · SQL</div></div></div>
+            <div class="streak-cell" style="color:var(--amber)">🔥 5</div>
+            <div class="xp-cell">380</div>
+            <div class="delta-cell" style="color:var(--text3)">—</div>
+          </div>
+
+          <!-- separator -->
+          <div style="padding:8px 16px;background:var(--bg4);font-size:11px;color:var(--text3);text-align:center;letter-spacing:.04em">· · · อันดับที่ 6-19 · · ·</div>
+
+          <!-- ME highlighted -->
+          <div class="lb-row me" onclick="location.href='profile.html'">
+            <div class="rank-num" style="color:var(--accent)">#20</div>
+            <div class="user-cell">
+              <div class="lb-av" style="background:var(--accent-g2);color:var(--accent)">กา</div>
+              <div>
+                <div class="lb-uname">กานต์ มีสุข <span style="font-size:10.5px;color:var(--accent);background:var(--accent-g2);padding:2px 7px;border-radius:20px;margin-left:4px">คุณ</span></div>
+                <div class="lb-ulevel">Level 4 · Python</div>
+              </div>
+            </div>
+            <div class="streak-cell" style="color:var(--amber)">🔥 5</div>
+            <div class="xp-cell" style="color:var(--accent)">320</div>
+            <div class="delta-cell" style="color:var(--green)"><i class="ti ti-arrow-up" style="font-size:12px"></i>2</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar -->
+      <div>
+        <div class="mini-card anim-up">
+          <div class="mini-title"><i class="ti ti-map-pin" style="color:var(--accent);font-size:15px"></i> อันดับของคุณ</div>
+          <div style="text-align:center;padding:1rem 0">
+            <div style="font-size:48px;font-weight:800;color:var(--accent);letter-spacing:-3px">#20</div>
+            <div class="f12 muted">จาก 2,418 ผู้เรียน</div>
+            <div style="margin:12px 0"><div class="prog-track thick"><div class="prog-fill" style="width:92%;background:linear-gradient(90deg,var(--accent2),var(--accent))"></div></div></div>
+            <div class="f12 muted">อีก <strong style="color:var(--amber)">60 XP</strong> ขึ้นอันดับ 19</div>
+          </div>
+          <button class="btn btn-green" style="width:100%;justify-content:center" onclick="location.href='lesson.html'"><i class="ti ti-bolt"></i> เรียนต่อเพื่อแซง!</button>
+        </div>
+
+        <div class="mini-card anim-up delay-1">
+          <div class="mini-title"><i class="ti ti-gift" style="color:var(--amber);font-size:15px"></i> รางวัลสิ้นสัปดาห์</div>
+          <div class="prize-item">
+            <div style="font-size:22px">🥇</div>
+            <div style="flex:1"><div class="f13 bold">อันดับ 1</div><div class="f11 muted">Pro 3 เดือน + Badge พิเศษ</div></div>
+          </div>
+          <div class="prize-item">
+            <div style="font-size:22px">🥈</div>
+            <div style="flex:1"><div class="f13 bold">อันดับ 2-3</div><div class="f11 muted">Pro 1 เดือน + 500 XP</div></div>
+          </div>
+          <div class="prize-item">
+            <div style="font-size:22px">⭐</div>
+            <div style="flex:1"><div class="f13 bold">Top 10</div><div class="f11 muted">Badge "Top Coder" + 200 XP</div></div>
+          </div>
+          <div class="prize-item">
+            <div style="font-size:22px">🎯</div>
+            <div style="flex:1"><div class="f13 bold">Most Improved</div><div class="f11 muted">ขยับอันดับมากสุด + 100 XP</div></div>
+          </div>
+        </div>
+
+        <div class="mini-card anim-up delay-2">
+          <div class="mini-title"><i class="ti ti-clock" style="color:var(--blue);font-size:15px"></i> รีเซ็ตใน</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center">
+            <div style="background:var(--bg3);border-radius:var(--r2);padding:10px">
+              <div id="cnt-h" style="font-size:22px;font-weight:800;font-family:'JetBrains Mono',monospace;letter-spacing:-1px">02</div>
+              <div class="f11 muted">ชั่วโมง</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:var(--r2);padding:10px">
+              <div id="cnt-m" style="font-size:22px;font-weight:800;font-family:'JetBrains Mono',monospace;letter-spacing:-1px">34</div>
+              <div class="f11 muted">นาที</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:var(--r2);padding:10px">
+              <div id="cnt-s" style="font-size:22px;font-weight:800;font-family:'JetBrains Mono',monospace;letter-spacing:-1px">17</div>
+              <div class="f11 muted">วินาที</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+<script>
+function setTab(el){document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('on'));el.classList.add('on');}
+let s=9257;
+setInterval(()=>{
+  s--;if(s<0)s=0;
+  const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  document.getElementById('cnt-h').textContent=String(h).padStart(2,'0');
+  document.getElementById('cnt-m').textContent=String(m).padStart(2,'0');
+  document.getElementById('cnt-s').textContent=String(sec).padStart(2,'0');
+},1000);
+</script>
+</body></html>

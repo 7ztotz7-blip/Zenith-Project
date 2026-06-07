@@ -1,0 +1,371 @@
+<!DOCTYPE html><html lang="th">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>แบบทดสอบ — CodePath</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="_shared.css">
+<style>
+.quiz-layout { display: flex; min-height: 100vh; }
+.quiz-content { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.quiz-inner { width: 100%; max-width: 640px; }
+
+.q-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
+.q-back { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text2); cursor: pointer; transition: color .12s; }
+.q-back:hover { color: var(--text); }
+.q-timer { display: flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 20px; background: var(--bg3); border: 1px solid var(--border); font-size: 13px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.timer-warn { color: var(--red) !important; border-color: rgba(255,91,91,.3) !important; background: var(--red-g) !important; animation: pulse .7s infinite; }
+
+.q-prog { margin-bottom: 2rem; }
+.q-prog-bar { height: 5px; border-radius: 3px; background: var(--bg3); overflow: hidden; margin-bottom: 8px; }
+.q-prog-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent2), var(--accent)); transition: width .4s cubic-bezier(.4,0,.2,1); }
+.q-prog-info { display: flex; align-items: center; justify-content: space-between; }
+
+.q-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r3); padding: 2rem; margin-bottom: 1.25rem; }
+.q-badge { margin-bottom: 1rem; }
+.q-text { font-size: 18px; font-weight: 700; letter-spacing: -.5px; line-height: 1.45; margin-bottom: 1.5rem; }
+.q-code { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 1rem 1.25rem; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.85; margin-bottom: 1.5rem; }
+.kw { color: #7DD3FC; } .fn { color: var(--blue); } .str { color: var(--amber); } .num { color: var(--pink); } .cm { color: var(--text3); font-style: italic; }
+
+.q-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.q-opt {
+  padding: 14px 16px; background: var(--bg3); border: 1.5px solid var(--border);
+  border-radius: 11px; font-size: 13.5px; cursor: pointer;
+  transition: all .15s; font-family: 'JetBrains Mono', monospace;
+  text-align: left; color: var(--text); line-height: 1.4;
+}
+.q-opt:hover:not(:disabled) { border-color: var(--border3); background: var(--bg4); }
+.q-opt.correct { border-color: var(--green) !important; background: rgba(0,229,160,.1) !important; color: var(--green) !important; }
+.q-opt.wrong   { border-color: var(--red)   !important; background: var(--red-g)          !important; color: var(--red)   !important; }
+.q-opt:disabled { cursor: default; }
+
+.q-feedback {
+  display: none; margin-top: 1rem; border-radius: 10px; padding: 12px 16px;
+  font-size: 13px; line-height: 1.6;
+}
+.q-feedback.show { display: flex; align-items: flex-start; gap: 10px; }
+.fb-ok  { background: rgba(0,229,160,.08); border: 1px solid rgba(0,229,160,.2); color: var(--green); }
+.fb-no  { background: var(--red-g); border: 1px solid rgba(255,91,91,.2); color: var(--red); }
+
+.q-foot { display: flex; align-items: center; justify-content: space-between; }
+.pts-tag { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; }
+
+/* Result */
+.result-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r3); padding: 3rem 2rem; text-align: center; }
+.result-emoji { font-size: 56px; margin-bottom: 1.25rem; }
+.result-h { font-size: 24px; font-weight: 800; letter-spacing: -1px; margin-bottom: .5rem; }
+.result-sub { font-size: 14px; color: var(--text2); margin-bottom: 2rem; }
+.result-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 2rem; }
+.rs { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r2); padding: 1.125rem; }
+.rs-val { font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+.rs-lbl { font-size: 11.5px; color: var(--text2); margin-top: 3px; }
+.result-btns { display: flex; gap: 10px; justify-content: center; }
+
+/* Sidebar minimal */
+.q-side { width: 200px; background: var(--bg2); border-right: 1px solid var(--border); padding: 1.25rem; display: flex; flex-direction: column; }
+.q-side-logo { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 800; margin-bottom: 2rem; text-decoration: none; color: var(--text); }
+.logo-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 800; }
+.q-map { display: flex; flex-direction: column; gap: 6px; }
+.qm-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; font-size: 13px; background: var(--bg3); border: 1px solid var(--border); }
+.qm-num { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; background: var(--bg5); flex-shrink: 0; }
+.qm-cur .qm-num { background: var(--accent); color: #fff; }
+.qm-done .qm-num { background: rgba(0,229,160,.15); color: var(--green); }
+.qm-wrong .qm-num { background: var(--red-g); color: var(--red); }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+@keyframes bounceIn { 0%{transform:scale(.8);opacity:0} 60%{transform:scale(1.05)} 100%{transform:scale(1);opacity:1} }
+</style>
+</head>
+<body>
+<div class="quiz-layout">
+
+  <!-- Quiz Sidebar -->
+  <div class="q-side">
+    <a href="index.html" class="q-side-logo"><div class="logo-mark">CP</div> CodePath</a>
+    <div style="font-size:12px;font-weight:700;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.75rem">สารบัญข้อสอบ</div>
+    <div class="q-map" id="q-map">
+      <div class="qm-item qm-cur" id="map-1"><div class="qm-num">1</div><span class="f13">List Index</span></div>
+      <div class="qm-item" id="map-2"><div class="qm-num">2</div><span class="f13 muted">range()</span></div>
+      <div class="qm-item" id="map-3"><div class="qm-num">3</div><span class="f13 muted">Loop Output</span></div>
+      <div class="qm-item" id="map-4"><div class="qm-num">4</div><span class="f13 muted">List Methods</span></div>
+      <div class="qm-item" id="map-5"><div class="qm-num">5</div><span class="f13 muted">enumerate()</span></div>
+    </div>
+    <div style="margin-top:auto">
+      <div style="background:var(--bg3);border-radius:var(--r2);padding:10px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:var(--amber);letter-spacing:-1px" id="side-pts">0</div>
+        <div class="f11 muted">XP สะสม</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Content -->
+  <div class="quiz-content">
+    <div class="quiz-inner">
+
+      <!-- Q Header -->
+      <div class="q-header">
+        <div class="q-back" onclick="location.href='lesson.html'"><i class="ti ti-arrow-left" style="font-size:14px"></i> กลับไปบทเรียน</div>
+        <div class="q-timer" id="timer"><i class="ti ti-clock" style="font-size:14px"></i> <span id="timer-val">02:00</span></div>
+      </div>
+
+      <!-- Progress -->
+      <div class="q-prog">
+        <div class="q-prog-bar"><div class="q-prog-fill" id="prog-fill" style="width:20%"></div></div>
+        <div class="q-prog-info">
+          <span class="f13 muted" id="q-num-label">ข้อ 1 จาก 5</span>
+          <span class="f12 muted">Python · Lists & Loops</span>
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div id="q1">
+        <div class="q-card">
+          <div class="q-badge"><span class="badge badge-green"><i class="ti ti-code" style="font-size:11px"></i> ผู้เริ่มต้น</span></div>
+          <div class="q-text">อะไรคือผลลัพธ์ของโค้ดนี้?</div>
+          <div class="q-code">
+            data = [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>, <span class="num">40</span>, <span class="num">50</span>]<br>
+            <span class="fn">print</span>(data[<span class="num">2</span>])
+          </div>
+          <div class="q-options">
+            <button class="q-opt" onclick="answer(this,'w1',1)">10</button>
+            <button class="q-opt" onclick="answer(this,'w1',1)">20</button>
+            <button class="q-opt" onclick="answer(this,'c',1)">30</button>
+            <button class="q-opt" onclick="answer(this,'w1',1)">40</button>
+          </div>
+          <div class="q-feedback fb-ok" id="fb1">
+            <i class="ti ti-check" style="font-size:17px;flex-shrink:0;margin-top:1px"></i>
+            <span>ถูกต้อง! Index เริ่มที่ 0 ดังนั้น data[2] = 30 (index 0=10, 1=20, 2=30)</span>
+          </div>
+          <div class="q-feedback fb-no" id="fb1w" style="display:none">
+            <i class="ti ti-x" style="font-size:17px;flex-shrink:0;margin-top:1px"></i>
+            <span>ไม่ถูก Index เริ่มที่ 0 ดังนั้น data[0]=10, data[1]=20, data[2]=30</span>
+          </div>
+        </div>
+        <div class="q-foot">
+          <div class="pts-tag"><span class="f13 muted">คะแนน:</span> <span class="badge badge-amber" id="pts-badge">0 XP</span></div>
+          <button class="btn btn-green" id="next1" style="display:none" onclick="showQ(2)">ข้อถัดไป <i class="ti ti-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div id="q2" style="display:none">
+        <div class="q-card">
+          <div class="q-badge"><span class="badge badge-green"><i class="ti ti-code" style="font-size:11px"></i> ผู้เริ่มต้น</span></div>
+          <div class="q-text">range(5) สร้างตัวเลขชุดใด?</div>
+          <div class="q-options">
+            <button class="q-opt" onclick="answer(this,'w2',2)">1, 2, 3, 4, 5</button>
+            <button class="q-opt" onclick="answer(this,'c',2)">0, 1, 2, 3, 4</button>
+            <button class="q-opt" onclick="answer(this,'w2',2)">0, 1, 2, 3, 4, 5</button>
+            <button class="q-opt" onclick="answer(this,'w2',2)">1, 2, 3, 4</button>
+          </div>
+          <div class="q-feedback fb-ok" id="fb2">
+            <i class="ti ti-check" style="font-size:17px;flex-shrink:0;margin-top:1px"></i>
+            <span>ถูกต้อง! range(n) สร้างตัวเลข 0 ถึง n-1 ดังนั้น range(5) = 0,1,2,3,4</span>
+          </div>
+          <div class="q-feedback fb-no" id="fb2w" style="display:none">
+            <i class="ti ti-x" style="font-size:17px;flex-shrink:0;margin-top:1px"></i>
+            <span>ไม่ถูก! range(n) สร้าง 0 ถึง n-1 (ไม่รวม n) ดังนั้น range(5) = 0,1,2,3,4</span>
+          </div>
+        </div>
+        <div class="q-foot">
+          <div class="pts-tag"><span class="f13 muted">คะแนน:</span> <span class="badge badge-amber" id="pts-badge2">0 XP</span></div>
+          <button class="btn btn-green" id="next2" style="display:none" onclick="showQ(3)">ข้อถัดไป <i class="ti ti-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div id="q3" style="display:none">
+        <div class="q-card">
+          <div class="q-badge"><span class="badge badge-amber"><i class="ti ti-code" style="font-size:11px"></i> ปานกลาง</span></div>
+          <div class="q-text">โค้ดนี้จะ print กี่ครั้ง?</div>
+          <div class="q-code">
+            <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">2</span>, <span class="num">8</span>, <span class="num">2</span>):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">print</span>(i)
+          </div>
+          <div class="q-options">
+            <button class="q-opt" onclick="answer(this,'w3',3)">6 ครั้ง</button>
+            <button class="q-opt" onclick="answer(this,'w3',3)">5 ครั้ง</button>
+            <button class="q-opt" onclick="answer(this,'c',3)">3 ครั้ง</button>
+            <button class="q-opt" onclick="answer(this,'w3',3)">4 ครั้ง</button>
+          </div>
+          <div class="q-feedback fb-ok" id="fb3">
+            <i class="ti ti-check" style="font-size:17px;flex-shrink:0;margin-top:1px"></i>
+            <span>เยี่ยม! range(2,8,2) = 2,4,6 → 3 ค่า (step=2, หยุดก่อนถึง 8)</span>
+          </div>
+          <div class="q-feedback fb-no" id="fb3w" style="display:none">
+            <i class="ti ti-x" style="font-size:17px;flex-shrink:0;margin-top:1px"></i>
+            <span>ไม่ถูก! range(2,8,2) = 2,4,6 → 3 ค่าเท่านั้น (step=2 ข้ามทีละ 2)</span>
+          </div>
+        </div>
+        <div class="q-foot">
+          <div class="pts-tag"><span class="f13 muted">คะแนน:</span> <span class="badge badge-amber" id="pts-badge3">0 XP</span></div>
+          <button class="btn btn-green" id="next3" style="display:none" onclick="showQ(4)">ข้อถัดไป <i class="ti ti-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div id="q4" style="display:none">
+        <div class="q-card">
+          <div class="q-badge"><span class="badge badge-amber"><i class="ti ti-code" style="font-size:11px"></i> ปานกลาง</span></div>
+          <div class="q-text">Method ใดใช้เพิ่มสมาชิกท้าย List?</div>
+          <div class="q-options">
+            <button class="q-opt" onclick="answer(this,'w4',4)">.add()</button>
+            <button class="q-opt" onclick="answer(this,'w4',4)">.push()</button>
+            <button class="q-opt" onclick="answer(this,'c',4)">.append()</button>
+            <button class="q-opt" onclick="answer(this,'w4',4)">.insert()</button>
+          </div>
+          <div class="q-feedback fb-ok" id="fb4">
+            <i class="ti ti-check" style="font-size:17px;flex-shrink:0;margin-top:1px"></i>
+            <span>ถูกต้อง! .append(x) เพิ่มค่า x ที่ท้าย list เสมอ ส่วน .insert(i,x) ใส่ที่ตำแหน่ง i</span>
+          </div>
+          <div class="q-feedback fb-no" id="fb4w" style="display:none">
+            <i class="ti ti-x" style="font-size:17px;flex-shrink:0;margin-top:1px"></i>
+            <span>ไม่ถูก! ใน Python ใช้ .append() สำหรับเพิ่มท้าย list (.add เป็นของ set, .push ไม่มีใน Python)</span>
+          </div>
+        </div>
+        <div class="q-foot">
+          <div class="pts-tag"><span class="f13 muted">คะแนน:</span> <span class="badge badge-amber" id="pts-badge4">0 XP</span></div>
+          <button class="btn btn-green" id="next4" style="display:none" onclick="showQ(5)">ข้อสุดท้าย <i class="ti ti-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div id="q5" style="display:none">
+        <div class="q-card">
+          <div class="q-badge"><span class="badge badge-red"><i class="ti ti-code" style="font-size:11px"></i> ยาก</span></div>
+          <div class="q-text">enumerate() ให้ค่าอะไรในแต่ละรอบ?</div>
+          <div class="q-code">
+            items = [<span class="str">"a"</span>, <span class="str">"b"</span>, <span class="str">"c"</span>]<br>
+            <span class="kw">for</span> ??? <span class="kw">in</span> <span class="fn">enumerate</span>(items):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;...
+          </div>
+          <div class="q-options">
+            <button class="q-opt" onclick="answer(this,'w5',5)">เฉพาะ value</button>
+            <button class="q-opt" onclick="answer(this,'c',5)">(index, value) tuple</button>
+            <button class="q-opt" onclick="answer(this,'w5',5)">เฉพาะ index</button>
+            <button class="q-opt" onclick="answer(this,'w5',5)">dictionary</button>
+          </div>
+          <div class="q-feedback fb-ok" id="fb5">
+            <i class="ti ti-check" style="font-size:17px;flex-shrink:0;margin-top:1px"></i>
+            <span>เจ๋ง! enumerate() ส่งคืน tuple (index, value) ทำให้ใช้ได้เหมือน: for i, v in enumerate(items)</span>
+          </div>
+          <div class="q-feedback fb-no" id="fb5w" style="display:none">
+            <i class="ti ti-x" style="font-size:17px;flex-shrink:0;margin-top:1px"></i>
+            <span>ไม่ถูก! enumerate() ส่งคืน tuple (index, value) เสมอ เช่น (0,'a'), (1,'b'), (2,'c')</span>
+          </div>
+        </div>
+        <div class="q-foot">
+          <div class="pts-tag"><span class="f13 muted">คะแนน:</span> <span class="badge badge-amber" id="pts-badge5">0 XP</span></div>
+          <button class="btn btn-green" id="next5" style="display:none" onclick="showResult()">ดูผลสอบ <i class="ti ti-trophy"></i></button>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div id="result" style="display:none">
+        <div class="result-card" style="animation:bounceIn .5s cubic-bezier(.4,0,.2,1)">
+          <div class="result-emoji" id="result-emoji">🏆</div>
+          <div class="result-h" id="result-h">ยอดเยี่ยมมาก!</div>
+          <div class="result-sub" id="result-sub">คุณผ่านแบบทดสอบ Lists & Loops</div>
+          <div class="result-stats">
+            <div class="rs">
+              <div class="rs-val" id="r-score" style="color:var(--green)">0/5</div>
+              <div class="rs-lbl">ข้อที่ถูก</div>
+            </div>
+            <div class="rs">
+              <div class="rs-val" id="r-pts" style="color:var(--amber)">+0</div>
+              <div class="rs-lbl">XP ที่ได้</div>
+            </div>
+            <div class="rs">
+              <div class="rs-val" id="r-acc" style="color:var(--blue)">0%</div>
+              <div class="rs-lbl">ความแม่นยำ</div>
+            </div>
+          </div>
+          <div class="result-btns">
+            <button class="btn btn-ghost" onclick="location.href='lesson.html'"><i class="ti ti-arrow-left"></i> กลับบทเรียน</button>
+            <button class="btn btn-green" onclick="location.href='dashboard.html'"><i class="ti ti-home"></i> Dashboard</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+let score = 0, pts = 0;
+let timerVal = 120, timerInterval;
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timerVal--;
+    const m = Math.floor(timerVal/60).toString().padStart(2,'0');
+    const s = (timerVal%60).toString().padStart(2,'0');
+    document.getElementById('timer-val').textContent = m+':'+s;
+    if (timerVal <= 30) document.getElementById('timer').classList.add('timer-warn');
+    if (timerVal <= 0) { clearInterval(timerInterval); showResult(); }
+  }, 1000);
+}
+
+function answer(btn, type, qn) {
+  const opts = document.querySelectorAll('#q'+qn+' .q-opt');
+  opts.forEach(o => o.disabled = true);
+  const correct = type === 'c';
+
+  if (correct) {
+    btn.classList.add('correct');
+    document.getElementById('fb'+qn).classList.add('show');
+    score++;
+    const xp = qn === 5 ? 30 : (qn === 3 || qn === 4 ? 25 : 20);
+    pts += xp;
+  } else {
+    btn.classList.add('wrong');
+    opts.forEach(o => { if (o.getAttribute('onclick').includes("'c'")) o.classList.add('correct'); });
+    document.getElementById('fb'+qn+'w').style.display = 'flex';
+    document.getElementById('fb'+qn+'w').classList.add('show');
+  }
+
+  document.getElementById('pts-badge'+(qn>1?qn:'')).textContent = pts + ' XP';
+  if (qn > 1) document.getElementById('pts-badge'+qn).textContent = pts + ' XP';
+  document.getElementById('pts-badge').textContent = pts + ' XP';
+  document.getElementById('side-pts').textContent = pts;
+
+  const mapItem = document.getElementById('map-'+qn);
+  mapItem.classList.remove('qm-cur');
+  mapItem.classList.add(correct ? 'qm-done' : 'qm-wrong');
+  mapItem.querySelector('.qm-num').innerHTML = correct ? '<i class="ti ti-check" style="font-size:10px"></i>' : '<i class="ti ti-x" style="font-size:10px"></i>';
+
+  document.getElementById('next'+qn).style.display = 'flex';
+}
+
+function showQ(n) {
+  for (let i=1;i<=5;i++) { document.getElementById('q'+i).style.display = 'none'; }
+  document.getElementById('q'+n).style.display = 'block';
+  const pct = (n/5)*100;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('q-num-label').textContent = 'ข้อ '+n+' จาก 5';
+  if (n < 5) {
+    const next = document.getElementById('map-'+n);
+    next.classList.add('qm-cur');
+  }
+  ['pts-badge2','pts-badge3','pts-badge4','pts-badge5'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = pts + ' XP';
+  });
+}
+
+function showResult() {
+  clearInterval(timerInterval);
+  for (let i=1;i<=5;i++) document.getElementById('q'+i).style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('r-score').textContent = score+'/5';
+  document.getElementById('r-pts').textContent = '+'+pts;
+  document.getElementById('r-acc').textContent = Math.round(score/5*100)+'%';
+  const pct = score/5;
+  if (pct === 1) { document.getElementById('result-emoji').textContent = '🏆'; document.getElementById('result-h').textContent = 'สมบูรณ์แบบ! Perfect Score!'; }
+  else if (pct >= 0.6) { document.getElementById('result-emoji').textContent = '🎉'; document.getElementById('result-h').textContent = 'ยอดเยี่ยม! ผ่านแล้ว!'; }
+  else { document.getElementById('result-emoji').textContent = '💪'; document.getElementById('result-h').textContent = 'ไม่เป็นไร ลองใหม่ได้เลย!'; }
+  document.getElementById('prog-fill').style.width = '100%';
+}
+
+startTimer();
+</script>
+</body></html>
