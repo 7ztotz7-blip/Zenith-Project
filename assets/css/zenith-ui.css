@@ -2,41 +2,41 @@
    ZENITH UI — Design System v2
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap');
 
 /* ── Tokens ─────────────────────────────────────────────── */
 :root {
-    --bg:       #080A0E;
-    --bg2:      #0D1017;
-    --bg3:      #121620;
-    --bg4:      #181D28;
-    --bg5:      #1E2433;
-    --border:   rgba(255,255,255,0.06);
-    --border2:  rgba(255,255,255,0.10);
+    --bg:       #08090B;
+    --bg2:      #0E0F12;
+    --bg3:      #15171B;
+    --bg4:      #1C1F25;
+    --bg5:      #262A32;
+    --border:   rgba(255,255,255,0.07);
+    --border2:  rgba(255,255,255,0.11);
 
-    --text:     #EDF0F7;
-    --text2:    #8B92A8;
-    --text3:    #4A5168;
+    --text:     #F4F6FA;
+    --text2:    #9BA1AE;
+    --text3:    #5A5F6B;
 
-    --green:    #00E5A0;
-    --green2:   #00B87D;
-    --green-g:  rgba(0,229,160,0.08);
-    --green-g2: rgba(0,229,160,0.14);
-    --green-glow: rgba(0,229,160,0.18);
+    --green:    #2CE39B;
+    --green2:   #1FB67D;
+    --green-g:  rgba(44,227,155,0.08);
+    --green-g2: rgba(44,227,155,0.14);
+    --green-glow: rgba(44,227,155,0.18);
 
-    --accent:        #a855f7;
-    --accent2:       #7c3aed;
-    --accent-g:      rgba(168,85,247,0.10);
-    --accent-g2:     rgba(168,85,247,0.16);
-    --accent-glow:   rgba(168,85,247,0.25);
-    --accent-border: rgba(168,85,247,0.28);
+    --accent:        #2E7DFF;
+    --accent2:       #1A5FE0;
+    --accent-g:      rgba(46,125,255,0.10);
+    --accent-g2:     rgba(46,125,255,0.16);
+    --accent-glow:   rgba(46,125,255,0.30);
+    --accent-border: rgba(46,125,255,0.30);
 
-    --blue:     #4D9EFF;
-    --blue-g:   rgba(77,158,255,0.12);
+    --blue:     #2E7DFF;
+    --blue-g:   rgba(46,125,255,0.12);
     --amber:    #FFB340;
     --amber-g:  rgba(255,179,64,0.12);
-    --purple:   #A78BF5;
-    --purple-g: rgba(167,139,245,0.12);
+    --purple:   #7CA3FF;
+    --purple-g: rgba(124,163,255,0.12);
     --red:      #FF5B5B;
     --red-g:    rgba(255,91,91,0.12);
 
@@ -46,8 +46,8 @@
     --radius-sm: 8px;
     --radius-lg: 20px;
 
-    --font: 'Plus Jakarta Sans', sans-serif;
-    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font: 'Geist', sans-serif;
+    --mono: 'Geist Mono', 'Fira Code', monospace;
 }
 
 /* ── Reset ──────────────────────────────────────────────── */
@@ -431,7 +431,7 @@ input, textarea, select { font-family: inherit; }
     position: fixed; top: -200px; left: 50%;
     transform: translateX(-50%);
     width: 600px; height: 600px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(46,125,255,0.08) 0%, transparent 65%);
     pointer-events: none; z-index: 0;
 }
 .auth-card {
@@ -481,7 +481,7 @@ input, textarea, select { font-family: inherit; }
 }
 #zenith-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 #zenith-toast.toast-error { border-color: rgba(255,91,91,0.35); color: var(--red); }
-#zenith-toast.toast-ok    { border-color: rgba(168,85,247,0.35); color: var(--accent); }
+#zenith-toast.toast-ok    { border-color: rgba(46,125,255,0.35); color: var(--accent); }
 
 /* ── Icon button (topbar) ────────────────────────────────── */
 .icon-btn {
@@ -606,17 +606,17 @@ input, textarea, select { font-family: inherit; }
 /* ── Certificate ─────────────────────────────────────────── */
 .cert-card {
     background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
-    border: 1px solid rgba(168,85,247,0.2);
+    border: 1px solid rgba(46,125,255,0.2);
     border-radius: 20px;
     padding: 48px;
     text-align: center;
     position: relative; overflow: hidden;
-    box-shadow: 0 0 80px rgba(168,85,247,0.06);
+    box-shadow: 0 0 80px rgba(46,125,255,0.06);
 }
 .cert-card::before {
     content: '';
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(168,85,247,0.06) 0%, transparent 65%);
+    background: radial-gradient(ellipse at 50% 0%, rgba(46,125,255,0.06) 0%, transparent 65%);
     pointer-events: none;
 }
 

@@ -2,12 +2,12 @@
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>เริ่มต้น — CodePath</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#080A0E;--bg2:#0D1017;--bg3:#121620;--bg4:#181D28;--bg5:#1E2433;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.10);--text:#EDF0F7;--text2:#8B92A8;--text3:#4A5168;--green:#00E5A0;--green2:#00B87D;--green-g:rgba(0,229,160,0.08);--green-g2:rgba(0,229,160,0.14);--blue:#4D9EFF;--amber:#FFB340;--purple:#A78BF5;--red:#FF5B5B;--accent:#a855f7;--accent2:#7c3aed;--accent-g:rgba(168,85,247,0.10);--accent-g2:rgba(168,85,247,0.16);--accent-glow:rgba(168,85,247,0.25);--accent-border:rgba(168,85,247,0.28)}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow-x:hidden}
+:root{--bg:#080A0E;--bg2:#0D1017;--bg3:#121620;--bg4:#181D28;--bg5:#1E2433;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.10);--text:#EDF0F7;--text2:#8B92A8;--text3:#4A5168;--green:#00E5A0;--green2:#00B87D;--green-g:rgba(0,229,160,0.08);--green-g2:rgba(0,229,160,0.14);--blue:#4D9EFF;--amber:#FFB340;--purple:#A78BF5;--red:#FF5B5B;--accent:#2E7DFF;--accent2:#1A5FE0;--accent-g:rgba(46,125,255,0.10);--accent-g2:rgba(46,125,255,0.16);--accent-glow:rgba(46,125,255,0.25);--accent-border:rgba(46,125,255,0.28)}
+body{font-family:'Geist',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow-x:hidden}
 .ob-wrap{width:100%;max-width:560px;padding:2rem}
 .ob-logo{display:flex;align-items:center;justify-content:center;gap:10px;font-size:18px;font-weight:800;margin-bottom:3rem}
 .logo-mark{width:32px;height:32px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800}
@@ -21,20 +21,20 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .ob-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ob-opt{background:var(--bg3);border:1.5px solid var(--border);border-radius:12px;padding:1.125rem;cursor:pointer;transition:all .15s;text-align:left}
 .ob-opt:hover{border-color:var(--border2);background:var(--bg4)}
-.ob-opt.sel{border-color:var(--accent);background:rgba(168,85,247,.06)}
+.ob-opt.sel{border-color:var(--accent);background:rgba(46,125,255,.06)}
 .ob-opt-icon{font-size:28px;margin-bottom:10px}
 .ob-opt-name{font-size:13.5px;font-weight:700;margin-bottom:3px}
 .ob-opt-sub{font-size:11.5px;color:var(--text2)}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:0 18px;height:46px;border-radius:8px;font-size:14px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;border:none;transition:all .15s;width:100%;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:0 18px;height:46px;border-radius:8px;font-size:14px;font-weight:700;font-family:'Geist',sans-serif;cursor:pointer;border:none;transition:all .15s;width:100%;justify-content:center}
 .btn-green{background:var(--accent);color:#fff}
 .btn-green:hover{background:var(--accent2);transform:translateY(-1px)}
 .btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text2)}
 .btn-ghost:hover{background:var(--bg3);color:var(--text)}
-.ob-input{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:11px 14px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);outline:none;width:100%;transition:border-color .15s;margin-bottom:10px}
+.ob-input{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:11px 14px;font-size:14px;font-family:'Geist',sans-serif;color:var(--text);outline:none;width:100%;transition:border-color .15s;margin-bottom:10px}
 .ob-input:focus{border-color:var(--border2)}
 .level-opt{display:flex;align-items:center;gap:14px;background:var(--bg3);border:1.5px solid var(--border);border-radius:12px;padding:1.125rem;cursor:pointer;transition:all .15s;margin-bottom:8px}
 .level-opt:hover{border-color:var(--border2)}
-.level-opt.sel{border-color:var(--accent);background:rgba(168,85,247,.06)}
+.level-opt.sel{border-color:var(--accent);background:rgba(46,125,255,.06)}
 .level-opt:last-child{margin-bottom:0}
 .l-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .l-name{font-size:14px;font-weight:700;margin-bottom:2px}
@@ -158,7 +158,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 
   <!-- Step 4: Recommendation -->
   <div id="step4" style="display:none">
-    <div class="ob-card" style="background:linear-gradient(135deg,var(--bg2),rgba(168,85,247,.04));border-color:rgba(168,85,247,.15)">
+    <div class="ob-card" style="background:linear-gradient(135deg,var(--bg2),rgba(46,125,255,.04));border-color:rgba(46,125,255,.15)">
       <div style="font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">✨ แนะนำสำหรับคุณ</div>
       <div class="ob-h">Python Developer Track</div>
       <div class="ob-sub">จากคำตอบของคุณ เราแนะนำให้เริ่มจาก Python — ภาษาที่ง่าย เป็นที่ต้องการในตลาด และต่อยอดได้หลากหลาย</div>

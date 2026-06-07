@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link rel="stylesheet" href="_shared.css">
 <style>
@@ -17,7 +17,7 @@
 .cert-card {
   position: relative; overflow: hidden;
   background: linear-gradient(135deg,#0e0820 0%,#150b2e 50%,#0a0614 100%);
-  border: 1px solid rgba(168,85,247,.28);
+  border: 1px solid rgba(46,125,255,.28);
   border-radius: var(--r3);
   padding: 3rem;
   text-align: center;
@@ -26,18 +26,18 @@
 .cert-card::before {
   content:''; position:absolute; inset:0; pointer-events:none;
   background:
-    radial-gradient(ellipse at 20% 0%,  rgba(168,85,247,.12), transparent 55%),
-    radial-gradient(ellipse at 80% 100%,rgba(124,58,237,.07),  transparent 55%);
+    radial-gradient(ellipse at 20% 0%,  rgba(46,125,255,.12), transparent 55%),
+    radial-gradient(ellipse at 80% 100%,rgba(26,95,224,.07),  transparent 55%);
 }
 .cert-glow {
   position:absolute; top:-80px; left:50%; transform:translateX(-50%);
   width:400px; height:400px; border-radius:50%;
-  background:radial-gradient(circle,rgba(168,85,247,.10) 0%,transparent 65%);
+  background:radial-gradient(circle,rgba(46,125,255,.10) 0%,transparent 65%);
   pointer-events:none;
 }
 .cert-corner {
   position:absolute; width:48px; height:48px;
-  border-color: rgba(168,85,247,.40); border-style:solid;
+  border-color: rgba(46,125,255,.40); border-style:solid;
 }
 .cert-corner-tl { top:16px; left:16px;  border-width:2px 0 0 2px; border-radius:4px 0 0 0; }
 .cert-corner-tr { top:16px; right:16px; border-width:2px 2px 0 0; border-radius:0 4px 0 0; }
@@ -54,7 +54,7 @@
 }
 .cert-divider {
   height:1px; margin:20px auto; max-width:240px;
-  background:linear-gradient(90deg,transparent,rgba(168,85,247,.5),rgba(124,58,237,.3),transparent);
+  background:linear-gradient(90deg,transparent,rgba(46,125,255,.5),rgba(26,95,224,.3),transparent);
 }
 .cert-to { font-size:11px; color:var(--text3); letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }
 .cert-name {
@@ -110,7 +110,7 @@
 @media print {
   .sidebar, .topbar, #printBtn { display:none!important; }
   .main { margin-left:0!important; }
-  .cert-card { border:1.5px solid rgba(168,85,247,.4)!important; break-inside:avoid; }
+  .cert-card { border:1.5px solid rgba(46,125,255,.4)!important; break-inside:avoid; }
 }
 </style>
 </head>
