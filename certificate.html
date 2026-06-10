@@ -155,6 +155,7 @@
       <a href="index.html" class="btn btn-sm btn-ghost">
         <i class="ti ti-books"></i> คอร์สเรียน
       </a>
+      <button class="btn btn-sm btn-ghost" id="btn-logout"><i class="ti ti-logout"></i> ออกจากระบบ</button>
     </div>
   </div>
 
@@ -202,7 +203,7 @@
 
 <script type="module">
 import { auth } from './assets/js/firebase.js';
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 const COURSES = [
   { key: 'python',     label: 'Python',       total: 12, color: '#00E5A0', emoji: '🐍' },
@@ -301,6 +302,12 @@ onAuthStateChanged(auth, (user) => {
     certSection.classList.remove('hidden');
     document.getElementById('printBtn').classList.remove('hidden');
     completedCourses.forEach(c => { certSection.innerHTML += buildCertCard(c, username); });
+  }
+});
+
+document.getElementById('btn-logout').addEventListener('click', () => {
+  if (confirm('ต้องการออกจากระบบ?')) {
+    signOut(auth).then(() => location.href = 'landing.html');
   }
 });
 </script>

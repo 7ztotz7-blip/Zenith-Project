@@ -117,6 +117,7 @@
     <div class="topbar-title">คอร์สเรียนทั้งหมด</div>
     <div class="topbar-right">
       <span class="top-meta">6 วิชา · 62 บทเรียน</span>
+      <button class="btn btn-sm btn-ghost" id="btn-logout"><i class="ti ti-logout"></i> ออกจากระบบ</button>
       <div class="avatar avatar-link" id="top-avatar" onclick="location.href='profile.html'">?</div>
     </div>
   </div>
@@ -304,5 +305,11 @@ window.checkAccess = function(course) {
   const id = getLastLesson(course);
   window.location.href = `lesson.html?course=${course}&id=${id}`;
 };
+
+document.getElementById('btn-logout').addEventListener('click', () => {
+  if (confirm('ต้องการออกจากระบบ?')) {
+    signOut(auth).then(() => location.href = 'landing.html');
+  }
+});
 </script>
 </body></html>

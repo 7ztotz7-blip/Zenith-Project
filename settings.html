@@ -78,6 +78,7 @@
   <div class="topbar">
     <div class="topbar-title">ตั้งค่า</div>
     <div class="topbar-right">
+      <button class="btn btn-sm btn-ghost" id="btn-logout"><i class="ti ti-logout"></i> ออกจากระบบ</button>
       <button class="btn btn-sm btn-green" onclick="save()"><i class="ti ti-check"></i> บันทึกการเปลี่ยนแปลง</button>
     </div>
   </div>
@@ -384,5 +385,14 @@ function save(){
   btn.style.background='var(--green2)';
   setTimeout(()=>{btn.innerHTML='<i class="ti ti-check"></i> บันทึกการเปลี่ยนแปลง';btn.style.background='';},2000);
 }
+</script>
+<script type="module">
+import { auth } from './assets/js/firebase.js';
+import { signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+document.getElementById('btn-logout').addEventListener('click', () => {
+  if (confirm('ต้องการออกจากระบบ?')) {
+    signOut(auth).then(() => location.href = 'landing.html');
+  }
+});
 </script>
 </body></html>

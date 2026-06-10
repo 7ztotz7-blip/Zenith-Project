@@ -171,6 +171,9 @@ textarea.code-editor:focus { box-shadow: inset 0 0 0 1.5px var(--accent-border);
 .option-btn.wrong-shake { animation: optShake .4s ease; }
 @keyframes optShake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
 #optionsContainer { margin-bottom: 1rem; }
+#quizFeedback { display: block !important; min-height: 0; font-size: 14px; margin-top: 10px; }
+#quizFeedback:empty { padding: 0 !important; margin: 0 !important; }
+#startQuizBtn { display: none !important; }
 </style>
 </head>
 <body>
@@ -179,8 +182,11 @@ textarea.code-editor:focus { box-shadow: inset 0 0 0 1.5px var(--accent-border);
   <!-- ══ LEFT: Lesson List Sidebar ══ -->
   <div class="lesson-nav">
     <div class="lnav-head">
-      <div class="lnav-back" onclick="location.href='courses.html'">
-        <i class="ti ti-arrow-left" style="font-size:14px"></i> <span id="sidebarTitle">กำลังโหลด...</span>
+      <div class="lnav-back" style="justify-content:space-between">
+        <span onclick="location.href='courses.html'" style="display:flex;align-items:center;gap:6px;cursor:pointer">
+          <i class="ti ti-arrow-left" style="font-size:14px"></i> <span id="sidebarTitle">กำลังโหลด...</span>
+        </span>
+        <button class="btn btn-sm btn-ghost" id="btn-logout" title="ออกจากระบบ"><i class="ti ti-logout"></i></button>
       </div>
       <div class="lnav-course">📚 บทเรียนทั้งหมด</div>
       <div class="lnav-prog">
@@ -536,5 +542,14 @@ function runCode() {
 
 function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
+</script>
+<script type="module">
+import { auth } from '../assets/js/firebase.js';
+import { signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+document.getElementById('btn-logout').addEventListener('click', () => {
+  if (confirm('ต้องการออกจากระบบ?')) {
+    signOut(auth).then(() => location.href = '../landing.html');
+  }
+});
 </script>
 </body></html>

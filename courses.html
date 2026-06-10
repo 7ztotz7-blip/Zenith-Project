@@ -85,6 +85,7 @@
     <div class="topbar-title">คอร์สทั้งหมด</div>
     <div class="topbar-right">
       <button class="btn btn-sm btn-ghost"><i class="ti ti-bell"></i></button>
+      <button class="btn btn-sm btn-ghost" id="btn-logout"><i class="ti ti-logout"></i> ออกจากระบบ</button>
       <div class="avatar" onclick="location.href='profile.html'" style="cursor:pointer">กา</div>
     </div>
   </div>
@@ -127,7 +128,7 @@
     <div class="course-grid anim-up delay-2">
 
       <!-- Python -->
-      <div class="course-card" onclick="location.href='lesson.html'">
+      <div class="course-card" onclick="location.href='lesson.html?course=python'">
         <div class="course-thumb" style="background:linear-gradient(135deg,#071a12,#0d3322)">
           🐍
           <span class="course-badge badge badge-glass">ยอดนิยม 🔥</span>
@@ -151,7 +152,7 @@
       </div>
 
       <!-- JavaScript -->
-      <div class="course-card" onclick="location.href='lesson.html'">
+      <div class="course-card" onclick="location.href='lesson.html?course=javascript'">
         <div class="course-thumb" style="background:linear-gradient(135deg,#1a1500,#332900)">
           ⚡
           <span class="course-badge badge badge-amber">ยอดนิยม</span>
@@ -175,7 +176,7 @@
       </div>
 
       <!-- C++ -->
-      <div class="course-card" onclick="location.href='lesson.html'">
+      <div class="course-card" onclick="location.href='lesson.html?course=cpp'">
         <div class="course-thumb" style="background:linear-gradient(135deg,#0a1220,#0d1a2e)">⚙️</div>
         <div class="course-body">
           <div class="course-tag">C++</div>
@@ -196,7 +197,7 @@
       </div>
 
       <!-- Java -->
-      <div class="course-card" onclick="location.href='lesson.html'">
+      <div class="course-card" onclick="location.href='lesson.html?course=java'">
         <div class="course-thumb" style="background:linear-gradient(135deg,#1a1000,#2a1a00)">☕</div>
         <div class="course-body">
           <div class="course-tag">Java</div>
@@ -217,7 +218,7 @@
       </div>
 
       <!-- HTML -->
-      <div class="course-card" onclick="location.href='lesson.html'">
+      <div class="course-card" onclick="location.href='lesson.html?course=html'">
         <div class="course-thumb" style="background:linear-gradient(135deg,#1a0a00,#2a1200)">🏗️</div>
         <div class="course-body">
           <div class="course-tag">HTML</div>
@@ -238,7 +239,7 @@
       </div>
 
       <!-- CSS -->
-      <div class="course-card" onclick="location.href='lesson.html'">
+      <div class="course-card" onclick="location.href='lesson.html?course=css'">
         <div class="course-thumb" style="background:linear-gradient(135deg,#050e20,#0a1530)">🎨</div>
         <div class="course-body">
           <div class="course-tag">CSS</div>
@@ -268,5 +269,14 @@ function setPill(el) {
   document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
   el.classList.add('on');
 }
+</script>
+<script type="module">
+import { auth } from './assets/js/firebase.js';
+import { signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+document.getElementById('btn-logout').addEventListener('click', () => {
+  if (confirm('ต้องการออกจากระบบ?')) {
+    signOut(auth).then(() => location.href = 'landing.html');
+  }
+});
 </script>
 </body></html>
