@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<style>
+<script src="../assets/js/theme.js"></script><style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --bg:#080A0E; --bg2:#0D1017; --bg3:#121620; --bg4:#181D28; --bg5:#1E2433;
@@ -19,6 +19,7 @@
   --amber:#FFB340; --amber-g:rgba(255,179,64,0.08);
   --red:#FF5B5B; --pink:#FF6EA8;
 }
+[data-theme="light"]{--bg:#f8faff;--bg2:#ffffff;--bg3:#f1f4fc;--bg4:#e8edf8;--bg5:#dde3f3;--border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.11);--text:#0f172a;--text2:#475569;--text3:#94a3b8;--accent:#1d4ed8;--accent2:#1e40af;--accent-g:rgba(29,78,216,0.08);--accent-g2:rgba(29,78,216,0.14);--accent-glow:rgba(29,78,216,0.20);--accent-border:rgba(29,78,216,0.22)}
 html { scroll-behavior: smooth; }
 body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 3px; }
@@ -360,50 +361,38 @@ footer {
     <div class="track-card t-green" onclick="location.href='courses.html'">
       <div class="track-icon">🐍</div>
       <div class="track-name">Python</div>
-      <div class="track-lessons">24 บทเรียน · 8 โปรเจกต์</div>
+      <div class="track-lessons">12 บทเรียน</div>
       <span class="badge" style="background:var(--green-g2);color:var(--green);border:1px solid rgba(0,229,160,.2)">ผู้เริ่มต้น</span>
     </div>
-    <div class="track-card t-blue" onclick="location.href='courses.html'">
-      <div class="track-icon">📜</div>
+    <div class="track-card t-amber" onclick="location.href='courses.html'">
+      <div class="track-icon">⚡</div>
       <div class="track-name">JavaScript</div>
-      <div class="track-lessons">32 บทเรียน · 12 โปรเจกต์</div>
-      <span class="badge" style="background:var(--blue-g);color:var(--blue);border:1px solid rgba(77,158,255,.2)">ผู้เริ่มต้น</span>
+      <div class="track-lessons">10 บทเรียน</div>
+      <span class="badge" style="background:var(--amber-g);color:var(--amber);border:1px solid rgba(255,179,64,.2)">ปานกลาง</span>
     </div>
-    <div class="track-card t-purple" onclick="location.href='courses.html'">
-      <div class="track-icon">⚛️</div>
-      <div class="track-name">React</div>
-      <div class="track-lessons">28 บทเรียน · 6 โปรเจกต์</div>
-      <span class="badge" style="background:var(--purple-g);color:var(--purple);border:1px solid rgba(167,139,245,.2)">ปานกลาง</span>
-    </div>
-    <div class="track-card t-cyan" onclick="location.href='courses.html'">
-      <div class="track-icon">🗄️</div>
-      <div class="track-name">SQL & Database</div>
-      <div class="track-lessons">18 บทเรียน · 4 โปรเจกต์</div>
-      <span class="badge" style="background:rgba(34,211,238,.08);color:#22D3EE;border:1px solid rgba(34,211,238,.2)">ปานกลาง</span>
+    <div class="track-card t-blue" onclick="location.href='courses.html'">
+      <div class="track-icon">⚙️</div>
+      <div class="track-name">C++</div>
+      <div class="track-lessons">10 บทเรียน</div>
+      <span class="badge" style="background:var(--blue-g);color:var(--blue);border:1px solid rgba(77,158,255,.2)">ปานกลาง</span>
     </div>
     <div class="track-card t-amber" onclick="location.href='courses.html'">
-      <div class="track-icon">📊</div>
-      <div class="track-name">Data Science</div>
-      <div class="track-lessons">35 บทเรียน · 10 โปรเจกต์</div>
-      <span class="badge" style="background:var(--amber-g);color:var(--amber);border:1px solid rgba(255,179,64,.2)">ขั้นสูง</span>
+      <div class="track-icon">☕</div>
+      <div class="track-name">Java</div>
+      <div class="track-lessons">10 บทเรียน</div>
+      <span class="badge" style="background:var(--amber-g);color:var(--amber);border:1px solid rgba(255,179,64,.2)">ปานกลาง</span>
     </div>
     <div class="track-card t-pink" onclick="location.href='courses.html'">
-      <div class="track-icon">🤖</div>
-      <div class="track-name">Machine Learning</div>
-      <div class="track-lessons">40 บทเรียน · 8 โปรเจกต์</div>
-      <span class="badge" style="background:var(--pink-g);color:var(--pink);border:1px solid rgba(255,110,168,.2)">ขั้นสูง</span>
+      <div class="track-icon">🏗️</div>
+      <div class="track-name">HTML</div>
+      <div class="track-lessons">10 บทเรียน</div>
+      <span class="badge" style="background:var(--pink-g);color:var(--pink);border:1px solid rgba(255,110,168,.2)">ผู้เริ่มต้น</span>
     </div>
-    <div class="track-card t-red" onclick="location.href='courses.html'">
-      <div class="track-icon">🌐</div>
-      <div class="track-name">TypeScript</div>
-      <div class="track-lessons">22 บทเรียน · 5 โปรเจกต์</div>
-      <span class="badge" style="background:var(--red-g,rgba(255,91,91,.08));color:var(--red);border:1px solid rgba(255,91,91,.2)">ปานกลาง</span>
-    </div>
-    <div class="track-card t-teal" onclick="location.href='courses.html'">
-      <div class="track-icon">🔧</div>
-      <div class="track-name">Git & DevOps</div>
-      <div class="track-lessons">15 บทเรียน · 3 โปรเจกต์</div>
-      <span class="badge" style="background:rgba(45,212,191,.08);color:#2DD4BF;border:1px solid rgba(45,212,191,.2)">ผู้เริ่มต้น</span>
+    <div class="track-card t-blue" onclick="location.href='courses.html'">
+      <div class="track-icon">🎨</div>
+      <div class="track-name">CSS</div>
+      <div class="track-lessons">10 บทเรียน</div>
+      <span class="badge" style="background:var(--blue-g);color:var(--blue);border:1px solid rgba(77,158,255,.2)">ปานกลาง</span>
     </div>
   </div>
 </section>

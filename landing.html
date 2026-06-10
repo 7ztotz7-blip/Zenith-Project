@@ -286,6 +286,59 @@
             .hero-glow { width: 340px; height: 340px; }
         }
 
+        /* ── STRIPE CANVAS GRADIENT ─────────────────────────── */
+        #hero-gradient-canvas {
+            position: absolute; inset: 0; z-index: 0;
+            width: 100%; height: 100%; display: block;
+            pointer-events: none;
+        }
+        /* Bottom fade into next section */
+        .hero-bottom-fade {
+            position: absolute; bottom: -1px; left: 0; right: 0;
+            height: 200px; z-index: 3; pointer-events: none;
+            background: linear-gradient(to bottom, transparent 0%, #080A0E 85%);
+        }
+        /* Ensure hero decorations layer above canvas */
+        .hero-glow, .hero-glow-accent { z-index: 1; }
+        .hero-orbit, .hero-orbit-2, .hero-line-top { z-index: 1; }
+        /* Floating cards: smoother transition for mouse parallax */
+        .hero-float-card {
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.07),
+                0 4px 16px rgba(0,0,0,0.3),
+                0 16px 40px rgba(168,85,247,0.08);
+            transition: transform 0.12s ease-out !important;
+            will-change: transform;
+        }
+        /* Enhanced CTA glow + shine sweep */
+        .btn-primary {
+            position: relative; overflow: hidden;
+            box-shadow: 0 0 0 1px rgba(168,85,247,0.35), 0 4px 24px rgba(168,85,247,0.28) !important;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 0 1px rgba(168,85,247,0.55), 0 8px 40px rgba(168,85,247,0.45) !important;
+        }
+        .btn-primary::before {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 50%; height: 100%; pointer-events: none;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.13), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-primary:hover::before { left: 160%; }
+        /* Light mode overrides for new elements */
+        [data-theme="light"] #hero-gradient-canvas { display: none; }
+        [data-theme="light"] .hero-bottom-fade {
+            background: linear-gradient(to bottom, transparent, #f8faff 85%);
+        }
+        /* Scroll arrow above bottom fade */
+        .hero-scroll-arrow { z-index: 10; }
+        /* Reduced motion: disable canvas + float animations */
+        @media (prefers-reduced-motion: reduce) {
+            #hero-gradient-canvas { display: none !important; }
+            .hero-card-left, .hero-card-right { animation: none !important; }
+            .hero-float-card { transition: none !important; }
+        }
+
         /* ── LIGHT MODE OVERRIDES ─────────────────────────────── */
 
         /* Body + background */
@@ -416,7 +469,10 @@
 </nav>
 
 <!-- ══════════════ HERO ══════════════ -->
-<section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 overflow-hidden">
+<section id="hero-section" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 overflow-hidden">
+
+    <!-- Stripe-style animated mesh gradient (canvas) -->
+    <canvas id="hero-gradient-canvas" aria-hidden="true"></canvas>
 
     <!-- BG elements -->
     <div class="hero-glow"></div>
@@ -531,10 +587,18 @@
             <span class="text-base leading-none">🏆</span>
             <span class="text-[10px] text-zinc-300 uppercase tracking-widest font-bold">Certificate</span>
         </div>
+        <div class="flex items-center gap-2 bg-[#a855f7]/10 border border-[#a855f7]/25 rounded-xl px-4 py-2.5">
+            <span class="text-base leading-none">👥</span>
+            <span id="visitor-hero" class="text-[#a855f7] text-base font-black leading-none">—</span>
+            <span class="text-[10px] text-zinc-300 uppercase tracking-widest font-bold">ผู้เข้าชม</span>
+        </div>
     </div>
 
+    <!-- Bottom fade to next section -->
+    <div class="hero-bottom-fade" aria-hidden="true"></div>
+
     <!-- Scroll arrow -->
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-zinc-600 animate-bounce">
+    <div class="hero-scroll-arrow absolute bottom-10 left-1/2 -translate-x-1/2 text-zinc-600 animate-bounce">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
         </svg>
@@ -543,7 +607,7 @@
 
 <!-- ══════════════ STATS ══════════════ -->
 <section class="max-w-5xl mx-auto px-6 py-16">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 reveal">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 reveal">
         <div class="stat-card p-6 text-center">
             <p class="text-4xl font-black text-[#a855f7] mb-1" data-count="6">0</p>
             <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">วิชาหลัก</p>
@@ -559,6 +623,10 @@
         <div class="stat-card p-6 text-center">
             <p class="text-4xl font-black text-white mb-1">∞</p>
             <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">ฟรีตลอดกาล</p>
+        </div>
+        <div class="stat-card p-6 text-center">
+            <p id="visitor-stat" class="text-4xl font-black text-[#2dd4bf] mb-1">—</p>
+            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">ผู้เข้าชม</p>
         </div>
     </div>
 </section>
@@ -619,7 +687,7 @@
                     <span class="text-xl">🎨</span>
                 </div>
                 <div>
-                    <p class="font-black text-sm">CSS Styling</p>
+                    <p class="font-black text-sm">CSS</p>
                     <p class="text-[10px] text-zinc-500 uppercase tracking-wider">10 บทเรียน</p>
                 </div>
                 <span class="ml-auto text-[9px] badge-purple px-2 py-0.5 rounded-full font-bold uppercase">Inter</span>
@@ -637,7 +705,7 @@
                     <span class="text-xl">🏗️</span>
                 </div>
                 <div>
-                    <p class="font-black text-sm">HTML Structure</p>
+                    <p class="font-black text-sm">HTML</p>
                     <p class="text-[10px] text-zinc-500 uppercase tracking-wider">10 บทเรียน</p>
                 </div>
                 <span class="ml-auto text-[9px] bg-orange-500/10 border border-orange-500/25 text-orange-400 px-2 py-0.5 rounded-full font-bold uppercase">Beginner</span>
@@ -750,13 +818,13 @@
             <div class="space-y-2.5">
                 <div class="flex items-center gap-2.5 bg-white/[0.03] rounded-xl px-3 py-2">
                     <span class="text-sm">🏗️</span>
-                    <span class="text-[11px] text-zinc-300 font-bold">HTML Structure</span>
+                    <span class="text-[11px] text-zinc-300 font-bold">HTML</span>
                     <span class="ml-auto text-[9px] text-orange-400 bg-orange-500/10 px-1.5 py-0.5 rounded-md">1</span>
                 </div>
                 <div class="text-center text-zinc-700 text-xs">↓</div>
                 <div class="flex items-center gap-2.5 bg-white/[0.03] rounded-xl px-3 py-2">
                     <span class="text-sm">🎨</span>
-                    <span class="text-[11px] text-zinc-300 font-bold">CSS Styling</span>
+                    <span class="text-[11px] text-zinc-300 font-bold">CSS</span>
                     <span class="ml-auto text-[9px] text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded-md">2</span>
                 </div>
                 <div class="text-center text-zinc-700 text-xs">↓</div>
@@ -930,6 +998,54 @@
     });
 </script>
 
+<!-- ══════════════ VISITOR COUNTER ══════════════ -->
+<script type="module">
+import { db } from './assets/js/firebase.js';
+import { doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const BASE = 127; // offset so count looks established from day 1
+
+function animateCount(el, target) {
+    if (!el || target <= 0) return;
+    const ms = 1400;
+    const start = performance.now();
+    (function step(now) {
+        const p = Math.min((now - start) / ms, 1);
+        const v = Math.round((1 - Math.pow(1 - p, 3)) * target);
+        el.textContent = v.toLocaleString('en-US');
+        if (p < 1) requestAnimationFrame(step);
+    })(start);
+}
+
+function showCount(n) {
+    animateCount(document.getElementById('visitor-hero'), n);
+    animateCount(document.getElementById('visitor-stat'), n);
+}
+
+(async function () {
+    const today = new Date().toDateString();
+    const visitorRef = doc(db, 'stats', 'visitors');
+    try {
+        // Increment once per day per browser
+        if (localStorage.getItem('zenith_visit_date') !== today) {
+            await setDoc(visitorRef, { count: increment(1) }, { merge: true });
+            localStorage.setItem('zenith_visit_date', today);
+        }
+        const snap = await getDoc(visitorRef);
+        showCount((snap.data()?.count || 0) + BASE);
+    } catch (_) {
+        // Firestore not accessible — use localStorage fallback
+        let local = parseInt(localStorage.getItem('zenith_visit_count') || '0');
+        if (localStorage.getItem('zenith_visit_date') !== today) {
+            local++;
+            localStorage.setItem('zenith_visit_count', String(local));
+            localStorage.setItem('zenith_visit_date', today);
+        }
+        showCount(local + BASE);
+    }
+})();
+</script>
+
 <!-- ══════════════ ANIMATIONS ══════════════ -->
 <div id="page-transition"></div>
 
@@ -1057,5 +1173,153 @@
 })();
 </script>
 
+<!-- Spotlight effect on cards -->
+<script src="assets/js/premium.js"></script>
+
+<!-- ══════════════ STRIPE HERO: CANVAS GRADIENT + 3D PARALLAX ══════════════ -->
+<script>
+(function () {
+    'use strict';
+
+    var PRM    = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var MOBILE = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+
+    /* ─── 1. Animated canvas mesh gradient ──────────────── */
+    var canvas = document.getElementById('hero-gradient-canvas');
+    if (canvas && !PRM) {
+        var ctx = canvas.getContext('2d');
+        var W = 0, H = 0, t = 0, paused = false;
+
+        // Brand accent palette — cycles purple → teal → blue → green → pink → purple
+        var PAL = [
+            [168,  85, 247],
+            [109,  40, 217],
+            [ 45, 212, 191],
+            [ 77, 158, 255],
+            [  0, 229, 160],
+            [255, 110, 168],
+            [168,  85, 247]
+        ];
+
+        function lerp(a, b, f) { return a + (b - a) * f; }
+
+        function colorAt(v) {
+            var n = PAL.length - 1;
+            var i = Math.min(Math.floor(v * n), n - 1);
+            var f = v * n - i;
+            var A = PAL[i], B = PAL[i + 1] || A;
+            return [
+                Math.round(lerp(A[0], B[0], f)),
+                Math.round(lerp(A[1], B[1], f)),
+                Math.round(lerp(A[2], B[2], f))
+            ];
+        }
+
+        function easeInOut(x) { return x < 0.5 ? 2 * x * x : -1 + (4 - 2 * x) * x; }
+
+        function resize() {
+            W = canvas.width  = canvas.offsetWidth;
+            H = canvas.height = canvas.offsetHeight;
+        }
+
+        var S = MOBILE ? 0.00025 : 0.0005;
+
+        function draw() {
+            if (!W) return;
+            ctx.fillStyle = '#08090d';
+            ctx.fillRect(0, 0, W, H);
+
+            var t1 = easeInOut((Math.sin(t * S)                + 1) * 0.5);
+            var t2 = easeInOut((Math.sin(t * S * 1.37 + 1.57)  + 1) * 0.5);
+            var t3 = easeInOut((Math.sin(t * S * 0.71 + 3.14)  + 1) * 0.5);
+
+            var c1 = colorAt(t1), c2 = colorAt(t2), c3 = colorAt(t3);
+            var R  = Math.max(W, H);
+
+            var blobs = [
+                [0.18 + 0.05 * Math.sin(t * S * 0.5),        0.28 + 0.07 * Math.cos(t * S * 0.4),         R * 0.7,  c1, 0.32],
+                [0.81 + 0.04 * Math.cos(t * S * 0.6),        0.22 + 0.06 * Math.sin(t * S * 0.35 + 1),    R * 0.65, c2, 0.24],
+                [0.50 + 0.07 * Math.sin(t * S * 0.45 + 2),   0.70 + 0.05 * Math.cos(t * S * 0.55 + 1),   R * 0.80, c3, 0.18]
+            ];
+
+            blobs.forEach(function (b) {
+                var gx = b[0] * W, gy = b[1] * H;
+                var g = ctx.createRadialGradient(gx, gy, 0, gx, gy, b[2]);
+                g.addColorStop(0, 'rgba(' + b[3].join(',') + ',' + b[4] + ')');
+                g.addColorStop(1, 'rgba(8,9,13,0)');
+                ctx.fillStyle = g;
+                ctx.fillRect(0, 0, W, H);
+            });
+
+            t++;
+        }
+
+        var FPS      = MOBILE ? 24 : 60;
+        var INTERVAL = 1000 / FPS;
+        var lastTs   = 0;
+
+        function loop(ts) {
+            if (paused) return;
+            if (ts - lastTs >= INTERVAL) { draw(); lastTs = ts; }
+            requestAnimationFrame(loop);
+        }
+
+        if (window.IntersectionObserver) {
+            new IntersectionObserver(function (entries) {
+                paused = !entries[0].isIntersecting;
+                if (!paused) requestAnimationFrame(loop);
+            }, { threshold: 0.01 }).observe(canvas);
+        }
+
+        window.addEventListener('resize', resize, { passive: true });
+        resize();
+        requestAnimationFrame(loop);
+    }
+
+    /* ─── 2. 3D mouse parallax for floating cards ───────── */
+    if (!PRM && !MOBILE) {
+        var heroSec   = document.getElementById('hero-section');
+        var cardLeft  = document.querySelector('.hero-card-left');
+        var cardRight = document.querySelector('.hero-card-right');
+
+        if (heroSec && (cardLeft || cardRight)) {
+            var mx = 0, my = 0, curX = 0, curY = 0;
+
+            heroSec.addEventListener('mousemove', function (e) {
+                var r = heroSec.getBoundingClientRect();
+                mx = (e.clientX - r.left  - r.width  * 0.5) / (r.width  * 0.5);
+                my = (e.clientY - r.top   - r.height * 0.5) / (r.height * 0.5);
+            }, { passive: true });
+
+            heroSec.addEventListener('mouseleave', function () { mx = 0; my = 0; });
+
+            function tiltLoop() {
+                // Smooth lerp for organic feel
+                curX += (mx - curX) * 0.06;
+                curY += (my - curY) * 0.06;
+
+                if (cardLeft) {
+                    cardLeft.style.transform =
+                        'translateY(calc(-50% + ' + (curY * -8) + 'px))' +
+                        ' perspective(900px)' +
+                        ' rotateX(' + (curY * -4) + 'deg)' +
+                        ' rotateY(' + (curX *  5) + 'deg)' +
+                        ' rotate(-3deg)';
+                }
+                if (cardRight) {
+                    cardRight.style.transform =
+                        'translateY(calc(-50% + ' + (curY * -8) + 'px))' +
+                        ' perspective(900px)' +
+                        ' rotateX(' + (curY * -4) + 'deg)' +
+                        ' rotateY(' + (curX * -5) + 'deg)' +
+                        ' rotate(3deg)';
+                }
+                requestAnimationFrame(tiltLoop);
+            }
+            tiltLoop();
+        }
+    }
+})();
+</script>
 </body>
 </html>

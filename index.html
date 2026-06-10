@@ -6,15 +6,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="_shared.css">
+<link rel="stylesheet" href="_shared.css"><script src="assets/js/theme.js"></script><script src="assets/js/sidebar.js"></script>
 <style>
 .course-card {
-  background:var(--bg2); border:1px solid var(--border);
-  border-radius:var(--r3); overflow:hidden;
-  transition:border-color .15s, transform .2s;
-  cursor:pointer; display:flex; flex-direction:column;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r3); overflow: hidden;
+  transition: all 0.22s var(--ease);
+  cursor: pointer; display: flex; flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  position: relative;
 }
-.course-card:hover { border-color:var(--border3); transform:translateY(-3px); }
+.course-card:hover {
+  border-color: var(--border3);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--shadow);
+}
 .course-img {
   height:110px; display:flex; align-items:center; justify-content:center;
   font-size:52px; position:relative;
@@ -30,13 +36,17 @@
 .course-desc { font-size:12.5px; color:var(--text2); line-height:1.6; flex:1; margin-bottom:12px; }
 .course-prog-row { display:flex; align-items:center; justify-content:space-between; font-size:11px; margin-bottom:4px; }
 .course-btn {
-  display:block; width:100%; padding:9px;
-  background:var(--bg4); border:1px solid var(--border);
-  border-radius:var(--r); font-size:12.5px; font-weight:600;
-  color:var(--text2); text-align:center; cursor:pointer;
-  transition:all .15s; margin-top:10px;
+  display: block; width: 100%; padding: 9px;
+  background: var(--bg4); border: 1px solid var(--border);
+  border-radius: var(--r); font-size: 12.5px; font-weight: 600;
+  color: var(--text2); text-align: center; cursor: pointer;
+  transition: all 0.2s var(--ease); margin-top: 10px;
+  box-shadow: var(--inner-glow);
 }
-.course-btn:hover { background:var(--accent-g2); border-color:var(--accent-border); color:var(--accent); }
+.course-btn:hover {
+  background: var(--accent-g2); border-color: var(--accent-border); color: var(--accent);
+  transform: translateY(-1px); box-shadow: var(--inner-glow), 0 4px 12px var(--accent-glow);
+}
 
 .sec-title { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text3); margin-bottom:16px; }
 
@@ -197,7 +207,7 @@
         <div class="course-img img-html"><span>🏗️</span></div>
         <div class="course-body">
           <div class="flex-between mb8">
-            <span class="course-name">HTML Structure</span>
+            <span class="course-name">HTML</span>
             <span class="badge badge-green">Beginner</span>
           </div>
           <div class="course-meta"><i class="ti ti-clock meta-icon"></i> 10 บทเรียน · 30 นาที</div>
@@ -216,7 +226,7 @@
         <div class="course-img img-css"><span>🎨</span></div>
         <div class="course-body">
           <div class="flex-between mb8">
-            <span class="course-name">CSS Styling</span>
+            <span class="course-name">CSS</span>
             <span class="badge badge-blue">Intermediate</span>
           </div>
           <div class="course-meta"><i class="ti ti-clock meta-icon"></i> 10 บทเรียน · 50 นาที</div>
