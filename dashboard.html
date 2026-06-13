@@ -8,37 +8,19 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link rel="stylesheet" href="_shared.css"><script src="assets/js/theme.js"></script><script src="assets/js/sidebar.js"></script>
 <style>
-/* XP bar with shimmer */
-.xp-bar { height:6px; border-radius:3px; background:var(--bg5); overflow:hidden; margin-top:4px; }
-.xp-fill {
-  height:100%; border-radius:3px;
-  background: linear-gradient(90deg, var(--accent2), var(--accent), rgba(168,85,247,0.8));
-  transition: width 1s ease;
-  box-shadow: 0 0 8px var(--accent-glow);
-}
-
-/* Stat cards — premium style */
+/* Stat cards */
 .stat-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r2);
-  padding: 1.25rem;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.2s var(--ease);
-  position: relative;
-  overflow: hidden;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r2); padding: 1.25rem;
+  box-shadow: var(--shadow-sm); transition: all 0.2s var(--ease);
+  position: relative; overflow: hidden;
 }
 .stat-card::before {
-  content: '';
-  position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0;
   background: radial-gradient(ellipse at top left, rgba(168,85,247,0.06), transparent 70%);
   pointer-events: none;
 }
-.stat-card:hover {
-  border-color: var(--border2);
-  box-shadow: var(--shadow);
-  transform: translateY(-3px);
-}
+.stat-card:hover { border-color: var(--border2); box-shadow: var(--shadow); transform: translateY(-3px); }
 .stat-icon {
   width: 38px; height: 38px; border-radius: 9px;
   display: flex; align-items: center; justify-content: center;
@@ -63,8 +45,7 @@
 .c-thumb {
   width: 44px; height: 44px; border-radius: 11px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px; flex-shrink: 0;
-  box-shadow: var(--shadow-sm);
+  font-size: 20px; flex-shrink: 0; box-shadow: var(--shadow-sm);
 }
 .c-name { font-size: 13.5px; font-weight: 600; margin-bottom: 7px; }
 .play-circle {
@@ -76,65 +57,31 @@
 }
 .play-circle:hover {
   background: var(--accent); border-color: var(--accent); color: #fff;
-  transform: scale(1.15);
-  box-shadow: 0 4px 12px var(--accent-glow);
+  transform: scale(1.15); box-shadow: 0 4px 12px var(--accent-glow);
 }
 
-/* Streak days */
-.streak-days { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; margin-bottom: 14px; }
-.s-day {
-  aspect-ratio: 1; border-radius: 6px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 2px; font-size: 9.5px; font-weight: 700;
-  color: var(--text3); background: var(--bg4); border: 1px solid var(--border);
-  transition: all 0.2s ease;
+/* Course progress items */
+.course-prog-item {
+  padding: 10px 0; border-bottom: 1px solid var(--border);
 }
-.s-day.done {
-  background: rgba(0,229,160,0.12); border-color: var(--green3); color: var(--green);
-  box-shadow: 0 0 8px rgba(0,229,160,0.15);
-}
-.s-day.today {
-  background: var(--accent); color: #fff; border-color: var(--accent);
-  box-shadow: 0 0 12px var(--accent-glow);
-}
-.s-day .day-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: .6; }
+.course-prog-item:last-child { border-bottom: none; }
 
-/* Badge row */
-.badge-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
-.b-item {
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 10px; padding: 12px 8px; text-align: center;
-  transition: all 0.2s var(--ease);
+/* Quiz history items */
+.quiz-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 0; border-bottom: 1px solid var(--border);
 }
-.b-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
-.b-item.earned {
-  border-color: var(--accent-border); background: var(--accent-g);
-  box-shadow: 0 0 0 1px var(--accent-border), 0 4px 16px rgba(168,85,247,0.1);
+.quiz-item:last-child { border-bottom: none; }
+.quiz-pass-badge {
+  font-size: 11px; font-weight: 700; color: var(--green);
+  background: var(--green-g); padding: 3px 10px;
+  border-radius: 99px; border: 1px solid var(--green3);
+  white-space: nowrap;
 }
-.b-item .bi-icon { font-size: 26px; margin-bottom: 6px; }
-.b-item .bi-name { font-size: 11.5px; font-weight: 700; }
-.b-item .bi-desc { font-size: 10px; color: var(--text3); margin-top: 2px; }
-.b-item.earned .bi-name { color: var(--accent); }
 
 /* Skeleton */
 @keyframes shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
 .skel { background: linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%); background-size: 400px 100%; animation: shimmer 1.4s infinite; border-radius: 8px; }
-
-/* Level card */
-.lv-card {
-  padding: 1.375rem;
-  display: flex; align-items: center; gap: 1.5rem;
-  background: linear-gradient(135deg, var(--bg2) 0%, rgba(168,85,247,0.06) 100%);
-  border-color: var(--accent-border) !important;
-  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(168,85,247,0.1) !important;
-}
-.lv-badge {
-  width: 52px; height: 52px; border-radius: 13px;
-  background: var(--accent-g2); border: 1.5px solid var(--accent-border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; font-weight: 800; color: var(--accent); flex-shrink: 0;
-  box-shadow: 0 4px 16px var(--accent-glow);
-}
 
 /* Welcome heading gradient */
 #welcome-h {
@@ -142,13 +89,10 @@
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-/* Ambient glow behind page */
-.page-body {
-  position: relative;
-}
+/* Ambient glow */
+.page-body { position: relative; }
 .page-body::before {
-  content: '';
-  position: fixed; top: 0; right: 0;
+  content: ''; position: fixed; top: 0; right: 0;
   width: 600px; height: 600px;
   background: radial-gradient(ellipse at top right, rgba(168,85,247,0.05) 0%, transparent 60%);
   pointer-events: none; z-index: 0;
@@ -172,7 +116,6 @@
   <div class="nav-group">
     <div class="nav-group-label">บัญชี</div>
     <a class="nav-link" href="profile.html"><i class="ti ti-user"></i> โปรไฟล์</a>
-    <a class="nav-link" href="certificate.html"><i class="ti ti-certificate"></i> ใบประกาศ</a>
     <a class="nav-link" href="settings.html"><i class="ti ti-settings"></i> ตั้งค่า</a>
   </div>
   <div class="sidebar-bottom">
@@ -180,7 +123,7 @@
       <div class="avatar" id="sb-avatar">?</div>
       <div class="user-info">
         <div class="user-name" id="sb-name">กำลังโหลด...</div>
-        <div class="user-pts"><span id="sb-xp">0</span> XP</div>
+        <div class="user-pts">ZENITH Learner</div>
       </div>
       <i class="ti ti-chevron-right" style="color:var(--text3);font-size:13px;margin-left:auto"></i>
     </a>
@@ -212,30 +155,12 @@
       </button>
     </div>
 
-    <!-- Level + XP card -->
-    <div class="card lv-card mb16 anim-up delay-1">
-      <div class="lv-badge" id="lv-badge">1</div>
-      <div style="flex:1;min-width:0">
-        <div class="flex-between mb8">
-          <span style="font-size:14px;font-weight:700" id="lv-label">Level 1 — Beginner</span>
-          <span class="f12 muted" id="lv-xp-label">0 / 100 XP</span>
-        </div>
-        <div class="xp-bar"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
-        <div class="f11 muted mt4" id="lv-next">เรียนบทแรกเพื่อเริ่มสะสม XP</div>
-      </div>
-      <div class="flex gap16" style="flex-shrink:0">
-        <div style="text-align:center"><div style="font-size:18px">🔥</div><div class="f11 muted mt4">XP</div><div style="font-size:15px;font-weight:700" id="stat-xp">0</div></div>
-        <div style="text-align:center"><div style="font-size:18px">📚</div><div class="f11 muted mt4">บท</div><div style="font-size:15px;font-weight:700" id="stat-done">0</div></div>
-        <div style="text-align:center"><div style="font-size:18px">🏅</div><div class="f11 muted mt4">Badge</div><div style="font-size:15px;font-weight:700" id="stat-badges">0</div></div>
-      </div>
-    </div>
-
-    <!-- Stats Row -->
-    <div class="g4 mb16 anim-up delay-2">
+    <!-- สถิติการเรียนรู้ (5 cards) -->
+    <div class="g5 mb16 anim-up delay-1">
       <div class="stat-card">
         <div class="stat-icon" style="background:var(--accent-g2);color:var(--accent)"><i class="ti ti-book"></i></div>
         <div class="stat-val" id="s-lessons">0</div>
-        <div class="stat-lbl">บทเรียนที่ผ่าน</div>
+        <div class="stat-lbl">บทเรียนที่จบแล้ว</div>
       </div>
       <div class="stat-card">
         <div class="stat-icon" style="background:var(--blue-g);color:var(--blue)"><i class="ti ti-award"></i></div>
@@ -243,21 +168,26 @@
         <div class="stat-lbl">คอร์สที่จบแล้ว</div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon" style="background:var(--amber-g);color:var(--amber)"><i class="ti ti-bolt"></i></div>
-        <div class="stat-val" id="s-xp">0</div>
-        <div class="stat-lbl">XP สะสม</div>
+        <div class="stat-icon" style="background:var(--green-g2);color:var(--green)"><i class="ti ti-check"></i></div>
+        <div class="stat-val" id="s-quiz">0</div>
+        <div class="stat-lbl">Quiz ผ่านแล้ว</div>
       </div>
       <div class="stat-card">
         <div class="stat-icon" style="background:var(--purple-g);color:var(--purple)"><i class="ti ti-percentage"></i></div>
         <div class="stat-val" id="s-pct">0%</div>
         <div class="stat-lbl">ความก้าวหน้ารวม</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:var(--amber-g);color:var(--amber)"><i class="ti ti-calendar-stats"></i></div>
+        <div class="stat-val" id="s-days">0</div>
+        <div class="stat-lbl">วันที่เรียนรู้</div>
+      </div>
     </div>
 
-    <!-- 2-col -->
-    <div class="g2 mb16 anim-up delay-3">
+    <!-- 2-col: Continue | Course Progress -->
+    <div class="g2 mb16 anim-up delay-2">
 
-      <!-- Continue Learning -->
+      <!-- เรียนต่อจากที่ค้างไว้ -->
       <div class="card">
         <div class="card-title">
           <div class="card-title-left">
@@ -272,32 +202,36 @@
         </div>
       </div>
 
-      <!-- Streak -->
+      <!-- ความก้าวหน้าแต่ละคอร์ส -->
       <div class="card">
         <div class="card-title">
           <div class="card-title-left">
-            <i class="ti ti-flame" style="color:var(--amber);font-size:16px"></i> Streak ประจำสัปดาห์
+            <i class="ti ti-trending-up" style="color:var(--accent);font-size:16px"></i> ความก้าวหน้าแต่ละคอร์ส
           </div>
-          <span style="font-size:14px;font-weight:800;color:var(--accent)" id="streak-label">0 วัน</span>
         </div>
-        <div class="streak-days" id="streak-grid"></div>
-        <div style="background:var(--accent-g2);border:1px solid var(--accent-border);border-radius:var(--r2);padding:10px 12px;font-size:12.5px;color:var(--accent)">
-          <i class="ti ti-bolt" style="font-size:14px"></i>
-          <span id="streak-msg">เรียนวันนี้เพื่อเริ่ม Streak แรกของคุณ! 🎯</span>
+        <div id="course-progress-list">
+          <div class="skel" style="height:38px;margin-bottom:10px"></div>
+          <div class="skel" style="height:38px;margin-bottom:10px"></div>
+          <div class="skel" style="height:38px;margin-bottom:10px"></div>
+          <div class="skel" style="height:38px"></div>
         </div>
       </div>
 
     </div>
 
-    <!-- Badges -->
-    <div class="card anim-up delay-4">
-      <div class="card-title" style="margin-bottom:14px">
+    <!-- ประวัติการทำ Quiz -->
+    <div class="card anim-up delay-3">
+      <div class="card-title">
         <div class="card-title-left">
-          <i class="ti ti-medal" style="color:var(--amber);font-size:16px"></i> Badges
+          <i class="ti ti-list-check" style="color:var(--green);font-size:16px"></i> ประวัติการทำ Quiz
         </div>
-        <span class="f12 muted" id="badge-summary">0 / 12 ได้แล้ว</span>
+        <span class="f12 muted" id="quiz-history-count"></span>
       </div>
-      <div class="badge-row" id="badge-grid"></div>
+      <div id="quiz-history-list">
+        <div class="skel" style="height:38px;margin-bottom:8px"></div>
+        <div class="skel" style="height:38px;margin-bottom:8px"></div>
+        <div class="skel" style="height:38px"></div>
+      </div>
     </div>
 
   </div>
@@ -317,39 +251,12 @@ const COURSES = [
   { key:'html',       label:'HTML',        total:10, color:'#FF6EA8', emoji:'🏗️', bg:'var(--pink-g,rgba(255,110,168,.08))' },
   { key:'css',        label:'CSS',         total:10, color:'#4D9EFF', emoji:'🎨', bg:'var(--blue-g)'   },
 ];
-const TOTAL = COURSES.reduce((s,c) => s + c.total, 0); // 62
-
-const BADGES = [
-  { emoji:'🎯', name:'First Step',  desc:'เรียนบทแรก',           check:d => d.done >= 1  },
-  { emoji:'⚡', name:'Quick Start', desc:'ผ่าน Quiz 10 ข้อ',      check:d => d.done >= 10 },
-  { emoji:'🏃', name:'Halfway',     desc:'ครึ่งทางคอร์สใดก็ได้',  check:d => d.courses.some(c => c.pct >= 50) },
-  { emoji:'🐍', name:'Python Pro',  desc:'จบ Python ครบ',         check:d => d.courses.find(c=>c.key==='python')?.done >= 12 },
-  { emoji:'⚡', name:'JS Wizard',   desc:'จบ JavaScript ครบ',     check:d => d.courses.find(c=>c.key==='javascript')?.done >= 10 },
-  { emoji:'⚙️', name:'C++ Dev',     desc:'จบ C++ ครบ',            check:d => d.courses.find(c=>c.key==='cpp')?.done >= 10 },
-  { emoji:'☕', name:'Java Dev',    desc:'จบ Java ครบ',           check:d => d.courses.find(c=>c.key==='java')?.done >= 10 },
-  { emoji:'🏗️', name:'HTML Hero',   desc:'จบ HTML ครบ',           check:d => d.courses.find(c=>c.key==='html')?.done >= 10 },
-  { emoji:'🎨', name:'CSS Artist',  desc:'จบ CSS ครบ',            check:d => d.courses.find(c=>c.key==='css')?.done >= 10 },
-  { emoji:'🎓', name:'Polyglot',    desc:'จบ 3 คอร์สขึ้นไป',     check:d => d.completed >= 3 },
-  { emoji:'💎', name:'Dedication',  desc:'เรียน 30 บทขึ้นไป',    check:d => d.done >= 30 },
-  { emoji:'🏆', name:'Full Stack',  desc:'จบครบทุก 6 คอร์ส',     check:d => d.completed >= 6 },
-];
-
-const DAYS = ['อา','จ','อ','พ','พฤ','ศ','ส'];
-
-function getLv(xp) {
-  const thresholds = [0,100,250,500,1000,2000,3500,5000];
-  let lv = 1;
-  for (let i = 1; i < thresholds.length; i++) { if (xp >= thresholds[i]) lv = i + 1; }
-  const names = ['—','Beginner','Learner','Coder','Developer','Engineer','Expert','Master'];
-  const cur = thresholds[Math.min(lv-1, thresholds.length-1)];
-  const next = thresholds[Math.min(lv, thresholds.length-1)];
-  const pct = next > cur ? Math.round(((xp - cur) / (next - cur)) * 100) : 100;
-  return { lv, name: names[Math.min(lv, names.length-1)], cur, next, pct };
-}
+const TOTAL = COURSES.reduce((s,c) => s + c.total, 0);
 
 function $(id) { return document.getElementById(id); }
 function setText(id, val) { const el=$(id); if(el) el.textContent = val; }
 function animate(el, to) {
+  if (!el) return;
   let cur=0, step=Math.max(1,Math.ceil(to/30));
   const t = setInterval(() => { cur=Math.min(cur+step,to); el.textContent=cur; if(cur>=to)clearInterval(t); }, 40);
 }
@@ -362,16 +269,14 @@ onAuthStateChanged(auth, async (user) => {
   const name = user.displayName || user.email.split('@')[0];
   const initial = name.charAt(0).toUpperCase();
 
-  // Sidebar + topbar user info
   ['sb-avatar','top-avatar'].forEach(id => { const el=$(id); if(el) el.textContent=initial; });
   setText('sb-name', name);
 
-  // Welcome
   const hour = new Date().getHours();
   const greet = hour < 12 ? 'สวัสดีตอนเช้า' : hour < 18 ? 'สวัสดีตอนบ่าย' : 'สวัสดีตอนเย็น';
   setText('welcome-h', `${greet}, ${name} 👋`);
 
-  // Build course stats
+  // Build course stats from localStorage
   const courseStats = COURSES.map(c => {
     const unlocked = parseInt(localStorage.getItem(`zenith_progress_${c.key}`) || '1');
     const done     = Math.max(0, unlocked - 1);
@@ -381,39 +286,32 @@ onAuthStateChanged(auth, async (user) => {
 
   const totalDone = courseStats.reduce((s,c) => s + c.done, 0);
   const completed = courseStats.filter(c => c.completed).length;
-  const xp        = totalDone * 10;
   const ovPct     = Math.round((totalDone / TOTAL) * 100);
-  const data      = { done: totalDone, completed, xp, courses: courseStats };
 
-  // XP sidebar
-  setText('sb-xp', xp);
+  // Track study days in localStorage (ไม่แตะ Firebase/progress)
+  const today = new Date().toISOString().slice(0, 10);
+  const rawDays = localStorage.getItem('zenith_study_days') || '[]';
+  const studyDays = JSON.parse(rawDays);
+  if (totalDone > 0 && !studyDays.includes(today)) {
+    studyDays.push(today);
+    localStorage.setItem('zenith_study_days', JSON.stringify(studyDays));
+  }
+  const dayCount = studyDays.length;
 
-  // Level card
-  const lv = getLv(xp);
-  setText('lv-badge', lv.lv);
-  setText('lv-label', `Level ${lv.lv} — ${lv.name}`);
-  setText('lv-xp-label', `${xp} / ${lv.next} XP`);
-  setText('lv-next', lv.pct >= 100 ? 'Max level!' : `อีก ${lv.next - xp} XP ถึง Level ${lv.lv + 1}`);
-  setTimeout(() => { const f=$('xp-fill'); if(f) f.style.width = lv.pct + '%'; }, 200);
-
-  // Mini stats (animated)
-  animate($('stat-xp'), xp);
-  animate($('stat-done'), totalDone);
-
-  // Stats cards
+  // สถิติ 5 cards
   setTimeout(() => {
     animate($('s-lessons'), totalDone);
     animate($('s-courses'), completed);
-    animate($('s-xp'), xp);
+    animate($('s-quiz'),    totalDone);
     setText('s-pct', ovPct + '%');
+    animate($('s-days'), dayCount);
   }, 100);
 
-  // Continue list
+  // เรียนต่อจากที่ค้างไว้
   const list = $('continue-list');
   list.innerHTML = '';
-  const inProgress = courseStats.filter(c => c.done > 0 && !c.completed).concat(
-    courseStats.filter(c => c.done === 0)
-  ).slice(0, 3);
+  const inProgress = courseStats.filter(c => c.done > 0 && !c.completed)
+    .concat(courseStats.filter(c => c.done === 0)).slice(0, 3);
 
   inProgress.forEach(c => {
     const item = document.createElement('div');
@@ -432,47 +330,51 @@ onAuthStateChanged(auth, async (user) => {
     list.appendChild(item);
   });
 
-  // Continue button target
   window.continueLesson = function() {
     const first = courseStats.find(c => c.done > 0 && !c.completed) || courseStats[0];
     location.href = `lesson.html?course=${first.key}&id=${first.done + 1}`;
   };
 
-  // Streak (simulate from localStorage)
-  const today = new Date();
-  const todayIdx = today.getDay();
-  const streakDays = parseInt(localStorage.getItem('zenith_streak') || '0');
-  const grid = $('streak-grid');
-  grid.innerHTML = '';
-  DAYS.forEach((d, i) => {
-    const div = document.createElement('div');
-    const done = i <= todayIdx && i > todayIdx - streakDays;
-    const isToday = i === todayIdx;
-    div.className = `s-day${isToday ? ' today' : done ? ' done' : ''}`;
-    div.innerHTML = `<span>${d}</span><div class="day-dot"></div>`;
-    grid.appendChild(div);
-  });
-  setText('streak-label', `${streakDays} วัน 🔥`);
-  if (streakDays > 0) setText('streak-msg', `รักษา Streak ${streakDays} วันนี้ไว้! เก่งมาก 🎉`);
+  // ความก้าวหน้าแต่ละคอร์ส
+  const cpList = $('course-progress-list');
+  if (cpList) {
+    cpList.innerHTML = courseStats.map(c => `
+      <div class="course-prog-item">
+        <div class="flex-between mb4">
+          <span style="font-size:13px;font-weight:600">${c.emoji} ${c.label}</span>
+          <span class="f12 muted">${c.done} / ${c.total} บท · ${c.pct}%</span>
+        </div>
+        <div class="prog-track"><div class="prog-fill" style="width:${c.pct}%;background:${c.color}"></div></div>
+      </div>
+    `).join('');
+  }
 
-  // Badges
-  const badgeGrid = $('badge-grid');
-  badgeGrid.innerHTML = '';
-  let earned = 0;
-  BADGES.forEach(b => {
-    const ok = b.check(data);
-    if (ok) earned++;
-    const div = document.createElement('div');
-    div.className = `b-item${ok ? ' earned' : ''}`;
-    div.innerHTML = `
-      <div class="bi-icon">${b.emoji}</div>
-      <div class="bi-name">${b.name}</div>
-      <div class="bi-desc">${b.desc}</div>
-      ${ok ? '<div style="font-size:10px;color:var(--accent);margin-top:3px;font-weight:700">✓ ได้แล้ว</div>' : ''}`;
-    badgeGrid.appendChild(div);
-  });
-  setText('stat-badges', earned);
-  setText('badge-summary', `${earned} / ${BADGES.length} ได้แล้ว`);
+  // ประวัติการทำ Quiz
+  const histList = $('quiz-history-list');
+  if (histList) {
+    const entries = [];
+    courseStats.forEach(c => {
+      for (let i = c.done; i >= 1; i--) {
+        entries.push({ course: c, lessonId: i });
+      }
+    });
+
+    setText('quiz-history-count', entries.length > 0 ? `ผ่านแล้ว ${entries.length} quiz` : '');
+
+    if (entries.length === 0) {
+      histList.innerHTML = `<p class="f12 muted" style="text-align:center;padding:24px 0">ยังไม่มีประวัติ Quiz — เริ่มเรียนและทำ Quiz เพื่อสะสมประวัติ</p>`;
+    } else {
+      histList.innerHTML = entries.slice(0, 30).map(e => `
+        <div class="quiz-item">
+          <div>
+            <span style="font-size:13px;font-weight:600">${e.course.emoji} ${e.course.label}</span>
+            <span class="f12 muted"> · บทที่ ${e.lessonId}</span>
+          </div>
+          <span class="quiz-pass-badge">ผ่าน ✓</span>
+        </div>
+      `).join('');
+    }
+  }
 });
 
 document.getElementById('btn-logout').addEventListener('click', () => {

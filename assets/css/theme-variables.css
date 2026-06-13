@@ -1,30 +1,30 @@
 /* ============================================================
    ZENITH — theme-variables.css
-   ☀️ Light = พื้นขาว + น้ำเงิน + ตัวอักษรดำ
-   🌙 Dark  = พื้นดำ  + เขียว  + ตัวอักษรขาว
+   ☀️ Light = Soft off-white & Indigo accents
+   🌙 Dark  = Obsidian deep space & Electric purple accents
    ============================================================ */
 
 /* ── 🌙 DARK MODE (default) ──────────────────────────────── */
 :root,
 [data-theme="dark"] {
-    --bg:            #080A0E;
-    --bg2:           #0D1017;
-    --bg3:           #121620;
-    --bg4:           #181D28;
-    --bg5:           #1E2433;
-    --bg-primary:    #080A0E;
-    --bg-secondary:  #0D1017;
-    --bg-card:       rgba(13,16,23,0.85);
-    --bg-nav:        rgba(8,10,14,0.85);
-    --bg-input:      rgba(255,255,255,0.04);
+    --bg:            #030306;
+    --bg2:           #08090f;
+    --bg3:           #0f111c;
+    --bg4:           #151726;
+    --bg5:           #1b1d30;
+    --bg-primary:    #030306;
+    --bg-secondary:  #08090f;
+    --bg-card:       rgba(8, 9, 15, 0.75);
+    --bg-nav:        rgba(3, 3, 6, 0.75);
+    --bg-input:      rgba(255,255,255,0.03);
     --bg-hover:      rgba(168,85,247,0.08);
-    --bg-sidebar:    #0D1017;
+    --bg-sidebar:    #08090f;
 
     --accent:        #a855f7;
     --accent-dark:   #7c3aed;
     --accent-light:  rgba(168,85,247,0.12);
-    --accent-glow:   rgba(168,85,247,0.22);
-    --accent-border: rgba(168,85,247,0.28);
+    --accent-glow:   rgba(168,85,247,0.25);
+    --accent-border: rgba(168,85,247,0.3);
 
     --green:         #00E5A0;
     --green2:        #00B87D;
@@ -44,23 +44,23 @@
     --pink:          #FF6EA8;
     --pink-g:        rgba(255,110,168,0.08);
 
-    --text:          #EDF0F7;
-    --text-primary:  #EDF0F7;
-    --text2:         #8B92A8;
-    --text-secondary:#8B92A8;
-    --text3:         #4A5168;
-    --text-muted:    #4A5168;
-    --text-code:     #cdd6f4;
+    --text:          #F3F4F6;
+    --text-primary:  #F3F4F6;
+    --text2:         #9CA3AF;
+    --text-secondary:#9CA3AF;
+    --text3:         #4B5563;
+    --text-muted:    #4B5563;
+    --text-code:     #CDD6F4;
 
-    --border:        rgba(255,255,255,0.06);
-    --border2:       rgba(255,255,255,0.10);
-    --border3:       rgba(255,255,255,0.16);
-    --border-subtle: rgba(255,255,255,0.06);
+    --border:        rgba(255,255,255,0.045);
+    --border2:       rgba(255,255,255,0.09);
+    --border3:       rgba(255,255,255,0.15);
+    --border-subtle: rgba(255,255,255,0.045);
 
-    --r:  8px;
-    --r2: 12px;
-    --r3: 16px;
-    --r4: 20px;
+    --r:  10px;
+    --r2: 14px;
+    --r3: 20px;
+    --r4: 24px;
 
     --sidebar-w:  230px;
     --topbar-h:   54px;
@@ -68,12 +68,12 @@
     --radius-sm:  8px;
     --radius-lg:  20px;
 
-    --shadow:        0 0 40px rgba(0,0,0,0.5);
-    --shadow2:       0 2px 8px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.4);
-    --code-bg:       #080A0E;
+    --shadow:        0 2px 4px rgba(0,0,0,0.5), 0 12px 40px rgba(0,0,0,0.3), 0 40px 80px -10px rgba(0,0,0,0.22);
+    --shadow2:       0 4px 8px rgba(0,0,0,0.45), 0 16px 48px rgba(0,0,0,0.32), 0 48px 100px rgba(0,0,0,0.22);
+    --code-bg:       #030306;
     --scrollbar:     #a855f7;
-    --video-opacity: 0.18;
-    --overlay:       radial-gradient(ellipse at 50% 0%, rgba(168,85,247,0.07) 0%, #080A0E 65%);
+    --video-opacity: 0.16;
+    --overlay:       radial-gradient(ellipse at 50% 0%, rgba(168,85,247,0.1) 0%, #030306 75%);
 
     --font: 'Plus Jakarta Sans', sans-serif;
     --mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -82,61 +82,61 @@
 /* ── ☀️ LIGHT MODE ───────────────────────────────────────── */
 [data-theme="light"] {
     --bg:            #ffffff;
-    --bg2:           #f8faff;
-    --bg3:           #f0f4ff;
-    --bg4:           #e8edf8;
-    --bg5:           #dde4f0;
+    --bg2:           #f8fafc;
+    --bg3:           #f1f5f9;
+    --bg4:           #e2e8f0;
+    --bg5:           #cbd5e1;
     --bg-primary:    #ffffff;
-    --bg-secondary:  #f8faff;
+    --bg-secondary:  #f8fafc;
     --bg-card:       #ffffff;
-    --bg-nav:        rgba(255,255,255,0.95);
-    --bg-input:      #f0f4ff;
-    --bg-hover:      rgba(29,78,216,0.06);
-    --bg-sidebar:    #f8faff;
+    --bg-nav:        rgba(255,255,255,0.85);
+    --bg-input:      #f1f5f9;
+    --bg-hover:      rgba(99,102,241,0.06);
+    --bg-sidebar:    #f8fafc;
 
-    --accent:        #1d4ed8;
-    --accent-dark:   #1e40af;
-    --accent-light:  rgba(29,78,216,0.10);
-    --accent-glow:   rgba(29,78,216,0.20);
-    --accent-border: rgba(29,78,216,0.25);
+    --accent:        #6366f1;
+    --accent-dark:   #4f46e5;
+    --accent-light:  rgba(99,102,241,0.08);
+    --accent-glow:   rgba(99,102,241,0.15);
+    --accent-border: rgba(99,102,241,0.22);
 
     --green:         #059669;
     --green2:        #047857;
     --green3:        #065f46;
-    --green-g:       rgba(5,150,105,0.08);
-    --green-g2:      rgba(5,150,105,0.12);
-    --green-glow:    rgba(5,150,105,0.15);
+    --green-g:       rgba(5,150,105,0.06);
+    --green-g2:      rgba(5,150,105,0.1);
+    --green-glow:    rgba(5,150,105,0.12);
 
-    --blue:          #1d4ed8;
-    --blue-g:        rgba(29,78,216,0.08);
+    --blue:          #3b82f6;
+    --blue-g:        rgba(59,130,246,0.06);
     --amber:         #d97706;
-    --amber-g:       rgba(217,119,6,0.08);
+    --amber-g:       rgba(217,119,6,0.06);
     --purple:        #7c3aed;
-    --purple-g:      rgba(124,58,237,0.08);
+    --purple-g:      rgba(124,58,237,0.06);
     --red:           #dc2626;
-    --red-g:         rgba(220,38,38,0.08);
+    --red-g:         rgba(220,38,38,0.06);
     --pink:          #db2777;
-    --pink-g:        rgba(219,39,119,0.08);
+    --pink-g:        rgba(219,39,119,0.06);
 
-    --text:          #0a0a0a;
-    --text-primary:  #0a0a0a;
+    --text:          #0f172a;
+    --text-primary:  #0f172a;
     --text2:         #475569;
     --text-secondary:#475569;
-    --text3:         #64748b;
-    --text-muted:    #64748b;
-    --text-code:     #1e3a5f;
+    --text3:         #94a3b8;
+    --text-muted:    #94a3b8;
+    --text-code:     #1e293b;
 
-    --border:        rgba(0,0,0,0.08);
-    --border2:       rgba(0,0,0,0.12);
-    --border3:       rgba(0,0,0,0.18);
-    --border-subtle: rgba(0,0,0,0.08);
+    --border:        rgba(0,0,0,0.05);
+    --border2:       rgba(0,0,0,0.08);
+    --border3:       rgba(0,0,0,0.14);
+    --border-subtle: rgba(0,0,0,0.05);
 
-    --shadow:        0 2px 20px rgba(29,78,216,0.08);
-    --shadow2:       0 4px 16px rgba(0,0,0,0.1);
-    --code-bg:       #eef2ff;
-    --scrollbar:     #1d4ed8;
-    --video-opacity: 0.04;
-    --overlay:       radial-gradient(ellipse at 50% 0%, rgba(29,78,216,0.05) 0%, #ffffff 55%);
+    --shadow:        0 8px 30px rgba(0,0,0,0.04);
+    --shadow2:       0 4px 20px rgba(0,0,0,0.08);
+    --code-bg:       #f8fafc;
+    --scrollbar:     #6366f1;
+    --video-opacity: 0.02;
+    --overlay:       radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.04) 0%, #ffffff 70%);
 }
 
 /* ============================================================
@@ -147,11 +147,12 @@ html { scroll-behavior: smooth; }
 
 * {
     transition: background-color 0.3s ease, color 0.3s ease,
-                border-color 0.3s ease, box-shadow 0.3s ease;
+                border-color 0.3s ease, box-shadow 0.3s ease,
+                transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font);
     background-color: var(--bg-primary) !important;
     color: var(--text-primary) !important;
     -webkit-font-smoothing: antialiased;
@@ -180,14 +181,17 @@ button { cursor: pointer; font-family: inherit; }
 }
 
 /* Cards */
-.zenith-card, .glass-card {
+.zenith-card, .glass-card, .glass-premium {
     background: var(--bg-card) !important;
-    border-color: var(--border) !important;
+    border: 1px solid var(--border) !important;
     box-shadow: var(--shadow) !important;
+    border-radius: var(--r3);
+    backdrop-filter: blur(16px) saturate(180%);
 }
-.zenith-card:hover, .glass-card:hover {
+.zenith-card:hover, .glass-card:hover, .glass-premium:hover {
     border-color: var(--accent-border) !important;
-    box-shadow: 0 0 32px var(--accent-glow), var(--shadow) !important;
+    box-shadow: 0 16px 40px -10px rgba(0,0,0,0.5), 0 0 32px var(--accent-glow), var(--shadow) !important;
+    transform: translateY(-4px) scale(1.01);
 }
 .lesson-card {
     background: var(--bg-secondary) !important;
@@ -205,8 +209,14 @@ aside                             { background: var(--bg-sidebar) !important; bo
 .active-lesson                    { background: var(--accent-light) !important; border-left-color: var(--accent) !important; }
 
 /* Code */
-.code-block         { background: var(--code-bg) !important; border-color: var(--border) !important; color: var(--text-code) !important; }
-.code-block::before { background: linear-gradient(90deg, var(--green), var(--blue)) !important; }
+.code-block {
+    background: var(--code-bg) !important;
+    border: 1px solid var(--border2) !important;
+    color: var(--text-code) !important;
+}
+.code-block::before {
+    background: linear-gradient(90deg, var(--green), var(--blue)) !important;
+}
 
 /* Quiz buttons */
 .option-btn        { background: var(--bg-secondary) !important; border-color: var(--border) !important; color: var(--text-secondary) !important; }
@@ -266,7 +276,7 @@ footer { background: var(--bg-nav) !important; border-top-color: var(--border-su
     border-color: var(--accent-border) !important;
 }
 
-/* ── Landing page: accent-colored Tailwind overrides ─────── */
+/* ── Landing page: accent-colored overrides ─────── */
 /* Hero glow → purple */
 [data-theme="dark"] .hero-glow {
     background: radial-gradient(circle,

@@ -96,7 +96,6 @@
   <div class="nav-group">
     <div class="nav-group-label">บัญชี</div>
     <a class="nav-link" href="profile.html"><i class="ti ti-user"></i> โปรไฟล์</a>
-    <a class="nav-link" href="certificate.html"><i class="ti ti-certificate"></i> ใบประกาศ</a>
     <a class="nav-link" href="settings.html"><i class="ti ti-settings"></i> ตั้งค่า</a>
   </div>
   <div class="sidebar-bottom">
@@ -104,7 +103,7 @@
       <div class="avatar" id="sb-avatar">?</div>
       <div class="user-info">
         <div class="user-name" id="sb-name">กำลังโหลด...</div>
-        <div class="user-pts"><span id="sb-xp">0</span> XP</div>
+        <div class="user-pts">ZENITH Learner</div>
       </div>
       <i class="ti ti-chevron-right sb-chevron"></i>
     </a>
@@ -285,17 +284,12 @@ onAuthStateChanged(auth, async (user) => {
   loadProgress();
 
   const name = user.displayName || user.email.split('@')[0];
-  const xp = COURSES.reduce((s,c) => {
-    const done = Math.max(0, getLastLesson(c.key) - 1);
-    return s + done * 10;
-  }, 0);
 
   ['sb-avatar','top-avatar'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.textContent = name.charAt(0).toUpperCase();
   });
   document.getElementById('sb-name').textContent = name;
-  document.getElementById('sb-xp').textContent = xp;
 
   const content = document.getElementById('page-content');
   if (content) { content.style.opacity = '1'; }
