@@ -8,101 +8,189 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link rel="stylesheet" href="_shared.css"><script src="assets/js/theme.js"></script><script src="assets/js/sidebar.js"></script>
 <style>
-/* Stat cards */
+/* ── Welcome Banner ── */
+.welcome-banner {
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, var(--bg2) 0%, var(--accent-g) 55%, var(--bg3) 100%);
+  border: 1px solid var(--accent-border);
+  border-radius: 20px; padding: 2rem 2.25rem;
+  margin-bottom: 24px;
+}
+.welcome-banner::before {
+  content: ''; position: absolute; top: -80px; right: -80px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 65%);
+  filter: blur(50px); pointer-events: none;
+}
+.welcome-banner::after {
+  content: ''; position: absolute; bottom: -60px; left: 30%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(99,102,241,.06) 0%, transparent 65%);
+  filter: blur(40px); pointer-events: none;
+}
+.streak-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--amber-g); border: 1px solid rgba(255,179,64,.3);
+  border-radius: 20px; padding: 4px 13px;
+  font-size: 12px; font-weight: 700; color: var(--amber);
+  margin-bottom: 13px; position: relative; z-index: 1;
+}
+.welcome-h {
+  font-size: 28px; font-weight: 800; letter-spacing: -.04em;
+  background: linear-gradient(135deg, var(--text) 35%, var(--accent) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 6px; position: relative; z-index: 1;
+}
+[data-theme="light"] .welcome-h {
+  background: linear-gradient(135deg, #1e293b 35%, var(--accent) 100%);
+  -webkit-background-clip: text; background-clip: text;
+}
+.welcome-sub { font-size: 14px; color: var(--text2); margin-bottom: 22px; position: relative; z-index: 1; }
+.welcome-actions { display: flex; gap: 12px; position: relative; z-index: 1; }
+
+/* ── Stat cards ── */
 .stat-card {
   background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--r2); padding: 1.25rem;
-  box-shadow: var(--shadow-sm); transition: all 0.2s var(--ease);
-  position: relative; overflow: hidden;
+  border-radius: 16px; padding: 1.375rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.12);
+  transition: all .22s var(--ease); position: relative; overflow: hidden;
 }
 .stat-card::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at top left, rgba(168,85,247,0.06), transparent 70%);
+  background: radial-gradient(ellipse at top left, rgba(168,85,247,.05), transparent 70%);
   pointer-events: none;
 }
-.stat-card:hover { border-color: var(--border2); box-shadow: var(--shadow); transform: translateY(-3px); }
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0,0,0,.35), 0 16px 40px rgba(0,0,0,.2);
+  border-color: var(--border2);
+}
 .stat-icon {
-  width: 38px; height: 38px; border-radius: 9px;
+  width: 40px; height: 40px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 17px; margin-bottom: 10px;
+  font-size: 17px; margin-bottom: 12px;
 }
 .stat-val {
-  font-size: 26px; font-weight: 800; letter-spacing: -1.5px;
-  background: linear-gradient(135deg, var(--text) 50%, var(--text2));
+  font-size: 32px; font-weight: 800; letter-spacing: -.05em; line-height: 1;
+  background: linear-gradient(145deg, var(--text) 40%, var(--text2));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-.stat-lbl { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.stat-lbl { font-size: 12px; color: var(--text2); margin-top: 5px; font-weight: 500; }
 
-/* Continue items */
+/* ── 2-col layout ── */
+.two-col {
+  display: grid; grid-template-columns: 3fr 2fr;
+  gap: 20px; margin-bottom: 24px;
+}
+@media(max-width:900px) { .two-col { grid-template-columns: 1fr; } }
+
+/* ── Continue items ── */
 .continue-item {
   display: flex; align-items: center; gap: 14px;
-  padding: 12px 10px; border-bottom: 1px solid var(--border);
-  cursor: pointer; transition: all 0.18s var(--ease);
-  border-radius: var(--r); margin: 0 -6px;
+  padding: 12px 8px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: all .18s var(--ease);
+  border-radius: var(--r); margin: 0 -4px;
 }
 .continue-item:last-child { border-bottom: none; }
 .continue-item:hover { background: var(--bg3); transform: translateX(3px); }
 .c-thumb {
-  width: 44px; height: 44px; border-radius: 11px;
+  width: 44px; height: 44px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px; flex-shrink: 0; box-shadow: var(--shadow-sm);
+  font-size: 20px; flex-shrink: 0;
 }
 .c-name { font-size: 13.5px; font-weight: 600; margin-bottom: 7px; }
 .play-circle {
   width: 32px; height: 32px; border-radius: 50%;
-  border: 1px solid var(--border2);
+  border: 1px solid var(--border2); background: transparent;
   display: flex; align-items: center; justify-content: center;
-  color: var(--text2); font-size: 14px; flex-shrink: 0;
-  transition: all 0.2s var(--ease-spring); cursor: pointer; background: transparent;
+  color: var(--text2); font-size: 13px; flex-shrink: 0;
+  transition: all .2s var(--ease-spring); cursor: pointer;
 }
 .play-circle:hover {
   background: var(--accent); border-color: var(--accent); color: #fff;
   transform: scale(1.15); box-shadow: 0 4px 12px var(--accent-glow);
 }
 
-/* Course progress items */
-.course-prog-item {
-  padding: 10px 0; border-bottom: 1px solid var(--border);
+/* ── Goal circle ── */
+.goal-circle-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 1rem 0 .5rem;
 }
-.course-prog-item:last-child { border-bottom: none; }
+.goal-circle { position: relative; width: 110px; height: 110px; margin-bottom: 12px; }
+.goal-circle svg { transform: rotate(-90deg); }
+.goal-circle-bg { fill: none; stroke: var(--bg5,var(--bg4)); stroke-width: 8; }
+.goal-circle-fill {
+  fill: none; stroke: var(--accent); stroke-width: 8; stroke-linecap: round;
+  stroke-dasharray: 289; stroke-dashoffset: 289;
+  transition: stroke-dashoffset .8s cubic-bezier(.4,0,.2,1);
+  filter: drop-shadow(0 0 6px var(--accent-glow));
+}
+.goal-num {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  font-size: 22px; font-weight: 800; letter-spacing: -.04em;
+  color: var(--text); text-align: center; line-height: 1.2; white-space: nowrap;
+}
+.goal-num sub { display: block; font-size: 10px; color: var(--text3); font-weight: 600; letter-spacing: 0; }
 
-/* Quiz history items */
-.quiz-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 9px 0; border-bottom: 1px solid var(--border);
+/* ── Next lesson card ── */
+.next-lesson {
+  display: flex; align-items: center; gap: 13px;
+  background: var(--accent-g); border: 1px solid var(--accent-border);
+  border-radius: var(--r2); padding: 14px 16px;
+  cursor: pointer; transition: all .2s var(--ease);
 }
-.quiz-item:last-child { border-bottom: none; }
-.quiz-pass-badge {
-  font-size: 11px; font-weight: 700; color: var(--green);
-  background: var(--green-g); padding: 3px 10px;
-  border-radius: 99px; border: 1px solid var(--green3);
-  white-space: nowrap;
+.next-lesson:hover {
+  background: var(--accent-g2); transform: translateY(-2px);
+  box-shadow: 0 4px 20px var(--accent-glow);
 }
+.nl-icon {
+  width: 46px; height: 46px; border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.nl-title { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 3px; }
+.nl-sub { font-size: 12px; color: var(--text2); }
 
-/* Skeleton */
+/* ── Course progress list ── */
+.cp-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 11px 6px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: all .16s var(--ease);
+  border-radius: 8px; margin: 0 -6px;
+}
+.cp-item:last-child { border-bottom: none; }
+.cp-item:hover { background: var(--bg3); }
+.cp-thumb {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+}
+.cp-name { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+.cp-meta { font-size: 11.5px; color: var(--text2); white-space: nowrap; flex-shrink: 0; text-align: right; }
+
+/* ── Streak calendar ── */
+.streak-cal { display: grid; grid-template-columns: repeat(7,1fr); gap: 8px; }
+.streak-day { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.streak-day-lbl { font-size: 10px; font-weight: 700; color: var(--text3); letter-spacing: .04em; text-transform: uppercase; }
+.streak-dot {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--bg4); border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; color: var(--text3);
+  transition: all .2s var(--ease);
+}
+.streak-dot.done { background: var(--accent-g2); border-color: var(--accent-border); color: var(--accent); font-weight: 700; }
+.streak-dot.today { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 800; box-shadow: 0 4px 14px var(--accent-glow); }
+
+/* ── Skeleton ── */
 @keyframes shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
 .skel { background: linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%); background-size: 400px 100%; animation: shimmer 1.4s infinite; border-radius: 8px; }
-
-/* Welcome heading gradient */
-#welcome-h {
-  background: linear-gradient(135deg, var(--text) 30%, rgba(200,160,255,0.9));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-
-/* Ambient glow */
-.page-body { position: relative; }
-.page-body::before {
-  content: ''; position: fixed; top: 0; right: 0;
-  width: 600px; height: 600px;
-  background: radial-gradient(ellipse at top right, rgba(168,85,247,0.05) 0%, transparent 60%);
-  pointer-events: none; z-index: 0;
-}
 </style>
 </head>
 <body>
 <div class="layout">
 
-<!-- ── SIDEBAR ─────────────────────────────────────────── -->
+<!-- ── SIDEBAR ── -->
 <aside class="sidebar">
   <a href="landing.html" class="sidebar-logo">
     <div class="logo-mark">Z</div>ZENITH
@@ -130,12 +218,12 @@
   </div>
 </aside>
 
-<!-- ── MAIN ────────────────────────────────────────────── -->
+<!-- ── MAIN ── -->
 <main class="main">
   <div class="topbar">
     <div class="topbar-title">Dashboard</div>
     <div class="topbar-right">
-      <button class="btn btn-sm btn-ghost" id="btn-logout">
+      <button type="button" class="btn btn-sm btn-ghost" id="btn-logout">
         <i class="ti ti-logout"></i> ออกจากระบบ
       </button>
       <div class="avatar" id="top-avatar" style="cursor:pointer" onclick="location.href='profile.html'">?</div>
@@ -144,19 +232,19 @@
 
   <div class="page-body">
 
-    <!-- Welcome -->
-    <div class="flex-between mb24 anim-up">
-      <div>
-        <h2 id="welcome-h" style="font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px">กำลังโหลด...</h2>
-        <p class="f13 muted" id="welcome-sub">ยินดีต้อนรับสู่ ZENITH</p>
+    <!-- ── 1. WELCOME BANNER ── -->
+    <div class="welcome-banner anim-up">
+      <div class="streak-pill" id="streak-pill">⏳ กำลังโหลด...</div>
+      <h2 class="welcome-h" id="welcome-h">กำลังโหลด...</h2>
+      <p class="welcome-sub" id="welcome-sub">ยินดีต้อนรับสู่ ZENITH</p>
+      <div class="welcome-actions">
+        <a class="btn btn-ghost" href="index.html"><i class="ti ti-books"></i> ดูคอร์สทั้งหมด</a>
+        <button type="button" class="btn btn-green" onclick="continueLesson()"><i class="ti ti-player-play"></i> เรียนต่อเลย</button>
       </div>
-      <button class="btn btn-green" id="btn-continue" onclick="continueLesson()">
-        <i class="ti ti-player-play"></i> เรียนต่อเลย
-      </button>
     </div>
 
-    <!-- สถิติการเรียนรู้ (5 cards) -->
-    <div class="g5 mb16 anim-up delay-1">
+    <!-- ── 2. STATS ROW ── -->
+    <div class="g5 mb24 anim-up delay-1">
       <div class="stat-card">
         <div class="stat-icon" style="background:var(--accent-g2);color:var(--accent)"><i class="ti ti-book"></i></div>
         <div class="stat-val" id="s-lessons">0</div>
@@ -184,10 +272,10 @@
       </div>
     </div>
 
-    <!-- 2-col: Continue | Course Progress -->
-    <div class="g2 mb16 anim-up delay-2">
+    <!-- ── 3. TWO COLUMNS ── -->
+    <div class="two-col anim-up delay-2">
 
-      <!-- เรียนต่อจากที่ค้างไว้ -->
+      <!-- Left 60%: Continue Learning -->
       <div class="card">
         <div class="card-title">
           <div class="card-title-left">
@@ -196,42 +284,84 @@
           <a class="f12" style="color:var(--accent);cursor:pointer" href="index.html">ดูทั้งหมด →</a>
         </div>
         <div id="continue-list">
-          <div class="skel" style="height:60px;margin-bottom:8px"></div>
-          <div class="skel" style="height:60px;margin-bottom:8px"></div>
-          <div class="skel" style="height:60px"></div>
+          <div class="skel" style="height:62px;margin-bottom:8px"></div>
+          <div class="skel" style="height:62px;margin-bottom:8px"></div>
+          <div class="skel" style="height:62px"></div>
         </div>
       </div>
 
-      <!-- ความก้าวหน้าแต่ละคอร์ส -->
-      <div class="card">
-        <div class="card-title">
-          <div class="card-title-left">
-            <i class="ti ti-trending-up" style="color:var(--accent);font-size:16px"></i> ความก้าวหน้าแต่ละคอร์ส
+      <!-- Right 40%: Goal + Next Lesson -->
+      <div style="display:flex;flex-direction:column;gap:18px">
+
+        <!-- Weekly Goal -->
+        <div class="card">
+          <div class="card-title">
+            <div class="card-title-left">
+              <i class="ti ti-target" style="color:var(--amber);font-size:16px"></i> เป้าหมายสัปดาห์นี้
+            </div>
+          </div>
+          <div class="goal-circle-wrap">
+            <div class="goal-circle">
+              <svg width="110" height="110" viewBox="0 0 110 110">
+                <circle class="goal-circle-bg" cx="55" cy="55" r="46"/>
+                <circle class="goal-circle-fill" id="goal-ring" cx="55" cy="55" r="46"/>
+              </svg>
+              <div class="goal-num">
+                <span id="goal-done">0</span>/<span id="goal-total">5</span>
+                <sub>วัน</sub>
+              </div>
+            </div>
+            <p class="f12 muted" id="goal-label" style="text-align:center;padding:0 1rem">กำลังโหลด...</p>
           </div>
         </div>
-        <div id="course-progress-list">
-          <div class="skel" style="height:38px;margin-bottom:10px"></div>
-          <div class="skel" style="height:38px;margin-bottom:10px"></div>
-          <div class="skel" style="height:38px;margin-bottom:10px"></div>
-          <div class="skel" style="height:38px"></div>
-        </div>
-      </div>
 
+        <!-- Next Lesson -->
+        <div class="card">
+          <div class="card-title" style="margin-bottom:.875rem">
+            <div class="card-title-left">
+              <i class="ti ti-sparkles" style="color:var(--green);font-size:16px"></i> บทเรียนถัดไป
+            </div>
+          </div>
+          <div class="next-lesson" id="next-lesson-btn" onclick="continueLesson()">
+            <div class="nl-icon" id="nl-icon">🐍</div>
+            <div style="flex:1;min-width:0">
+              <div class="nl-title" id="nl-title">กำลังโหลด...</div>
+              <div class="nl-sub" id="nl-sub">กดเพื่อเริ่มเรียน</div>
+            </div>
+            <i class="ti ti-arrow-right" style="color:var(--accent);font-size:18px;flex-shrink:0"></i>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <!-- ประวัติการทำ Quiz -->
-    <div class="card anim-up delay-3">
+    <!-- ── 4. COURSE PROGRESS ── -->
+    <div class="card mb24 anim-up delay-3">
       <div class="card-title">
         <div class="card-title-left">
-          <i class="ti ti-list-check" style="color:var(--green);font-size:16px"></i> ประวัติการทำ Quiz
+          <i class="ti ti-trending-up" style="color:var(--accent);font-size:16px"></i> ความก้าวหน้าแต่ละคอร์ส
         </div>
-        <span class="f12 muted" id="quiz-history-count"></span>
+        <span class="f12 muted" id="overall-label"></span>
       </div>
-      <div id="quiz-history-list">
-        <div class="skel" style="height:38px;margin-bottom:8px"></div>
-        <div class="skel" style="height:38px;margin-bottom:8px"></div>
-        <div class="skel" style="height:38px"></div>
+      <div id="course-progress-list">
+        <div class="skel" style="height:40px;margin-bottom:10px"></div>
+        <div class="skel" style="height:40px;margin-bottom:10px"></div>
+        <div class="skel" style="height:40px;margin-bottom:10px"></div>
+        <div class="skel" style="height:40px;margin-bottom:10px"></div>
+        <div class="skel" style="height:40px;margin-bottom:10px"></div>
+        <div class="skel" style="height:40px"></div>
       </div>
+    </div>
+
+    <!-- ── 5. STREAK CALENDAR ── -->
+    <div class="card anim-up delay-4">
+      <div class="card-title">
+        <div class="card-title-left">
+          <i class="ti ti-flame" style="color:var(--amber);font-size:16px"></i> Streak รายสัปดาห์
+        </div>
+        <span class="f12 muted" id="streak-label">0 วันต่อเนื่อง</span>
+      </div>
+      <div class="streak-cal" id="streak-cal"></div>
     </div>
 
   </div>
@@ -252,6 +382,7 @@ const COURSES = [
   { key:'css',        label:'CSS',         total:10, color:'#4D9EFF', emoji:'🎨', bg:'var(--blue-g)'   },
 ];
 const TOTAL = COURSES.reduce((s,c) => s + c.total, 0);
+const DAY_LABELS = ['อา','จ','อ','พ','พฤ','ศ','ส'];
 
 function $(id) { return document.getElementById(id); }
 function setText(id, val) { const el=$(id); if(el) el.textContent = val; }
@@ -268,7 +399,6 @@ onAuthStateChanged(auth, async (user) => {
 
   const name = user.displayName || user.email.split('@')[0];
   const initial = name.charAt(0).toUpperCase();
-
   ['sb-avatar','top-avatar'].forEach(id => { const el=$(id); if(el) el.textContent=initial; });
   setText('sb-name', name);
 
@@ -276,19 +406,19 @@ onAuthStateChanged(auth, async (user) => {
   const greet = hour < 12 ? 'สวัสดีตอนเช้า' : hour < 18 ? 'สวัสดีตอนบ่าย' : 'สวัสดีตอนเย็น';
   setText('welcome-h', `${greet}, ${name} 👋`);
 
-  // Build course stats from localStorage
+  // Course stats from localStorage
   const courseStats = COURSES.map(c => {
     const unlocked = parseInt(localStorage.getItem(`zenith_progress_${c.key}`) || '1');
-    const done     = Math.max(0, unlocked - 1);
-    const pct      = Math.min(Math.round((done / c.total) * 100), 100);
+    const done = Math.max(0, unlocked - 1);
+    const pct = Math.min(Math.round((done / c.total) * 100), 100);
     return { ...c, done, pct, completed: done >= c.total };
   });
 
   const totalDone = courseStats.reduce((s,c) => s + c.done, 0);
   const completed = courseStats.filter(c => c.completed).length;
-  const ovPct     = Math.round((totalDone / TOTAL) * 100);
+  const ovPct = Math.round((totalDone / TOTAL) * 100);
 
-  // Track study days in localStorage (ไม่แตะ Firebase/progress)
+  // Study days tracking (localStorage only — no Firebase)
   const today = new Date().toISOString().slice(0, 10);
   const rawDays = localStorage.getItem('zenith_study_days') || '[]';
   const studyDays = JSON.parse(rawDays);
@@ -298,21 +428,80 @@ onAuthStateChanged(auth, async (user) => {
   }
   const dayCount = studyDays.length;
 
-  // สถิติ 5 cards
+  // Streak: consecutive days ending today
+  let streak = 0;
+  const checkDay = new Date();
+  while (true) {
+    const ds = checkDay.toISOString().slice(0, 10);
+    if (studyDays.includes(ds)) { streak++; checkDay.setDate(checkDay.getDate() - 1); }
+    else break;
+  }
+
+  // ── Stat cards ──
   setTimeout(() => {
     animate($('s-lessons'), totalDone);
     animate($('s-courses'), completed);
-    animate($('s-quiz'),    totalDone);
+    animate($('s-quiz'), totalDone);
     setText('s-pct', ovPct + '%');
     animate($('s-days'), dayCount);
   }, 100);
 
-  // เรียนต่อจากที่ค้างไว้
+  // ── Welcome banner text ──
+  const last7 = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    last7.push(d.toISOString().slice(0, 10));
+  }
+  const weekStudied = last7.filter(d => studyDays.includes(d)).length;
+  const WEEKLY_GOAL = 5;
+  const weekRemain = Math.max(0, WEEKLY_GOAL - weekStudied);
+
+  const streakPill = $('streak-pill');
+  if (streakPill) streakPill.innerHTML = streak > 0
+    ? `🔥 สตรีคกำลังร้อนแรง · ต่อเนื่อง ${streak} วัน`
+    : `✨ เริ่มสตรีควันแรกกันเลย!`;
+
+  setText('welcome-sub', weekRemain > 0
+    ? `วันนี้คุณเหลืออีกแค่ ${weekRemain} วัน ก็จะครบเป้า ${WEEKLY_GOAL} วันสัปดาห์นี้ 💪`
+    : `ยอดเยี่ยมมาก! คุณบรรลุเป้าหมายสัปดาห์นี้แล้ว 🎉`
+  );
+
+  // ── Weekly goal circle ──
+  const circumference = 2 * Math.PI * 46;
+  const offset = circumference * (1 - Math.min(weekStudied, WEEKLY_GOAL) / WEEKLY_GOAL);
+  setText('goal-done', weekStudied);
+  setText('goal-total', WEEKLY_GOAL);
+  setTimeout(() => {
+    const ring = $('goal-ring');
+    if (ring) ring.style.strokeDashoffset = offset;
+  }, 200);
+  setText('goal-label', weekStudied >= WEEKLY_GOAL
+    ? '🎉 ครบเป้าสัปดาห์นี้แล้ว!'
+    : weekStudied === 0
+      ? 'ลงมือเรียนวันนี้เพื่อเริ่มสตรีค!'
+      : `เรียนอีก ${weekRemain} วัน ก็จะครบเป้า`
+  );
+
+  // ── Next lesson ──
+  const nextCourse = courseStats.find(c => c.done > 0 && !c.completed) || courseStats[0];
+  const nlIcon = $('nl-icon');
+  if (nlIcon) { nlIcon.textContent = nextCourse.emoji; nlIcon.style.background = nextCourse.bg; }
+  setText('nl-title', `${nextCourse.label} — บทที่ ${nextCourse.done + 1}`);
+  setText('nl-sub', nextCourse.done > 0
+    ? `เรียนต่อจากบทที่ ${nextCourse.done} ที่ผ่านมา`
+    : 'เริ่มต้นบทแรกกันเลย!'
+  );
+
+  window.continueLesson = function() {
+    const first = courseStats.find(c => c.done > 0 && !c.completed) || courseStats[0];
+    location.href = `lesson.html?course=${first.key}&id=${first.done + 1}`;
+  };
+
+  // ── Continue list (top 3 in-progress or not started) ──
   const list = $('continue-list');
   list.innerHTML = '';
   const inProgress = courseStats.filter(c => c.done > 0 && !c.completed)
     .concat(courseStats.filter(c => c.done === 0)).slice(0, 3);
-
   inProgress.forEach(c => {
     const item = document.createElement('div');
     item.className = 'continue-item';
@@ -330,51 +519,45 @@ onAuthStateChanged(auth, async (user) => {
     list.appendChild(item);
   });
 
-  window.continueLesson = function() {
-    const first = courseStats.find(c => c.done > 0 && !c.completed) || courseStats[0];
-    location.href = `lesson.html?course=${first.key}&id=${first.done + 1}`;
-  };
-
-  // ความก้าวหน้าแต่ละคอร์ส
+  // ── Course progress (all 6) ──
   const cpList = $('course-progress-list');
   if (cpList) {
     cpList.innerHTML = courseStats.map(c => `
-      <div class="course-prog-item">
-        <div class="flex-between mb4">
-          <span style="font-size:13px;font-weight:600">${c.emoji} ${c.label}</span>
-          <span class="f12 muted">${c.done} / ${c.total} บท · ${c.pct}%</span>
+      <div class="cp-item" onclick="location.href='lesson.html?course=${c.key}&id=${c.done+1}'">
+        <div class="cp-thumb" style="background:${c.bg}">${c.emoji}</div>
+        <div style="flex:1;min-width:0">
+          <div class="cp-name">${c.label}</div>
+          <div class="prog-track"><div class="prog-fill" style="width:${c.pct}%;background:${c.color}"></div></div>
         </div>
-        <div class="prog-track"><div class="prog-fill" style="width:${c.pct}%;background:${c.color}"></div></div>
+        <div class="cp-meta">${c.done}/${c.total} บท · ${c.pct}%</div>
       </div>
     `).join('');
   }
+  setText('overall-label', `${totalDone} / ${TOTAL} บทรวม · ${ovPct}%`);
 
-  // ประวัติการทำ Quiz
-  const histList = $('quiz-history-list');
-  if (histList) {
-    const entries = [];
-    courseStats.forEach(c => {
-      for (let i = c.done; i >= 1; i--) {
-        entries.push({ course: c, lessonId: i });
-      }
-    });
-
-    setText('quiz-history-count', entries.length > 0 ? `ผ่านแล้ว ${entries.length} quiz` : '');
-
-    if (entries.length === 0) {
-      histList.innerHTML = `<p class="f12 muted" style="text-align:center;padding:24px 0">ยังไม่มีประวัติ Quiz — เริ่มเรียนและทำ Quiz เพื่อสะสมประวัติ</p>`;
-    } else {
-      histList.innerHTML = entries.slice(0, 30).map(e => `
-        <div class="quiz-item">
-          <div>
-            <span style="font-size:13px;font-weight:600">${e.course.emoji} ${e.course.label}</span>
-            <span class="f12 muted"> · บทที่ ${e.lessonId}</span>
-          </div>
-          <span class="quiz-pass-badge">ผ่าน ✓</span>
-        </div>
-      `).join('');
+  // ── Streak calendar (last 7 days) ──
+  const cal = $('streak-cal');
+  if (cal) {
+    const days7 = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i); days7.push(d);
     }
+    cal.innerHTML = days7.map(d => {
+      const ds = d.toISOString().slice(0, 10);
+      const isToday = ds === today;
+      const isDone = studyDays.includes(ds);
+      const num = d.getDate();
+      const lbl = DAY_LABELS[d.getDay()];
+      let cls = 'streak-dot';
+      if (isToday) cls += ' today';
+      else if (isDone) cls += ' done';
+      return `<div class="streak-day">
+        <div class="streak-day-lbl">${lbl}</div>
+        <div class="${cls}">${num}</div>
+      </div>`;
+    }).join('');
   }
+  setText('streak-label', streak > 0 ? `${streak} วันต่อเนื่อง 🔥` : 'ยังไม่มีสตรีค');
 });
 
 document.getElementById('btn-logout').addEventListener('click', () => {
