@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="th">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>คอร์สเรียน — ZENITH</title>
-<meta name="description" content="เลือกคอร์สโปรแกรมมิ่ง Python, JavaScript, C++, Java, HTML, CSS เรียนฟรีบน ZENITH">
+<meta name="description" content="เรียน Python ฟรีบน ZENITH — 16 บทเรียน ครบทั้ง 4 หน่วยการเรียนรู้">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -115,16 +115,16 @@
   <div class="topbar">
     <div class="topbar-title">คอร์สเรียนทั้งหมด</div>
     <div class="topbar-right">
-      <span class="top-meta">6 วิชา · 62 บทเรียน</span>
+      <span class="top-meta">1 วิชา · 16 บทเรียน</span>
       <button class="btn btn-sm btn-ghost" id="btn-logout"><i class="ti ti-logout"></i> ออกจากระบบ</button>
       <div class="avatar avatar-link" id="top-avatar" onclick="location.href='profile.html'">?</div>
     </div>
   </div>
 
   <div class="page-body" id="page-content">
-    <div class="sec-title">เลือกวิชาที่ต้องการเรียน</div>
+    <div class="sec-title">หลักสูตรที่เปิดสอน</div>
 
-    <div class="g3">
+    <div class="g3" style="max-width:360px">
 
       <!-- Python -->
       <div class="course-card anim-up" onclick="checkAccess('python')">
@@ -134,109 +134,14 @@
             <span class="course-name">Python</span>
             <span class="badge badge-green">Beginner</span>
           </div>
-          <div class="course-meta"><i class="ti ti-clock meta-icon"></i> 12 บทเรียน · 45 นาที</div>
-          <div class="course-desc">Variables, Loops, Functions, Lists, OOP จบครบในคอร์สเดียว</div>
+          <div class="course-meta"><i class="ti ti-clock meta-icon"></i> 16 บทเรียน · 4 หน่วยการเรียนรู้</div>
+          <div class="course-desc">Variables, Loops, Functions, OOP ครบทั้ง 4 หน่วยการเรียนรู้</div>
           <div class="course-prog-row">
             <span class="pct-lbl">Progress</span>
             <span class="pct-green" id="pct-python">0%</span>
           </div>
           <div class="prog-track"><div class="prog-fill fill-green" id="bar-python" style="width:0%"></div></div>
           <button class="course-btn" id="btn-python">Start Learning →</button>
-        </div>
-      </div>
-
-      <!-- JavaScript -->
-      <div class="course-card anim-up delay-1" onclick="checkAccess('javascript')">
-        <div class="course-img img-js"><span>⚡</span></div>
-        <div class="course-body">
-          <div class="flex-between mb8">
-            <span class="course-name">JavaScript</span>
-            <span class="badge badge-amber">Intermediate</span>
-          </div>
-          <div class="course-meta"><i class="ti ti-clock meta-icon"></i> 10 บทเรียน · 60 นาที</div>
-          <div class="course-desc">DOM, Events, ES6+, Arrays, Objects ทำให้เว็บมีชีวิตชีวา</div>
-          <div class="course-prog-row">
-            <span class="pct-lbl">Progress</span>
-            <span class="pct-amber" id="pct-javascript">0%</span>
-          </div>
-          <div class="prog-track"><div class="prog-fill fill-amber" id="bar-javascript" style="width:0%"></div></div>
-          <button class="course-btn" id="btn-javascript">Start Learning →</button>
-        </div>
-      </div>
-
-      <!-- C++ -->
-      <div class="course-card anim-up delay-2" onclick="checkAccess('cpp')">
-        <div class="course-img img-cpp"><span>⚙️</span></div>
-        <div class="course-body">
-          <div class="flex-between mb8">
-            <span class="course-name">C++</span>
-            <span class="badge badge-blue">Intermediate</span>
-          </div>
-          <div class="course-meta"><i class="ti ti-clock meta-icon"></i> 10 บทเรียน · 55 นาที</div>
-          <div class="course-desc">Pointers, Memory, Classes, OOP ฐานของ System Programming</div>
-          <div class="course-prog-row">
-            <span class="pct-lbl">Progress</span>
-            <span class="pct-blue" id="pct-cpp">0%</span>
-          </div>
-          <div class="prog-track"><div class="prog-fill fill-blue" id="bar-cpp" style="width:0%"></div></div>
-          <button class="course-btn" id="btn-cpp">Start Learning →</button>
-        </div>
-      </div>
-
-      <!-- Java -->
-      <div class="course-card anim-up delay-1" onclick="checkAccess('java')">
-        <div class="course-img img-java"><span>☕</span></div>
-        <div class="course-body">
-          <div class="flex-between mb8">
-            <span class="course-name">Java</span>
-            <span class="badge badge-amber">Intermediate</span>
-          </div>
-          <div class="course-meta"><i class="ti ti-clock meta-icon"></i> 10 บทเรียน · 55 นาที</div>
-          <div class="course-desc">OOP, Inheritance, JVM Architecture เขียนครั้งเดียวรันได้ทุกที่</div>
-          <div class="course-prog-row">
-            <span class="pct-lbl">Progress</span>
-            <span class="pct-amber" id="pct-java">0%</span>
-          </div>
-          <div class="prog-track"><div class="prog-fill fill-amber" id="bar-java" style="width:0%"></div></div>
-          <button class="course-btn" id="btn-java">Start Learning →</button>
-        </div>
-      </div>
-
-      <!-- HTML -->
-      <div class="course-card anim-up delay-2" onclick="checkAccess('html')">
-        <div class="course-img img-html"><span>🏗️</span></div>
-        <div class="course-body">
-          <div class="flex-between mb8">
-            <span class="course-name">HTML</span>
-            <span class="badge badge-green">Beginner</span>
-          </div>
-          <div class="course-meta"><i class="ti ti-clock meta-icon"></i> 10 บทเรียน · 30 นาที</div>
-          <div class="course-desc">Tags, Forms, Semantic HTML สร้างโครงสร้างเว็บอย่างมืออาชีพ</div>
-          <div class="course-prog-row">
-            <span class="pct-lbl">Progress</span>
-            <span class="pct-pink" id="pct-html">0%</span>
-          </div>
-          <div class="prog-track"><div class="prog-fill fill-pink" id="bar-html" style="width:0%"></div></div>
-          <button class="course-btn" id="btn-html">Start Learning →</button>
-        </div>
-      </div>
-
-      <!-- CSS -->
-      <div class="course-card anim-up delay-3" onclick="checkAccess('css')">
-        <div class="course-img img-css"><span>🎨</span></div>
-        <div class="course-body">
-          <div class="flex-between mb8">
-            <span class="course-name">CSS</span>
-            <span class="badge badge-blue">Intermediate</span>
-          </div>
-          <div class="course-meta"><i class="ti ti-clock meta-icon"></i> 10 บทเรียน · 50 นาที</div>
-          <div class="course-desc">Flexbox, Grid, Animation, Responsive Design ทำเว็บสวยทุกขนาด</div>
-          <div class="course-prog-row">
-            <span class="pct-lbl">Progress</span>
-            <span class="pct-blue" id="pct-css">0%</span>
-          </div>
-          <div class="prog-track"><div class="prog-fill fill-blue" id="bar-css" style="width:0%"></div></div>
-          <button class="course-btn" id="btn-css">Start Learning →</button>
         </div>
       </div>
 
@@ -251,12 +156,7 @@ import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/
 import { syncFromFirestore } from './assets/js/progress.js';
 
 const COURSES = [
-  { key:'python',     total:12 },
-  { key:'javascript', total:10 },
-  { key:'cpp',        total:10 },
-  { key:'java',       total:10 },
-  { key:'html',       total:10 },
-  { key:'css',        total:10 },
+  { key:'python', total:16 },
 ];
 
 function getLastLesson(key) {

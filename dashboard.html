@@ -374,14 +374,9 @@ import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/
 import { syncFromFirestore } from './assets/js/progress.js';
 
 const COURSES = [
-  { key:'python',     label:'Python',      total:12, color:'#00E5A0', emoji:'🐍', bg:'var(--green-g2)' },
-  { key:'javascript', label:'JavaScript',  total:10, color:'#FFB340', emoji:'⚡', bg:'var(--amber-g)'  },
-  { key:'cpp',        label:'C++',         total:10, color:'#4D9EFF', emoji:'⚙️', bg:'var(--blue-g)'   },
-  { key:'java',       label:'Java',        total:10, color:'#FFB340', emoji:'☕', bg:'var(--amber-g)'  },
-  { key:'html',       label:'HTML',        total:10, color:'#FF6EA8', emoji:'🏗️', bg:'var(--pink-g,rgba(255,110,168,.08))' },
-  { key:'css',        label:'CSS',         total:10, color:'#4D9EFF', emoji:'🎨', bg:'var(--blue-g)'   },
+  { key:'python', label:'Python', total:16, color:'#00E5A0', emoji:'🐍', bg:'var(--green-g2)' },
 ];
-const TOTAL = COURSES.reduce((s,c) => s + c.total, 0);
+const TOTAL = 16;
 const DAY_LABELS = ['อา','จ','อ','พ','พฤ','ศ','ส'];
 
 function $(id) { return document.getElementById(id); }
