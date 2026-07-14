@@ -1,6 +1,6 @@
 // Anti-flash IIFE — runs before first paint
 (function () {
-    const saved = localStorage.getItem('zenith_theme') || 'dark';
+    const saved = localStorage.getItem('zenith_theme') || 'light';
     document.documentElement.setAttribute('data-theme', saved);
     if (saved === 'dark') {
         document.documentElement.classList.add('dark');
@@ -10,7 +10,7 @@
 })();
 
 window.toggleTheme = function () {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
     const next = current === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('zenith_theme', next);

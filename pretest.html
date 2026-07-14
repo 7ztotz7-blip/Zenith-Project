@@ -1,0 +1,403 @@
+<!DOCTYPE html><html lang="th">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>แบบทดสอบก่อนเรียน — ZENITH</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="_shared.css"><script src="assets/js/theme.js"></script><script src="assets/js/sidebar.js"></script>
+<style>
+.test-banner {
+  background: linear-gradient(135deg, var(--bg2) 0%, var(--accent-g) 100%);
+  border: 1px solid var(--accent-border); border-radius: 16px;
+  padding: 1.5rem 1.75rem; margin-bottom: 20px; position: relative; overflow: hidden;
+}
+.test-banner::after {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, var(--accent-glow), transparent 65%);
+  filter: blur(40px); pointer-events: none;
+}
+.test-banner-type { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
+.test-banner-title { font-size:22px; font-weight:800; letter-spacing:-.03em; margin-bottom:4px; }
+.test-banner-sub { font-size:13px; color:var(--text2); }
+
+.prev-banner {
+  display:flex; align-items:center; gap:10px;
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:12px; padding:12px 16px; margin-bottom:16px;
+}
+
+.prog-sticky {
+  position:sticky; top:0; z-index:10;
+  background:var(--bg); border-bottom:1px solid var(--border);
+  padding:12px 0; margin-bottom:20px;
+}
+.prog-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.prog-label { font-size:13px; font-weight:600; color:var(--text2); }
+.prog-count { font-size:13px; font-weight:700; color:var(--accent); }
+.prog-bar { height:6px; background:var(--bg4); border-radius:99px; overflow:hidden; }
+.prog-bar-fill { height:100%; background:var(--accent); border-radius:99px; transition:width .3s ease; }
+
+.q-card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:14px; padding:1.25rem 1.5rem; margin-bottom:10px;
+  transition:border-color .2s, box-shadow .2s;
+}
+.q-card.answered { border-color:rgba(168,85,247,.3); box-shadow:0 2px 12px rgba(168,85,247,.05); }
+.q-card.correct { border-color:rgba(0,229,160,.4); background:rgba(0,229,160,.025); }
+.q-card.wrong { border-color:rgba(255,91,91,.4); background:rgba(255,91,91,.025); }
+.q-num { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); margin-bottom:8px; }
+.q-text { font-size:14.5px; font-weight:600; line-height:1.6; margin-bottom:14px; }
+.q-opts { display:flex; flex-direction:column; gap:8px; }
+
+.opt-lbl {
+  display:flex; align-items:center; gap:12px;
+  padding:10px 14px; border:1px solid var(--border); border-radius:10px;
+  cursor:pointer; transition:all .18s var(--ease); user-select:none;
+}
+.opt-lbl:hover { border-color:var(--border2); background:var(--bg3); }
+.opt-lbl.sel { border-color:var(--accent); background:rgba(168,85,247,.08); }
+.opt-lbl.correct-ans { border-color:rgba(0,229,160,.5); background:rgba(0,229,160,.07); }
+.opt-lbl.wrong-sel { border-color:rgba(255,91,91,.5); background:rgba(255,91,91,.07); }
+.opt-lbl input[type="radio"] { display:none; }
+.opt-letter {
+  width:24px; height:24px; border-radius:50%;
+  background:var(--bg4); border:1.5px solid var(--border2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:700; color:var(--text2); flex-shrink:0; transition:all .18s;
+}
+.opt-lbl.sel .opt-letter { background:var(--accent); border-color:var(--accent); color:#fff; }
+.opt-lbl.correct-ans .opt-letter { background:rgba(0,229,160,.15); border-color:rgba(0,229,160,.5); color:var(--green); }
+.opt-lbl.wrong-sel .opt-letter { background:rgba(255,91,91,.15); border-color:rgba(255,91,91,.5); color:var(--red); }
+.opt-text { font-size:13.5px; font-weight:500; flex:1; line-height:1.4; }
+
+.test-bottom {
+  position:sticky; bottom:0; z-index:10;
+  background:var(--bg); border-top:1px solid var(--border);
+  padding:14px 0; display:flex; align-items:center; justify-content:space-between; margin-top:16px;
+}
+
+.results-hero {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:20px; padding:2rem; margin-bottom:20px; text-align:center;
+}
+.score-big {
+  font-size:72px; font-weight:900; letter-spacing:-.06em; line-height:1;
+  background:linear-gradient(135deg, var(--text) 30%, var(--accent));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.score-denom { font-size:32px; font-weight:600; color:var(--text3); }
+.grade-pill {
+  display:inline-block; padding:4px 16px; border-radius:20px;
+  font-size:13px; font-weight:700; margin:10px 0;
+}
+.grade-A { background:rgba(0,229,160,.12); color:var(--green); border:1px solid rgba(0,229,160,.3); }
+.grade-B { background:rgba(168,85,247,.12); color:var(--accent); border:1px solid var(--accent-border); }
+.grade-C { background:rgba(255,179,64,.12); color:var(--amber); border:1px solid rgba(255,179,64,.3); }
+.grade-D { background:rgba(255,91,91,.12); color:var(--red); border:1px solid rgba(255,91,91,.3); }
+
+.hidden { display:none!important; }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+  <a href="landing.html" class="sidebar-logo"><div class="logo-mark">Z</div>ZENITH</a>
+  <div class="nav-group">
+    <div class="nav-group-label">เรียนรู้</div>
+    <a class="nav-link" href="dashboard.html"><i class="ti ti-home"></i> Dashboard</a>
+    <a class="nav-link" href="index.html"><i class="ti ti-books"></i> คอร์สเรียน</a>
+    <a class="nav-link" href="lesson.html"><i class="ti ti-code"></i> บทเรียน</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">แบบทดสอบ</div>
+    <a class="nav-link active" href="pretest.html"><i class="ti ti-clipboard-check"></i> ก่อนเรียน</a>
+    <a class="nav-link" href="posttest.html"><i class="ti ti-clipboard-list"></i> หลังเรียน</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">บัญชี</div>
+    <a class="nav-link" href="profile.html"><i class="ti ti-user"></i> โปรไฟล์</a>
+    <a class="nav-link" href="settings.html"><i class="ti ti-settings"></i> ตั้งค่า</a>
+  </div>
+  <div class="sidebar-bottom">
+    <a class="user-pill" href="profile.html">
+      <div class="avatar" id="sb-avatar">?</div>
+      <div class="user-info">
+        <div class="user-name" id="sb-name">กำลังโหลด...</div>
+        <div class="user-pts">ZENITH Learner</div>
+      </div>
+      <i class="ti ti-chevron-right" style="color:var(--text3);font-size:13px;margin-left:auto"></i>
+    </a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title">แบบทดสอบก่อนเรียน</div>
+    <div class="topbar-right">
+      <button type="button" class="btn btn-sm btn-ghost" id="btn-logout"><i class="ti ti-logout"></i> ออกจากระบบ</button>
+      <div class="avatar" id="top-avatar" style="cursor:pointer" onclick="location.href='profile.html'">?</div>
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="test-banner anim-up">
+      <div class="test-banner-type">🐍 Python — Pre-Test</div>
+      <div class="test-banner-title">แบบทดสอบก่อนเรียน</div>
+      <div class="test-banner-sub">ทดสอบความรู้ Python เบื้องต้น · 30 ข้อ · เลือกคำตอบที่ถูกต้องที่สุด</div>
+    </div>
+
+    <div id="prev-banner" class="prev-banner hidden">
+      <i class="ti ti-history" style="color:var(--accent);font-size:18px;flex-shrink:0"></i>
+      <span style="font-size:13px;color:var(--text2)">คะแนนครั้งก่อน: <strong id="prev-score" style="color:var(--text)"></strong></span>
+      <span style="font-size:12px;color:var(--text3);margin-left:auto" id="prev-date"></span>
+    </div>
+
+    <!-- Test form -->
+    <div id="test-wrap">
+      <div class="prog-sticky">
+        <div class="prog-row">
+          <span class="prog-label">ความคืบหน้า</span>
+          <span class="prog-count"><span id="ans-count">0</span>/30 ข้อ</span>
+        </div>
+        <div class="prog-bar"><div class="prog-bar-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+      <div id="q-container"></div>
+      <div class="test-bottom">
+        <span style="font-size:13px;color:var(--text3)" id="bottom-hint">ตอบให้ครบทุกข้อก่อนส่ง</span>
+        <button type="button" class="btn btn-green btn-lg" id="submit-btn" disabled onclick="submitTest()">
+          <i class="ti ti-send"></i> ส่งคำตอบ
+        </button>
+      </div>
+    </div>
+
+    <!-- Results (hidden) -->
+    <div id="results-wrap" class="hidden">
+      <div class="results-hero anim-up">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:8px">ผลคะแนน · แบบทดสอบก่อนเรียน</div>
+        <div class="score-big" id="res-num">0</div><span class="score-denom">/30</span>
+        <div class="grade-pill" id="res-grade"></div>
+        <div style="font-size:14px;color:var(--text2);margin-bottom:4px" id="res-msg"></div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:24px" id="res-pct"></div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a class="btn btn-ghost" href="dashboard.html"><i class="ti ti-home"></i> กลับ Dashboard</a>
+          <a class="btn btn-green" href="posttest.html"><i class="ti ti-clipboard-list"></i> ทำแบบทดสอบหลังเรียน</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-title-left"><i class="ti ti-list-check" style="color:var(--accent)"></i> เฉลยทุกข้อ</div>
+        </div>
+        <div id="review-container"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+</div>
+
+<script type="module">
+import { auth, db } from './assets/js/firebase.js';
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const QUESTIONS = [
+  { q:"คำสั่งใดใช้แสดงผลข้อความใน Python?", opts:["echo()","print()","display()","show()"], ans:1 },
+  { q:"ชนิดข้อมูลใดเก็บตัวเลขทศนิยม?", opts:["int","str","float","bool"], ans:2 },
+  { q:"ผลลัพธ์ของ 10 % 3 คืออะไร?", opts:["3","1","0","10"], ans:1 },
+  { q:"วิธีสร้าง list ใน Python ที่ถูกต้องคือข้อใด?", opts:["(1, 2, 3)","{1, 2, 3}","[1, 2, 3]","<1, 2, 3>"], ans:2 },
+  { q:"ฟังก์ชัน len() ใช้ทำอะไร?", opts:["แปลงชนิดข้อมูล","นับจำนวนสมาชิก","หาค่าสูงสุด","จัดเรียงข้อมูล"], ans:1 },
+  { q:'ผลลัพธ์ของ "Hello" + " World" คืออะไร?', opts:['"HelloWorld"','"Hello World"',"Error",'"Hello" + " World"'], ans:1 },
+  { q:"range(5) ให้ค่าตั้งแต่เท่าไรถึงเท่าไร?", opts:["1 ถึง 5","0 ถึง 4","0 ถึง 5","1 ถึง 4"], ans:1 },
+  { q:"คำสั่งใดใช้รับข้อมูลจากผู้ใช้?", opts:["get()","read()","input()","scan()"], ans:2 },
+  { q:"def ใช้สำหรับอะไร?", opts:["กำหนดตัวแปร","ประกาศฟังก์ชัน","วนซ้ำ","เงื่อนไข"], ans:1 },
+  { q:"True and False มีค่าเท่าใด?", opts:["True","False","None","Error"], ans:1 },
+  { q:"การเข้าถึงสมาชิกแรกใน list ใช้ index ใด?", opts:["1","-1","0","first"], ans:2 },
+  { q:"while loop ทำงานอย่างไร?", opts:["ทำงานครั้งเดียว","วนซ้ำตาม list","วนซ้ำเมื่อเงื่อนไขเป็น True","วนซ้ำ n ครั้ง"], ans:2 },
+  { q:"break ทำหน้าที่อะไรใน loop?", opts:["ข้ามรอบปัจจุบัน","หยุด loop ทันที","เริ่ม loop ใหม่","ออกจากโปรแกรม"], ans:1 },
+  { q:"ผลลัพธ์ของ 2 ** 3 คืออะไร?", opts:["6","5","8","9"], ans:2 },
+  { q:"ฟังก์ชัน int() ใช้ทำอะไร?", opts:["สร้าง integer","แปลงเป็น integer","นับจำนวน","หารแบบได้จำนวนเต็ม"], ans:1 },
+  { q:"dict ใน Python คืออะไร?", opts:["รายการข้อมูลเรียงลำดับ","ชุดข้อมูล key-value","ข้อมูลตัวเลข","ข้อความ"], ans:1 },
+  { q:"elif ย่อมาจากอะไร?", opts:["else","else if","end if","elif loop"], ans:1 },
+  { q:"not True มีค่าเท่าใด?", opts:["True","None","False","0"], ans:2 },
+  { q:"list.append(x) ทำอะไร?", opts:["ลบ x ออกจาก list","เพิ่ม x ที่หน้า list","เพิ่ม x ที่ท้าย list","หา x ใน list"], ans:2 },
+  { q:'ผลลัพธ์ "hello".upper() คืออะไร?', opts:['"Hello"','"HELLO"','"hello"',"Error"], ans:1 },
+  { q:"ข้อใดคือ comment ใน Python?", opts:["// comment","/* comment */","# comment","<!-- comment -->"], ans:2 },
+  { q:"continue ใน loop ทำอะไร?", opts:["หยุด loop","ข้ามรอบปัจจุบัน ไปรอบถัดไป","วนซ้ำต่อ","ออกจากฟังก์ชัน"], ans:1 },
+  { q:"ผลลัพธ์ str(42) คืออะไร?", opts:["42",'"42"',"42.0","Error"], ans:1 },
+  { q:"ตัวแปรใน Python ต้องประกาศชนิดข้อมูลก่อนใช้หรือไม่?", opts:["ต้องประกาศเสมอ","ไม่ต้องประกาศ","ขึ้นอยู่กับ version","ต้องใช้ var ก่อน"], ans:1 },
+  { q:"ผลลัพธ์ 10 // 3 คืออะไร?", opts:["3.33","3","4","1"], ans:1 },
+  { q:"None ใน Python หมายความว่าอะไร?", opts:["ค่าเป็น 0","ค่าเป็น False","ไม่มีค่า","ค่าว่าง string"], ans:2 },
+  { q:"ผลลัพธ์ type(True) คืออะไร?", opts:["int","str","float","bool"], ans:3 },
+  { q:"คำสั่ง return ในฟังก์ชันทำหน้าที่อะไร?", opts:["แสดงผล","รับค่า","ส่งค่ากลับจากฟังก์ชัน","ยุติโปรแกรม"], ans:2 },
+  { q:"วิธีนับจาก 1 ถึง 5 ด้วย range ที่ถูกต้อง?", opts:["range(5)","range(1, 5)","range(1, 6)","range(0, 5)"], ans:2 },
+  { q:"Python ถูกพัฒนาโดยใคร?", opts:["Bill Gates","Linus Torvalds","Guido van Rossum","James Gosling"], ans:2 },
+];
+
+const LETTERS = ['A','B','C','D'];
+const userAnswers = new Array(30).fill(-1);
+let submitted = false;
+
+function $(id) { return document.getElementById(id); }
+
+function updateProgress() {
+  const done = userAnswers.filter(v => v !== -1).length;
+  $('ans-count').textContent = done;
+  $('prog-fill').style.width = (done / 30 * 100) + '%';
+  const btn = $('submit-btn');
+  if (done === 30) {
+    btn.disabled = false;
+    $('bottom-hint').textContent = 'พร้อมส่งแล้ว! ✓';
+    $('bottom-hint').style.color = 'var(--green)';
+  } else {
+    btn.disabled = true;
+    $('bottom-hint').textContent = `ยังต้องตอบอีก ${30 - done} ข้อ`;
+    $('bottom-hint').style.color = 'var(--text3)';
+  }
+}
+
+function buildQuestions() {
+  const container = $('q-container');
+  container.innerHTML = QUESTIONS.map((q, i) => `
+    <div class="q-card" id="qcard-${i}">
+      <div class="q-num">ข้อที่ ${i + 1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-opts">
+        ${q.opts.map((opt, j) => `
+          <label class="opt-lbl" id="opt-${i}-${j}" onclick="selectOpt(${i},${j})">
+            <input type="radio" name="q${i}" value="${j}">
+            <span class="opt-letter">${LETTERS[j]}</span>
+            <span class="opt-text">${opt}</span>
+          </label>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+window.selectOpt = function(qi, oi) {
+  if (submitted) return;
+  const prev = userAnswers[qi];
+  if (prev !== -1) $(`opt-${qi}-${prev}`).classList.remove('sel');
+  userAnswers[qi] = oi;
+  $(`opt-${qi}-${oi}`).classList.add('sel');
+  $(`qcard-${qi}`).classList.add('answered');
+  updateProgress();
+};
+
+window.submitTest = async function() {
+  if (submitted) return;
+  submitted = true;
+  $('submit-btn').disabled = true;
+  $('submit-btn').innerHTML = '<i class="ti ti-loader-2"></i> กำลังประมวลผล...';
+
+  const correct = userAnswers.reduce((sum, ans, i) => sum + (ans === QUESTIONS[i].ans ? 1 : 0), 0);
+  const pct = Math.round(correct / 30 * 100);
+
+  // Save to Firestore
+  const user = auth.currentUser;
+  if (user) {
+    try {
+      await setDoc(doc(db, 'users', user.uid), {
+        testScores: { pretest: { score: correct, total: 30, date: Date.now() } }
+      }, { merge: true });
+    } catch(e) { console.error(e); }
+  }
+
+  // Save to localStorage as backup
+  localStorage.setItem('zenith_pretest', JSON.stringify({ score: correct, date: Date.now() }));
+
+  showResults(correct, pct);
+};
+
+function showResults(correct, pct) {
+  // Hide form, show results
+  $('test-wrap').classList.add('hidden');
+  $('results-wrap').classList.remove('hidden');
+
+  $('res-num').textContent = correct;
+  $('res-pct').textContent = `คิดเป็น ${pct}% (${correct} ข้อถูกจาก 30 ข้อ)`;
+
+  let gradeClass, gradeText, msg;
+  if (pct >= 80) { gradeClass='grade-A'; gradeText='ดีเยี่ยม'; msg='ยอดเยี่ยม! คุณมีพื้นฐาน Python ที่แข็งแกร่งมากแล้ว 🎉'; }
+  else if (pct >= 60) { gradeClass='grade-B'; gradeText='ดี'; msg='ผลดีมาก! เรียนจบคอร์สเพื่อเติมเต็มความรู้ให้ครบ 💪'; }
+  else if (pct >= 40) { gradeClass='grade-C'; gradeText='พอใช้'; msg='มีพื้นฐานบ้างแล้ว ติดตามคอร์สเพื่อเสริมความเข้าใจ 📚'; }
+  else { gradeClass='grade-D'; gradeText='ต้องพัฒนา'; msg='ไม่ต้องกังวล! คอร์สนี้จะพาคุณเรียนรู้ตั้งแต่พื้นฐาน 🌱'; }
+
+  const gradeEl = $('res-grade');
+  gradeEl.textContent = gradeText;
+  gradeEl.className = `grade-pill ${gradeClass}`;
+  $('res-msg').textContent = msg;
+
+  // Review
+  const reviewEl = $('review-container');
+  reviewEl.innerHTML = QUESTIONS.map((q, i) => {
+    const ua = userAnswers[i];
+    const isCorrect = ua === q.ans;
+    return `
+      <div class="q-card ${isCorrect ? 'correct' : 'wrong'}" style="margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="q-num" style="margin-bottom:0">ข้อ ${i+1}</span>
+          <span style="margin-left:auto;font-size:13px;font-weight:700;color:${isCorrect ? 'var(--green)' : 'var(--red)'}">
+            ${isCorrect ? '✓ ถูก' : '✗ ผิด'}
+          </span>
+        </div>
+        <div class="q-text" style="margin-bottom:10px">${q.q}</div>
+        <div class="q-opts">
+          ${q.opts.map((opt, j) => {
+            let cls = 'opt-lbl';
+            if (j === q.ans) cls += ' correct-ans';
+            else if (j === ua && !isCorrect) cls += ' wrong-sel';
+            return `<div class="${cls}" style="cursor:default">
+              <span class="opt-letter">${LETTERS[j]}</span>
+              <span class="opt-text">${opt}</span>
+              ${j === q.ans ? '<i class="ti ti-check" style="color:var(--green);margin-left:auto;font-size:15px"></i>' : ''}
+              ${j === ua && !isCorrect ? '<i class="ti ti-x" style="color:var(--red);margin-left:auto;font-size:15px"></i>' : ''}
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+  }).join('');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { window.location.href = 'login.html'; return; }
+
+  const name = user.displayName || user.email.split('@')[0];
+  const init = name.charAt(0).toUpperCase();
+  ['sb-avatar','top-avatar'].forEach(id => { const el=$(id); if(el) el.textContent=init; });
+  $('sb-name').textContent = name;
+
+  // Load previous score
+  try {
+    const snap = await getDoc(doc(db, 'users', user.uid));
+    if (snap.exists()) {
+      const ts = snap.data().testScores?.pretest;
+      if (ts) {
+        $('prev-score').textContent = `${ts.score}/30`;
+        $('prev-date').textContent = new Date(ts.date).toLocaleDateString('th-TH');
+        $('prev-banner').classList.remove('hidden');
+      }
+    }
+  } catch(e) {}
+
+  buildQuestions();
+  updateProgress();
+});
+
+$('btn-logout').addEventListener('click', () => {
+  if (confirm('ต้องการออกจากระบบ?')) {
+    import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js").then(({ signOut }) => {
+      signOut(auth).then(() => location.href = 'landing.html');
+    });
+  }
+});
+</script>
+</body></html>

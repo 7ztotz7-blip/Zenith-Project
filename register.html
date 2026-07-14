@@ -1,131 +1,148 @@
-<!DOCTYPE html><html lang="th">
+<!DOCTYPE html>
+<html lang="th">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>สมัครสมาชิก — ZENITH</title>
 <meta name="robots" content="index,follow">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="_shared.css"><script src="assets/js/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="assets/css/pystart.css" rel="stylesheet" />
+<script src="assets/js/theme.js"></script>
 <style>
-body {
-  display:flex; align-items:center; justify-content:center;
-  min-height:100vh; padding:24px;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-.auth-bg {
-  position:fixed; inset:0; z-index:-1;
-  background:
-    radial-gradient(ellipse at 80% 10%, rgba(168,85,247,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 20% 90%, rgba(77,158,255,0.08) 0%, transparent 50%),
-    var(--bg);
-}
-.auth-orb { position:fixed; border-radius:50%; filter:blur(80px); pointer-events:none; animation:orb-drift 12s ease-in-out infinite; }
-.auth-orb-1 { width:350px; height:350px; top:-80px; right:-60px; background:rgba(168,85,247,0.14); }
-.auth-orb-2 { width:300px; height:300px; bottom:-60px; left:-60px; background:rgba(0,229,160,0.09); animation-delay:-6s; animation-duration:16s; }
-@keyframes orb-drift { 0%,100%{transform:translate(0,0) scale(1);} 33%{transform:translate(25px,-18px) scale(1.05);} 66%{transform:translate(-18px,12px) scale(0.96);} }
-.auth-wrap { width:100%; max-width:400px; position:relative; z-index:1; }
-.auth-logo { display:flex; align-items:center; gap:10px; margin-bottom:28px; }
-.auth-logo .logo-mark { width:36px; height:36px; border-radius:10px; font-size:15px; }
-.auth-logo-name { font-size:20px; font-weight:800; letter-spacing:-.5px; }
-.auth-card {
-  background: rgba(13,14,20,0.75);
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: var(--r4); padding: 2rem;
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  backdrop-filter: blur(24px) saturate(160%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), var(--shadow), 0 0 0 1px rgba(168,85,247,0.08);
-}
-.auth-title {
-  font-size:22px; font-weight:800; letter-spacing:-.5px; margin-bottom:4px;
-  background: linear-gradient(135deg, #ffffff 30%, rgba(200,160,255,0.9));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-}
-.auth-sub { font-size:13px; color:var(--text2); margin-bottom:24px; }
-.field { margin-bottom:14px; }
-.field-label { font-size:12px; font-weight:600; color:var(--text2); margin-bottom:6px; }
-.field-input {
-  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--border2);
-  border-radius:var(--r); padding:10px 14px; font-size:13.5px; font-weight:500;
-  color:var(--text); font-family:inherit; outline:none;
-  transition:border-color .2s, box-shadow .2s;
-}
-.field-input::placeholder { color:var(--text3); }
-.field-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow), inset 0 1px 0 rgba(168,85,247,0.1); background:rgba(168,85,247,0.04); }
-.pw-wrap { position:relative; }
-.pw-wrap .field-input { padding-right:42px; }
-.pw-eye { position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--text3); cursor:pointer; font-size:16px; transition:color .15s; }
-.pw-eye:hover { color:var(--text2); }
-.auth-divider { height:1px; background:var(--border); margin:20px 0; }
-.auth-footer { text-align:center; font-size:13px; color:var(--text3); }
-.auth-footer a { color:var(--accent); font-weight:600; }
-.auth-footer a:hover { text-decoration:underline; }
-.w-full { width:100%; }
-.mt8 { margin-top:8px; }
-.hidden { display:none!important; }
-[data-theme="light"] .auth-card { background:rgba(255,255,255,0.85); border-color:rgba(0,0,0,0.08); box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,0.9); }
-[data-theme="light"] .auth-title { background:linear-gradient(135deg,#0f172a 30%,#7c3aed); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-[data-theme="light"] .field-input { background:var(--bg3); }
-[data-theme="light"] .field-input:focus { background:rgba(124,58,237,0.04); box-shadow:0 0 0 3px rgba(124,58,237,0.15); }
+  body{height:100vh;overflow:hidden;}
+  .auth{display:grid;grid-template-columns:1.05fr 1fr;height:100vh;}
+
+  .brand{position:relative;overflow:hidden;color:#fff;padding:54px 56px;display:flex;flex-direction:column;
+    background:
+      radial-gradient(700px 420px at 78% 8%,oklch(0.6 0.19 300/.55),transparent 62%),
+      radial-gradient(620px 460px at 8% 92%,oklch(0.58 0.15 200/.5),transparent 60%),
+      linear-gradient(155deg,oklch(0.4 0.16 300),oklch(0.28 0.12 305));}
+  .brand::after{content:"";position:absolute;inset:0;opacity:.5;pointer-events:none;
+    background-image:radial-gradient(circle at 1px 1px,oklch(1 0 0/.10) 1px,transparent 0);background-size:26px 26px;}
+  .b-logo{display:flex;align-items:center;gap:11px;font-weight:600;font-size:20px;position:relative;z-index:2;text-decoration:none;color:#fff;}
+  .b-mk{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;
+    background:oklch(1 0 0/.16);border:1px solid oklch(1 0 0/.25);backdrop-filter:blur(6px);}
+  .b-mid{position:relative;z-index:2;margin-top:auto;margin-bottom:auto;}
+  .b-tag{display:inline-flex;align-items:center;gap:9px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+    letter-spacing:.05em;color:oklch(0.92 0.04 250);background:oklch(1 0 0/.1);border:1px solid oklch(1 0 0/.18);
+    padding:7px 14px;border-radius:100px;margin-bottom:24px;}
+  .b-tag .d{width:7px;height:7px;border-radius:50%;background:oklch(0.85 0.13 145);box-shadow:0 0 10px oklch(0.85 0.13 145);}
+  .brand h1{font-size:clamp(32px,3.5vw,46px);font-weight:600;letter-spacing:-.025em;line-height:1.12;text-wrap:balance;}
+  .brand p.lead{font-size:17.5px;line-height:1.6;color:oklch(0.9 0.03 250);margin-top:18px;max-width:420px;text-wrap:pretty;}
+  .b-feats{display:flex;flex-direction:column;gap:15px;margin-top:34px;position:relative;z-index:2;}
+  .b-feat{display:flex;align-items:center;gap:14px;font-size:15.5px;color:oklch(0.94 0.02 250);}
+  .b-feat .fi{width:38px;height:38px;border-radius:11px;flex-shrink:0;display:grid;place-items:center;
+    background:oklch(1 0 0/.13);border:1px solid oklch(1 0 0/.2);}
+  .b-foot{position:relative;z-index:2;margin-top:auto;font-size:13.5px;color:oklch(0.82 0.03 250);}
+
+  .formside{display:flex;align-items:center;justify-content:center;padding:40px;overflow-y:auto;background:var(--bg);}
+  .formcard{width:100%;max-width:404px;}
+  .fc-top{text-align:center;margin-bottom:26px;}
+  .fc-top h2{font-size:27px;font-weight:600;letter-spacing:-.02em;}
+  .fc-top p{color:var(--muted);font-size:15px;margin-top:7px;}
+  .field{margin-bottom:15px;}
+  .field label{display:block;font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:7px;}
+  .field .inp{position:relative;}
+  .field .inp .ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--faint);pointer-events:none;}
+  .field input{width:100%;height:50px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);
+    padding:0 44px 0 44px;font-size:15px;color:var(--ink);transition:.18s;}
+  .field input::placeholder{color:var(--faint);}
+  .field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft);}
+  .field .eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--faint);width:32px;height:32px;
+    border-radius:8px;display:grid;place-items:center;background:none;}
+  .field .eye:hover{background:var(--soft);color:var(--muted);}
+  .meter{display:flex;gap:5px;margin-top:9px;}
+  .meter i{flex:1;height:5px;border-radius:100px;background:var(--line);transition:.25s;}
+  .meter i.on{background:linear-gradient(90deg,var(--ok),var(--ok-deep));}
+  .meter-l{font-size:12px;color:var(--faint);margin-top:6px;}
+  .submit{width:100%;margin-top:8px;}
+  .switch{text-align:center;margin-top:24px;font-size:14.5px;color:var(--muted);}
+  .switch a{color:var(--accent-deep);font-weight:600;text-decoration:none;}
+
+  #zenith-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--ink);color:#fff;
+    padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9999;
+    white-space:nowrap;box-shadow:var(--shadow-md);}
+  #zenith-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  #zenith-toast.toast-error{background:oklch(0.5 0.16 25);}
+
+  @media (max-width:880px){
+    body{overflow:auto;height:auto;}
+    .auth{grid-template-columns:1fr;height:auto;}
+    .brand{display:none;}
+    .formside{min-height:100vh;}
+  }
 </style>
 </head>
-<body>
-<div class="auth-bg"></div>
-<div class="auth-orb auth-orb-1"></div>
-<div class="auth-orb auth-orb-2"></div>
-<div id="zenith-toast"></div>
+<body data-fx=".brand .b-logo, .b-mid > *, .b-foot, .formcard > *">
+<script>
+(function(){var b=document.body,s=b.getAttribute('data-fx');if(!s)return;document.documentElement.classList.add('js-fx');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var st=document.createElement('style');st.textContent='.js-fx :is('+s+'){transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}.js-fx :is('+s+'):not(.fx-shown){opacity:0;transform:translateY(22px)}';document.head.appendChild(st);})();
+</script>
+<div class="auth">
 
-<div class="auth-wrap">
-  <div class="auth-logo">
-    <div class="logo-mark">Z</div>
-    <span class="auth-logo-name">ZENITH</span>
-  </div>
+  <!-- LEFT -->
+  <aside class="brand">
+    <a class="b-logo" href="landing.html"><span class="b-mk">Z</span>ZENITH</a>
+    <div class="b-mid">
+      <span class="b-tag"><span class="d"></span>เรียนเขียนโค้ดฟรี · ไม่ต้องลงโปรแกรม</span>
+      <h1>เริ่มเขียน Python<br/>ได้ภายใน 5 นาที</h1>
+      <p class="lead">สร้างบัญชีเพื่อบันทึกความคืบหน้า และเรียนต่อจากเครื่องไหนก็ได้</p>
+      <div class="b-feats">
+        <div class="b-feat"><span class="fi">📚</span>24 บทเรียน ตั้งแต่พื้นฐานถึง OOP</div>
+        <div class="b-feat"><span class="fi">🎯</span>Quiz ท้ายบททุกบท ปลดล็อกทีละขั้น</div>
+        <div class="b-feat"><span class="fi">☁️</span>ความคืบหน้าซิงก์ผ่านบัญชีของคุณ</div>
+      </div>
+    </div>
+    <div class="b-foot">© 2026 ZENITH · โครงงานเรียนรู้การเขียนโปรแกรม</div>
+  </aside>
 
-  <div class="auth-card">
-    <div class="auth-title">สร้างบัญชีใหม่</div>
-    <div class="auth-sub">เรียนฟรี ไม่ต้องใช้บัตรเครดิต</div>
-
-    <form id="register-form">
-      <div class="field">
-        <div class="field-label">Username</div>
-        <input class="field-input" type="text" id="reg-username" required placeholder="ชื่อผู้ใช้งาน">
+  <!-- RIGHT -->
+  <main class="formside">
+    <div class="formcard">
+      <div class="fc-top">
+        <h2>สร้างบัญชีใหม่</h2>
+        <p>เริ่มต้นเส้นทางนักเขียนโค้ดของคุณ</p>
       </div>
 
-      <div class="field">
-        <div class="field-label">Email Address</div>
-        <input class="field-input" type="email" id="reg-email" required placeholder="your@email.com">
-      </div>
+      <div id="zenith-toast"></div>
 
-      <div class="field">
-        <div class="field-label">Password</div>
-        <div class="pw-wrap">
-          <input class="field-input" type="password" id="reg-password" required placeholder="•••••••• (ขั้นต่ำ 6 ตัวอักษร)">
-          <span class="pw-eye" onclick="togglePw('reg-password',this)">
-            <i class="ti ti-eye-off eye-off"></i>
-            <i class="ti ti-eye eye-on hidden"></i>
-          </span>
+      <form id="register-form">
+        <div class="field">
+          <label>ชื่อที่ใช้แสดง</label>
+          <div class="inp">
+            <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+            <input type="text" id="reg-username" required placeholder="เช่น ใจดี โค้ดเก่ง" />
+          </div>
         </div>
-      </div>
+        <div class="field">
+          <label>อีเมล</label>
+          <div class="inp">
+            <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 5L2 7"></path></svg></span>
+            <input type="email" id="reg-email" required placeholder="you@example.com" />
+          </div>
+        </div>
+        <div class="field">
+          <label>รหัสผ่าน</label>
+          <div class="inp">
+            <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span>
+            <input type="password" id="reg-password" required placeholder="อย่างน้อย 6 ตัวอักษร" />
+            <button type="button" class="eye" id="eyeBtn" title="แสดง/ซ่อนรหัสผ่าน" aria-label="แสดง/ซ่อนรหัสผ่าน"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+          </div>
+          <div class="meter" id="meter"><i></i><i></i><i></i><i></i></div>
+          <div class="meter-l" id="meterL">ความปลอดภัยของรหัสผ่าน</div>
+        </div>
 
-      <button type="submit" id="reg-btn" class="btn btn-green btn-lg w-full mt8">
-        <i class="ti ti-user-plus"></i> สมัครสมาชิก
-      </button>
-    </form>
+        <button type="submit" id="reg-btn" class="btn btn-primary lg submit">สร้างบัญชี
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </form>
 
-    <div class="auth-divider"></div>
-    <div class="auth-footer">มีบัญชีอยู่แล้ว? <a href="login.html">เข้าสู่ระบบที่นี่</a></div>
-  </div>
+      <p class="switch">มีบัญชีอยู่แล้ว? <a href="login.html">เข้าสู่ระบบที่นี่</a></p>
+    </div>
+  </main>
 </div>
-
-<!-- Toast -->
-<style>
-#zenith-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9999;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.5)}
-#zenith-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-#zenith-toast.toast-ok{border-color:rgba(168,85,247,.3);color:var(--accent)}
-#zenith-toast.toast-error{border-color:rgba(255,91,91,.3);color:var(--red)}
-</style>
 
 <script type="module">
 import { registerUser, checkAuthState } from './assets/js/auth.js';
@@ -135,17 +152,21 @@ checkAuthState('auth_page');
 function showToast(msg, isError = false) {
   const t = document.getElementById('zenith-toast');
   t.textContent = msg;
-  t.className = isError ? 'show toast-error' : 'show toast-ok';
+  t.className = isError ? 'show toast-error' : 'show';
   setTimeout(() => t.className = '', 3200);
 }
 
-window.togglePw = function(id, el) {
-  const input = document.getElementById(id);
-  const isHidden = input.type === 'password';
-  input.type = isHidden ? 'text' : 'password';
-  el.querySelector('.eye-off').classList.toggle('hidden', isHidden);
-  el.querySelector('.eye-on').classList.toggle('hidden', !isHidden);
-};
+const pw = document.getElementById('reg-password'), eyeBtn = document.getElementById('eyeBtn');
+eyeBtn.addEventListener('click', () => { pw.type = pw.type === 'password' ? 'text' : 'password'; });
+
+const meter = document.getElementById('meter'), meterL = document.getElementById('meterL');
+const labels = ['อ่อนมาก', 'พอใช้', 'ดี', 'แข็งแรง'];
+pw.addEventListener('input', () => {
+  const v = pw.value; let s = 0;
+  if (v.length >= 8) s++; if (/[A-Z]/.test(v) || /[ก-๙]/.test(v)) s++; if (/[0-9]/.test(v)) s++; if (/[^A-Za-z0-9]/.test(v)) s++;
+  [...meter.children].forEach((i, idx) => i.classList.toggle('on', idx < s));
+  meterL.textContent = v ? ('ความปลอดภัย: ' + (labels[Math.max(0, s - 1)] || labels[0])) : 'ความปลอดภัยของรหัสผ่าน';
+});
 
 function translateAuthError(msg) {
   if (msg.includes('email-already-in-use')) return '❌ อีเมลนี้ถูกใช้งานไปแล้ว';
@@ -160,16 +181,17 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
   const email    = document.getElementById('reg-email').value.trim();
   const password = document.getElementById('reg-password').value;
   const btn      = document.getElementById('reg-btn');
-  btn.innerHTML = '<i class="ti ti-loader-2"></i> กำลังสร้างบัญชี...'; btn.disabled = true;
+  btn.textContent = 'กำลังสร้างบัญชี...'; btn.disabled = true;
   const result = await registerUser(email, password, username);
   if (result.success) {
     showToast('✓ สมัครสมาชิกสำเร็จ ยินดีต้อนรับ!');
-    setTimeout(() => window.location.href = 'dashboard.html', 1200);
+    setTimeout(() => window.location.href = 'index.html', 1000);
   } else {
     showToast(translateAuthError(result.error), true);
-    btn.innerHTML = '<i class="ti ti-user-plus"></i> สมัครสมาชิก'; btn.disabled = false;
+    btn.textContent = 'สร้างบัญชี'; btn.disabled = false;
   }
 });
 </script>
-<script src="assets/js/premium.js"></script>
-</body></html>
+<script src="assets/js/pystart-fx.js"></script>
+</body>
+</html>

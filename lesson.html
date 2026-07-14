@@ -1,581 +1,421 @@
-<!DOCTYPE html><html lang="th">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>บทเรียน — CodePath</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="_shared.css"><script src="assets/js/theme.js"></script><script src="assets/js/sidebar.js"></script>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>บทเรียน — ZENITH</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="assets/css/pystart.css" rel="stylesheet" />
+<script src="assets/js/theme.js"></script>
 <style>
-body { overflow: hidden; }
+  body{padding-bottom:0;}
+  .topbar{height:50px;}
+  .tb-back{display:flex;align-items:center;gap:8px;padding:0 16px;height:100%;border-right:1px solid var(--line);font-size:13px;color:var(--muted);font-weight:500;transition:color .15s,background .15s;white-space:nowrap;text-decoration:none;}
+  .tb-back:hover{color:var(--accent-deep);background:var(--accent-soft);}
+  .tb-logo{padding:0 14px;height:100%;border-right:1px solid var(--line);font-size:15px;}
+  .tb-mk{width:24px;height:24px;border-radius:6px;font-size:11px;}
+  .tb-crumb{padding:0 16px;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+  .tb-crumb .sep{opacity:.4;}
+  .tb-crumb .cur{color:var(--ink);font-weight:600;}
+  .chiplet{height:28px;padding:0 10px;border-radius:7px;font-size:12px;}
+  .tb-av{width:28px;height:28px;font-size:11px;}
 
-/* ── 2-column layout ── */
-.lesson-wrap { display: grid; grid-template-columns: 240px 1fr; height: 100vh; }
+  .prog-strip{position:sticky;top:50px;z-index:49;height:2px;background:var(--line-soft);}
+  .prog-strip .pf{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;transition:width .5s ease;}
 
-/* ════ LEFT: Lesson Nav Sidebar ════ */
-.lesson-nav { background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
-.lnav-head { padding: 1rem; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-.lnav-back { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); cursor: pointer; margin-bottom: .75rem; transition: color .12s; }
-.lnav-back:hover { color: var(--text); }
-.lnav-course { font-size: 13.5px; font-weight: 700; margin-bottom: 4px; }
-.lnav-prog { display: flex; align-items: center; gap: 8px; }
-.lnav-list { flex: 1; overflow-y: auto; padding: .5rem 0; }
-.l-item { display: flex; align-items: center; gap: 10px; padding: 9px 1rem; font-size: 13px; cursor: pointer; color: var(--text2); transition: background .12s; }
-.l-item:hover { background: var(--bg3); color: var(--text); }
-.l-item.active { background: var(--accent-g2); color: var(--accent); }
-.l-item.locked { opacity: .45; cursor: not-allowed; }
-.l-num { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
-.l-num.done { background: rgba(0,229,160,.15); border-color: var(--green3); color: var(--green); }
-.l-num.cur  { background: var(--accent); border-color: var(--accent); color: #fff; }
-.l-title { flex: 1; }
-.l-min { font-size: 10.5px; color: var(--text3); }
+  .page-wrap{display:flex;min-height:calc(100vh - 52px);}
+  .sidebar{width:260px;flex-shrink:0;background:oklch(0.128 0.015 262);border-right:1px solid oklch(0.21 0.015 262);
+    display:flex;flex-direction:column;position:sticky;top:52px;height:calc(100vh - 52px);overflow:hidden;
+    transition:width .25s cubic-bezier(.4,0,.2,1);z-index:40;}
+  .sidebar.closed{width:0;border-right:none;}
+  .sb-head{padding:18px 16px 14px;border-bottom:1px solid oklch(0.21 0.015 262);flex-shrink:0;}
+  .sb-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:oklch(0.48 0.02 264);margin-bottom:4px;font-family:'IBM Plex Mono',monospace;}
+  .sb-course{font-size:13.5px;font-weight:600;color:oklch(0.88 0.01 260);line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sb-body{flex:1;overflow-y:auto;padding:8px 0;}
+  .sb-body::-webkit-scrollbar{width:0;}
+  .sb-item{display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .15s;position:relative;min-width:0;white-space:nowrap;text-decoration:none;}
+  .sb-item:hover{background:oklch(0.158 0.016 262);}
+  .sb-item.active{background:oklch(0.62 0.19 300 / .18);}
+  .sb-item.active::before{content:'';position:absolute;left:0;top:5px;bottom:5px;width:3px;border-radius:0 2px 2px 0;background:var(--accent);}
+  .sb-item.locked{opacity:.45;cursor:not-allowed;pointer-events:none;}
+  .sb-ic{width:22px;height:22px;border-radius:6px;flex-shrink:0;display:grid;place-items:center;font-size:10px;font-family:'IBM Plex Mono',monospace;font-weight:700;border:1.5px solid;}
+  .sb-ic.done{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok-deep);}
+  .sb-ic.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .sb-ic.lock{background:oklch(0.19 0.015 262);border-color:oklch(0.21 0.015 262);color:oklch(0.48 0.02 264);}
+  .sb-tx{flex:1;min-width:0;}
+  .sb-num{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:oklch(0.48 0.02 264);margin-bottom:1px;}
+  .sb-name{font-size:12.5px;color:oklch(0.88 0.01 260);font-weight:500;overflow:hidden;text-overflow:ellipsis;}
+  .sb-item.active .sb-name{color:#fff;font-weight:600;}
+  .sb-foot{border-top:1px solid oklch(0.21 0.015 262);padding:13px 16px;flex-shrink:0;}
+  .xp-label{display:flex;justify-content:space-between;font-size:11.5px;color:oklch(0.48 0.02 264);margin-bottom:6px;}
+  .xp-label strong{color:oklch(0.88 0.01 260);}
+  .xp-track{height:4px;border-radius:100px;background:oklch(0.19 0.015 262);overflow:hidden;}
+  .xp-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;transition:width .5s ease;}
+  .sb-toggle{position:fixed;top:62px;left:12px;z-index:45;width:32px;height:32px;border-radius:8px;
+    background:var(--card);border:1px solid var(--line);display:grid;place-items:center;cursor:pointer;
+    transition:background .15s,border-color .15s,left .25s;box-shadow:var(--shadow-sm);}
+  .sb-toggle:hover{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent-deep);}
 
-/* ════ RIGHT: Content Area ════ */
-.lesson-right { display: flex; flex-direction: column; height: 100vh; overflow: hidden; background: var(--bg); }
+  .content-wrap{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden;}
+  .content{max-width:780px;margin:0 auto;padding:44px 32px 80px;}
 
-/* Sticky header */
-.lc-header { display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 56px; background: var(--bg2); border-bottom: 1px solid var(--border); flex-shrink: 0; }
-.lc-title  { font-size: 15px; font-weight: 800; letter-spacing: -.4px; }
-.lc-meta   { font-size: 11px; color: var(--text3); margin-top: 2px; }
-.lc-header-right { display: flex; align-items: center; gap: 10px; }
+  .step-pill{display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border-radius:100px;background:var(--accent-soft);border:1px solid var(--accent-line);font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:16px;}
+  .step-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
 
-/* Thin progress bar */
-.lc-lesson-progress { height: 3px; background: var(--bg3); flex-shrink: 0; }
-.lc-lesson-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .l-title{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:12px;}
+  .l-desc{font-size:16px;line-height:1.8;color:var(--muted);margin-bottom:26px;}
 
-/* Scroll container */
-.lc-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; }
-.lc-inner  { max-width: 820px; margin: 0 auto; padding: 2rem 2rem 5rem; }
+  .sdiv{border:none;height:1px;background:var(--line-soft);margin:32px 0;}
 
-/* ════ Section wrapper ════ */
-.ls-section { margin-bottom: 2rem; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-.ls-sec-head { display: flex; align-items: center; gap: 10px; padding: .875rem 1.25rem; background: var(--bg2); border-bottom: 1px solid var(--border); }
-.ls-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; background: var(--bg3); border: 1px solid var(--border); flex-shrink: 0; }
-.ls-sec-label { font-size: 13px; font-weight: 700; letter-spacing: -.2px; }
-.ls-sec-tag { margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 9px; border-radius: 20px; color: var(--text3); background: var(--bg3); border: 1px solid var(--border); white-space: nowrap; }
-.ls-sec-body { padding: 1.375rem; }
+  .inline-code{margin:18px 0 24px;border-radius:11px;overflow:hidden;border:1px solid var(--edl);box-shadow:var(--shadow-md);}
+  .ic-bar{display:flex;align-items:center;gap:6px;padding:9px 14px;background:var(--ed2);border-bottom:1px solid var(--edl);}
+  .ic-dot{width:9px;height:9px;border-radius:50%;}
+  .ic-fname{margin-left:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--eddim);}
+  .ic-body{padding:16px 20px;font-family:'IBM Plex Mono',monospace;font-size:13.5px;line-height:1.85;white-space:pre;color:var(--edtx);background:var(--ed);overflow-x:auto;}
+  .ic-body .k{color:var(--kw);} .ic-body .f{color:var(--fn);} .ic-body .s{color:var(--str);} .ic-body .n{color:var(--num);} .ic-body .c{color:var(--cmt);}
 
-/* ════ Section 1: Objective ════ */
-.objective-box { background: var(--accent-g); border: 1px solid var(--accent-border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 1rem 1.125rem; }
-.objective-box p { font-size: 14px; color: var(--text2); line-height: 1.75; margin: 0 0 10px; }
-.obj-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.obj-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: var(--accent-g2); border: 1px solid var(--accent-border); color: var(--accent); }
+  .qty{display:flex;align-items:center;gap:9px;margin-bottom:16px;}
+  .qty .sn{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;background:linear-gradient(140deg,var(--warm),var(--warm-deep));flex-shrink:0;}
+  .qty .st{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-deep);}
 
-/* ════ Section 2: Narrative ════ */
-.ep-h  { font-size: 18px; font-weight: 800; letter-spacing: -.5px; margin-bottom: .875rem; }
-.ep-h2 { font-size: 14px; font-weight: 700; margin: 1.75rem 0 .75rem; display: flex; align-items: center; gap: 7px; }
-.ep-h2::before { content: ''; display: block; width: 3px; height: 14px; background: var(--accent); border-radius: 2px; }
-.ep-p  { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: .875rem; }
-ic { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg4); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; color: var(--green); }
-.callout { background: var(--bg3); border: 1px solid var(--border); border-left: 3px solid; border-radius: 10px; padding: 1.125rem; margin: 1.125rem 0; }
-.callout.green { border-left-color: var(--green); }
-.callout.blue  { border-left-color: var(--blue);  }
-.callout.amber { border-left-color: var(--amber); }
-.callout-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
-.callout.green .callout-label { color: var(--green); }
-.callout.blue  .callout-label { color: var(--blue);  }
-.callout.amber .callout-label { color: var(--amber); }
-.callout p { font-size: 13.5px; color: var(--text2); line-height: 1.65; }
-.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.25rem; }
-.method-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 9px; padding: 12px; }
-.method-name { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
-.method-desc { font-size: 12px; color: var(--text3); }
+  .q-card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:20px 22px;}
+  .q-card.answered{border-color:var(--line-soft);}
+  .q-text{font-size:16px;font-weight:600;color:var(--ink);line-height:1.5;margin-bottom:14px;}
+  .q-opts{display:flex;flex-direction:column;gap:8px;}
+  .q-opt{display:flex;align-items:center;gap:11px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;font-size:14.5px;color:var(--ink);transition:border-color .15s,background .15s;text-align:left;}
+  .q-opt:hover:not(:disabled){border-color:var(--accent-line);background:var(--accent-soft);}
+  .q-opt .q-ic{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);flex-shrink:0;display:grid;place-items:center;font-size:10px;transition:.15s;}
+  .q-opt.correct{border-color:var(--ok-line);background:var(--ok-soft);color:var(--ok-deep);cursor:default;}
+  .q-opt.correct .q-ic{background:var(--ok);border-color:var(--ok);color:#fff;}
+  .q-opt.wrong{border-color:oklch(0.86 0.08 20);background:oklch(0.97 0.02 20);color:oklch(0.45 0.12 22);cursor:default;}
+  .q-opt.wrong .q-ic{background:oklch(0.7 0.15 22);border-color:oklch(0.7 0.15 22);color:#fff;}
 
-/* ════ Section 3: Code Example ════ */
-.code-example-wrap { background: var(--bg); border-radius: 10px; overflow: hidden; border: 1px solid var(--border2); }
-.ce-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 0 1rem; height: 40px; background: var(--bg3); border-bottom: 1px solid var(--border); }
-.ce-dots { display: flex; gap: 5px; }
-.ce-dot  { width: 10px; height: 10px; border-radius: 50%; }
-.ce-filename { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text3); }
-.copy-btn { display: flex; align-items: center; gap: 5px; padding: 4px 10px; background: transparent; border: 1px solid var(--border2); color: var(--text3); border-radius: 6px; font-size: 12px; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: all .12s; }
-.copy-btn:hover { background: var(--bg4); color: var(--text); }
-.copy-btn.copied { color: var(--green); border-color: var(--green3); }
-.ce-body { padding: 1rem 1.125rem; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.9; overflow-x: auto; color: var(--text2); white-space: pre; }
-.kw  { color: #7DD3FC; }
-.fn  { color: var(--blue); }
-.str { color: var(--amber); }
-.num { color: var(--pink); }
-.cm  { color: var(--text3); font-style: italic; }
+  .actionbar{display:flex;align-items:center;gap:12px;margin-top:22px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);flex-wrap:wrap;}
+  .ab-status{display:flex;align-items:center;gap:11px;flex:1;min-width:200px;}
+  .ab-ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--soft);color:var(--faint);flex-shrink:0;}
+  .ab-ic.ok{background:var(--ok-soft);color:var(--ok-deep);}
+  .ab-tx b{display:block;font-size:14px;font-weight:600;}
+  .ab-tx span{font-size:12.5px;color:var(--muted);}
 
-/* ════ Section 4: Try It Yourself ════ */
-.ls-section.ls-try { border-color: rgba(168,85,247,.22); }
-.ls-section.ls-try .ls-sec-head { background: linear-gradient(135deg, rgba(168,85,247,.07) 0%, var(--bg2) 60%); }
-.try-editor-head { display: flex; align-items: center; justify-content: space-between; padding: 0 1rem; height: 42px; background: var(--bg3); border-bottom: 1px solid var(--border); }
-.try-filename { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 7px; }
-.try-lang-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; background: var(--green-g); border: 1px solid var(--green3); color: var(--green); border-radius: 4px; letter-spacing: .04em; }
-.try-actions { display: flex; align-items: center; gap: 6px; }
-.reset-btn { display: flex; align-items: center; gap: 5px; padding: 0 10px; height: 30px; background: transparent; border: 1px solid var(--border2); color: var(--text2); border-radius: 7px; font-size: 12px; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: all .12s; }
-.reset-btn:hover { background: var(--bg3); color: var(--text); }
-.run-btn { display: flex; align-items: center; gap: 6px; padding: 0 16px; height: 30px; background: var(--accent); color: #fff; border: none; border-radius: 7px; font-size: 12.5px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: background .12s; }
-.run-btn:hover { background: var(--accent2); }
-.run-btn.running { background: var(--bg4); color: var(--text2); border: 1px solid var(--border2); }
-textarea.code-editor { display: block; width: 100%; min-height: 220px; padding: 1rem 1.125rem; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.9; color: var(--text); background: var(--bg); border: none; outline: none; resize: vertical; white-space: pre; overflow-x: auto; }
-textarea.code-editor:focus { box-shadow: inset 0 0 0 1.5px var(--accent-border); }
-.try-output { border-top: 1px solid var(--border); }
-.try-out-head { display: flex; align-items: center; gap: 8px; padding: 0 1rem; height: 36px; background: var(--bg2); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text3); }
-.out-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--bg5); }
-.out-dot.running { background: var(--amber); animation: pulse 1s infinite; }
-.out-dot.done    { background: var(--green); }
-.out-dot.err     { background: var(--red); }
-.try-out-body { padding: .875rem 1rem; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.8; min-height: 72px; max-height: 180px; overflow-y: auto; }
-.out-line-ok  { color: var(--green); }
-.out-line-err { color: var(--red); }
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(28px);z-index:60;display:flex;align-items:center;gap:11px;padding:11px 18px 11px 12px;border-radius:13px;background:var(--card);border:1px solid var(--ok-line);opacity:0;pointer-events:none;box-shadow:var(--shadow-md);transition:transform .38s cubic-bezier(.2,.7,.2,1),opacity .28s;}
+  .toast.show{transform:translateX(-50%);opacity:1;}
+  .toast .t-ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:#fff;font-size:16px;background:linear-gradient(140deg,var(--ok),var(--ok-deep));flex-shrink:0;}
+  .toast b{font-size:13px;display:block;line-height:1.3;}
+  .toast span{font-size:12px;color:var(--muted);}
+  .confetti{position:fixed;inset:0;pointer-events:none;z-index:55;overflow:hidden;}
+  .confetti i{position:absolute;top:-12px;width:8px;height:13px;border-radius:2px;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(105vh) rotate(600deg);}}
 
-/* ════ Section 5: Quiz ════ */
-.quiz-q { font-size: 15px; font-weight: 700; line-height: 1.6; margin-bottom: 1.25rem; padding: 1rem 1.125rem; background: var(--bg3); border-radius: 10px; border: 1px solid var(--border); }
-.quiz-q-label { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 7px; }
-.quiz-opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.25rem; }
-.quiz-opt { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1.5px solid var(--border2); border-radius: 10px; cursor: pointer; transition: all .15s; background: var(--bg2); font-size: 14px; user-select: none; }
-.quiz-opt:hover { border-color: var(--accent-border); background: var(--accent-g); }
-.quiz-opt.selected { border-color: var(--accent); background: var(--accent-g2); }
-.quiz-opt.correct  { border-color: var(--green); background: var(--green-g); color: var(--green) !important; pointer-events: none; }
-.quiz-opt.wrong    { border-color: var(--red); background: rgba(255,91,91,.07); color: var(--red) !important; pointer-events: none; }
-.quiz-opt-letter { width: 26px; height: 26px; border-radius: 50%; background: var(--bg3); border: 1.5px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; transition: all .15s; }
-.quiz-opt.selected .quiz-opt-letter { background: var(--accent); border-color: var(--accent); color: #fff; }
-.quiz-opt.correct  .quiz-opt-letter { background: var(--green); border-color: var(--green); color: #fff; }
-.quiz-opt.wrong    .quiz-opt-letter { background: var(--red);   border-color: var(--red);   color: #fff; }
-.quiz-submit { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; padding: 12px; background: var(--accent); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: background .15s; }
-.quiz-submit:hover { background: var(--accent2); }
-.quiz-submit:disabled { background: var(--bg4); color: var(--text3); cursor: not-allowed; }
-.quiz-feedback { margin-top: 12px; padding: 1rem 1.125rem; border-radius: 10px; font-size: 13.5px; line-height: 1.7; display: none; }
-.quiz-feedback.show { display: block; }
-.quiz-feedback.ok  { background: var(--green-g); border: 1px solid var(--green3); color: var(--text2); }
-.quiz-feedback.no  { background: rgba(255,91,91,.08); border: 1px solid rgba(255,91,91,.2); color: var(--text2); }
-.xp-pop { display: inline-block; font-size: 18px; font-weight: 800; color: var(--green); animation: xpPop .45s cubic-bezier(.34,1.56,.64,1); }
-@keyframes xpPop { from { transform: scale(0) translateY(8px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
-
-/* ════ Footer Nav ════ */
-.lc-footer-nav { display: flex; align-items: center; justify-content: space-between; padding: 2.5rem 0 0; gap: 1rem; }
-.lc-step-info { font-size: 12px; color: var(--text3); text-align: center; }
-.lc-step-dots { display: flex; gap: 4px; justify-content: center; margin-top: 6px; }
-.lc-step-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bg5); transition: all .2s; }
-.lc-step-dot.done { background: var(--green3); }
-.lc-step-dot.cur  { background: var(--accent); width: 18px; border-radius: 3px; }
-
-/* ── Shared utils ── */
-.prog-track { height: 4px; background: var(--bg4); border-radius: 2px; overflow: hidden; }
-.prog-fill  { height: 100%; border-radius: 2px; }
-.flex { display: flex; } .gap8 { gap: 8px; } .f11 { font-size: 11px; } .muted { color: var(--text3); }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-@keyframes spin   { from{transform:rotate(0)} to{transform:rotate(360deg)} }
-
-/* ── Dynamic lesson system ── */
-.hidden { display: none !important; }
-/* Sidebar items rendered by main.js */
-.sidebar-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 1rem; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 0; transition: background .12s; color: var(--text2); }
-.sidebar-item:hover { background: var(--bg3); color: var(--text); }
-.active-lesson { background: var(--accent-g2) !important; color: var(--accent) !important; }
-.text-gray-400 { color: var(--text3); }
-.text-zinc-700 { color: var(--text4); opacity: .5; cursor: not-allowed; }
-/* Quiz option buttons rendered by main.js */
-.option-btn { width: 100%; text-align: left; padding: 12px 16px; background: var(--bg2); border: 1.5px solid var(--border2); border-radius: 10px; color: var(--text); font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 0; margin-bottom: 8px; }
-.option-btn:hover:not(:disabled) { border-color: var(--accent-border); background: var(--accent-g); }
-.option-btn.correct-glow { background: var(--green-g) !important; border-color: var(--green) !important; color: var(--green); }
-.option-btn .text-\[\#a855f7\], .option-btn span:first-child { color: var(--accent); font-weight: 800; margin-right: 8px; }
-.option-btn.wrong-shake { animation: optShake .4s ease; }
-@keyframes optShake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
-#optionsContainer { margin-bottom: 1rem; }
-#quizFeedback { display: block !important; min-height: 0; font-size: 14px; margin-top: 10px; }
-#quizFeedback:empty { padding: 0 !important; margin: 0 !important; }
-#startQuizBtn { display: none !important; }
+  @media(max-width:780px){.tb-crumb{display:none;} .content{padding:32px 20px 60px;}}
 </style>
 </head>
 <body>
-<div class="lesson-wrap">
 
-  <!-- ══ LEFT: Lesson List Sidebar ══ -->
-  <div class="lesson-nav">
-    <div class="lnav-head">
-      <div class="lnav-back" style="justify-content:space-between">
-        <span onclick="location.href='index.html'" style="display:flex;align-items:center;gap:6px;cursor:pointer">
-          <i class="ti ti-arrow-left" style="font-size:14px"></i> <span id="sidebarTitle">กำลังโหลด...</span>
-        </span>
-        <button class="btn btn-sm btn-ghost" id="btn-logout" title="ออกจากระบบ"><i class="ti ti-logout"></i></button>
-      </div>
-      <div class="lnav-course">📚 บทเรียนทั้งหมด</div>
-      <div class="lnav-prog">
-        <div class="prog-track" style="flex:1"><div class="prog-fill" id="sidebarProgress" style="width:0%;background:var(--green)"></div></div>
-        <span class="f11 muted" id="progressText">0/0</span>
-      </div>
+<header class="topbar">
+  <a class="tb-back" href="index.html">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    หลักสูตร
+  </a>
+  <a class="tb-logo tb-logo" href="dashboard.html" style="display:flex;align-items:center;gap:8px;font-weight:600;"><span class="tb-mk">Z</span>ZENITH</a>
+  <div class="tb-crumb">
+    <span id="crumb-unit">กำลังโหลด...</span>
+    <span class="sep">›</span>
+    <span class="cur" id="crumb-lesson"></span>
+  </div>
+  <div class="tb-right">
+    <a class="tb-av" id="top-avatar" href="profile.html">?</a>
+  </div>
+</header>
+<div class="prog-strip"><div class="pf" id="prog-fill"></div></div>
+
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <div class="sb-title" id="sb-unit-label">หน่วยที่ 1</div>
+      <div class="sb-course" id="sb-unit-title">พื้นฐาน Python</div>
     </div>
-    <div class="lnav-list" id="lessonList">
-      <div class="l-item"><div class="l-num done"><i class="ti ti-check" style="font-size:10px"></i></div><span class="l-title">Hello World</span><span class="l-min">3 นาที</span></div>
-      <div class="l-item"><div class="l-num done"><i class="ti ti-check" style="font-size:10px"></i></div><span class="l-title">ตัวแปรและชนิดข้อมูล</span><span class="l-min">5 นาที</span></div>
-      <div class="l-item"><div class="l-num done"><i class="ti ti-check" style="font-size:10px"></i></div><span class="l-title">String Methods</span><span class="l-min">8 นาที</span></div>
-      <div class="l-item"><div class="l-num done"><i class="ti ti-check" style="font-size:10px"></i></div><span class="l-title">เงื่อนไข if/elif/else</span><span class="l-min">7 นาที</span></div>
-      <div class="l-item active"><div class="l-num cur">5</div><span class="l-title">Lists & Loops</span><span class="l-min">12 นาที</span></div>
-      <div class="l-item"><div class="l-num">6</div><span class="l-title">Dictionary</span><span class="l-min">10 นาที</span></div>
-      <div class="l-item"><div class="l-num">7</div><span class="l-title">Functions & Scope</span><span class="l-min">15 นาที</span></div>
-      <div class="l-item"><div class="l-num">8</div><span class="l-title">Higher-Order Fn</span><span class="l-min">12 นาที</span></div>
-      <div class="l-item locked"><div class="l-num"><i class="ti ti-lock" style="font-size:10px;color:var(--text3)"></i></div><span class="l-title">Classes & OOP</span><span class="l-min">20 นาที</span></div>
-      <div class="l-item locked"><div class="l-num"><i class="ti ti-lock" style="font-size:10px;color:var(--text3)"></i></div><span class="l-title">Modules & Packages</span><span class="l-min">18 นาที</span></div>
-      <div class="l-item locked"><div class="l-num"><i class="ti ti-lock" style="font-size:10px;color:var(--text3)"></i></div><span class="l-title">File I/O</span><span class="l-min">14 นาที</span></div>
-      <div class="l-item locked"><div class="l-num"><i class="ti ti-lock" style="font-size:10px;color:var(--text3)"></i></div><span class="l-title">Error Handling</span><span class="l-min">10 นาที</span></div>
+    <div class="sb-body" id="sb-body"></div>
+    <div class="sb-foot">
+      <div class="xp-label"><span>ความคืบหน้ารวม</span><strong id="xp-label">0/24</strong></div>
+      <div class="xp-track"><div class="xp-fill" id="xp-fill"></div></div>
+    </div>
+  </aside>
+
+  <div class="content-wrap">
+    <div class="content">
+
+      <div class="step-pill"><span class="step-dot"></span><span id="step-label">บทที่ 1 จาก 24</span></div>
+      <h1 class="l-title" id="l-title">กำลังโหลด...</h1>
+      <p class="l-desc" id="l-desc"></p>
+
+      <div class="inline-code" id="code-wrap" style="display:none">
+        <div class="ic-bar"><span class="ic-dot" style="background:oklch(0.72 0.16 25)"></span><span class="ic-dot" style="background:oklch(0.84 0.13 90)"></span><span class="ic-dot" style="background:oklch(0.76 0.14 150)"></span><span class="ic-fname">example.py</span></div>
+        <div class="ic-body" id="code-body"></div>
+      </div>
+
+      <hr class="sdiv" />
+
+      <div class="qty"><span class="sn">Q</span><span class="st">แบบทดสอบท้ายบท</span></div>
+      <h2 style="font-size:20px;font-weight:700;margin-bottom:6px;">ทบทวนความเข้าใจ</h2>
+      <p style="color:var(--muted);font-size:14.5px;margin-bottom:18px;">ตอบให้ถูกต้องเพื่อปลดล็อกบทถัดไป</p>
+
+      <div class="q-card" id="q-card">
+        <div class="q-text" id="q-text"></div>
+        <div class="q-opts" id="q-opts"></div>
+      </div>
+
+      <div class="actionbar">
+        <div class="ab-status">
+          <div class="ab-ic" id="ab-ic">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          </div>
+          <div class="ab-tx"><b id="ab-title">ยังไม่ได้ตอบ</b><span id="ab-sub">เลือกคำตอบด้านบน</span></div>
+        </div>
+        <button class="btn btn-primary" id="next-btn" disabled>บทถัดไป
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+
     </div>
   </div>
+</div>
 
-  <!-- ══ RIGHT: Lesson Content ══ -->
-  <div class="lesson-right">
+<button class="sb-toggle" id="sbToggle" title="เปิด/ปิดเมนู">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
 
-    <!-- Sticky Header -->
-    <div class="lc-header">
-      <div>
-        <div class="lc-title" id="lessonTitle">กำลังโหลด...</div>
-        <div class="lc-meta">Python · บทที่ 5 จาก 24 · ⏱ 12 นาที</div>
-      </div>
-      <div class="lc-header-right">
-        <span class="badge badge-green">+50 XP</span>
-      </div>
-    </div>
-    <div class="lc-lesson-progress"><div class="lc-lesson-fill" style="width:20.8%"></div></div>
+<div class="toast" id="toast">
+  <div class="t-ic">🎉</div>
+  <div><b>ถูกต้อง! เก่งมาก</b><span id="toast-sub">ปลดล็อกบทถัดไปแล้ว</span></div>
+</div>
 
-    <!-- Scrollable 5-Section Content -->
-    <div class="lc-scroll">
-      <div class="lc-inner">
-
-        <!-- ─ 1. เป้าหมายการเรียนรู้ ─ -->
-        <div class="ls-section">
-          <div class="ls-sec-head">
-            <div class="ls-icon">🎯</div>
-            <span class="ls-sec-label">เป้าหมายการเรียนรู้</span>
-            <span class="ls-sec-tag">Learning Objective</span>
-          </div>
-          <div class="ls-sec-body">
-            <div class="objective-box">
-              <p>บทนี้คุณจะได้เรียนรู้วิธีใช้ <strong>List</strong> เพื่อเก็บข้อมูลหลายค่าในตัวแปรเดียว และใช้ <strong>for loop</strong> วนซ้ำผ่านข้อมูลอย่างมีประสิทธิภาพแบบ Pythonic style รวมถึง <strong>enumerate()</strong> และ <strong>range()</strong> ที่ใช้งานได้จริงในโปรเจกต์</p>
-              <div class="obj-tags">
-                <span class="obj-tag">List [ ]</span>
-                <span class="obj-tag">for loop</span>
-                <span class="obj-tag">enumerate()</span>
-                <span class="obj-tag">range()</span>
-                <span class="obj-tag">index</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ─ 2. เนื้อหา ─ -->
-        <div class="ls-section">
-          <div class="ls-sec-head">
-            <div class="ls-icon">📖</div>
-            <span class="ls-sec-label">เนื้อหา</span>
-          </div>
-          <div class="ls-sec-body">
-            <div class="ep-h" id="lessonTopicTitle">กำลังโหลด...</div>
-            <p class="ep-p" id="lessonDesc">กำลังโหลดเนื้อหา...</p>
-
-            <div class="callout green">
-              <div class="callout-label">💡 สำคัญมาก</div>
-              <p>Index เริ่มที่ <ic>0</ic> เสมอ — ไม่ใช่ 1! สมาชิกตัวแรกคือ <ic>list[0]</ic> และตัวสุดท้ายคือ <ic>list[-1]</ic></p>
-            </div>
-
-            <p class="ep-p">สร้าง list ด้วยวงเล็บเหลี่ยม <ic>[]</ic> คั่นด้วยจุลภาค สามารถเก็บข้อมูลต่างชนิดกันได้ในตัวแปรเดียวกัน</p>
-
-            <div class="ep-h2">List Methods ที่ใช้บ่อย</div>
-            <div class="method-grid">
-              <div class="method-card">
-                <div class="method-name" style="color:var(--green)"><ic>.append(x)</ic></div>
-                <div class="method-desc">เพิ่มสมาชิกท้าย list</div>
-              </div>
-              <div class="method-card">
-                <div class="method-name" style="color:var(--blue)"><ic>.remove(x)</ic></div>
-                <div class="method-desc">ลบสมาชิกตัวแรกที่เจอ</div>
-              </div>
-              <div class="method-card">
-                <div class="method-name" style="color:var(--amber)"><ic>len(list)</ic></div>
-                <div class="method-desc">นับจำนวนสมาชิก</div>
-              </div>
-              <div class="method-card">
-                <div class="method-name" style="color:var(--purple)"><ic>.sort()</ic></div>
-                <div class="method-desc">เรียงลำดับ in-place</div>
-              </div>
-            </div>
-
-            <div class="ep-h2">for Loop — วนซ้ำแบบ Pythonic</div>
-            <p class="ep-p"><ic>for</ic> loop ใน Python ออกแบบมาให้สวยงาม วนผ่านทุกสมาชิกใน list โดยตรง ไม่ต้องใช้ index เลย</p>
-
-            <div class="callout blue">
-              <div class="callout-label">📌 Pattern ที่ควรจำ</div>
-              <p>ถ้าต้องการทั้ง index และ value ใช้ <ic>enumerate()</ic> — จะได้ทั้งคู่ในคราวเดียว แบบ Pythonic ที่สุด</p>
-            </div>
-
-            <div class="ep-h2">range() function</div>
-            <p class="ep-p"><ic>range(n)</ic> สร้างตัวเลข 0 ถึง n-1 ใช้เมื่อต้องการวนซ้ำตามจำนวนรอบ</p>
-            <p class="ep-p"><ic>range(start, stop, step)</ic> ควบคุมได้ละเอียดขึ้น เช่น <ic>range(0, 10, 2)</ic> คือ 0,2,4,6,8</p>
-          </div>
-        </div>
-
-        <!-- ─ 3. ตัวอย่างโค้ด ─ -->
-        <div class="ls-section">
-          <div class="ls-sec-head">
-            <div class="ls-icon">💻</div>
-            <span class="ls-sec-label">ตัวอย่างโค้ด</span>
-            <span class="ls-sec-tag">อ่านอย่างเดียว</span>
-          </div>
-          <div class="ls-sec-body">
-            <div id="codeContainer" class="code-example-wrap">
-              <div class="ce-toolbar">
-                <div style="display:flex;align-items:center;gap:9px">
-                  <div class="ce-dots">
-                    <div class="ce-dot" style="background:#FF5F57"></div>
-                    <div class="ce-dot" style="background:#FEBC2E"></div>
-                    <div class="ce-dot" style="background:#28C840"></div>
-                  </div>
-                  <span class="ce-filename">example.py</span>
-                </div>
-                <button class="copy-btn" id="copy-btn" onclick="copyCode()">
-                  <i class="ti ti-copy" style="font-size:13px"></i> Copy
-                </button>
-              </div>
-              <pre id="codeBlock" class="ce-body">// กำลังโหลดตัวอย่างโค้ด...</pre>
-            </div>
-          </div>
-        </div>
-
-        <!-- ─ 4. ลองทำเอง ─ -->
-        <div class="ls-section ls-try">
-          <div class="ls-sec-head">
-            <div class="ls-icon">✍️</div>
-            <span class="ls-sec-label">ลองทำเอง</span>
-            <span class="ls-sec-tag" style="color:var(--green);border-color:var(--green3);background:var(--green-g)">JavaScript · รันได้จริง</span>
-          </div>
-          <div class="try-editor-head">
-            <div class="try-filename">
-              <i class="ti ti-file-code" style="font-size:14px"></i>
-              main.js
-              <span class="try-lang-badge">JS</span>
-            </div>
-            <div class="try-actions">
-              <button class="reset-btn" onclick="resetCode()"><i class="ti ti-refresh" style="font-size:12px"></i> Reset</button>
-              <button class="run-btn" id="run-btn" onclick="runCode()"><i class="ti ti-player-play" style="font-size:12px"></i> ▶ Run</button>
-            </div>
-          </div>
-          <textarea class="code-editor" id="code-editor" spellcheck="false"></textarea>
-          <div class="try-output">
-            <div class="try-out-head">
-              <div class="out-dot" id="out-dot"></div>
-              Output
-              <span id="out-time" style="font-weight:400;font-size:10.5px;color:var(--text3);margin-left:4px"></span>
-              <span id="out-status" style="margin-left:auto;font-size:11px;font-weight:600"></span>
-            </div>
-            <div class="try-out-body" id="out-body">
-              <span style="color:var(--text4)">กด ▶ Run เพื่อรันโค้ด...</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- ─ 5. Quiz ─ -->
-        <div class="ls-section">
-          <div class="ls-sec-head">
-            <div class="ls-icon">✅</div>
-            <span class="ls-sec-label">Quiz</span>
-            <span class="ls-sec-tag" style="color:var(--amber);border-color:rgba(255,179,64,.3);background:var(--amber-g)">+50 XP เมื่อตอบถูก</span>
-          </div>
-          <div class="ls-sec-body">
-            <div class="quiz-q">
-              <span class="quiz-q-label">คำถาม</span>
-              <span id="questionText">กำลังโหลดคำถาม...</span>
-            </div>
-            <!-- Options rendered by main.js checkAns() -->
-            <div id="optionsContainer"></div>
-            <div class="quiz-feedback" id="quizFeedback"></div>
-            <!-- Hidden helpers for main.js compatibility -->
-            <button id="startQuizBtn" class="hidden" aria-hidden="true"></button>
-            <div id="quizSection" class="hidden" aria-hidden="true"></div>
-          </div>
-        </div>
-
-        <!-- ─ Navigation ─ -->
-        <div class="lc-footer-nav">
-          <button type="button" class="btn btn-ghost btn-sm" onclick="prevLesson()">
-            <i class="ti ti-arrow-left"></i> บทก่อนหน้า
-          </button>
-          <div class="lc-step-info">
-            <span id="stepInfo">บทที่ 1</span>
-          </div>
-          <button type="button" class="btn btn-green btn-sm hidden" id="nextLessonBtn" onclick="nextLesson()">
-            บทถัดไป <i class="ti ti-arrow-right"></i>
-          </button>
-        </div>
-
-      </div><!-- /lc-inner -->
-    </div><!-- /lc-scroll -->
-  </div><!-- /lesson-right -->
-</div><!-- /lesson-wrap -->
-
-<script>
-/* ── DYNAMIC COURSE LOADER ────────────────────────────── */
-(function () {
-    var params   = new URLSearchParams(window.location.search);
-    var course   = params.get('course') || localStorage.getItem('zenith_course') || 'python';
-    var lessonId = parseInt(params.get('id') || localStorage.getItem('zenith_lesson_id') || '1', 10) || 1;
-
-    window.courseType      = course;
-    window.currentLessonId = lessonId;
-    localStorage.setItem('zenith_course',    course);
-    localStorage.setItem('zenith_lesson_id', String(lessonId));
-
-    /* initCodeEditor — called by main.js after every updateUI() */
-    window.initCodeEditor = function (code, courseType) {
-        var editor = document.getElementById('code-editor');
-        if (editor) {
-            editor.value = code || '';
-            window._lessonStarterCode = code || '';
-        }
-
-        var BADGE = { python:'PY', javascript:'JS', cpp:'C++', java:'JAVA', html:'HTML', css:'CSS' };
-        var TFILE = { python:'main.py', javascript:'main.js', cpp:'main.cpp', java:'Main.java', html:'index.html', css:'style.css' };
-        var CFILE = { python:'example.py', javascript:'example.js', cpp:'example.cpp', java:'Example.java', html:'index.html', css:'style.css' };
-
-        var badge      = document.querySelector('.try-lang-badge');
-        var ceFilename = document.querySelector('.ce-filename');
-        var tryFn      = document.querySelector('.try-filename');
-
-        if (badge)      badge.textContent = BADGE[courseType] || courseType.toUpperCase();
-        if (ceFilename) ceFilename.textContent = CFILE[courseType] || 'example.txt';
-        if (tryFn) {
-            var icon = tryFn.querySelector('i');
-            var bdg  = tryFn.querySelector('.try-lang-badge');
-            tryFn.innerHTML = '';
-            if (icon) tryFn.appendChild(icon);
-            tryFn.appendChild(document.createTextNode(' ' + (TFILE[courseType] || 'main.txt') + ' '));
-            if (bdg) tryFn.appendChild(bdg);
-        }
-
-        /* Custom section updates — runs after every lesson change */
-        if (typeof courseData !== 'undefined' && courseData.lessons && typeof currentLessonId !== 'undefined') {
-            var lesson = courseData.lessons.find(function (l) { return l.id === currentLessonId; });
-            if (lesson) {
-                var cnt  = lesson.content['th'] || lesson.content[Object.keys(lesson.content)[0]];
-                var CNAME = { python:'Python', javascript:'JavaScript', cpp:'C++', java:'Java', html:'HTML', css:'CSS' };
-
-                var objP = document.querySelector('.objective-box p');
-                if (objP) objP.textContent = cnt.desc;
-
-                var topicTitleEl = document.getElementById('lessonTopicTitle');
-                if (topicTitleEl) topicTitleEl.textContent = cnt.title;
-
-                var metaEl = document.querySelector('.lc-meta');
-                if (metaEl) metaEl.textContent = (CNAME[courseType] || courseType) + ' · บทที่ ' + currentLessonId + ' จาก ' + courseData.lessons.length + ' · ⏱ 10 นาที';
-
-                var stepEl = document.getElementById('stepInfo');
-                if (stepEl) stepEl.textContent = 'บทที่ ' + currentLessonId + ' จาก ' + courseData.lessons.length;
-
-                var fillEl = document.querySelector('.lc-lesson-fill');
-                if (fillEl) fillEl.style.width = ((currentLessonId / courseData.lessons.length) * 100).toFixed(1) + '%';
-            }
-        }
-    };
-
-    /* Dynamically load course data file → then main.js */
-    function loadMainJs() {
-        var s = document.createElement('script');
-        s.src = 'assets/js/main.js';
-        s.onload = function () { if (typeof updateUI === 'function') updateUI(); };
-        document.head.appendChild(s);
-    }
-
-    var dataScript = document.createElement('script');
-    dataScript.src = 'assets/js/' + course + '_data.js';
-    dataScript.onload  = loadMainJs;
-    dataScript.onerror = function () {
-        window.courseType = 'python';
-        var fb = document.createElement('script');
-        fb.src = 'assets/js/python_data.js';
-        fb.onload = loadMainJs;
-        document.head.appendChild(fb);
-    };
-    document.head.appendChild(dataScript);
-})();
-
-/* ── Tab → 2 spaces ── */
-document.getElementById('code-editor').addEventListener('keydown', function (e) {
-    if (e.key !== 'Tab') return;
-    e.preventDefault();
-    var s = this.selectionStart, end = this.selectionEnd;
-    this.value = this.value.substring(0, s) + '  ' + this.value.substring(end);
-    this.selectionStart = this.selectionEnd = s + 2;
-});
-
-/* ── Reset editor ── */
-function resetCode() {
-    var editor = document.getElementById('code-editor');
-    if (editor) editor.value = window._lessonStarterCode || '';
-    document.getElementById('out-dot').className    = 'out-dot';
-    document.getElementById('out-time').textContent = '';
-    document.getElementById('out-status').textContent = '';
-    document.getElementById('out-body').innerHTML   = '<span style="color:var(--text4)">กด ▶ Run เพื่อรันโค้ด...</span>';
-}
-
-/* ── Copy code example ── */
-function copyCode() {
-    var block = document.getElementById('codeBlock');
-    var text  = block ? block.textContent.trim() : '';
-    if (!text) return;
-    navigator.clipboard.writeText(text).then(function () {
-        var btn = document.getElementById('copy-btn');
-        btn.innerHTML = '<i class="ti ti-check" style="font-size:13px"></i> Copied!';
-        btn.classList.add('copied');
-        setTimeout(function () {
-            btn.innerHTML = '<i class="ti ti-copy" style="font-size:13px"></i> Copy';
-            btn.classList.remove('copied');
-        }, 2000);
-    });
-}
-
-/* ── Run (JavaScript sandbox) ── */
-function runCode() {
-    var code   = document.getElementById('code-editor').value;
-    var btn    = document.getElementById('run-btn');
-    var dot    = document.getElementById('out-dot');
-    var body   = document.getElementById('out-body');
-    var timeEl = document.getElementById('out-time');
-    var statEl = document.getElementById('out-status');
-
-    btn.innerHTML = '<i class="ti ti-loader" style="font-size:12px;animation:spin .8s linear infinite"></i> Running...';
-    btn.classList.add('running');
-    dot.className = 'out-dot running';
-    body.innerHTML = '<span style="color:var(--text3)">Executing…</span>';
-    timeEl.textContent = '';
-    statEl.textContent = '';
-
-    var t0 = performance.now();
-    var outputs = [];
-
-    function print() {
-        outputs.push(Array.from(arguments).map(String).join(' '));
-    }
-
-    setTimeout(function () {
-        try {
-            eval(code); // jshint ignore:line
-            var ms = ((performance.now() - t0) / 1000).toFixed(2) + 's';
-            dot.className = 'out-dot done';
-            btn.innerHTML = '<i class="ti ti-player-play" style="font-size:12px"></i> ▶ Run';
-            btn.classList.remove('running');
-            timeEl.textContent = ms;
-            statEl.innerHTML = '<span style="color:var(--green)">✓ Success</span>';
-            body.innerHTML = outputs.length
-                ? outputs.map(function (l) { return '<div class="out-line-ok">' + esc(l) + '</div>'; }).join('')
-                : '<span style="color:var(--text4)">ไม่มี output — ลองเพิ่ม print() ดู</span>';
-        } catch (err) {
-            dot.className = 'out-dot err';
-            btn.innerHTML = '<i class="ti ti-player-play" style="font-size:12px"></i> ▶ Run';
-            btn.classList.remove('running');
-            statEl.innerHTML = '<span style="color:var(--red)">✗ Error</span>';
-            body.innerHTML = '<div class="out-line-err">❌ ' + esc(err.message) + '</div>';
-        }
-    }, 280);
-}
-
-function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-</script>
+<script src="assets/js/python_data.js"></script>
 <script type="module">
 import { auth } from './assets/js/firebase.js';
-import { signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-document.getElementById('btn-logout').addEventListener('click', () => {
-  if (confirm('ต้องการออกจากระบบ?')) {
-    signOut(auth).then(() => location.href = 'landing.html');
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { syncFromFirestore, saveToFirestore, saveQuizScore } from './assets/js/progress.js';
+
+const UNITS = [
+  { n:1, start:1,  end:6,  title:'พื้นฐาน Python' },
+  { n:2, start:7,  end:11, title:'ควบคุมทิศทาง' },
+  { n:3, start:12, end:16, title:'โครงสร้างข้อมูล' },
+  { n:4, start:17, end:20, title:'ฟังก์ชัน' },
+  { n:5, start:21, end:24, title:'OOP' },
+];
+const TOTAL = 24;
+const COURSE = 'python';
+
+const params = new URLSearchParams(location.search);
+const lessonId = Math.min(Math.max(parseInt(params.get('id')) || 1, 1), TOTAL);
+
+function getUnlocked() { return parseInt(localStorage.getItem(`zenith_progress_${COURSE}`) || '1'); }
+function getDone() { return Math.max(0, getUnlocked() - 1); }
+function unitOf(id) { return UNITS.find(u => id >= u.start && id <= u.end); }
+
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+const KW=new Set(['for','in','while','if','elif','else','def','return','import','from','as','and','or','not','True','False','None','break','continue','pass','class','with','try','except','finally','global']);
+const BI=new Set(['print','input','range','int','str','float','len','list','dict','set','tuple','sum','min','max','abs','round','type','sorted']);
+function highlight(code){
+  return code.split('\n').map(line=>{
+    let out='',i=0;
+    while(i<line.length){
+      const r=line.slice(i);
+      if(r[0]==='#'){out+='<span class="c">'+esc(r)+'</span>';break;}
+      const sm=r.match(/^(['"])(?:\\.|(?!\1).)*\1?/);
+      if(sm){out+='<span class="s">'+esc(sm[0])+'</span>';i+=sm[0].length;continue;}
+      const nm=r.match(/^\d+\.?\d*/);
+      if(nm){out+='<span class="n">'+esc(nm[0])+'</span>';i+=nm[0].length;continue;}
+      const wm=r.match(/^[A-Za-z_]\w*/);
+      if(wm){const w=wm[0];if(KW.has(w))out+='<span class="k">'+w+'</span>';else if(BI.has(w))out+='<span class="f">'+w+'</span>';else out+=esc(w);i+=w.length;continue;}
+      out+=esc(r[0]);i++;
+    }
+    return out;
+  }).join('\n');
+}
+
+function shuffle(quiz) {
+  const opts = quiz.options.map((o, i) => ({ o, correct: i === quiz.ans }));
+  for (let i = opts.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [opts[i], opts[j]] = [opts[j], opts[i]]; }
+  return opts;
+}
+
+function renderSidebar() {
+  const unit = unitOf(lessonId);
+  const done = getDone();
+  document.getElementById('sb-unit-label').textContent = `หน่วยที่ ${unit.n} · ${unit.end - unit.start + 1} บท`;
+  document.getElementById('sb-unit-title').textContent = unit.title;
+  document.getElementById('crumb-unit').textContent = `หน่วยที่ ${unit.n} · ${unit.title}`;
+
+  const body = document.getElementById('sb-body');
+  body.innerHTML = '';
+  for (let id = unit.start; id <= unit.end; id++) {
+    const lesson = courseData.lessons.find(l => l.id === id);
+    const isDone = id <= done;
+    const isActive = id === lessonId;
+    const isLocked = id > done + 1;
+    const tag = isLocked ? 'div' : 'a';
+    const href = isLocked ? '' : `href="lesson.html?course=python&id=${id}"`;
+    const icHtml = isDone ? '✓' : isLocked ? '🔒' : id;
+    const item = document.createElement(tag);
+    item.className = 'sb-item' + (isActive ? ' active' : '') + (isLocked ? ' locked' : '');
+    if (href) item.setAttribute('href', `lesson.html?course=python&id=${id}`);
+    item.innerHTML = `<div class="sb-ic ${isDone ? 'done' : isActive ? 'active' : 'lock'}">${icHtml}</div>
+      <div class="sb-tx"><div class="sb-num">บทที่ ${id}</div><div class="sb-name">${lesson.title}</div></div>`;
+    body.appendChild(item);
+  }
+
+  const pct = Math.min(Math.round((done / TOTAL) * 100), 100);
+  document.getElementById('xp-label').textContent = `${done}/${TOTAL}`;
+  document.getElementById('xp-fill').style.width = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+}
+
+let currentQuiz = null;
+let passed = false;
+
+function renderLesson() {
+  const lesson = courseData.lessons.find(l => l.id === lessonId);
+  if (!lesson) { window.location.href = 'index.html'; return; }
+  const content = lesson.content.th;
+
+  document.getElementById('step-label').textContent = `บทที่ ${lessonId} จาก ${TOTAL}`;
+  document.getElementById('crumb-lesson').textContent = `บทที่ ${lessonId} · ${lesson.title}`;
+  document.getElementById('l-title').textContent = content.title;
+  document.getElementById('l-desc').textContent = content.desc;
+  document.title = `บทที่ ${lessonId} · ${lesson.title} — ZENITH`;
+
+  const codeWrap = document.getElementById('code-wrap');
+  if (content.code) {
+    document.getElementById('code-body').innerHTML = highlight(content.code);
+    codeWrap.style.display = '';
+  } else {
+    codeWrap.style.display = 'none';
+  }
+
+  passed = lessonId <= getDone();
+  currentQuiz = shuffle(lesson.quiz);
+  document.getElementById('q-text').textContent = lesson.quiz.q;
+  const optsWrap = document.getElementById('q-opts');
+  optsWrap.innerHTML = '';
+  currentQuiz.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'q-opt';
+    btn.innerHTML = `<span class="q-ic">${String.fromCharCode(65 + i)}</span><span>${opt.o}</span>`;
+    btn.addEventListener('click', () => onAnswer(i, btn));
+    optsWrap.appendChild(btn);
+  });
+  document.getElementById('q-card').classList.remove('answered');
+
+  const nextBtn = document.getElementById('next-btn');
+  if (passed) {
+    setStatus(true, 'ผ่านแล้ว', 'ทำ Quiz นี้ผ่านแล้ว ไปบทถัดไปได้เลย');
+    nextBtn.disabled = false;
+    disableOptions();
+  } else {
+    setStatus(false, 'ยังไม่ได้ตอบ', 'เลือกคำตอบด้านบน');
+    nextBtn.disabled = true;
+  }
+}
+
+function disableOptions() {
+  document.querySelectorAll('.q-opt').forEach(b => b.disabled = true);
+}
+
+function setStatus(ok, title, sub) {
+  const ic = document.getElementById('ab-ic');
+  ic.classList.toggle('ok', ok);
+  ic.innerHTML = ok
+    ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+    : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>';
+  document.getElementById('ab-title').textContent = title;
+  document.getElementById('ab-sub').textContent = sub;
+}
+
+async function onAnswer(i, btn) {
+  if (passed) return;
+  const opts = document.querySelectorAll('.q-opt');
+  const correctIdx = currentQuiz.findIndex(o => o.correct);
+  if (currentQuiz[i].correct) {
+    opts.forEach((b, idx) => { b.disabled = true; if (idx === correctIdx) b.classList.add('correct'); });
+    document.getElementById('q-card').classList.add('answered');
+    passed = true;
+    setStatus(true, 'ถูกต้อง! 🎉', 'ปลดล็อกบทถัดไปแล้ว');
+    document.getElementById('next-btn').disabled = false;
+    showToast();
+
+    const unlocked = getUnlocked();
+    if (lessonId >= unlocked) {
+      const nextLevel = lessonId + 1;
+      localStorage.setItem(`zenith_progress_${COURSE}`, nextLevel);
+      await saveToFirestore(COURSE, nextLevel);
+    }
+    await saveQuizScore(COURSE, lessonId);
+    renderSidebar();
+  } else {
+    btn.classList.add('wrong');
+    setTimeout(() => btn.classList.remove('wrong'), 600);
+    setStatus(false, 'ยังไม่ถูก', 'ลองใหม่อีกครั้ง');
+  }
+}
+
+document.getElementById('next-btn').addEventListener('click', () => {
+  if (lessonId >= TOTAL) {
+    window.location.href = 'results.html';
+  } else {
+    window.location.href = `lesson.html?course=python&id=${lessonId + 1}`;
   }
 });
+
+function showToast() {
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toast.classList.remove('show'), 3200);
+  celebrate();
+}
+function celebrate() {
+  const colors = ['oklch(0.7 0.19 300)','oklch(0.72 0.14 200)','oklch(0.78 0.14 145)','oklch(0.8 0.14 80)','oklch(0.7 0.16 25)'];
+  const wrap = document.createElement('div'); wrap.className = 'confetti';
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('i');
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDuration = (2.2 + Math.random() * 2) + 's';
+    c.style.animationDelay = (Math.random() * .35) + 's';
+    c.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+    wrap.appendChild(c);
+  }
+  document.body.appendChild(wrap);
+  setTimeout(() => wrap.remove(), 4600);
+}
+
+const sidebar = document.getElementById('sidebar'), sbToggle = document.getElementById('sbToggle');
+const sbOpen = localStorage.getItem('zenith_sb') !== 'closed';
+if (!sbOpen) sidebar.classList.add('closed');
+sbToggle.style.left = sidebar.classList.contains('closed') ? '12px' : '272px';
+sbToggle.addEventListener('click', () => {
+  sidebar.classList.toggle('closed');
+  localStorage.setItem('zenith_sb', sidebar.classList.contains('closed') ? 'closed' : 'open');
+  sbToggle.style.left = sidebar.classList.contains('closed') ? '12px' : '272px';
+});
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { window.location.href = 'login.html'; return; }
+  await syncFromFirestore();
+
+  // don't allow skipping ahead via URL manipulation
+  if (lessonId > getUnlocked()) { window.location.href = `lesson.html?course=python&id=${getUnlocked()}`; return; }
+
+  renderSidebar();
+  renderLesson();
+  const name = user.displayName || user.email.split('@')[0];
+  document.getElementById('top-avatar').textContent = name.charAt(0).toUpperCase();
+});
 </script>
-</body></html>
+</body>
+</html>

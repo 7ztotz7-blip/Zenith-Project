@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ผลสรุปหลักสูตร — ZENITH</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="assets/css/pystart.css" rel="stylesheet" />
+<script src="assets/js/theme.js"></script>
+<style>
+  body{padding-bottom:80px;}
+  .wrap{max-width:1000px;}
+
+  .hero{position:relative;overflow:hidden;margin-top:30px;border-radius:26px;padding:46px 44px;color:#fff;text-align:center;
+    background:
+      radial-gradient(600px 300px at 80% -25%,oklch(0.7 0.19 300/.5),transparent 64%),
+      radial-gradient(500px 320px at 10% 120%,oklch(0.64 0.15 175/.35),transparent 60%),
+      linear-gradient(150deg,oklch(0.42 0.16 300),oklch(0.3 0.12 305));
+    box-shadow:var(--shadow-lg);}
+  .hero::after{content:"";position:absolute;inset:0;opacity:.4;pointer-events:none;
+    background-image:radial-gradient(circle at 1px 1px,oklch(1 0 0/.1) 1px,transparent 0);background-size:24px 24px;}
+  .hero > *{position:relative;z-index:2;}
+  .badge-pass{display:inline-flex;align-items:center;gap:9px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;
+    letter-spacing:.08em;text-transform:uppercase;color:oklch(0.95 0.05 150);background:oklch(1 0 0/.14);border:1px solid oklch(1 0 0/.25);
+    padding:7px 15px;border-radius:100px;margin-bottom:24px;}
+  .scorering{--p:0;width:200px;height:200px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;
+    background:conic-gradient(#fff calc(var(--p)*1%),oklch(1 0 0/.16) 0);box-shadow:0 14px 40px -12px oklch(0 0 0/.5);}
+  .scorering .inner{width:164px;height:164px;border-radius:50%;background:linear-gradient(160deg,oklch(0.4 0.15 300),oklch(0.34 0.12 305));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid oklch(1 0 0/.15);}
+  .scorering .pct{font-size:52px;font-weight:600;letter-spacing:-.03em;line-height:1;}
+  .scorering .lab{font-size:13px;color:oklch(0.9 0.04 150);margin-top:5px;letter-spacing:.04em;}
+  .hero h1{font-size:clamp(26px,4vw,36px);font-weight:600;letter-spacing:-.025em;margin-top:18px;}
+  .hero .sub{font-size:16.5px;color:oklch(0.93 0.03 150);margin-top:11px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.6;}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px;}
+  .stat{background:linear-gradient(180deg,var(--card),var(--soft));border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:var(--shadow-sm);}
+  .stat .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:18px;margin-bottom:12px;}
+  .stat .n{font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1;}
+  .stat .n small{font-size:14px;color:var(--faint);font-weight:500;}
+  .stat .l{font-size:13px;color:var(--muted);margin-top:6px;}
+
+  .section{margin-top:34px;}
+  .stitle{display:flex;align-items:center;gap:11px;margin-bottom:16px;}
+  .stitle h2{font-size:20px;font-weight:600;letter-spacing:-.01em;}
+  .stitle .si{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#fff;font-size:15px;
+    background:linear-gradient(140deg,var(--accent-2),var(--accent-deep));}
+  .stitle .ct{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--faint);}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 28px;box-shadow:var(--shadow-sm);}
+  .mrow{display:flex;align-items:center;gap:16px;padding:13px 0;}
+  .mrow + .mrow{border-top:1px solid var(--line-soft);}
+  .mrow .mi{width:36px;height:36px;border-radius:11px;flex-shrink:0;display:grid;place-items:center;font-size:16px;background:var(--accent-soft);color:var(--accent-deep);}
+  .mrow .mname{width:190px;flex-shrink:0;font-size:14.5px;font-weight:500;}
+  .mrow .mname small{display:block;color:var(--faint);font-weight:400;font-size:12.5px;margin-top:1px;}
+  .mrow .mbar{flex:1;height:11px;border-radius:100px;background:var(--soft);border:1px solid var(--line);overflow:hidden;}
+  .mrow .mbar i{display:block;height:100%;border-radius:100px;width:0%;transition:width 1s cubic-bezier(.2,.7,.2,1);background:linear-gradient(90deg,var(--ok),var(--ok-deep));}
+  .mrow .mscore{width:64px;text-align:right;flex-shrink:0;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:var(--ok-deep);}
+
+  .certwrap{position:relative;}
+  .certificate{position:relative;overflow:hidden;border-radius:18px;padding:40px 46px;color:oklch(0.28 0.04 260);
+    background:linear-gradient(165deg,oklch(0.99 0.01 85),#fff 60%);
+    border:2px solid transparent;background-clip:padding-box;box-shadow:var(--shadow-md);}
+  .certificate::before{content:"";position:absolute;inset:0;border-radius:18px;padding:2px;
+    background:linear-gradient(135deg,var(--gold),oklch(0.85 0.1 90),var(--gold-deep));
+    -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;}
+  .certificate::after{content:"";position:absolute;inset:12px;border:1px solid oklch(0.85 0.08 88);border-radius:11px;pointer-events:none;}
+  .cert-in{position:relative;z-index:2;text-align:center;}
+  .cert-seal{position:absolute;top:-8px;right:-8px;width:78px;height:78px;border-radius:50%;display:grid;place-items:center;font-size:34px;
+    background:linear-gradient(140deg,var(--gold),var(--gold-deep));box-shadow:0 10px 22px -8px oklch(0.6 0.12 80/.6);border:3px solid #fff;transform:rotate(8deg);}
+  .cert-brand{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:16px;color:var(--accent-deep);}
+  .cert-brand .m{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:12px;
+    background:linear-gradient(140deg,var(--accent-2),var(--accent-deep));}
+  .cert-kick{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);margin-top:22px;}
+  .cert-title{font-size:28px;font-weight:700;letter-spacing:-.02em;margin-top:10px;color:oklch(0.25 0.04 260);}
+  .cert-sub{font-size:14.5px;color:var(--muted);margin-top:6px;}
+  .cert-name{font-size:32px;font-weight:600;margin-top:24px;padding-bottom:14px;letter-spacing:-.01em;
+    background:linear-gradient(120deg,var(--accent-deep),oklch(0.4 0.13 200));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    border-bottom:1.5px dashed oklch(0.85 0.05 90);display:inline-block;min-width:340px;}
+  .cert-desc{font-size:14.5px;color:oklch(0.4 0.03 260);margin-top:18px;line-height:1.6;max-width:460px;margin-left:auto;margin-right:auto;}
+  .cert-foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:34px;gap:30px;}
+  .cert-foot .cf{flex:1;text-align:center;}
+  .cert-foot .cf .v{font-size:15px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding-bottom:8px;border-bottom:1px solid oklch(0.82 0.02 260);}
+  .cert-foot .cf .k{font-size:12px;color:var(--faint);margin-top:7px;letter-spacing:.05em;text-transform:uppercase;}
+  .cert-actions{display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap;}
+
+  .nextcta{display:flex;gap:14px;justify-content:center;margin-top:36px;flex-wrap:wrap;}
+
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(30px);z-index:80;display:flex;align-items:center;gap:13px;
+    padding:14px 22px 14px 15px;border-radius:15px;background:var(--card);border:1px solid var(--gold);opacity:0;pointer-events:none;
+    box-shadow:var(--shadow-lg);transition:transform .4s cubic-bezier(.2,.7,.2,1),opacity .3s;}
+  .toast.show{transform:translateX(-50%);opacity:1;}
+  .toast .ti{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;
+    background:linear-gradient(140deg,var(--gold),var(--gold-deep));}
+  .toast b{font-size:15px;} .toast span{display:block;font-size:13px;color:var(--muted);}
+
+  @media (max-width:820px){
+    .stats{grid-template-columns:1fr 1fr;}
+    .mrow .mname{width:130px;}
+    .cert-name{min-width:0;font-size:24px;}
+    .certificate{padding:30px 24px;}
+  }
+  @media print{.topbar,.nextcta,.cert-actions,.toast{display:none!important;}}
+</style>
+</head>
+<body data-fx=".topbar, .hero, .stats > .stat, .section, .nextcta">
+<script>
+(function(){var b=document.body,s=b.getAttribute('data-fx');if(!s)return;document.documentElement.classList.add('js-fx');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var st=document.createElement('style');st.textContent='.js-fx :is('+s+'){transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}.js-fx :is('+s+'):not(.fx-shown){opacity:0;transform:translateY(22px)}';document.head.appendChild(st);})();
+</script>
+
+<header class="topbar">
+  <a class="tb-logo" href="landing.html"><span class="tb-mk">Z</span>ZENITH</a>
+  <nav class="tb-nav">
+    <a href="dashboard.html">แดชบอร์ด</a>
+    <a href="index.html">หลักสูตร</a>
+    <a href="profile.html">โปรไฟล์</a>
+  </nav>
+  <div class="tb-right">
+    <a class="tb-av" id="top-avatar" href="profile.html">?</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="badge-pass">✓ เรียนจบหลักสูตร</span>
+    <div class="scorering" id="scorering"><div class="inner"><span class="pct" id="pct">0%</span><span class="lab">เรียนจบครบ</span></div></div>
+    <h1 id="hero-title">ยินดีด้วย! 🎉</h1>
+    <p class="sub" id="hero-sub"></p>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="ic" style="background:var(--ok-soft);color:var(--ok-deep)">📚</div><div class="n" id="s-lessons">0<small>/24</small></div><div class="l">บทเรียนที่จบ</div></div>
+    <div class="stat"><div class="ic" style="background:var(--accent-soft);color:var(--accent-deep)">✅</div><div class="n" id="s-quiz">0<small>/24</small></div><div class="l">Quiz ที่ผ่าน</div></div>
+    <div class="stat"><div class="ic" style="background:oklch(0.95 0.05 85);color:var(--gold-deep)">🏗️</div><div class="n" id="s-units">0<small>/5</small></div><div class="l">หน่วยที่เรียนจบ</div></div>
+    <div class="stat"><div class="ic" style="background:var(--warm-soft);color:var(--warm-deep)">📅</div><div class="n" id="s-date">—</div><div class="l">วันที่เรียนจบ</div></div>
+  </div>
+
+  <!-- MODULE BREAKDOWN -->
+  <div class="section">
+    <div class="stitle"><span class="si">📊</span><h2>ความคืบหน้าแยกตามหน่วย</h2><span class="ct">5 หน่วย · 24 บท</span></div>
+    <div class="card" id="breakdown"></div>
+  </div>
+
+  <!-- CERTIFICATE -->
+  <div class="section">
+    <div class="stitle"><span class="si">🎖️</span><h2>ใบประกาศนียบัตรของคุณ</h2></div>
+    <div class="certwrap">
+      <div class="certificate" id="cert">
+        <div class="cert-seal">🎖️</div>
+        <div class="cert-in">
+          <div class="cert-brand"><span class="m">Z</span>ZENITH</div>
+          <div class="cert-kick">Certificate of Completion</div>
+          <div class="cert-title">ใบประกาศนียบัตร</div>
+          <div class="cert-sub">มอบให้เพื่อรับรองว่า</div>
+          <div class="cert-name" id="cert-name">—</div>
+          <div class="cert-desc">ได้เรียนจบหลักสูตร <b>"Python Developer Track"</b> ครบทั้ง 24 บทเรียน 5 หน่วยการเรียนรู้</div>
+          <div class="cert-foot">
+            <div class="cf"><div class="v" id="cert-date">—</div><div class="k">วันที่สำเร็จ</div></div>
+            <div class="cf"><div class="v" id="cert-id">—</div><div class="k">รหัสใบประกาศ</div></div>
+            <div class="cf"><div class="v">ZENITH</div><div class="k">ผู้ออกใบรับรอง</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="cert-actions">
+        <button class="btn btn-gold" id="dlBtn">⬇ ดาวน์โหลดใบประกาศ (PDF)</button>
+        <button class="btn btn-ghost" id="shareBtn">🔗 แชร์ความสำเร็จ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEXT -->
+  <div class="nextcta">
+    <a href="dashboard.html" class="btn btn-ghost lg">กลับหน้าแดชบอร์ด</a>
+    <a href="profile.html" class="btn btn-primary lg">ดูความสำเร็จในโปรไฟล์ →</a>
+  </div>
+</div>
+
+<div class="toast" id="toast"><div class="ti">🎖️</div><div><b id="toast-b"></b><span id="toast-s"></span></div></div>
+
+<script src="assets/js/python_data.js"></script>
+<script type="module">
+import { auth } from './assets/js/firebase.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { syncFromFirestore, getUserData } from './assets/js/progress.js';
+
+const TOTAL = 24;
+const COURSE = 'python';
+const UNITS = [
+  { n:1, start:1,  end:6,  title:'พื้นฐาน Python' },
+  { n:2, start:7,  end:11, title:'ควบคุมทิศทาง' },
+  { n:3, start:12, end:16, title:'โครงสร้างข้อมูล' },
+  { n:4, start:17, end:20, title:'ฟังก์ชัน' },
+  { n:5, start:21, end:24, title:'OOP' },
+];
+
+function $(id) { return document.getElementById(id); }
+function showToast(b, s) {
+  $('toast-b').textContent = b; $('toast-s').textContent = s;
+  $('toast').classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => $('toast').classList.remove('show'), 3200);
+}
+function celebrate() {
+  const colors = ['oklch(0.78 0.13 85)','oklch(0.7 0.15 150)','oklch(0.7 0.19 300)','oklch(0.72 0.14 200)','oklch(0.8 0.14 80)'];
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement('i');
+    c.style.cssText = 'position:fixed;top:-12px;width:9px;height:15px;border-radius:2px;z-index:99;pointer-events:none;left:' + (Math.random() * 100) + 'vw;background:' + colors[i % colors.length] + ';transform:rotate(' + (Math.random() * 360) + 'deg);animation:cf ' + (2.6 + Math.random() * 2) + 's linear ' + (Math.random() * .5) + 's forwards;';
+    document.body.appendChild(c); setTimeout(() => c.remove(), 5200);
+  }
+}
+const st = document.createElement('style'); st.textContent = '@keyframes cf{to{transform:translateY(105vh) rotate(680deg);}}'; document.head.appendChild(st);
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { window.location.href = 'login.html'; return; }
+  await syncFromFirestore();
+
+  const unlocked = parseInt(localStorage.getItem(`zenith_progress_${COURSE}`) || '1');
+  const done = Math.max(0, unlocked - 1);
+
+  if (done < TOTAL) { window.location.href = 'index.html'; return; }
+
+  const name = user.displayName || user.email.split('@')[0];
+  $('top-avatar').textContent = name.charAt(0).toUpperCase();
+
+  const userData = await getUserData();
+  const quizScores = (userData && userData.quizScores) || {};
+  const quizCount = Object.keys(quizScores).filter(k => k.startsWith(COURSE + '_')).length;
+  const unitsDone = UNITS.filter(u => done >= u.end).length;
+
+  $('hero-title').textContent = `ยินดีด้วย ${name}! 🎉`;
+  $('hero-sub').textContent = `คุณเรียนจบหลักสูตร Python Developer Track ครบทั้ง 24 บทเรียนแล้ว`;
+
+  setTimeout(() => {
+    $('scorering').style.setProperty('--p', 100);
+    $('pct').textContent = '100%';
+  }, 100);
+
+  $('s-lessons').innerHTML = `${done}<small>/24</small>`;
+  $('s-quiz').innerHTML = `${quizCount}<small>/24</small>`;
+  $('s-units').innerHTML = `${unitsDone}<small>/5</small>`;
+  $('s-date').textContent = new Date().toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' });
+
+  $('breakdown').innerHTML = UNITS.map(u => {
+    const count = u.end - u.start + 1;
+    const doneInUnit = Math.min(Math.max(done - (u.start - 1), 0), count);
+    const pct = Math.round((doneInUnit / count) * 100);
+    return `<div class="mrow">
+      <span class="mi">${u.n}</span>
+      <span class="mname">${u.title}<small>${count} บท</small></span>
+      <span class="mbar"><i data-w="${pct}"></i></span>
+      <span class="mscore">${doneInUnit}/${count}</span>
+    </div>`;
+  }).join('');
+  setTimeout(() => {
+    document.querySelectorAll('#breakdown .mbar i').forEach(el => { el.style.width = el.dataset.w + '%'; });
+  }, 200);
+
+  $('cert-name').textContent = name;
+  $('cert-date').textContent = new Date().toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
+  $('cert-id').textContent = 'ZN-' + new Date().getFullYear() + '-' + (user.uid || '').slice(0, 6).toUpperCase();
+
+  celebrate();
+
+  $('dlBtn').addEventListener('click', () => showToast('กำลังเตรียมไฟล์ใบประกาศ…', 'ฟีเจอร์ดาวน์โหลด PDF จะเปิดให้ใช้งานเร็วๆ นี้'));
+  $('shareBtn').addEventListener('click', async () => {
+    const text = `ฉันเรียนจบหลักสูตร Python Developer Track บน ZENITH แล้ว! 🎉`;
+    try {
+      if (navigator.share) { await navigator.share({ title: 'ZENITH', text }); }
+      else { await navigator.clipboard.writeText(text); showToast('คัดลอกข้อความแล้ว!', 'แชร์ความสำเร็จให้เพื่อน ๆ ได้เลย'); }
+    } catch (_) {}
+  });
+});
+</script>
+</body>
+</html>

@@ -11,41 +11,36 @@
 .path-tab:hover{background:var(--bg4);color:var(--text)}
 .path-tab.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 
-.path-canvas{position:relative;padding:1rem 0 3rem}
-.path-stage{display:flex;gap:20px;margin-bottom:0;position:relative}
-.stage-label{writing-mode:vertical-rl;text-orientation:mixed;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:1rem .5rem;flex-shrink:0;width:28px;display:flex;align-items:center}
-
-.nodes-col{flex:1;display:flex;flex-direction:column;gap:16px;padding:1rem 0}
-
-.node{
-  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3);
-  padding:1.125rem;cursor:pointer;transition:all .2s;position:relative
+.timeline{position:relative;max-width:700px;margin:2rem auto;padding:10px 0}
+.timeline::before{content:'';position:absolute;top:0;bottom:0;left:24px;width:2px;background:var(--border)}
+.tl-stage{position:relative;margin:32px 0 24px 10px;padding:6px 14px;background:var(--bg);display:inline-block;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text);border:1px solid var(--border3);z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.tl-item{position:relative;margin-bottom:24px;padding-left:60px}
+.tl-marker{position:absolute;left:13px;top:20px;width:24px;height:24px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;z-index:1;color:var(--text3)}
+.tl-item.done .tl-marker{background:var(--accent);border-color:var(--accent);color:#fff}
+.tl-item.active .tl-marker{background:var(--bg);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-g)}
+.tl-item.active .tl-marker::after{content:'';width:10px;height:10px;background:var(--accent);border-radius:50%}
+.tl-item.locked .tl-marker{background:var(--bg3);border-color:var(--border)}
+.tl-content{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3);padding:1.125rem;transition:all .2s;cursor:pointer;display:flex;align-items:center;gap:16px}
+.tl-content:hover{border-color:var(--border3);transform:translateY(-2px)}
+.tl-item.locked .tl-content{opacity:.5;cursor:not-allowed}
+.tl-item.locked .tl-content:hover{transform:none;border-color:var(--border)}
+.tl-item.active .tl-content{border-color:var(--accent);box-shadow:0 4px 20px rgba(0,0,0,.04)}
+.tl-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.tl-info{flex:1;min-width:0}
+.tl-name{font-size:15px;font-weight:700;margin-bottom:2px}
+.tl-sub{font-size:13px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-meta{display:flex;align-items:center;gap:12px;margin-top:8px}
+.tl-meta-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text3)}
+.tl-status{flex-shrink:0;text-align:right}
+.tl-split{padding-left:60px;display:flex;gap:16px;margin-bottom:24px;position:relative}
+.tl-split::before{content:'';position:absolute;left:24px;top:10px;bottom:10px;border-left:2px dashed var(--border);z-index:0}
+.tl-split .tl-content{flex:1;flex-direction:column;align-items:flex-start}
+.tl-split .tl-icon{margin-bottom:8px}
+@media(max-width:640px){
+  .tl-content{flex-direction:column;align-items:flex-start;gap:12px}
+  .tl-status{text-align:left;width:100%;margin-top:4px}
+  .tl-split{flex-direction:column}
 }
-.node:hover{border-color:var(--border3);transform:translateY(-2px)}
-.node.done{border-color:var(--green3);background:rgba(0,229,160,.03)}
-.node.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-g)}
-.node.locked{opacity:.45;cursor:not-allowed}
-.node.locked:hover{transform:none;border-color:var(--border)}
-
-.node-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.node-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.node-name{font-size:14px;font-weight:700;letter-spacing:-.3px}
-.node-sub{font-size:12px;color:var(--text2);margin-top:1px}
-.node-status{margin-left:auto;flex-shrink:0}
-
-.node-meta{display:flex;align-items:center;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-.node-meta-item{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--text3)}
-
-.connector{display:flex;justify-content:center;padding:4px 0;color:var(--border3);font-size:20px;position:relative}
-.connector::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1px;height:100%;background:var(--border2)}
-
-.row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.row-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-
-.branch-arrow{text-align:center;padding:8px 0;color:var(--text3);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px}
-.branch-arrow::before,.branch-arrow::after{content:'';flex:1;height:1px;background:var(--border)}
-
-.level-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px}
 </style>
 </head>
 <body>
@@ -92,29 +87,24 @@
       </div>
       <div class="flex gap8">
         <div style="font-size:12px;display:flex;align-items:center;gap:6px;color:var(--text2)">
-          <div style="width:10px;height:10px;border-radius:50%;background:var(--green)"></div>เสร็จแล้ว
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--accent)"></div>เสร็จแล้ว
           <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);opacity:.5;margin-left:4px;border:1.5px solid var(--accent)"></div>กำลังเรียน
           <div style="width:10px;height:10px;border-radius:50%;background:var(--bg5);margin-left:4px"></div>ล็อค
         </div>
       </div>
     </div>
 
-    <div class="path-tabs anim-up delay-1">
-      <button class="path-tab on" onclick="setTrack(this,'python')">🐍 Python Developer</button>
-      <button class="path-tab" onclick="setTrack(this,'frontend')">⚛️ Frontend Developer</button>
-      <button class="path-tab" onclick="setTrack(this,'data')">📊 Data Scientist</button>
-      <button class="path-tab" onclick="setTrack(this,'fullstack')">🌐 Full-Stack</button>
-    </div>
+
 
     <!-- PYTHON TRACK -->
     <div id="track-python" class="anim-up delay-2">
 
       <div style="text-align:center;margin-bottom:2rem;padding:1rem;background:rgba(0,229,160,.04);border:1px solid rgba(0,229,160,.12);border-radius:var(--r3)">
-        <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Python Developer Track</div>
+        <div style="font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Python Developer Track</div>
         <div style="font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px">จากศูนย์สู่ Python Developer</div>
         <div class="f13 muted">8 คอร์ส · ประมาณ 4-6 เดือน · เป้าหมาย: Backend / Data Science</div>
         <div class="flex-center gap16" style="justify-content:center;margin-top:12px">
-          <div style="font-size:13px"><span style="font-weight:700;color:var(--green)">3</span> <span class="muted">เสร็จแล้ว</span></div>
+          <div style="font-size:13px"><span style="font-weight:700;color:var(--accent)">3</span> <span class="muted">เสร็จแล้ว</span></div>
           <div style="width:1px;height:16px;background:var(--border)"></div>
           <div style="font-size:13px"><span style="font-weight:700;color:var(--amber)">1</span> <span class="muted">กำลังเรียน</span></div>
           <div style="width:1px;height:16px;background:var(--border)"></div>
@@ -122,152 +112,146 @@
         </div>
       </div>
 
-      <!-- Stage 1: Foundation -->
-      <div style="text-align:center;margin-bottom:16px">
-        <span class="badge badge-green" style="font-size:11px">⬛ Foundation</span>
-      </div>
-      <div class="row-3" style="margin-bottom:12px">
-        <div class="node done" onclick="location.href='lesson.html'">
-          <div class="node-head">
-            <div class="node-icon" style="background:var(--green-g2)">🐍</div>
-            <div><div class="node-name">Python Basics</div><div class="node-sub">ตัวแปร, ชนิดข้อมูล, Operators</div></div>
-            <div class="node-status"><span class="badge badge-green" style="font-size:10px"><i class="ti ti-check" style="font-size:10px"></i> เสร็จ</span></div>
-          </div>
-          <div class="node-meta">
-            <span class="node-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 8 บท</span>
-            <span class="node-meta-item"><i class="ti ti-clock" style="font-size:12px"></i> 3 ชั่วโมง</span>
-            <span class="node-meta-item" style="margin-left:auto;color:var(--green)">+80 XP</span>
-          </div>
-        </div>
-        <div class="node done" onclick="location.href='lesson.html'">
-          <div class="node-head">
-            <div class="node-icon" style="background:rgba(77,158,255,.1)">🔀</div>
-            <div><div class="node-name">Control Flow</div><div class="node-sub">if/elif/else, Loops</div></div>
-            <div class="node-status"><span class="badge badge-green" style="font-size:10px"><i class="ti ti-check" style="font-size:10px"></i> เสร็จ</span></div>
-          </div>
-          <div class="node-meta">
-            <span class="node-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 6 บท</span>
-            <span class="node-meta-item"><i class="ti ti-clock" style="font-size:12px"></i> 2.5 ชั่วโมง</span>
-            <span class="node-meta-item" style="margin-left:auto;color:var(--green)">+60 XP</span>
-          </div>
-        </div>
-        <div class="node done" onclick="location.href='lesson.html'">
-          <div class="node-head">
-            <div class="node-icon" style="background:rgba(255,179,64,.1)">📦</div>
-            <div><div class="node-name">Functions</div><div class="node-sub">def, Parameters, Return</div></div>
-            <div class="node-status"><span class="badge badge-green" style="font-size:10px"><i class="ti ti-check" style="font-size:10px"></i> เสร็จ</span></div>
-          </div>
-          <div class="node-meta">
-            <span class="node-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 7 บท</span>
-            <span class="node-meta-item"><i class="ti ti-clock" style="font-size:12px"></i> 3 ชั่วโมง</span>
-            <span class="node-meta-item" style="margin-left:auto;color:var(--green)">+70 XP</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Connector -->
-      <div class="branch-arrow" style="margin-bottom:16px">Stage 2 — Core Python</div>
-
-      <!-- Stage 2 -->
-      <div class="row-2" style="margin-bottom:12px">
-        <div class="node active" onclick="location.href='lesson.html'">
-          <div class="node-head">
-            <div class="node-icon" style="background:var(--green-g2)">📋</div>
-            <div><div class="node-name">Data Structures</div><div class="node-sub">Lists, Dict, Set, Tuple</div></div>
-            <div class="node-status"><span class="badge badge-amber" style="font-size:10px">▶ กำลังเรียน</span></div>
-          </div>
-          <div class="prog-track" style="margin:10px 0 4px"><div class="prog-fill" style="width:42%;background:var(--green)"></div></div>
-          <div class="node-meta">
-            <span class="node-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 10 บท</span>
-            <span class="node-meta-item"><i class="ti ti-clock" style="font-size:12px"></i> 4 ชั่วโมง</span>
-            <span class="node-meta-item" style="margin-left:auto;color:var(--green)">+100 XP</span>
-          </div>
-        </div>
-        <div class="node" onclick="location.href='lesson.html'">
-          <div class="node-head">
-            <div class="node-icon" style="background:rgba(167,139,245,.1)">🧩</div>
-            <div><div class="node-name">OOP Fundamentals</div><div class="node-sub">Classes, Inheritance, Methods</div></div>
-            <div class="node-status"><span class="badge badge-glass" style="font-size:10px">ถัดไป</span></div>
-          </div>
-          <div class="node-meta">
-            <span class="node-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 12 บท</span>
-            <span class="node-meta-item"><i class="ti ti-clock" style="font-size:12px"></i> 5 ชั่วโมง</span>
-            <span class="node-meta-item" style="margin-left:auto;color:var(--text3)">+120 XP</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stage 3 branches -->
-      <div class="branch-arrow" style="margin-bottom:16px">Stage 3 — เลือก Specialization</div>
-      <div class="row-2" style="margin-bottom:12px">
-        <div>
-          <div style="text-align:center;margin-bottom:10px"><span class="badge badge-blue">🔧 Backend Path</span></div>
-          <div class="node locked">
-            <div class="node-head">
-              <div class="node-icon" style="background:rgba(77,158,255,.08)"><i class="ti ti-lock" style="font-size:18px;color:var(--text3)"></i></div>
-              <div><div class="node-name">Flask & APIs</div><div class="node-sub">REST API, HTTP, Routing</div></div>
+      <div class="timeline">
+        
+        <div class="tl-stage">🏁 Stage 1: Foundation</div>
+        
+        <div class="tl-item done" onclick="location.href='lesson.html'">
+          <div class="tl-marker"><i class="ti ti-check" style="font-size:14px"></i></div>
+          <div class="tl-content">
+            <div class="tl-icon" style="background:var(--accent-g2)">🐍</div>
+            <div class="tl-info">
+              <div class="tl-name">Python Basics</div>
+              <div class="tl-sub">ตัวแปร, ชนิดข้อมูล, Operators</div>
+              <div class="tl-meta">
+                <span class="tl-meta-item"><i class="ti ti-book"></i> 8 บท</span>
+                <span class="tl-meta-item"><i class="ti ti-clock"></i> 3 ชม.</span>
+                <span class="tl-meta-item" style="color:var(--accent)">+80 XP</span>
+              </div>
             </div>
-            <div class="node-meta">
-              <span class="node-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 14 บท</span>
-              <span class="node-meta-item"><i class="ti ti-clock" style="font-size:12px"></i> 6 ชั่วโมง</span>
-            </div>
+            <div class="tl-status"><span class="badge badge-blue">เสร็จสมบูรณ์</span></div>
           </div>
         </div>
-        <div>
-          <div style="text-align:center;margin-bottom:10px"><span class="badge badge-purple">📊 Data Path</span></div>
-          <div class="node locked">
-            <div class="node-head">
-              <div class="node-icon" style="background:var(--purple-g)"><i class="ti ti-lock" style="font-size:18px;color:var(--text3)"></i></div>
-              <div><div class="node-name">NumPy & Pandas</div><div class="node-sub">Data manipulation, Analysis</div></div>
-            </div>
-            <div class="node-meta">
-              <span class="node-meta-item"><i class="ti ti-book" style="font-size:12px"></i> 16 บท</span>
-              <span class="node-meta-item"><i class="ti ti-clock" style="font-size:12px"></i> 7 ชั่วโมง</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Final -->
-      <div class="branch-arrow" style="margin-bottom:16px">Stage 4 — Final Project</div>
-      <div style="max-width:380px;margin:0 auto">
-        <div class="node locked" style="text-align:center;padding:1.5rem">
-          <div style="font-size:36px;margin-bottom:10px">🏆</div>
-          <div style="font-size:16px;font-weight:800;margin-bottom:6px">Capstone Project</div>
-          <div class="f13 muted">สร้างโปรเจกต์ Python จริงที่ใส่ใน Portfolio ได้</div>
-          <div class="flex-center gap8" style="justify-content:center;margin-top:12px">
-            <span class="badge badge-glass">Certificate</span>
-            <span class="badge badge-glass">+500 XP</span>
+        <div class="tl-item done" onclick="location.href='lesson.html'">
+          <div class="tl-marker"><i class="ti ti-check" style="font-size:14px"></i></div>
+          <div class="tl-content">
+            <div class="tl-icon" style="background:rgba(77,158,255,.1)">🔀</div>
+            <div class="tl-info">
+              <div class="tl-name">Control Flow</div>
+              <div class="tl-sub">if/elif/else, Loops</div>
+              <div class="tl-meta">
+                <span class="tl-meta-item"><i class="ti ti-book"></i> 6 บท</span>
+                <span class="tl-meta-item"><i class="ti ti-clock"></i> 2.5 ชม.</span>
+                <span class="tl-meta-item" style="color:var(--accent)">+60 XP</span>
+              </div>
+            </div>
+            <div class="tl-status"><span class="badge badge-blue">เสร็จสมบูรณ์</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item done" onclick="location.href='lesson.html'">
+          <div class="tl-marker"><i class="ti ti-check" style="font-size:14px"></i></div>
+          <div class="tl-content">
+            <div class="tl-icon" style="background:rgba(255,179,64,.1)">📦</div>
+            <div class="tl-info">
+              <div class="tl-name">Functions</div>
+              <div class="tl-sub">def, Parameters, Return</div>
+              <div class="tl-meta">
+                <span class="tl-meta-item"><i class="ti ti-book"></i> 7 บท</span>
+                <span class="tl-meta-item"><i class="ti ti-clock"></i> 3 ชม.</span>
+                <span class="tl-meta-item" style="color:var(--accent)">+70 XP</span>
+              </div>
+            </div>
+            <div class="tl-status"><span class="badge badge-blue">เสร็จสมบูรณ์</span></div>
+          </div>
+        </div>
+
+        <div class="tl-stage">⚙️ Stage 2: Core Python</div>
+        
+        <div class="tl-item active" onclick="location.href='lesson.html'">
+          <div class="tl-marker"></div>
+          <div class="tl-content">
+            <div class="tl-icon" style="background:var(--accent-g2)">📋</div>
+            <div class="tl-info">
+              <div class="tl-name">Data Structures</div>
+              <div class="tl-sub">Lists, Dict, Set, Tuple</div>
+              <div class="prog-track" style="margin:8px 0;width:140px"><div class="prog-fill" style="width:42%;background:var(--accent)"></div></div>
+              <div class="tl-meta">
+                <span class="tl-meta-item"><i class="ti ti-book"></i> 10 บท</span>
+                <span class="tl-meta-item"><i class="ti ti-clock"></i> 4 ชม.</span>
+                <span class="tl-meta-item" style="color:var(--accent)">+100 XP</span>
+              </div>
+            </div>
+            <div class="tl-status"><span class="badge badge-amber">กำลังเรียน</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item locked">
+          <div class="tl-marker"><i class="ti ti-lock" style="font-size:12px"></i></div>
+          <div class="tl-content">
+            <div class="tl-icon" style="background:rgba(167,139,245,.1)">🧩</div>
+            <div class="tl-info">
+              <div class="tl-name">OOP Fundamentals</div>
+              <div class="tl-sub">Classes, Inheritance, Methods</div>
+              <div class="tl-meta">
+                <span class="tl-meta-item"><i class="ti ti-book"></i> 12 บท</span>
+                <span class="tl-meta-item"><i class="ti ti-clock"></i> 5 ชม.</span>
+                <span class="tl-meta-item">+120 XP</span>
+              </div>
+            </div>
+            <div class="tl-status"><span class="badge badge-glass">รอปลดล็อค</span></div>
+          </div>
+        </div>
+
+        <div class="tl-stage">🛤️ Stage 3: เลือกเส้นทาง (Specialization)</div>
+        
+        <div class="tl-split">
+          <div class="tl-content locked">
+            <div style="margin-bottom:8px"><span class="badge badge-blue">Backend Path</span></div>
+            <div class="tl-icon" style="background:rgba(77,158,255,.08)"><i class="ti ti-lock" style="color:var(--text3)"></i></div>
+            <div class="tl-info">
+              <div class="tl-name">Flask & APIs</div>
+              <div class="tl-sub">REST API, HTTP, Routing</div>
+              <div class="tl-meta" style="margin-top:12px">
+                <span class="tl-meta-item"><i class="ti ti-book"></i> 14 บท</span>
+                <span class="tl-meta-item"><i class="ti ti-clock"></i> 6 ชม.</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="tl-content locked">
+            <div style="margin-bottom:8px"><span class="badge badge-purple">Data Path</span></div>
+            <div class="tl-icon" style="background:var(--purple-g)"><i class="ti ti-lock" style="color:var(--text3)"></i></div>
+            <div class="tl-info">
+              <div class="tl-name">NumPy & Pandas</div>
+              <div class="tl-sub">Data manipulation, Analysis</div>
+              <div class="tl-meta" style="margin-top:12px">
+                <span class="tl-meta-item"><i class="ti ti-book"></i> 16 บท</span>
+                <span class="tl-meta-item"><i class="ti ti-clock"></i> 7 ชม.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-stage">🏆 Stage 4: Final Project</div>
+
+        <div class="tl-item locked">
+          <div class="tl-marker"><i class="ti ti-lock" style="font-size:12px"></i></div>
+          <div class="tl-content" style="text-align:center;flex-direction:column;align-items:center;padding:2rem">
+            <div style="font-size:36px;margin-bottom:12px">🏆</div>
+            <div class="tl-name" style="font-size:18px">Capstone Project</div>
+            <div class="tl-sub" style="margin-bottom:16px">สร้างโปรเจกต์ Python จริงที่ใส่ใน Portfolio ได้</div>
+            <div class="flex-center gap8">
+              <span class="badge badge-glass">Certificate</span>
+              <span class="badge badge-glass">+500 XP</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Other tracks placeholder -->
-    <div id="track-frontend" style="display:none">
-      <div style="text-align:center;padding:4rem 2rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3)">
-        <div style="font-size:36px;margin-bottom:1rem">⚛️</div>
-        <div style="font-size:18px;font-weight:700;margin-bottom:8px">Frontend Developer Track</div>
-        <div class="f13 muted">HTML → CSS → JavaScript → React → TypeScript → Testing</div>
-        <button class="btn btn-green" style="margin-top:1.5rem">เริ่ม Track นี้</button>
-      </div>
-    </div>
-    <div id="track-data" style="display:none">
-      <div style="text-align:center;padding:4rem 2rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3)">
-        <div style="font-size:36px;margin-bottom:1rem">📊</div>
-        <div style="font-size:18px;font-weight:700;margin-bottom:8px">Data Scientist Track</div>
-        <div class="f13 muted">Python → Statistics → Pandas → ML → Deep Learning → Projects</div>
-        <button class="btn btn-green" style="margin-top:1.5rem">เริ่ม Track นี้</button>
-      </div>
-    </div>
-    <div id="track-fullstack" style="display:none">
-      <div style="text-align:center;padding:4rem 2rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3)">
-        <div style="font-size:36px;margin-bottom:1rem">🌐</div>
-        <div style="font-size:18px;font-weight:700;margin-bottom:8px">Full-Stack Developer Track</div>
-        <div class="f13 muted">JavaScript → React → Node.js → Database → Deployment → DevOps</div>
-        <button class="btn btn-green" style="margin-top:1.5rem">เริ่ม Track นี้</button>
-      </div>
-    </div>
+
 
   </div>
 </main>

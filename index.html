@@ -1,204 +1,245 @@
-<!DOCTYPE html><html lang="th">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>คอร์สเรียน — ZENITH</title>
-<meta name="description" content="เรียน Python ฟรีบน ZENITH — 16 บทเรียน ครบทั้ง 4 หน่วยการเรียนรู้">
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>หลักสูตร Python — ZENITH</title>
+<meta name="description" content="เรียน Python ฟรีบน ZENITH — 24 บทเรียน ครบทั้ง 5 หน่วยการเรียนรู้">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="stylesheet" href="_shared.css"><script src="assets/js/theme.js"></script><script src="assets/js/sidebar.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="assets/css/pystart.css" rel="stylesheet" />
+<script src="assets/js/theme.js"></script>
 <style>
-.course-card {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--r3); overflow: hidden;
-  transition: all 0.22s var(--ease);
-  cursor: pointer; display: flex; flex-direction: column;
-  box-shadow: var(--shadow-sm);
-  position: relative;
-}
-.course-card:hover {
-  border-color: var(--border3);
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: var(--shadow);
-}
-.course-img {
-  height:110px; display:flex; align-items:center; justify-content:center;
-  font-size:52px; position:relative;
-}
-.course-img::before {
-  content:''; position:absolute; inset:0;
-  background:rgba(8,10,14,.35);
-}
-.course-img span { position:relative; z-index:1; }
-.course-body { padding:1.125rem; flex:1; display:flex; flex-direction:column; }
-.course-name { font-size:15px; font-weight:800; letter-spacing:-.3px; margin-bottom:4px; }
-.course-meta { font-size:12px; color:var(--text2); margin-bottom:10px; }
-.course-desc { font-size:12.5px; color:var(--text2); line-height:1.6; flex:1; margin-bottom:12px; }
-.course-prog-row { display:flex; align-items:center; justify-content:space-between; font-size:11px; margin-bottom:4px; }
-.course-btn {
-  display: block; width: 100%; padding: 9px;
-  background: var(--bg4); border: 1px solid var(--border);
-  border-radius: var(--r); font-size: 12.5px; font-weight: 600;
-  color: var(--text2); text-align: center; cursor: pointer;
-  transition: all 0.2s var(--ease); margin-top: 10px;
-  box-shadow: var(--inner-glow);
-}
-.course-btn:hover {
-  background: var(--accent-g2); border-color: var(--accent-border); color: var(--accent);
-  transform: translateY(-1px); box-shadow: var(--inner-glow), 0 4px 12px var(--accent-glow);
-}
+  body{padding-bottom:80px;}
+  .wrap{max-width:1000px;}
 
-.sec-title { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text3); margin-bottom:16px; }
+  /* hero */
+  .hero{position:relative;margin-top:34px;background:
+      radial-gradient(620px 240px at 88% -20%,var(--accent-soft),transparent 70%),
+      linear-gradient(180deg,var(--card),oklch(0.985 0.006 250));
+    border:1px solid var(--line);border-radius:24px;padding:38px 40px;overflow:hidden;
+    box-shadow:0 1px 0 #fff inset,var(--shadow-md);}
+  .hero::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--accent),var(--accent-2));}
+  .hero-kick{display:inline-flex;align-items:center;gap:9px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--accent-deep);background:var(--accent-soft);
+    border:1px solid var(--accent-line);padding:7px 13px;border-radius:100px;margin-bottom:18px;}
+  .hero h1{font-size:clamp(28px,3.6vw,40px);font-weight:600;letter-spacing:-.025em;line-height:1.12;text-wrap:balance;}
+  .hero p.lead{color:var(--muted);font-size:17px;line-height:1.6;margin-top:13px;max-width:560px;text-wrap:pretty;}
+  .hero-meta{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
+  .meta{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);
+    padding:9px 14px;border-radius:11px;font-size:14px;font-weight:500;box-shadow:var(--shadow-sm);}
+  .meta b{font-weight:600;}
+  .hero-prog{display:flex;align-items:center;gap:18px;margin-top:26px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap;}
+  .hero-prog .pt{flex:1;min-width:200px;}
+  .hero-prog .pt b{font-size:16px;font-weight:600;display:block;}
+  .hero-prog .pt span{font-size:14px;color:var(--muted);}
 
-/* per-course image backgrounds */
-.img-python  { background:linear-gradient(135deg,#0a2318,#0d2b1e); }
-.img-js      { background:linear-gradient(135deg,#1a1500,#2a2200); }
-.img-cpp     { background:linear-gradient(135deg,#0a1220,#0d1a2e); }
-.img-java    { background:linear-gradient(135deg,#1a1000,#2a1a00); }
-.img-html    { background:linear-gradient(135deg,#1a0a00,#2a1200); }
-.img-css     { background:linear-gradient(135deg,#050e20,#0a1530); }
+  /* module */
+  .mod{background:var(--card);border:1px solid var(--line);border-radius:18px;margin-bottom:16px;overflow:hidden;
+    box-shadow:var(--shadow-sm);transition:box-shadow .25s,border-color .25s;}
+  .mod.open{box-shadow:var(--shadow-md);}
+  .mod.locked{background:var(--soft);}
+  .mod-head{display:flex;align-items:center;gap:16px;padding:20px 22px;cursor:pointer;user-select:none;}
+  .mod-badge{width:46px;height:46px;border-radius:13px;flex-shrink:0;display:grid;place-items:center;font-size:22px;color:#fff;
+    background:linear-gradient(140deg,var(--accent-2),var(--accent-deep));
+    box-shadow:0 1px 0 oklch(1 0 0/.4) inset,0 8px 16px -6px oklch(0.45 0.13 288/.5);position:relative;}
+  .mod.done .mod-badge{background:linear-gradient(140deg,var(--ok),var(--ok-deep));box-shadow:0 1px 0 oklch(1 0 0/.4) inset,0 8px 16px -6px oklch(0.45 0.12 158/.5);}
+  .mod.locked .mod-badge{background:linear-gradient(140deg,oklch(0.82 0.01 255),oklch(0.72 0.012 255));box-shadow:var(--shadow-sm);color:#fff;}
+  .mod-info{flex:1;min-width:0;}
+  .mod-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:3px;}
+  .mod-title{font-size:18.5px;font-weight:600;letter-spacing:-.01em;}
+  .mod-desc{font-size:14px;color:var(--muted);margin-top:3px;}
+  .mod-side{display:flex;align-items:center;gap:18px;flex-shrink:0;}
+  .mod-pct{text-align:right;}
+  .mod-pct span{font-size:13px;font-weight:600;display:block;}
+  .mod-mini{width:88px;height:7px;border-radius:100px;background:var(--soft);border:1px solid var(--line);overflow:hidden;margin-top:5px;}
+  .mod-mini i{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent-2));}
+  .mod.done .mod-mini i{background:linear-gradient(90deg,var(--ok),var(--ok-deep));}
+  .mod-status{font-size:13px;font-weight:600;}
+  .mod-status.s-done{color:var(--ok-deep);} .mod-status.s-cur{color:var(--accent-deep);} .mod-status.s-lock{color:var(--lock);}
+  .mod-caret{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:var(--faint);background:var(--soft);transition:transform .28s,background .15s;flex-shrink:0;}
+  .mod.open .mod-caret{transform:rotate(180deg);background:var(--accent-soft);color:var(--accent-deep);}
 
-/* per-course pct colours */
-.pct-green  { color:var(--green);  font-weight:700; }
-.pct-amber  { color:var(--amber);  font-weight:700; }
-.pct-blue   { color:var(--blue);   font-weight:700; }
-.pct-pink   { color:var(--pink,#FF6EA8); font-weight:700; }
+  .mod-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s cubic-bezier(.3,.7,.3,1);}
+  .mod.open .mod-body{grid-template-rows:1fr;}
+  .mod-body-inner{overflow:hidden;}
+  .chapters{border-top:1px solid var(--line);padding:8px 22px 16px;}
+  .ch{display:flex;align-items:center;gap:14px;padding:12px 8px;border-radius:11px;transition:background .15s;text-decoration:none;color:inherit;}
+  .ch:hover{background:var(--soft);}
+  .ch + .ch{border-top:1px solid var(--line-soft);}
+  .ch-ic{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-size:13px;}
+  .ch-ic.done{background:var(--ok-soft);color:var(--ok-deep);border:1.5px solid var(--ok-line);}
+  .ch-ic.cur{background:linear-gradient(140deg,var(--accent),var(--accent-deep));color:#fff;box-shadow:0 0 0 4px var(--accent-soft);}
+  .ch-ic.lock{background:var(--soft);color:var(--lock);border:1.5px solid var(--line);}
+  .ch-num{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--faint);width:24px;flex-shrink:0;}
+  .ch-name{flex:1;font-size:15px;font-weight:500;}
+  .ch.is-lock{cursor:not-allowed;}
+  .ch.is-lock .ch-name{color:var(--faint);}
+  .ch-go{font-size:13px;font-weight:600;color:var(--accent-deep);display:inline-flex;align-items:center;gap:5px;opacity:0;transition:.15s;flex-shrink:0;}
+  .ch:hover .ch-go{opacity:1;}
+  .ch.is-cur{background:var(--accent-soft);}
+  .ch.is-cur .ch-name{color:var(--accent-deep);font-weight:600;}
+  .ch.is-cur .ch-go{opacity:1;}
 
-/* progress bar per-course colours */
-.fill-green  { background:var(--green);  }
-.fill-amber  { background:var(--amber);  }
-.fill-blue   { background:var(--blue);   }
-.fill-pink   { background:var(--pink,#FF6EA8); }
-
-/* misc layout helpers */
-.sb-chevron  { color:var(--text3); font-size:13px; margin-left:auto; }
-.avatar-link { cursor:pointer; }
-.top-meta    { font-size:12px; color:var(--text2); }
-.pct-lbl     { color:var(--text3); }
-.meta-icon   { font-size:11px; }
-#page-content { opacity:0; transition:opacity .3s; }
+  @media (max-width:720px){
+    .hero{padding:28px 24px;}
+    .mod-side .mod-pct{display:none;}
+  }
 </style>
 </head>
-<body>
-<div class="layout">
+<body data-fx=".topbar, .hero, #modlist .mod">
+<script>
+(function(){var b=document.body,s=b.getAttribute('data-fx');if(!s)return;document.documentElement.classList.add('js-fx');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var st=document.createElement('style');st.textContent='.js-fx :is('+s+'){transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}.js-fx :is('+s+'):not(.fx-shown){opacity:0;transform:translateY(22px)}';document.head.appendChild(st);})();
+</script>
 
-<!-- ── SIDEBAR ─────────────────────────────────────────── -->
-<aside class="sidebar">
-  <a href="landing.html" class="sidebar-logo">
-    <div class="logo-mark">Z</div>ZENITH
-  </a>
-  <div class="nav-group">
-    <div class="nav-group-label">เรียนรู้</div>
-    <a class="nav-link" href="dashboard.html"><i class="ti ti-home"></i> Dashboard</a>
-    <a class="nav-link active" href="index.html"><i class="ti ti-books"></i> คอร์สเรียน</a>
-    <a class="nav-link" href="lesson.html"><i class="ti ti-code"></i> บทเรียน</a>
+<header class="topbar">
+  <a class="tb-logo" href="landing.html"><span class="tb-mk">Z</span>ZENITH</a>
+  <nav class="tb-nav">
+    <a href="dashboard.html">แดชบอร์ด</a>
+    <a href="index.html" class="cur">หลักสูตร</a>
+    <a href="profile.html">โปรไฟล์</a>
+  </nav>
+  <div class="tb-right">
+    <button class="btn btn-ghost sm" id="btn-logout">ออกจากระบบ</button>
+    <a class="tb-av" id="top-avatar" href="profile.html">?</a>
   </div>
-  <div class="nav-group">
-    <div class="nav-group-label">บัญชี</div>
-    <a class="nav-link" href="profile.html"><i class="ti ti-user"></i> โปรไฟล์</a>
-    <a class="nav-link" href="settings.html"><i class="ti ti-settings"></i> ตั้งค่า</a>
-  </div>
-  <div class="sidebar-bottom">
-    <a class="user-pill" href="profile.html">
-      <div class="avatar" id="sb-avatar">?</div>
-      <div class="user-info">
-        <div class="user-name" id="sb-name">กำลังโหลด...</div>
-        <div class="user-pts">ZENITH Learner</div>
-      </div>
-      <i class="ti ti-chevron-right sb-chevron"></i>
-    </a>
-  </div>
-</aside>
+</header>
 
-<!-- ── MAIN ────────────────────────────────────────────── -->
-<main class="main">
-  <div class="topbar">
-    <div class="topbar-title">คอร์สเรียนทั้งหมด</div>
-    <div class="topbar-right">
-      <span class="top-meta">1 วิชา · 16 บทเรียน</span>
-      <button class="btn btn-sm btn-ghost" id="btn-logout"><i class="ti ti-logout"></i> ออกจากระบบ</button>
-      <div class="avatar avatar-link" id="top-avatar" onclick="location.href='profile.html'">?</div>
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero-kick">หลักสูตรเดียว · ครบทุกเรื่อง</span>
+    <h1>Python Developer Track</h1>
+    <p class="lead">หลักสูตร Python ตั้งแต่พื้นฐานจนถึง OOP ครบ 24 บทเรียน 5 หน่วยการเรียนรู้ เรียนทีละบท ปลดล็อกไปเรื่อยๆ</p>
+    <div class="hero-meta">
+      <span class="meta">📚 <b>24</b> บทเรียน</span>
+      <span class="meta">⏱️ <b>~4</b> ชั่วโมง</span>
+      <span class="meta">🎯 Beginner</span>
     </div>
-  </div>
-
-  <div class="page-body" id="page-content">
-    <div class="sec-title">หลักสูตรที่เปิดสอน</div>
-
-    <div class="g3" style="max-width:360px">
-
-      <!-- Python -->
-      <div class="course-card anim-up" onclick="checkAccess('python')">
-        <div class="course-img img-python"><span>🐍</span></div>
-        <div class="course-body">
-          <div class="flex-between mb8">
-            <span class="course-name">Python</span>
-            <span class="badge badge-green">Beginner</span>
-          </div>
-          <div class="course-meta"><i class="ti ti-clock meta-icon"></i> 16 บทเรียน · 4 หน่วยการเรียนรู้</div>
-          <div class="course-desc">Variables, Loops, Functions, OOP ครบทั้ง 4 หน่วยการเรียนรู้</div>
-          <div class="course-prog-row">
-            <span class="pct-lbl">Progress</span>
-            <span class="pct-green" id="pct-python">0%</span>
-          </div>
-          <div class="prog-track"><div class="prog-fill fill-green" id="bar-python" style="width:0%"></div></div>
-          <button class="course-btn" id="btn-python">Start Learning →</button>
-        </div>
-      </div>
-
+    <div class="hero-prog">
+      <div class="ring" id="hero-ring"><i id="hero-pct">0%</i></div>
+      <div class="pt"><b id="hero-line">กำลังโหลด...</b><span id="hero-sub"></span></div>
+      <a href="#" id="continue-btn" class="btn btn-primary">เรียนต่อ
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
     </div>
-  </div>
-</main>
+  </section>
+
+  <div id="modlist" style="margin-top:30px"></div>
+
 </div>
 
+<script src="assets/js/python_data.js"></script>
 <script type="module">
 import { auth } from './assets/js/firebase.js';
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { syncFromFirestore } from './assets/js/progress.js';
 
-const COURSES = [
-  { key:'python', total:16 },
+const UNITS = [
+  { n:1, start:1,  end:6,  emoji:'🐣', title:'พื้นฐาน Python',   desc:'ตัวแปร ชนิดข้อมูล input/output ตัวดำเนินการ' },
+  { n:2, start:7,  end:11, emoji:'🔀', title:'ควบคุมทิศทาง',     desc:'if/elif/else · for/while loop · break/continue' },
+  { n:3, start:12, end:16, emoji:'📦', title:'โครงสร้างข้อมูล',   desc:'List · Tuple · Set · Dictionary · String Methods' },
+  { n:4, start:17, end:20, emoji:'⚡', title:'ฟังก์ชัน',          desc:'def · return · Arguments · Scope · try/except' },
+  { n:5, start:21, end:24, emoji:'🏗️', title:'OOP',              desc:'Class · Object · Inheritance · Encapsulation' },
 ];
+const TOTAL = 24;
 
-function getLastLesson(key) {
-  return parseInt(localStorage.getItem(`zenith_progress_${key}`) || '1');
+function getDone() {
+  const unlocked = parseInt(localStorage.getItem('zenith_progress_python') || '1');
+  return Math.max(0, unlocked - 1);
 }
 
-function loadProgress() {
-  COURSES.forEach(c => {
-    const unlocked = getLastLesson(c.key);
-    const done = Math.max(0, unlocked - 1);
-    const pct  = Math.min(Math.round((done / c.total) * 100), 100);
-    const pEl = document.getElementById(`pct-${c.key}`);
-    const bEl = document.getElementById(`bar-${c.key}`);
-    const btn = document.getElementById(`btn-${c.key}`);
-    if (pEl) pEl.textContent = pct + '%';
-    if (bEl) bEl.style.width = pct + '%';
-    if (btn) btn.textContent = done > 0 ? 'เรียนต่อ →' : 'Start Learning →';
+function lessonTitle(id) {
+  const l = courseData.lessons.find(x => x.id === id);
+  return l ? l.title : ('บทที่ ' + id);
+}
+
+function render() {
+  const done = getDone();
+  const overallPct = Math.min(Math.round((done / TOTAL) * 100), 100);
+  document.getElementById('hero-ring').style.setProperty('--p', overallPct);
+  document.getElementById('hero-pct').textContent = overallPct + '%';
+
+  const nextId = Math.min(done + 1, TOTAL);
+  if (done >= TOTAL) {
+    document.getElementById('hero-line').textContent = 'เรียนจบครบทั้ง 24 บทแล้ว 🎉';
+    document.getElementById('hero-sub').textContent = 'ยินดีด้วย! คุณเรียนจบหลักสูตรนี้แล้ว';
+    document.getElementById('continue-btn').textContent = 'ดูผลสรุป';
+    document.getElementById('continue-btn').href = 'results.html';
+  } else {
+    document.getElementById('hero-line').textContent = `เรียนไปแล้ว ${done} จาก ${TOTAL} บท`;
+    document.getElementById('hero-sub').textContent = `กำลังเรียน: บทที่ ${nextId} · ${lessonTitle(nextId)}`;
+    document.getElementById('continue-btn').href = `lesson.html?course=python&id=${nextId}`;
+  }
+
+  const list = document.getElementById('modlist');
+  list.innerHTML = '';
+  UNITS.forEach((u, idx) => {
+    const count = u.end - u.start + 1;
+    const doneInUnit = Math.min(Math.max(done - (u.start - 1), 0), count);
+    const pct = Math.round((doneInUnit / count) * 100);
+    const isDone = doneInUnit >= count;
+    const isLocked = done < u.start - 1;
+    const isCurrent = !isDone && !isLocked;
+
+    const mod = document.createElement('div');
+    mod.className = 'mod' + (isDone ? ' done' : isLocked ? ' locked' : '') + (isCurrent && idx === UNITS.findIndex(x => done < x.end && done >= x.start - 1) ? ' open' : '');
+
+    const statusHtml = isDone
+      ? `<span class="mod-status s-done">เรียนจบแล้ว</span>`
+      : isLocked
+        ? `<span class="mod-status s-lock">🔒 ล็อกอยู่</span>`
+        : `<span class="mod-status s-cur">${doneInUnit} / ${count} บท</span>`;
+
+    let chaptersHtml = '';
+    for (let id = u.start; id <= u.end; id++) {
+      const chDone = id <= done;
+      const chCur = id === done + 1;
+      const chLock = id > done + 1;
+      const icon = chDone ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>' : chCur ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>' : '🔒';
+      const cls = 'ch' + (chDone ? ' is-done' : '') + (chCur ? ' is-cur' : '') + (chLock ? ' is-lock' : '');
+      const icCls = 'ch-ic ' + (chDone ? 'done' : chCur ? 'cur' : 'lock');
+      const tag = chLock ? 'div' : 'a';
+      const href = chLock ? '' : `href="lesson.html?course=python&id=${id}"`;
+      const goLabel = chDone ? 'ทบทวน →' : chCur ? 'เรียนต่อ →' : '';
+      chaptersHtml += `<${tag} class="${cls}" ${href}>
+        <span class="${icCls}">${icon}</span>
+        <span class="ch-num">${String(id).padStart(2,'0')}</span>
+        <span class="ch-name">${lessonTitle(id)}</span>
+        ${goLabel ? `<span class="ch-go">${goLabel}</span>` : ''}
+      </${tag}>`;
+    }
+
+    mod.innerHTML = `
+      <div class="mod-head">
+        <div class="mod-badge">${isDone ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>' : u.emoji}</div>
+        <div class="mod-info">
+          <div class="mod-eyebrow">หน่วยที่ ${u.n}${isCurrent ? ' · กำลังเรียน' : ''}</div>
+          <div class="mod-title">${u.title}</div>
+          <div class="mod-desc">${u.desc}</div>
+        </div>
+        <div class="mod-side">
+          <div class="mod-pct">${statusHtml}<div class="mod-mini"><i style="width:${pct}%"></i></div></div>
+          <div class="mod-caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+        </div>
+      </div>
+      <div class="mod-body"><div class="mod-body-inner"><div class="chapters">${chaptersHtml}</div></div></div>
+    `;
+    mod.querySelector('.mod-head').addEventListener('click', () => mod.classList.toggle('open'));
+    list.appendChild(mod);
   });
 }
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) { window.location.href = 'login.html'; return; }
-
   await syncFromFirestore();
-  loadProgress();
-
+  render();
   const name = user.displayName || user.email.split('@')[0];
-
-  ['sb-avatar','top-avatar'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = name.charAt(0).toUpperCase();
-  });
-  document.getElementById('sb-name').textContent = name;
-
-  const content = document.getElementById('page-content');
-  if (content) { content.style.opacity = '1'; }
+  document.getElementById('top-avatar').textContent = name.charAt(0).toUpperCase();
 });
-
-window.checkAccess = function(course) {
-  const id = getLastLesson(course);
-  window.location.href = `lesson.html?course=${course}&id=${id}`;
-};
 
 document.getElementById('btn-logout').addEventListener('click', () => {
   if (confirm('ต้องการออกจากระบบ?')) {
@@ -206,4 +247,6 @@ document.getElementById('btn-logout').addEventListener('click', () => {
   }
 });
 </script>
-</body></html>
+<script src="assets/js/pystart-fx.js"></script>
+</body>
+</html>

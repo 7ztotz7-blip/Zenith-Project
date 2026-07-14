@@ -1,1236 +1,271 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZENITH — เรียนโค้ด เปลี่ยนชีวิต</title>
-    <!-- SEO -->
-    <meta name="description" content="ZENITH แพลตฟอร์มเรียนโปรแกรมมิ่งออนไลน์ด้วยภาษาไทย เรียน Python, JavaScript, C++, Java, HTML, CSS ได้ฟรี">
-    <meta name="keywords" content="เรียนโค้ด, โปรแกรมมิ่ง, Python, JavaScript, HTML, CSS, เรียนออนไลน์, ZENITH, coding, สอนโค้ด">
-    <meta name="author" content="ZENITH">
-    <meta name="robots" content="index, follow">
-    <!-- Open Graph -->
-    <meta property="og:title" content="ZENITH — เรียนโค้ด เปลี่ยนชีวิต">
-    <meta property="og:description" content="ZENITH แพลตฟอร์มเรียนโปรแกรมมิ่งออนไลน์ด้วยภาษาไทย เรียน Python, JavaScript, C++, Java, HTML, CSS ได้ฟรี">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://zenith-alpha-lyart.vercel.app/landing.html">
-    <meta property="og:image" content="https://zenith-alpha-lyart.vercel.app/python-logo.png">
-    <meta property="og:site_name" content="ZENITH">
-    <meta property="og:locale" content="th_TH">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ZENITH — เรียนโค้ด เปลี่ยนชีวิต">
-    <meta name="twitter:description" content="ZENITH แพลตฟอร์มเรียนโปรแกรมมิ่งออนไลน์ด้วยภาษาไทย เรียน Python, JavaScript, C++, Java, HTML, CSS ได้ฟรี">
-    <meta name="twitter:image" content="https://zenith-alpha-lyart.vercel.app/python-logo.png">
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="shortcut icon" href="favicon.svg">
-    <script src="assets/js/theme.js"></script>
-    <link rel="stylesheet" href="assets/css/theme-variables.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #080A0E; color: #EDF0F7; overflow-x: hidden; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ZENITH — เรียนเขียน Python ตั้งแต่ศูนย์</title>
+<meta name="description" content="ZENITH แพลตฟอร์มเรียน Python ออนไลน์ด้วยภาษาไทย ครบ 24 บทเรียน 5 หน่วยการเรียนรู้ ฟรี 100%">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="assets/css/pystart.css" rel="stylesheet" />
+<script src="assets/js/theme.js"></script>
+<style>
+  a{text-decoration:none;}
+  .lwrap{max-width:1180px;margin:0 auto;padding:0 40px;}
+  @media (max-width:860px){.lwrap{padding:0 22px;}}
 
-        /* VIDEO BG */
-        #bg-video {
-            position: fixed; right: 0; bottom: 0;
-            min-width: 100%; min-height: 100%;
-            z-index: -2; object-fit: cover;
-            opacity: 0.18; filter: saturate(0.8) brightness(0.5);
-        }
-        .video-overlay {
-            position: fixed; inset: 0; z-index: -1; pointer-events: none;
-            background: radial-gradient(ellipse at 50% 0%, rgba(168,85,247,0.08) 0%, #080A0E 65%);
-        }
-        .geo-bg {
-            background-image:
-                linear-gradient(rgba(168,85,247,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(168,85,247,0.04) 1px, transparent 1px);
-            background-size: 44px 44px;
-        }
+  /* nav */
+  .lnav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:20px 40px;background:color-mix(in oklch,var(--bg) 82%,transparent);backdrop-filter:blur(14px) saturate(1.4);
+    border-bottom:1px solid transparent;transition:border-color .2s;}
+  .lnav.scrolled{border-color:var(--line);}
+  .lnav-links{display:flex;align-items:center;gap:30px;font-size:15px;color:var(--muted);}
+  .lnav-links a{color:inherit;}
+  .lnav-links a:hover{color:var(--ink);}
+  .lnav-actions{display:flex;align-items:center;gap:10px;}
+  @media (max-width:860px){.lnav{padding:16px 22px;}.lnav-links{display:none;}}
 
-        /* HERO */
-        .hero-glow {
-            position: absolute; top: -280px; left: 50%; transform: translateX(-50%);
-            width: 900px; height: 900px; border-radius: 50%;
-            background: radial-gradient(circle,
-                rgba(168,85,247,0.22) 0%,
-                rgba(124,58,237,0.1)  35%,
-                transparent 70%);
-            pointer-events: none;
-            animation: glow-pulse 5s ease-in-out infinite;
-        }
-        .hero-glow-accent {
-            position: absolute; bottom: 5%; right: 5%;
-            width: 500px; height: 500px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 70%);
-            pointer-events: none;
-            filter: blur(50px);
-        }
-        .hero-orbit {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 560px; height: 560px; border-radius: 50%;
-            border: 1px solid rgba(168,85,247,0.08);
-            pointer-events: none;
-        }
-        .hero-orbit-2 {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 760px; height: 760px; border-radius: 50%;
-            border: 1px solid rgba(168,85,247,0.04);
-            pointer-events: none;
-        }
-        .hero-line-top {
-            position: absolute; top: 64px; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg,
-                transparent 0%,
-                rgba(168,85,247,0.35) 30%,
-                rgba(168,85,247,0.18) 70%,
-                transparent 100%);
-            pointer-events: none;
-        }
-        .hero-title-gradient {
-            background: linear-gradient(135deg, #ffffff 0%, #f5e6ff 25%, #d9a1ff 55%, #c084fc 80%, #a855f7 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-            filter: drop-shadow(0 0 40px rgba(168,85,247,0.45)) drop-shadow(0 2px 8px rgba(0,0,0,0.8));
-        }
-        .hero-scrim {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 700px; height: 600px;
-            background: radial-gradient(ellipse at center,
-                rgba(5,5,5,0.65) 0%,
-                rgba(5,5,5,0.3)  45%,
-                transparent 70%);
-            pointer-events: none;
-            z-index: 5;
-        }
-        .hero-float-card {
-            background: rgba(168,85,247,0.04);
-            border: 1px solid rgba(168,85,247,0.18);
-            -webkit-backdrop-filter: blur(16px);
-            backdrop-filter: blur(16px);
-            border-radius: 16px;
-        }
-        @keyframes glow-pulse {
-            0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
-            50%       { opacity: 0.75; transform: translateX(-50%) scale(1.06); }
-        }
-        @keyframes float-l {
-            0%, 100% { transform: translateY(0) rotate(-3deg); }
-            50%       { transform: translateY(-10px) rotate(-3deg); }
-        }
-        @keyframes float-r {
-            0%, 100% { transform: translateY(0) rotate(3deg); }
-            50%       { transform: translateY(-10px) rotate(3deg); }
-        }
+  /* hero split */
+  .hero{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:70px 0 96px;}
+  .hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;
+    font-size:13px;color:var(--accent-deep);background:var(--accent-soft);border:1px solid var(--accent-line);
+    padding:7px 13px;border-radius:8px;margin-bottom:24px;letter-spacing:.02em;}
+  .hero h1{font-size:clamp(34px,4.6vw,54px);line-height:1.08;letter-spacing:-.02em;font-weight:700;text-wrap:balance;}
+  .hero h1 .em{color:var(--accent);}
+  .hero-sub{font-size:18px;line-height:1.65;color:var(--muted);margin-top:22px;max-width:460px;text-wrap:pretty;}
+  .hero-cta{display:flex;gap:13px;margin-top:32px;flex-wrap:wrap;}
+  .hero-meta{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap;}
+  .hero-meta .it{font-size:13.5px;color:var(--muted);}
+  .hero-meta .it b{display:block;font-size:23px;color:var(--ink);font-weight:700;letter-spacing:-.01em;}
 
-        /* GLASS CARD */
-        .glass-card {
-            background: rgba(255,255,255,0.025);
-            border: 1px solid rgba(255,255,255,0.06);
-            -webkit-backdrop-filter: blur(12px);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
-        }
-        .glass-card:hover {
-            background: rgba(168,85,247,0.06);
-            border-color: rgba(168,85,247,0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 16px 40px rgba(168,85,247,0.1);
-        }
+  /* editor mock */
+  .editor{border-radius:16px;overflow:hidden;border:1px solid var(--edl);box-shadow:0 34px 70px -34px oklch(0.42 0.1 288/.35);background:var(--ed);}
+  .editor .etop{display:flex;align-items:center;gap:8px;padding:13px 16px;background:var(--ed2);}
+  .editor .edot{width:11px;height:11px;border-radius:50%;}
+  .editor .etab{margin-left:12px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--eddim);background:var(--ed);padding:5px 12px;border-radius:6px;}
+  .editor .ebody{display:flex;font-family:'IBM Plex Mono',monospace;font-size:14px;line-height:1.95;}
+  .editor .egut{padding:20px 0 20px 18px;color:var(--eddim);text-align:right;user-select:none;}
+  .editor .egut span{display:block;}
+  .editor .ecode{padding:20px 22px;white-space:pre;color:var(--edtx);overflow:auto;flex:1;}
+  .editor .k{color:var(--kw);} .editor .f{color:var(--fn);} .editor .s{color:var(--str);} .editor .c{color:var(--cmt);}
+  .editor .eout{padding:13px 22px;border-top:1px solid var(--edl);background:var(--ed2);font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--str);white-space:pre;}
 
-        /* COURSE CARD color dots */
-        .dot-python  { background: #2dd4bf; }
-        .dot-js      { background: #f7df1e; }
-        .dot-css     { background: #38bdf8; }
-        .dot-html    { background: #e34f26; }
-        .dot-php     { background: #777bb4; }
-        .dot-sql     { background: #00758f; }
+  /* generic section */
+  .lsec{padding:88px 0;}
+  .lsec.alt{background:var(--soft);border-block:1px solid var(--line);}
+  .shead{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:44px;flex-wrap:wrap;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  .lh2{font-size:clamp(28px,3.6vw,40px);letter-spacing:-.02em;font-weight:700;line-height:1.12;}
+  .shead p{color:var(--muted);font-size:16.5px;line-height:1.6;max-width:360px;}
 
-        /* STEPS */
-        .step-connector {
-            position: absolute;
-            top: 36px;
-            left: calc(33.333% + 16px);
-            right: calc(33.333% + 16px);
-            height: 1px;
-            background: linear-gradient(90deg, rgba(168,85,247,0.5) 0%, rgba(77,158,255,0.5) 50%, rgba(255,179,64,0.5) 100%);
-            pointer-events: none;
-        }
-        .step-num {
-            font-size: 72px;
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: -0.05em;
-            opacity: 0.06;
-            position: absolute;
-            top: -16px; right: 12px;
-            pointer-events: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-        .feature-pill {
-            background: rgba(255,255,255,0.025);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px;
-            transition: border-color 0.2s ease;
-        }
-        .feature-pill:hover { border-color: rgba(168,85,247,0.3); }
+  /* bento */
+  .bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:18px;}
+  .tile{border:1px solid var(--line);border-radius:16px;padding:28px;background:var(--card);
+    display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow-sm);}
+  .tile.wide{grid-column:span 2;}
+  .tile.tall{grid-row:span 2;background:linear-gradient(140deg,var(--accent),var(--accent-deep));color:#fff;}
+  .tile h3{font-size:21px;font-weight:600;letter-spacing:-.01em;}
+  .tile p{font-size:15px;line-height:1.55;color:var(--muted);margin-top:8px;}
+  .tile.tall p{color:oklch(0.95 0.03 300);}
+  .tile .big{font-size:44px;font-weight:700;letter-spacing:-.02em;color:var(--accent);}
+  .tile .ico{width:42px;height:42px;border-radius:10px;background:var(--accent-soft);color:var(--accent-deep);display:grid;place-items:center;}
+  .tile.tall .ico{background:oklch(1 0 0/.18);color:#fff;}
+  @media (max-width:860px){.bento{grid-template-columns:1fr 1fr;grid-auto-rows:auto;}.tile.wide,.tile.tall{grid-column:span 2;}}
+  @media (max-width:560px){.bento{grid-template-columns:1fr;}.tile.wide,.tile.tall{grid-column:span 1;}}
 
-        /* ANIMATIONS */
-        @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes pulse-slow { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
-        .animate-fade-up { animation: fadeUp 0.7s ease both; }
-        .delay-1 { animation-delay: 0.15s; }
-        .delay-2 { animation-delay: 0.3s; }
-        .delay-3 { animation-delay: 0.45s; }
-        .delay-4 { animation-delay: 0.6s; }
+  /* roadmap */
+  .road{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:center;}
+  .tl{position:relative;padding-left:30px;}
+  .tl::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--line);}
+  .ti{position:relative;padding:0 0 30px 0;}
+  .ti:last-child{padding-bottom:0;}
+  .ti::before{content:"";position:absolute;left:-30px;top:5px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:3px solid var(--accent);}
+  .ti h4{font-size:18.5px;font-weight:600;margin-bottom:5px;}
+  .ti .lvl{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;}
+  .ti p{color:var(--muted);font-size:15px;line-height:1.55;}
+  .roadcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:36px;box-shadow:var(--shadow-sm);}
+  .roadcard .ph{height:170px;border-radius:12px;background:repeating-linear-gradient(45deg,var(--soft) 0 12px,var(--bg) 12px 24px);
+    border:1px dashed var(--line);display:grid;place-items:center;margin-bottom:22px;}
+  .roadcard .ph span{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);}
+  .roadcard h3{font-size:21px;font-weight:600;}
+  .roadcard p{color:var(--muted);font-size:15px;line-height:1.6;margin-top:8px;}
+  @media (max-width:860px){.road{grid-template-columns:1fr;}}
 
-        /* SCROLL REVEAL */
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+  /* cta band */
+  .band{margin:0 0 88px;border:1px solid var(--line);border-radius:22px;overflow:hidden;display:grid;grid-template-columns:1.2fr 1fr;}
+  .band .l{padding:56px;}
+  .band .l h2{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.14;}
+  .band .l p{color:var(--muted);font-size:16px;margin:16px 0 26px;line-height:1.6;max-width:380px;}
+  .band .r{background:linear-gradient(140deg,var(--accent),var(--accent-deep));display:grid;place-items:center;color:#fff;padding:40px;}
+  .band .r .q{font-size:20px;line-height:1.5;font-weight:500;}
+  .band .r .by{margin-top:18px;font-size:14px;color:oklch(0.93 0.03 300);}
+  @media (max-width:860px){.band{grid-template-columns:1fr;margin:0 0 60px;}.band .l{padding:34px;}}
 
-        /* PROGRESS BAR ZERO */
-        .progress-zero { width: 0%; }
+  .lfoot{border-top:1px solid var(--line);padding:34px 0;display:flex;justify-content:space-between;
+    color:var(--muted);font-size:14px;flex-wrap:wrap;gap:14px;}
 
-        /* CTA INNER GLOW */
-        .cta-inner-glow {
-            background: radial-gradient(ellipse at 50% 120%, rgba(168,85,247,0.1), transparent 65%);
-        }
-        .about-inner-glow {
-            background: radial-gradient(ellipse at 50% 0%, rgba(168,85,247,0.08), transparent 65%);
-        }
-
-        /* SCROLLBAR */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #080A0E; }
-        ::-webkit-scrollbar-thumb { background: #1E2433; border-radius: 10px; }
-
-        /* BADGE */
-        .badge-green  { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.25); color: #a855f7; }
-        .badge-purple { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.25); color: #a855f7; }
-        .badge-teal   { background: rgba(45,212,191,0.12);  border: 1px solid rgba(45,212,191,0.25);  color: #2dd4bf; }
-
-        /* STAT CARD */
-        .stat-card {
-            background: rgba(168,85,247,0.07);
-            border: 1px solid rgba(168,85,247,0.2);
-            border-radius: 20px;
-            -webkit-backdrop-filter: blur(16px);
-            backdrop-filter: blur(16px);
-            transition: all 0.3s ease;
-        }
-        .stat-card:hover {
-            background: rgba(168,85,247,0.12);
-            border-color: rgba(168,85,247,0.4);
-            transform: translateY(-2px);
-        }
-
-        /* BTN */
-        .btn-primary {
-            background: #a855f7; color: #fff;
-            font-weight: 800; border-radius: 10px;
-            transition: all 0.18s ease;
-        }
-        .btn-primary:hover { background: #7c3aed; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(168,85,247,0.4); }
-        .btn-outline {
-            background: transparent; color: #fff;
-            border: 1px solid rgba(255,255,255,0.15); border-radius: 14px;
-            font-weight: 700; transition: all 0.2s ease;
-        }
-        .btn-outline:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); }
-
-        .hero-card-left  { animation: float-l 6s ease-in-out infinite;      opacity: 0.7; }
-        .hero-card-right { animation: float-r 6s ease-in-out infinite 0.8s; opacity: 0.7; }
-        .w-pct-75 { width: 75%; }
-        .w-pct-50 { width: 50%; }
-        .w-pct-30 { width: 30%; }
-
-        /* PAGE TRANSITION */
-        #page-transition {
-            position: fixed; inset: 0; z-index: 9999;
-            background: #080A0E; /* intentionally same as body bg */
-            opacity: 1;
-            transition: opacity 0.35s ease;
-            pointer-events: all;
-        }
-        #page-transition.out { opacity: 1; pointer-events: all; }
-        #page-transition.hidden { opacity: 0; pointer-events: none; }
-
-        /* TYPEWRITER CURSOR */
-        .tw-cursor {
-            display: inline-block;
-            width: 3px; margin-left: 2px;
-            background: #a855f7;
-            -webkit-text-fill-color: #a855f7 !important;
-            animation: blink 0.8s step-end infinite;
-            border-radius: 2px;
-        }
-        @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
-
-        /* SLIDE ANIMATIONS */
-        .slide-left  { opacity: 0; transform: translateX(-40px); transition: opacity 0.6s ease, transform 0.6s ease; }
-        .slide-right { opacity: 0; transform: translateX(40px);  transition: opacity 0.6s ease, transform 0.6s ease; }
-        .slide-left.visible, .slide-right.visible { opacity: 1; transform: translateX(0); }
-
-        /* STAGGER CARD */
-        .stagger-item { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
-        .stagger-item.visible { opacity: 1; transform: translateY(0); }
-
-        @media (max-width: 640px) {
-            .hero-glow { width: 340px; height: 340px; }
-        }
-
-        /* ── STRIPE CANVAS GRADIENT ─────────────────────────── */
-        #hero-gradient-canvas {
-            position: absolute; inset: 0; z-index: 0;
-            width: 100%; height: 100%; display: block;
-            pointer-events: none;
-        }
-        /* Bottom fade into next section */
-        .hero-bottom-fade {
-            position: absolute; bottom: -1px; left: 0; right: 0;
-            height: 200px; z-index: 3; pointer-events: none;
-            background: linear-gradient(to bottom, transparent 0%, #080A0E 85%);
-        }
-        /* Ensure hero decorations layer above canvas */
-        .hero-glow, .hero-glow-accent { z-index: 1; }
-        .hero-orbit, .hero-orbit-2, .hero-line-top { z-index: 1; }
-        /* Floating cards: smoother transition for mouse parallax */
-        .hero-float-card {
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.07),
-                0 4px 16px rgba(0,0,0,0.3),
-                0 16px 40px rgba(168,85,247,0.08);
-            transition: transform 0.12s ease-out !important;
-            will-change: transform;
-        }
-        /* Enhanced CTA glow + shine sweep */
-        .btn-primary {
-            position: relative; overflow: hidden;
-            box-shadow: 0 0 0 1px rgba(168,85,247,0.35), 0 4px 24px rgba(168,85,247,0.28) !important;
-        }
-        .btn-primary:hover {
-            box-shadow: 0 0 0 1px rgba(168,85,247,0.55), 0 8px 40px rgba(168,85,247,0.45) !important;
-        }
-        .btn-primary::before {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 50%; height: 100%; pointer-events: none;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.13), transparent);
-            transition: left 0.5s ease;
-        }
-        .btn-primary:hover::before { left: 160%; }
-        /* Light mode overrides for new elements */
-        [data-theme="light"] #hero-gradient-canvas { display: none; }
-        [data-theme="light"] .hero-bottom-fade {
-            background: linear-gradient(to bottom, transparent, #f8faff 85%);
-        }
-        /* Scroll arrow above bottom fade */
-        .hero-scroll-arrow { z-index: 10; }
-        /* Reduced motion: disable canvas + float animations */
-        @media (prefers-reduced-motion: reduce) {
-            #hero-gradient-canvas { display: none !important; }
-            .hero-card-left, .hero-card-right { animation: none !important; }
-            .hero-float-card { transition: none !important; }
-        }
-
-        /* ── LIGHT MODE OVERRIDES ─────────────────────────────── */
-
-        /* Body + background */
-        [data-theme="light"] body { background: #f8faff !important; color: #0f172a !important; }
-        [data-theme="light"] #bg-video,
-        [data-theme="light"] .video-overlay { display: none !important; }
-        [data-theme="light"] .geo-bg {
-            background-image:
-                linear-gradient(rgba(29,78,216,0.045) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(29,78,216,0.045) 1px, transparent 1px);
-        }
-
-        /* Hero glow — สีน้ำเงินอ่อน ไม่ pulse */
-        [data-theme="light"] .hero-glow {
-            background: radial-gradient(circle, rgba(29,78,216,0.07) 0%, transparent 65%);
-            animation: none;
-        }
-        [data-theme="light"] .hero-glow-accent { opacity: 0; pointer-events: none; }
-        [data-theme="light"] .hero-orbit        { border-color: rgba(29,78,216,0.06); }
-        [data-theme="light"] .hero-orbit-2      { border-color: rgba(29,78,216,0.03); }
-        [data-theme="light"] .hero-line-top {
-            background: linear-gradient(90deg,
-                transparent 0%, rgba(29,78,216,0.18) 50%, transparent 100%);
-        }
-
-        /* Scrim — สว่างแทนมืด */
-        [data-theme="light"] .hero-scrim {
-            background: radial-gradient(ellipse at center,
-                rgba(248,250,255,0.88) 0%,
-                rgba(248,250,255,0.48) 45%,
-                transparent 70%);
-        }
-
-        /* Gradients */
-        .gradient-accent {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Hero title — gradient น้ำเงินเข้ม → ม่วง อ่านได้บนพื้นขาว */
-        [data-theme="light"] .hero-title-gradient {
-            background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 35%, #059669 65%, #047857 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-            filter: drop-shadow(0 0 16px rgba(29,78,216,0.12));
-        }
-        [data-theme="light"] .tw-cursor {
-            background: #059669;
-            -webkit-text-fill-color: #059669 !important;
-        }
-
-        /* Floating cards — visible shadow + border ในโหมดสว่าง */
-        [data-theme="light"] .hero-float-card {
-            background: rgba(255,255,255,0.97) !important;
-            border: 1px solid rgba(29,78,216,0.14) !important;
-            box-shadow: 0 8px 32px rgba(29,78,216,0.1), 0 2px 8px rgba(0,0,0,0.06) !important;
-        }
-        [data-theme="light"] .hero-float-card .text-zinc-600  { color: #374151 !important; }
-        [data-theme="light"] .hero-float-card .text-zinc-500  { color: #6b7280 !important; }
-        [data-theme="light"] .hero-float-card .text-zinc-400  { color: #6b7280 !important; }
-
-        /* Badges */
-        [data-theme="light"] .badge-purple {
-            background: rgba(29,78,216,0.08) !important;
-            border-color: rgba(29,78,216,0.2) !important;
-            color: #1d4ed8 !important;
-        }
-
-        /* Glass card hover */
-        [data-theme="light"] .glass-card:hover {
-            background: rgba(29,78,216,0.03) !important;
-            border-color: rgba(29,78,216,0.25) !important;
-            box-shadow: 0 16px 40px rgba(29,78,216,0.08) !important;
-        }
-
-        /* Stat cards */
-        [data-theme="light"] .stat-card {
-            background: rgba(29,78,216,0.05) !important;
-            border-color: rgba(29,78,216,0.12) !important;
-        }
-        [data-theme="light"] .stat-card:hover {
-            background: rgba(29,78,216,0.08) !important;
-            border-color: rgba(29,78,216,0.28) !important;
-        }
-
-        /* Social proof pills */
-        [data-theme="light"] .bg-\[\#a855f7\]\/10 {
-            background: rgba(29,78,216,0.06) !important;
-        }
-        [data-theme="light"] .border-\[\#a855f7\]\/25 {
-            border-color: rgba(29,78,216,0.18) !important;
-        }
-
-        /* Hero subtitle text (zinc-200 invisible on white) */
-        [data-theme="light"] .text-zinc-200 { color: #1e293b !important; }
-        [data-theme="light"] .text-zinc-300 { color: #374151 !important; }
-
-        /* Scrollbar — neutral แทน blue */
-        [data-theme="light"] ::-webkit-scrollbar-thumb { background: #cbd5e1 !important; border-radius: 10px; }
-        [data-theme="light"] ::-webkit-scrollbar-track  { background: #f8faff  !important; }
-    </style>
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;}}
+</style>
 </head>
-<body class="geo-bg">
+<body data-fx=".lnav *, .hero > div > *, .editor, .lsec .reveal, .bento .tile, .road > *, .band">
+<script>
+(function(){var b=document.body,s=b.getAttribute('data-fx');if(!s)return;document.documentElement.classList.add('js-fx');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var st=document.createElement('style');st.textContent='.js-fx :is('+s+'){transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}.js-fx :is('+s+'):not(.fx-shown){opacity:0;transform:translateY(22px)}';document.head.appendChild(st);})();
+</script>
 
-<!-- VIDEO BACKGROUND -->
-<video autoplay loop muted playsinline id="bg-video">
-    <source src="gg-video.mp4" type="video/mp4">
-</video>
-<div class="video-overlay"></div>
-
-<!-- ══════════════ NAVBAR ══════════════ -->
-<nav class="fixed top-0 w-full z-50 h-16 flex items-center justify-between px-6 md:px-10
-            bg-[#080A0E]/70 backdrop-blur-md border-b border-white/[0.04]">
-
-    <a href="landing.html" class="text-2xl font-black text-[#a855f7] italic tracking-tighter select-none">ZENITH.</a>
-
-    <div class="flex items-center gap-3 ml-auto">
-        <div class="hidden md:flex items-center gap-6 text-[11px] font-bold uppercase tracking-widest text-zinc-400 mr-3">
-            <a href="#courses" class="hover:text-white transition">คอร์สเรียน</a>
-            <a href="#about"   class="hover:text-white transition">เกี่ยวกับเรา</a>
-        </div>
-        <button type="button" onclick="window.toggleTheme()" class="theme-toggle-btn" aria-label="Toggle theme">
-            <svg class="icon-sun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M18.364 18.364l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
-            <svg class="icon-moon" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
-        </button>
-        <a href="login.html"
-           class="btn-outline px-5 py-2 text-[10px] uppercase tracking-widest hidden sm:block">
-            Sign In
-        </a>
-        <a href="register.html"
-           class="btn-primary px-5 py-2 text-[10px] uppercase tracking-widest">
-            Get Started
-        </a>
-    </div>
+<nav class="lnav" id="lnav">
+  <a class="tb-logo" href="landing.html"><span class="tb-mk">Z</span>ZENITH</a>
+  <div class="lnav-links">
+    <a href="index.html">หลักสูตร</a>
+    <a href="#features">จุดเด่น</a>
+    <a href="#roadmap">เส้นทางการเรียน</a>
+  </div>
+  <div class="lnav-actions">
+    <a class="btn btn-ghost sm" href="login.html">เข้าสู่ระบบ</a>
+    <a class="btn btn-primary sm" href="register.html">เริ่มเรียนฟรี</a>
+  </div>
 </nav>
 
-<!-- ══════════════ HERO ══════════════ -->
-<section id="hero-section" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 overflow-hidden">
-
-    <!-- Stripe-style animated mesh gradient (canvas) -->
-    <canvas id="hero-gradient-canvas" aria-hidden="true"></canvas>
-
-    <!-- BG elements -->
-    <div class="hero-glow"></div>
-    <div class="hero-glow-accent"></div>
-    <div class="hero-orbit hidden md:block"></div>
-    <div class="hero-orbit-2 hidden md:block"></div>
-    <div class="hero-line-top"></div>
-    <div class="hero-scrim"></div>
-
-    <!-- Floating code card — left (desktop only) -->
-    <div class="hero-float-card hero-card-left hidden lg:block absolute left-[4%] top-1/2 -translate-y-1/2 w-52 p-4 pointer-events-none">
-        <div class="flex items-center gap-1.5 mb-3">
-            <span class="w-2 h-2 rounded-full bg-red-500/60"></span>
-            <span class="w-2 h-2 rounded-full bg-yellow-500/60"></span>
-            <span class="w-2 h-2 rounded-full bg-green-500/60"></span>
-            <span class="text-[9px] text-zinc-600 ml-auto font-mono">main.py</span>
-        </div>
-        <div class="text-[10px] leading-[1.7] font-mono text-left">
-            <span class="text-[#a855f7]">def</span> <span class="text-[#2dd4bf]">greet</span><span class="text-zinc-400">(name):</span><br>
-            <span class="text-zinc-600">&nbsp;&nbsp;msg</span> <span class="text-zinc-500">=</span> <span class="text-yellow-400 text-[9px]">f"Hi {name}!"</span><br>
-            <span class="text-zinc-600">&nbsp;&nbsp;</span><span class="text-[#a855f7]">print</span><span class="text-zinc-400">(msg)</span><br>
-            <br>
-            <span class="text-[#2dd4bf]">greet</span><span class="text-zinc-400">(</span><span class="text-yellow-400 text-[9px]">"Zenith"</span><span class="text-zinc-400">)</span>
-        </div>
-        <div class="mt-3 pt-3 border-t border-white/5 flex items-center gap-2">
-            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse flex-shrink-0"></span>
-            <span class="text-[9px] text-green-400 font-mono">Hi Zenith!</span>
-        </div>
+<main>
+  <!-- HERO -->
+  <div class="lwrap hero">
+    <div>
+      <span class="hero-tag">$ python — สำหรับมือใหม่</span>
+      <h1>เรียน <span class="em">Python</span><br/>อย่างเป็นระบบ ทีละขั้น</h1>
+      <p class="hero-sub">เส้นทางการเรียนที่ออกแบบไว้ชัดเจน ตั้งแต่ตัวแปรตัวแรกจนถึง OOP — ไม่ต้องเดาว่าจะเรียนอะไรต่อ</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary lg" href="register.html">เริ่มเส้นทางการเรียน →</a>
+        <a class="btn btn-ghost lg" href="index.html">ดูหลักสูตร</a>
+      </div>
+      <div class="hero-meta">
+        <div class="it"><b>24</b>บทเรียน</div>
+        <div class="it"><b>~4 ชม.</b>เนื้อหาทั้งหมด</div>
+        <div class="it"><b>5</b>หน่วยการเรียนรู้</div>
+      </div>
     </div>
-
-    <!-- Floating progress card — right (desktop only) -->
-    <div class="hero-float-card hero-card-right hidden lg:block absolute right-[4%] top-1/2 -translate-y-1/2 w-44 p-4 pointer-events-none">
-        <p class="text-[9px] text-[#a855f7] uppercase tracking-widest font-black mb-3">Progress</p>
-        <div class="space-y-3">
-            <div>
-                <div class="flex justify-between text-[9px] mb-1">
-                    <span class="text-zinc-400">🐍 Python</span>
-                    <span class="text-[#2dd4bf] font-bold">75%</span>
-                </div>
-                <div class="w-full bg-zinc-800/80 rounded-full h-1">
-                    <div class="h-1 rounded-full bg-[#2dd4bf] w-pct-75"></div>
-                </div>
-            </div>
-            <div class="space-y-1.5 pt-2">
-                <div class="flex items-center gap-1.5"><span class="text-[9px]">📘</span><span class="text-[9px] text-zinc-500">16 บทเรียน</span></div>
-                <div class="flex items-center gap-1.5"><span class="text-[9px]">✅</span><span class="text-[9px] text-zinc-500">4 หน่วยการเรียน</span></div>
-                <div class="flex items-center gap-1.5"><span class="text-[9px]">🏆</span><span class="text-[9px] text-zinc-500">Certificate ฟรี</span></div>
-            </div>
-        </div>
-        <div class="mt-3 pt-3 border-t border-white/5">
-            <span class="text-[9px] text-[#2dd4bf] font-bold">เรียนได้เลยวันนี้ →</span>
-        </div>
+    <div class="editor">
+      <div class="etop">
+        <span class="edot" style="background:oklch(0.7 0.16 25)"></span>
+        <span class="edot" style="background:oklch(0.82 0.13 90)"></span>
+        <span class="edot" style="background:oklch(0.74 0.14 150)"></span>
+        <span class="etab">guess_number.py</span>
+      </div>
+      <div class="ebody">
+        <div class="egut"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+        <div class="ecode"><span class="c"># เกมทายตัวเลข</span>
+<span class="k">import</span> random
+secret = random.<span class="f">randint</span>(<span class="k">1</span>, <span class="k">10</span>)
+guess = <span class="f">int</span>(<span class="f">input</span>(<span class="s">"ทายเลข 1-10: "</span>))
+<span class="k">if</span> guess == secret:
+    <span class="f">print</span>(<span class="s">"เก่งมาก! ทายถูก 🎉"</span>)</div>
+      </div>
+      <div class="eout">▸ ทายเลข 1-10: 7
+▸ เก่งมาก! ทายถูก 🎉</div>
     </div>
+  </div>
 
-    <!-- Badge -->
-    <div class="badge-purple inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-8 animate-fade-up relative z-10">
-        <span class="w-1.5 h-1.5 rounded-full bg-[#a855f7] animate-pulse"></span>
-        เรียนฟรี 100% · ไม่ต้องใช้บัตรเครดิต
+  <!-- BENTO -->
+  <section class="lsec" id="features">
+    <div class="lwrap">
+      <div class="shead">
+        <div>
+          <div class="eyebrow reveal">// จุดเด่น</div>
+          <h2 class="lh2 reveal">ทุกอย่างที่มือใหม่ต้องการ<br/>ในที่เดียว</h2>
+        </div>
+        <p class="reveal">ไม่ต้องสลับไปมาหลายเว็บ เรารวมบทเรียน ตัวอย่างโค้ด และ Quiz ไว้ครบ</p>
+      </div>
+      <div class="bento">
+        <div class="tile tall reveal">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div><h3>เรียนทีละบท ชัดเจน</h3><p>อธิบายทีละขั้น พร้อมโค้ดตัวอย่างจริงในทุกบทเรียน ไม่ต้องเดาว่าต้องรู้อะไรก่อน</p></div>
+        </div>
+        <div class="tile wide reveal">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div><h3>คำอธิบายภาษาคน</h3><p>ทุกแนวคิดอธิบายด้วยตัวอย่างใกล้ตัว เป็นภาษาไทยที่เข้าใจง่าย ไม่ใช้ศัพท์เทคนิคชวนงง</p></div>
+        </div>
+        <div class="tile reveal">
+          <div class="big">~4 ชม.</div>
+          <p>เนื้อหาทั้งคอร์ส เรียนได้แม้มีเวลาน้อย</p>
+        </div>
+        <div class="tile reveal">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+          <div><h3>Quiz ท้ายบท</h3><p>ตอบถูกจึงปลดล็อกบทถัดไป ช่วยให้แน่ใจว่าเข้าใจจริงก่อนไปต่อ</p></div>
+        </div>
+        <div class="tile reveal">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div><h3>ติดตามความคืบหน้า</h3><p>เข้าสู่ระบบแล้วเรียนต่อจากที่ค้างไว้ได้ทุกเครื่อง</p></div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Headline -->
-    <h1 id="hero-title" class="hero-title-gradient text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.0] mb-6 animate-fade-up delay-1 max-w-4xl relative z-10">
-        เขียนโค้ด<br>เปลี่ยนชีวิต
-    </h1>
-
-    <!-- Subtitle -->
-    <p class="text-zinc-200 text-base md:text-lg max-w-xl leading-relaxed mb-10 animate-fade-up delay-2 relative z-10">
-        Python · 16 บทเรียน · 4 หน่วยการเรียนรู้<br>
-        <span class="text-sm text-zinc-400">พร้อม Quiz ทุกบท และ Certificate ฟรี</span>
-    </p>
-
-    <!-- CTA Buttons -->
-    <div class="flex flex-col sm:flex-row items-center gap-4 mb-16 animate-fade-up delay-3 relative z-10">
-        <a href="register.html"
-           class="btn-primary px-8 py-4 text-sm uppercase tracking-widest w-full sm:w-auto text-center">
-            เริ่มเรียนฟรีเลย →
-        </a>
-        <a href="login.html"
-           class="btn-outline px-8 py-4 text-sm uppercase tracking-widest w-full sm:w-auto text-center">
-            มีบัญชีแล้ว? Sign In
-        </a>
+  <!-- ROADMAP -->
+  <section class="lsec alt" id="roadmap">
+    <div class="lwrap">
+      <div class="shead">
+        <div>
+          <div class="eyebrow reveal">// เส้นทางการเรียน</div>
+          <h2 class="lh2 reveal">รู้ชัดว่าต้องเรียนอะไรต่อ</h2>
+        </div>
+        <p class="reveal">ไต่ระดับจากพื้นฐานสู่การเขียนโปรแกรมเชิงวัตถุอย่างมั่นใจ</p>
+      </div>
+      <div class="road">
+        <div class="tl">
+          <div class="ti reveal"><div class="lvl">หน่วย 1 · พื้นฐาน</div><h4>พื้นฐาน Python</h4><p>ตัวแปร ชนิดข้อมูล input/output ตัวดำเนินการ</p></div>
+          <div class="ti reveal"><div class="lvl">หน่วย 2 · ตรรกะ</div><h4>ควบคุมทิศทาง</h4><p>เงื่อนไข if/elif/else ลูป for/while break/continue</p></div>
+          <div class="ti reveal"><div class="lvl">หน่วย 3 · ข้อมูล</div><h4>โครงสร้างข้อมูล</h4><p>List Tuple Set Dictionary และ String Methods</p></div>
+          <div class="ti reveal"><div class="lvl">หน่วย 4-5 · ประยุกต์</div><h4>ฟังก์ชันและ OOP</h4><p>เขียนฟังก์ชัน จัดการ Error และเขียนโปรแกรมเชิงวัตถุ</p></div>
+        </div>
+        <div class="roadcard reveal">
+          <div class="ph"><span>[ ภาพหน้าจอ หลักสูตรและความคืบหน้า ]</span></div>
+          <h3>ติดตามความคืบหน้าได้ตลอด</h3>
+          <p>เห็นชัดว่าเรียนถึงไหนแล้ว เหลืออีกกี่บท และปลดล็อกบทถัดไปเมื่อพร้อม</p>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Social proof strip -->
-    <div class="flex flex-wrap items-center justify-center gap-3 animate-fade-up delay-4 relative z-10">
-        <div class="flex items-center gap-2 bg-[#a855f7]/10 border border-[#a855f7]/25 rounded-xl px-4 py-2.5">
-            <span class="text-[#2dd4bf] text-base font-black leading-none">1</span>
-            <span class="text-[10px] text-zinc-300 uppercase tracking-widest font-bold">วิชา</span>
+  <!-- CTA BAND -->
+  <div class="lwrap">
+    <section class="band reveal">
+      <div class="l">
+        <h2>เริ่มเส้นทางสู่การเขียนโค้ดวันนี้</h2>
+        <p>บทแรกฟรีเสมอ ไม่ต้องใช้บัตรเครดิต เริ่มได้ใน 1 นาที</p>
+        <a class="btn btn-primary lg" href="register.html">สมัครฟรี →</a>
+      </div>
+      <div class="r">
+        <div>
+          <div class="q">"โครงสร้างหลักสูตรชัดมาก ทำให้รู้ว่าควรเรียนอะไรก่อน-หลัง ไม่หลงทางเหมือนดู YouTube มั่ว ๆ"</div>
+          <div class="by">— ธนกร · นักศึกษาวิศวกรรม</div>
         </div>
-        <div class="flex items-center gap-2 bg-[#a855f7]/10 border border-[#a855f7]/25 rounded-xl px-4 py-2.5">
-            <span class="text-[#a855f7] text-base font-black leading-none">16</span>
-            <span class="text-[10px] text-zinc-300 uppercase tracking-widest font-bold">บทเรียน</span>
-        </div>
-        <div class="flex items-center gap-2 bg-[#a855f7]/10 border border-[#a855f7]/25 rounded-xl px-4 py-2.5">
-            <span class="text-yellow-400 text-base font-black leading-none">16</span>
-            <span class="text-[10px] text-zinc-300 uppercase tracking-widest font-bold">Quiz</span>
-        </div>
-        <div class="flex items-center gap-2 bg-[#a855f7]/10 border border-[#a855f7]/25 rounded-xl px-4 py-2.5">
-            <span class="text-base leading-none">🏆</span>
-            <span class="text-[10px] text-zinc-300 uppercase tracking-widest font-bold">Certificate</span>
-        </div>
-        <div class="flex items-center gap-2 bg-[#a855f7]/10 border border-[#a855f7]/25 rounded-xl px-4 py-2.5">
-            <span class="text-base leading-none">👥</span>
-            <span id="visitor-hero" class="text-[#a855f7] text-base font-black leading-none">—</span>
-            <span class="text-[10px] text-zinc-300 uppercase tracking-widest font-bold">ผู้เข้าชม</span>
-        </div>
-    </div>
+      </div>
+    </section>
+  </div>
 
-    <!-- Bottom fade to next section -->
-    <div class="hero-bottom-fade" aria-hidden="true"></div>
+  <div class="lwrap">
+    <footer class="lfoot">
+      <a class="tb-logo" href="landing.html" style="font-size:16px"><span class="tb-mk" style="width:24px;height:24px;font-size:12px">Z</span>ZENITH</a>
+      <div>© 2026 ZENITH · เรียนเขียนโปรแกรมอย่างเป็นระบบ</div>
+    </footer>
+  </div>
+</main>
 
-    <!-- Scroll arrow -->
-    <div class="hero-scroll-arrow absolute bottom-10 left-1/2 -translate-x-1/2 text-zinc-600 animate-bounce">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-        </svg>
-    </div>
-</section>
-
-<!-- ══════════════ STATS ══════════════ -->
-<section class="max-w-5xl mx-auto px-6 py-16">
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 reveal">
-        <div class="stat-card p-6 text-center">
-            <p class="text-4xl font-black text-[#a855f7] mb-1" data-count="1">0</p>
-            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">วิชาหลัก</p>
-        </div>
-        <div class="stat-card p-6 text-center">
-            <p class="text-4xl font-black text-[#2dd4bf] mb-1" data-count="16">0</p>
-            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">บทเรียน</p>
-        </div>
-        <div class="stat-card p-6 text-center">
-            <p class="text-4xl font-black text-[#f7df1e] mb-1" data-count="16">0</p>
-            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">Quiz ฝึกหัด</p>
-        </div>
-        <div class="stat-card p-6 text-center">
-            <p class="text-4xl font-black text-white mb-1">∞</p>
-            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">ฟรีตลอดกาล</p>
-        </div>
-        <div class="stat-card p-6 text-center">
-            <p id="visitor-stat" class="text-4xl font-black text-[#2dd4bf] mb-1">—</p>
-            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">ผู้เข้าชม</p>
-        </div>
-    </div>
-</section>
-
-<!-- ══════════════ COURSES ══════════════ -->
-<section id="courses" class="max-w-6xl mx-auto px-6 pb-24">
-
-    <div class="text-center mb-12 reveal">
-        <p class="text-[10px] font-black text-[#a855f7] uppercase tracking-widest mb-3">หลักสูตร</p>
-        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-4">เริ่มต้นด้วย Python</h2>
-        <p class="text-zinc-500 text-sm max-w-lg mx-auto leading-relaxed">
-            เรียนรู้การเขียนโปรแกรมจากศูนย์ ครบทั้ง 4 หน่วยการเรียนรู้ใน 16 บทเรียน
-        </p>
-    </div>
-
-    <div class="flex justify-center reveal">
-        <!-- Python -->
-        <a href="login.html" class="glass-premium p-8 group hover:-translate-y-2 transition-all duration-300 max-w-sm w-full">
-            <div class="w-14 h-14 rounded-2xl bg-[#00E5A0]/10 border border-[#00E5A0]/20 flex items-center justify-center mb-6 group-hover:shadow-[0_0_30px_rgba(0,229,160,0.2)] transition-all">
-                <span class="text-3xl">🐍</span>
-            </div>
-            <h3 class="text-xl font-bold mb-2">Python</h3>
-            <p class="text-zinc-400 text-sm leading-relaxed mb-6">Variables, Loops, Functions, OOP ครบทั้ง 4 หน่วยการเรียนรู้ พร้อม Quiz และ Certificate</p>
-            <div class="flex items-center justify-between">
-                <span class="text-[10px] uppercase tracking-widest font-bold text-[#00E5A0]">Beginner</span>
-                <span class="text-xs text-zinc-500">16 Lessons</span>
-            </div>
-        </a>
-    </div>
-
-    <!-- Hidden courses (ยังไม่เปิด) -->
-    <div class="hidden">
-        <!-- JavaScript -->
-        <a href="login.html" class="glass-premium p-8 group hover:-translate-y-2 transition-all duration-300">
-            <div class="w-14 h-14 rounded-2xl bg-[#f97316]/10 border border-[#f97316]/20 flex items-center justify-center mb-6">
-                <span class="text-3xl">🏗️</span>
-            </div>
-            <h3 class="text-xl font-bold mb-2">HTML</h3>
-            <p class="text-zinc-400 text-sm leading-relaxed mb-6">Tags, Links, Forms, Images และ Semantic HTML สร้างโครงสร้างเว็บอย่างมืออาชีพ</p>
-            <div class="flex items-center justify-between">
-                <span class="text-[10px] uppercase tracking-widest font-bold text-[#f97316]">Beginner</span>
-                <span class="text-xs text-zinc-500">10 Lessons</span>
-            </div>
-        </a>
-
-        <!-- C++ -->
-        <a href="login.html" class="glass-premium p-8 group hover:-translate-y-2 transition-all duration-300">
-            <div class="w-14 h-14 rounded-2xl bg-[#3b82f6]/10 border border-[#3b82f6]/20 flex items-center justify-center mb-6 group-hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all">
-                <span class="text-3xl">⚙️</span>
-            </div>
-            <h3 class="text-xl font-bold mb-2">C++</h3>
-            <p class="text-zinc-400 text-sm leading-relaxed mb-6">Variables, Pointers, Functions, Arrays, Classes และ Memory Management พัฒนาซอฟต์แวร์ประสิทธิภาพสูง</p>
-            <div class="flex items-center justify-between">
-                <span class="text-[10px] uppercase tracking-widest font-bold text-[#3b82f6]">Intermediate</span>
-                <span class="text-xs text-zinc-500">10 Lessons</span>
-            </div>
-        </a>
-
-        <!-- Java -->
-        <a href="login.html" class="glass-premium p-8 group hover:-translate-y-2 transition-all duration-300">
-            <div class="w-14 h-14 rounded-2xl bg-[#ea580c]/10 border border-[#ea580c]/20 flex items-center justify-center mb-6 group-hover:shadow-[0_0_30px_rgba(234,88,12,0.2)] transition-all">
-                <span class="text-3xl">☕</span>
-            </div>
-            <h3 class="text-xl font-bold mb-2">Java</h3>
-            <p class="text-zinc-400 text-sm leading-relaxed mb-6">Variables, OOP, Inheritance, Classes, Methods และ JVM Architecture เขียนครั้งเดียวรันได้ทุกที่</p>
-            <div class="flex items-center justify-between">
-                <span class="text-[10px] uppercase tracking-widest font-bold text-[#ea580c]">Intermediate</span>
-                <span class="text-xs text-zinc-500">10 Lessons</span>
-            </div>
-        </a>
-
-    </div>
-</section>
-
-
-<!-- ══════════════ CAREER PATH ══════════════ -->
-<section class="max-w-5xl mx-auto px-6 pb-24">
-
-    <div class="text-center mb-12 reveal">
-        <p class="text-[10px] font-black text-[#2dd4bf] uppercase tracking-widest mb-3">เส้นทางอาชีพ</p>
-        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-3">เลือก <span class="text-[#a855f7]">เส้นทางของคุณ</span></h2>
-        <p class="text-zinc-500 text-sm max-w-md mx-auto leading-relaxed">เรียนตามลำดับที่แนะนำเพื่อสร้างทักษะที่แข็งแกร่งในสายที่ชอบ</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-
-        <!-- Frontend -->
-        <div class="glass-card p-7 reveal">
-            <div class="flex items-center gap-3 mb-5">
-                <div class="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/25 flex items-center justify-center flex-shrink-0">
-                    <span class="text-lg">🎨</span>
-                </div>
-                <div>
-                    <p class="font-black text-sm text-white">Front-End Dev</p>
-                    <p class="text-[9px] text-zinc-500 uppercase tracking-wider">UI / Interface</p>
-                </div>
-            </div>
-            <div class="space-y-2.5">
-                <div class="flex items-center gap-2.5 bg-white/[0.03] rounded-xl px-3 py-2">
-                    <span class="text-sm">🏗️</span>
-                    <span class="text-[11px] text-zinc-300 font-bold">HTML</span>
-                    <span class="ml-auto text-[9px] text-orange-400 bg-orange-500/10 px-1.5 py-0.5 rounded-md">1</span>
-                </div>
-                <div class="text-center text-zinc-700 text-xs">↓</div>
-                <div class="flex items-center gap-2.5 bg-white/[0.03] rounded-xl px-3 py-2">
-                    <span class="text-sm">🎨</span>
-                    <span class="text-[11px] text-zinc-300 font-bold">CSS</span>
-                    <span class="ml-auto text-[9px] text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded-md">2</span>
-                </div>
-                <div class="text-center text-zinc-700 text-xs">↓</div>
-                <div class="flex items-center gap-2.5 bg-white/[0.03] rounded-xl px-3 py-2">
-                    <span class="text-sm">⚡</span>
-                    <span class="text-[11px] text-zinc-300 font-bold">JavaScript</span>
-                    <span class="ml-auto text-[9px] text-yellow-400 bg-yellow-500/10 px-1.5 py-0.5 rounded-md">3</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Backend / Systems -->
-        <div class="glass-card p-7 reveal">
-            <div class="flex items-center gap-3 mb-5">
-                <div class="w-10 h-10 rounded-xl bg-[#a855f7]/15 border border-[#a855f7]/25 flex items-center justify-center flex-shrink-0">
-                    <span class="text-lg">⚙️</span>
-                </div>
-                <div>
-                    <p class="font-black text-sm text-white">Systems Dev</p>
-                    <p class="text-[9px] text-zinc-500 uppercase tracking-wider">Logic / Performance</p>
-                </div>
-            </div>
-            <div class="space-y-2.5">
-                <div class="flex items-center gap-2.5 bg-white/[0.03] rounded-xl px-3 py-2">
-                    <span class="text-sm">🐍</span>
-                    <span class="text-[11px] text-zinc-300 font-bold">Python</span>
-                    <span class="ml-auto text-[9px] text-[#2dd4bf] bg-[#2dd4bf]/10 px-1.5 py-0.5 rounded-md">1</span>
-                </div>
-                <div class="text-center text-zinc-700 text-xs">↓</div>
-                <div class="flex items-center gap-2.5 bg-white/[0.03] rounded-xl px-3 py-2">
-                    <span class="text-sm">☕</span>
-                    <span class="text-[11px] text-zinc-300 font-bold">Java</span>
-                    <span class="ml-auto text-[9px] text-orange-400 bg-orange-500/10 px-1.5 py-0.5 rounded-md">2</span>
-                </div>
-                <div class="text-center text-zinc-700 text-xs">↓</div>
-                <div class="flex items-center gap-2.5 bg-white/[0.03] rounded-xl px-3 py-2">
-                    <span class="text-sm">⚙️</span>
-                    <span class="text-[11px] text-zinc-300 font-bold">C++</span>
-                    <span class="ml-auto text-[9px] text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded-md">3</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Fullstack -->
-        <div class="glass-card p-7 reveal">
-            <div class="flex items-center gap-3 mb-5">
-                <div class="w-10 h-10 rounded-xl bg-[#2dd4bf]/15 border border-[#2dd4bf]/25 flex items-center justify-center flex-shrink-0">
-                    <span class="text-lg">🚀</span>
-                </div>
-                <div>
-                    <p class="font-black text-sm text-white">Full-Stack Dev</p>
-                    <p class="text-[9px] text-zinc-500 uppercase tracking-wider">ครบทุกด้าน</p>
-                </div>
-            </div>
-            <p class="text-zinc-500 text-[11px] leading-relaxed mb-5">เรียนครบทุก 6 วิชา เพื่อเป็น Developer ที่ทำได้ทั้ง Frontend และ Backend อย่างมืออาชีพ</p>
-            <div class="flex flex-wrap gap-2">
-                <span class="text-[9px] bg-white/[0.04] border border-white/[0.08] text-zinc-400 px-2 py-1 rounded-lg">🐍 Python</span>
-                <span class="text-[9px] bg-white/[0.04] border border-white/[0.08] text-zinc-400 px-2 py-1 rounded-lg">⚡ JS</span>
-                <span class="text-[9px] bg-white/[0.04] border border-white/[0.08] text-zinc-400 px-2 py-1 rounded-lg">⚙️ C++</span>
-                <span class="text-[9px] bg-white/[0.04] border border-white/[0.08] text-zinc-400 px-2 py-1 rounded-lg">☕ Java</span>
-                <span class="text-[9px] bg-white/[0.04] border border-white/[0.08] text-zinc-400 px-2 py-1 rounded-lg">🏗️ HTML</span>
-                <span class="text-[9px] bg-white/[0.04] border border-white/[0.08] text-zinc-400 px-2 py-1 rounded-lg">🎨 CSS</span>
-            </div>
-            <div class="mt-5 pt-4 border-t border-white/[0.05]">
-                <a href="register.html" class="inline-flex items-center gap-1.5 text-[10px] text-[#2dd4bf] font-black uppercase tracking-widest hover:text-white transition">
-                    เริ่มเรียนครบทุกวิชา →
-                </a>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<!-- ══════════════ ABOUT ══════════════ -->
-<section id="about" class="max-w-4xl mx-auto px-6 pb-24 reveal">
-
-    <div class="glass-card p-10 md:p-14 relative overflow-hidden text-center">
-        <div class="about-inner-glow absolute inset-0 pointer-events-none"></div>
-
-        <div class="relative z-10">
-            <!-- Label -->
-            <span class="inline-block badge-purple text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-6">เกี่ยวกับโปรเจกต์</span>
-
-            <!-- Title -->
-            <h2 class="text-4xl md:text-5xl font-black italic tracking-tighter text-[#a855f7] mb-4">ZENITH.</h2>
-            <p class="text-zinc-300 text-sm md:text-base max-w-xl mx-auto leading-relaxed mb-2">
-                แพลตฟอร์มเรียนโปรแกรมมิ่งออนไลน์ภาษาไทย ครอบคลุม 6 วิชาหลัก
-            </p>
-            <p class="text-zinc-500 text-xs md:text-sm max-w-lg mx-auto leading-relaxed mb-2">
-                พร้อม Quiz ทุกบท ระบบ XP, Badge และ Progress Sync ผ่าน Cloud
-            </p>
-            <p class="text-zinc-500 text-xs md:text-sm max-w-lg mx-auto leading-relaxed mb-10">
-                สร้างขึ้นเพื่อให้ผู้เริ่มต้นถึงระดับกลางสามารถเรียนได้อย่างมีประสิทธิภาพและสนุก
-            </p>
-
-            <!-- Divider -->
-            <div class="w-20 h-px bg-gradient-to-r from-transparent via-[#a855f7]/50 to-transparent mx-auto mb-10"></div>
-
-            <!-- Team -->
-            <p class="text-[10px] font-black text-[#a855f7] uppercase tracking-widest mb-6">ผู้จัดทำ</p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                <div class="bg-white/[0.03] border border-[#a855f7]/15 rounded-2xl px-6 py-6 stagger-item">
-                    <div class="w-12 h-12 rounded-full bg-[#a855f7]/15 border border-[#a855f7]/30 flex items-center justify-center mx-auto mb-3">
-                        <span class="text-xl">👨‍💻</span>
-                    </div>
-                    <p class="font-black text-sm text-white">ชนวิท เทพาคมภ์</p>
-                    <p class="text-[10px] text-[#a855f7] mt-1 font-bold">Project Leader</p>
-                    <p class="text-[9px] text-zinc-600 mt-1 uppercase tracking-wider">Full-Stack Developer</p>
-                </div>
-                <div class="bg-white/[0.03] border border-[#2dd4bf]/15 rounded-2xl px-6 py-6 stagger-item">
-                    <div class="w-12 h-12 rounded-full bg-[#2dd4bf]/15 border border-[#2dd4bf]/30 flex items-center justify-center mx-auto mb-3">
-                        <span class="text-xl">🎨</span>
-                    </div>
-                    <p class="font-black text-sm text-white">ทีมงานคนที่ 2</p>
-                    <p class="text-[10px] text-[#2dd4bf] mt-1 font-bold">UI/UX Design</p>
-                    <p class="text-[9px] text-zinc-600 mt-1 uppercase tracking-wider">Designer</p>
-                </div>
-                <div class="bg-white/[0.03] border border-yellow-500/15 rounded-2xl px-6 py-6 stagger-item">
-                    <div class="w-12 h-12 rounded-full bg-yellow-500/15 border border-yellow-500/30 flex items-center justify-center mx-auto mb-3">
-                        <span class="text-xl">⚙️</span>
-                    </div>
-                    <p class="font-black text-sm text-white">ทีมงานคนที่ 3</p>
-                    <p class="text-[10px] text-yellow-400 mt-1 font-bold">Backend Dev</p>
-                    <p class="text-[9px] text-zinc-600 mt-1 uppercase tracking-wider">System Engineer</p>
-                </div>
-            </div>
-
-            <!-- School -->
-            <div class="inline-flex items-center gap-2.5 bg-white/[0.03] border border-white/[0.08] rounded-2xl px-6 py-3">
-                <span class="text-lg">🏫</span>
-                <div class="text-left">
-                    <p class="text-[11px] text-zinc-300 font-black uppercase tracking-wider">วิทยาลัยเทคนิคลำพูน</p>
-                    <p class="text-[9px] text-zinc-600 uppercase tracking-widest mt-0.5">ระดับ ปวส. · ชั้นปีที่ 2 ห้อง 2 · ปีการศึกษา 2026</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</section>
-
-<!-- ══════════════ FOOTER ══════════════ -->
-<footer class="border-t border-white/[0.05] py-10">
-    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-
-        <!-- Brand -->
-        <div class="text-center md:text-left">
-            <h2 class="text-xl font-black text-[#a855f7] italic tracking-tighter mb-1">ZENITH.</h2>
-            <p class="text-zinc-700 text-[9px] uppercase tracking-widest">© 2026 Senior Project · วิทยาลัยเทคนิคลำพูน</p>
-        </div>
-
-        <!-- Links -->
-        <div class="flex items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-zinc-600">
-            <a href="#courses"  class="hover:text-[#a855f7] transition">คอร์สเรียน</a>
-            <a href="#about"    class="hover:text-[#a855f7] transition">เกี่ยวกับเรา</a>
-            <a href="login.html"    class="hover:text-white transition">Sign In</a>
-            <a href="register.html" class="hover:text-white transition">Register</a>
-        </div>
-
-    </div>
-</footer>
-
-<!-- ══════════════ FIREBASE AUTH CHECK ══════════════ -->
 <script type="module">
-    import { auth } from './assets/js/firebase.js';
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            window.location.href = 'index.html';
-        }
-    });
+import { checkAuthState } from './assets/js/auth.js';
+checkAuthState('auth_page');
 </script>
-
-<!-- ══════════════ VISITOR COUNTER ══════════════ -->
-<script type="module">
-import { db } from './assets/js/firebase.js';
-import { doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-const BASE = 127; // offset so count looks established from day 1
-
-function animateCount(el, target) {
-    if (!el || target <= 0) return;
-    const ms = 1400;
-    const start = performance.now();
-    (function step(now) {
-        const p = Math.min((now - start) / ms, 1);
-        const v = Math.round((1 - Math.pow(1 - p, 3)) * target);
-        el.textContent = v.toLocaleString('en-US');
-        if (p < 1) requestAnimationFrame(step);
-    })(start);
-}
-
-function showCount(n) {
-    animateCount(document.getElementById('visitor-hero'), n);
-    animateCount(document.getElementById('visitor-stat'), n);
-}
-
-(async function () {
-    const today = new Date().toDateString();
-    
-    // Initial display from fallback to avoid blank state
-    let local = parseInt(localStorage.getItem('zenith_visit_count') || '42');
-    showCount(local + BASE);
-
-    try {
-        const visitorRef = doc(db, 'stats', 'visitors');
-        // Increment once per day per browser
-        if (localStorage.getItem('zenith_visit_date') !== today) {
-            await setDoc(visitorRef, { count: increment(1) }, { merge: true });
-            localStorage.setItem('zenith_visit_date', today);
-        }
-        const snap = await getDoc(visitorRef);
-        const serverCount = (snap.data()?.count || 0);
-        localStorage.setItem('zenith_visit_count', String(serverCount));
-        showCount(serverCount + BASE);
-    } catch (err) {
-        console.warn('Firestore fallback:', err);
-        // Fallback already shown above, but increment if new day
-        if (localStorage.getItem('zenith_visit_date') !== today) {
-            local++;
-            localStorage.setItem('zenith_visit_count', String(local));
-            localStorage.setItem('zenith_visit_date', today);
-            showCount(local + BASE);
-        }
-    }
-})();
-</script>
-
-<!-- ══════════════ ANIMATIONS ══════════════ -->
-<div id="page-transition"></div>
-
 <script>
-(function () {
+  const nav = document.getElementById('lnav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-    /* ── PAGE TRANSITION ─────────────────────────────── */
-    const overlay = document.getElementById('page-transition');
-
-    // Fade in: start opaque, transition to hidden
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-        overlay.classList.add('hidden');
-    }));
-
-    // Intercept non-hash links for fade-out
-    document.addEventListener('click', (e) => {
-        const link = e.target.closest('a[href]');
-        if (!link) return;
-        const href = link.getAttribute('href');
-        if (!href || href.startsWith('#') || href.startsWith('javascript') || link.target) return;
-        e.preventDefault();
-        overlay.classList.remove('hidden');
-        setTimeout(() => { window.location.href = href; }, 340);
-    });
-
-    /* ── SMOOTH SCROLL (navbar offset 72px) ─────────── */
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', e => {
-            const target = document.querySelector(a.getAttribute('href'));
-            if (!target) return;
-            e.preventDefault();
-            const top = target.getBoundingClientRect().top + window.scrollY - 72;
-            window.scrollTo({ top, behavior: 'smooth' });
-        });
-    });
-
-    /* ── TYPEWRITER ──────────────────────────────────── */
-    const titleEl = document.getElementById('hero-title');
-    if (titleEl) {
-        const line1 = [...'เขียนโค้ด'];
-        const line2 = [...'เปลี่ยนชีวิต'];
-        let phase = 0, idx = 0, out1 = '', out2 = '';
-
-        titleEl.innerHTML = '';   // clear immediately
-
-        function tick() {
-            if (phase === 0) {
-                if (idx < line1.length) {
-                    out1 += line1[idx++];
-                    titleEl.innerHTML = out1 + '<span class="tw-cursor">|</span>';
-                } else { phase = 1; idx = 0; }
-            } else {
-                if (idx < line2.length) {
-                    out2 += line2[idx++];
-                    titleEl.innerHTML = out1 + '<br>' + out2 + '<span class="tw-cursor">|</span>';
-                } else {
-                    titleEl.innerHTML = out1 + '<br>' + out2; // done
-                    return;
-                }
-            }
-            setTimeout(tick, phase === 0 && idx === line1.length ? 220 : 75);
-        }
-        setTimeout(tick, 600); // start after page fade-in
-    }
-
-    /* ── COUNTER ANIMATION ───────────────────────────── */
-    function countUp(el, target, ms) {
-        const start = performance.now();
-        (function step(now) {
-            const p = Math.min((now - start) / ms, 1);
-            const eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = Math.round(eased * target);
-            if (p < 1) requestAnimationFrame(step);
-        })(start);
-    }
-
-    const counterObs = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            const el = entry.target;
-            countUp(el, parseInt(el.dataset.count), 1400);
-            counterObs.unobserve(el);
-        });
-    }, { threshold: 0.6 });
-
-    document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
-
-    /* ── STAGGER CARDS ───────────────────────────────── */
-    const staggerObs = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            const siblings = [...entry.target.parentElement.querySelectorAll('.stagger-item')];
-            const i = siblings.indexOf(entry.target);
-            entry.target.style.transitionDelay = (i * 0.1) + 's';
-            entry.target.classList.add('visible');
-            staggerObs.unobserve(entry.target);
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.stagger-item').forEach(el => staggerObs.observe(el));
-
-    /* ── SLIDE LEFT / RIGHT ──────────────────────────── */
-    const slideObs = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('visible');
-            slideObs.unobserve(entry.target);
-        });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.slide-left, .slide-right').forEach(el => slideObs.observe(el));
-
-    /* ── SCROLL REVEAL (existing .reveal elements) ───── */
-    const revealObs = new IntersectionObserver(entries => {
-        entries.forEach((entry, i) => {
-            if (!entry.isIntersecting) return;
-            entry.target.style.transitionDelay = (i % 3) * 0.1 + 's';
-            entry.target.classList.add('visible');
-            revealObs.unobserve(entry.target);
-        });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-})();
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
-
-<!-- Spotlight effect on cards -->
-<script src="assets/js/premium.js"></script>
-
-<!-- ══════════════ STRIPE HERO: CANVAS GRADIENT + 3D PARALLAX ══════════════ -->
-<script>
-(function () {
-    'use strict';
-
-    var PRM    = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var MOBILE = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
-
-    /* ─── 1. Animated canvas mesh gradient ──────────────── */
-    var canvas = document.getElementById('hero-gradient-canvas');
-    if (canvas && !PRM) {
-        var ctx = canvas.getContext('2d');
-        var W = 0, H = 0, t = 0, paused = false;
-
-        // Brand accent palette — cycles purple → teal → blue → green → pink → purple
-        var PAL = [
-            [168,  85, 247],
-            [109,  40, 217],
-            [ 45, 212, 191],
-            [ 77, 158, 255],
-            [  0, 229, 160],
-            [255, 110, 168],
-            [168,  85, 247]
-        ];
-
-        function lerp(a, b, f) { return a + (b - a) * f; }
-
-        function colorAt(v) {
-            var n = PAL.length - 1;
-            var i = Math.min(Math.floor(v * n), n - 1);
-            var f = v * n - i;
-            var A = PAL[i], B = PAL[i + 1] || A;
-            return [
-                Math.round(lerp(A[0], B[0], f)),
-                Math.round(lerp(A[1], B[1], f)),
-                Math.round(lerp(A[2], B[2], f))
-            ];
-        }
-
-        function easeInOut(x) { return x < 0.5 ? 2 * x * x : -1 + (4 - 2 * x) * x; }
-
-        function resize() {
-            W = canvas.width  = canvas.offsetWidth;
-            H = canvas.height = canvas.offsetHeight;
-        }
-
-        var S = MOBILE ? 0.00025 : 0.0005;
-
-        function draw() {
-            if (!W) return;
-            ctx.fillStyle = '#08090d';
-            ctx.fillRect(0, 0, W, H);
-
-            var t1 = easeInOut((Math.sin(t * S)                + 1) * 0.5);
-            var t2 = easeInOut((Math.sin(t * S * 1.37 + 1.57)  + 1) * 0.5);
-            var t3 = easeInOut((Math.sin(t * S * 0.71 + 3.14)  + 1) * 0.5);
-
-            var c1 = colorAt(t1), c2 = colorAt(t2), c3 = colorAt(t3);
-            var R  = Math.max(W, H);
-
-            var blobs = [
-                [0.18 + 0.05 * Math.sin(t * S * 0.5),        0.28 + 0.07 * Math.cos(t * S * 0.4),         R * 0.7,  c1, 0.32],
-                [0.81 + 0.04 * Math.cos(t * S * 0.6),        0.22 + 0.06 * Math.sin(t * S * 0.35 + 1),    R * 0.65, c2, 0.24],
-                [0.50 + 0.07 * Math.sin(t * S * 0.45 + 2),   0.70 + 0.05 * Math.cos(t * S * 0.55 + 1),   R * 0.80, c3, 0.18]
-            ];
-
-            blobs.forEach(function (b) {
-                var gx = b[0] * W, gy = b[1] * H;
-                var g = ctx.createRadialGradient(gx, gy, 0, gx, gy, b[2]);
-                g.addColorStop(0, 'rgba(' + b[3].join(',') + ',' + b[4] + ')');
-                g.addColorStop(1, 'rgba(8,9,13,0)');
-                ctx.fillStyle = g;
-                ctx.fillRect(0, 0, W, H);
-            });
-
-            t++;
-        }
-
-        var FPS      = MOBILE ? 24 : 60;
-        var INTERVAL = 1000 / FPS;
-        var lastTs   = 0;
-
-        function loop(ts) {
-            if (paused) return;
-            if (ts - lastTs >= INTERVAL) { draw(); lastTs = ts; }
-            requestAnimationFrame(loop);
-        }
-
-        if (window.IntersectionObserver) {
-            new IntersectionObserver(function (entries) {
-                paused = !entries[0].isIntersecting;
-                if (!paused) requestAnimationFrame(loop);
-            }, { threshold: 0.01 }).observe(canvas);
-        }
-
-        window.addEventListener('resize', resize, { passive: true });
-        resize();
-        requestAnimationFrame(loop);
-    }
-
-    /* ─── 2. 3D mouse parallax for floating cards ───────── */
-    if (!PRM && !MOBILE) {
-        var heroSec   = document.getElementById('hero-section');
-        var cardLeft  = document.querySelector('.hero-card-left');
-        var cardRight = document.querySelector('.hero-card-right');
-
-        if (heroSec && (cardLeft || cardRight)) {
-            var mx = 0, my = 0, curX = 0, curY = 0;
-
-            heroSec.addEventListener('mousemove', function (e) {
-                var r = heroSec.getBoundingClientRect();
-                mx = (e.clientX - r.left  - r.width  * 0.5) / (r.width  * 0.5);
-                my = (e.clientY - r.top   - r.height * 0.5) / (r.height * 0.5);
-            }, { passive: true });
-
-            heroSec.addEventListener('mouseleave', function () { mx = 0; my = 0; });
-
-            function tiltLoop() {
-                // Smooth lerp for organic feel
-                curX += (mx - curX) * 0.06;
-                curY += (my - curY) * 0.06;
-
-                if (cardLeft) {
-                    cardLeft.style.transform =
-                        'translateY(calc(-50% + ' + (curY * -8) + 'px))' +
-                        ' perspective(900px)' +
-                        ' rotateX(' + (curY * -4) + 'deg)' +
-                        ' rotateY(' + (curX *  5) + 'deg)' +
-                        ' rotate(-3deg)';
-                }
-                if (cardRight) {
-                    cardRight.style.transform =
-                        'translateY(calc(-50% + ' + (curY * -8) + 'px))' +
-                        ' perspective(900px)' +
-                        ' rotateX(' + (curY * -4) + 'deg)' +
-                        ' rotateY(' + (curX * -5) + 'deg)' +
-                        ' rotate(3deg)';
-                }
-                requestAnimationFrame(tiltLoop);
-            }
-            tiltLoop();
-        }
-    }
-})();
-</script>
+<script src="assets/js/pystart-fx.js"></script>
 </body>
 </html>
